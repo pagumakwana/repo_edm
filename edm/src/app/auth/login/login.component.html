@@ -41,11 +41,11 @@
                         Social Login
                     </p>
                     <div class="button_group">
-                        <a class="global_btn icon_btn facebook_btn" href="#" target="_blank">
+                        <a class="global_btn icon_btn facebook_btn" (click)="socialSignIn('facebook')">
                             <span>Login with Facebook</span>
                             <span class="facebook_icon btn_icon"></span>
                         </a>
-                        <a class="global_btn icon_btn google_btn" href="#" target="_blank">
+                        <a class="global_btn icon_btn google_btn" (click)="socialSignIn('google')">
                             <span>Login with Google</span>
                             <span class="google_icon btn_icon"></span>
                         </a>
