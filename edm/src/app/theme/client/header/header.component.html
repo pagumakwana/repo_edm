@@ -11,27 +11,50 @@
                 </a>
             </div>
             <div class="mobile_menu_list">
-                <p>
+                <!-- <div>
                     <a href="#" target="_blank">Store</a>
-                </p>
-                <p>
+                </div>
+                <div>
                     <a href="#" target="_blank">Genre</a>
-                </p>
-                <p>
+                </div>
+                <div>
                     <a href="#" target="_blank">Custom Track</a>
-                </p>
-                <p>
+                </div>
+                <div>
                     <a href="#" target="_blank">Services</a>
-                </p>
-                <p>
-                    <a href="#" target="_blank">Logout</a>
-                </p>
-                <p (click)="redirectUrl('login')">
+                </div>
+                <div (click)="redirectUrl('login')">
                     <a href="#" target="_blank">Sign In</a>
-                </p>
-                <p>
+                </div>
+                <div>
                     <a href="#" target="_blank">Sign Up</a>
-                </p>
+                </div> -->
+                <div class="mobile_menus active_menu_list">
+                    <a><span>Store</span></a>
+                </div>
+                <div class="mobile_menus accordian_menu">
+                    <a><span>Genre</span></a>
+                </div>
+                <div class="inner_menu">
+                    <div class="mobile_menus">
+                        <a><span>Genre Inner</span></a>
+                    </div>
+                    <div class="mobile_menus">
+                        <a><span>Genre Inner</span></a>
+                    </div>
+                </div>
+                <div class="mobile_menus">
+                    <a><span>Custom Track</span></a>
+                </div>
+                <div class="mobile_menus">
+                    <a><span>Services</span></a>
+                </div>
+                <div class="mobile_menus" (click)="redirectUrl('login')">
+                    <a><span>Sign In</span></a>
+                </div>
+                <div class="mobile_menus">
+                    <a><span>Sign Up</span></a>
+                </div>
             </div>
         </div>
     </div>
@@ -42,18 +65,36 @@
     </div>
     <div class="project_menu">
         <div class="menu_list">
-            <p>
+            <div>
                 <a routerLink="/product">Store</a>
-            </p>
-            <p>
+            </div>
+            <div class="dropdown_point">
                 <a routerLink="/geners">Genre</a>
-            </p>
-            <p>
+                <div class="dropdown_panel menu_dropdown_panel">
+                    <div class="dropdown_body">
+                        <div class="dropdown_list">
+                            <a href="#">
+                                Administrator
+                            </a>
+                            <a href="#">
+                                My Account
+                            </a>
+                            <a href="#">
+                                Get In Touch
+                            </a>
+                            <a href="#">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
                 <a routerLink="/product">Custom Track</a>
-            </p>
-            <p>
+            </div>
+            <div>
                 <a routerLink="/service">Services</a>
-            </p>
+            </div>
         </div>
         <div class="cart_section">
             <div class="cart_area" title="My Cart">
@@ -62,9 +103,30 @@
             </div>
         </div>
         <div class="user_profile">
-            <div class="user_profile_img">
-                <img *ngIf="hasLogin"
-                    src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" />
+            <div class="user_profile_img dropdown_point">
+                <img *ngIf="hasLogin" src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" />
+                <div class="dropdown_panel profile_dropdown_panel">
+                    <div class="dropdown_body">
+                        <div class="user_information">
+                            <h3>Pallavi Chapla</h3>
+                            <p>pallavi.chapla@gmail.com</p>
+                        </div>
+                        <div class="dropdown_list">
+                            <a href="#">
+                                Administrator
+                            </a>
+                            <a href="#">
+                                My Account
+                            </a>
+                            <a href="#">
+                                Get In Touch
+                            </a>
+                            <a href="#">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="signin_btn" *ngIf="hasLogin">

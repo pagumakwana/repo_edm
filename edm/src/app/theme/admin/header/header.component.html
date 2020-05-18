@@ -5,16 +5,24 @@
             <img src="../../../../assets/images/logo.PNG" />
         </p>
         <div class="menu_listing">
-            <div class="menu_list active_menu_list menu_home">
+            <div class="menu_list accordian_menu active_menu_list accordian_menu menu_home">
                 <a><span>Home</span></a>
             </div>
             <div class="menu_list menu_alltracks">
                 <a><span>All Tracks</span></a>
             </div>
+            <div class="inner_menu">
+                <div class="menu_list">
+                    <a><span>Inner menu</span></a>
+                </div>
+                <div class="menu_list">
+                    <a><span>Inner menu</span></a>
+                </div>
+            </div>
             <div class="menu_list menu_allbeats">
                 <a><span>All Beats</span></a>
             </div>
-            <div class="menu_list menu_services">
+            <div class="menu_list accordian_menu menu_services">
                 <a><span>Services</span></a>
             </div>
             <div class="menu_list menu_earning_analytics">
@@ -50,12 +58,33 @@
             <p class="profile_list">
                 <img src="../../../../assets/images/notification.svg" title="Notification" alt="Notification" />
             </p>
-            <p class="user_name">
+            <!-- <p class="user_name">
                 Pallavi Chapla
-            </p>
-            <div class="user_profile_img">
-                <img
-                    src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" />
+            </p> -->
+            <div class="user_profile_img dropdown_point">
+                <img src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" />
+                <div class="dropdown_panel profile_dropdown_panel">
+                    <div class="dropdown_body">
+                        <div class="user_information">
+                            <h3>Pallavi Chapla</h3>
+                            <p>pallavi.chapla@gmail.com</p>
+                        </div>
+                        <div class="dropdown_list">
+                            <a href="#">
+                                Administrator
+                            </a>
+                            <a href="#">
+                                My Account
+                            </a>
+                            <a href="#">
+                                Get In Touch
+                            </a>
+                            <a href="#">
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -82,9 +111,9 @@ $(".search_section > img").click(function(){
 });
 
 if (window.matchMedia("(max-width: 850px)").matches) {
-    $(".admin_base").addClass("admin_mini_menu");
-} else {
     $(".admin_base").removeClass("admin_mini_menu");
+} else {
+    $(".admin_base").addClass("admin_mini_menu");
 }
 
 -->

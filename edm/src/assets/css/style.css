@@ -431,8 +431,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     background: url(../images/email.svg) no-repeat;
     height: 12px;
 }
-.dropdown_icon {
+.dropdown_icon, .accordian_menu > a:after {
     background: url(../images/dropdown_arrow.svg) no-repeat;
+}
+.dropdown_icon {
     height: 6px;
     cursor: pointer;
 }
@@ -493,14 +495,113 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .menu_settings > a:before {
     background: url(../images/settings.svg) no-repeat;
 }
-
-/* TEMP CSS */
-appadmin-dashboard {
-    margin: 56px 0 0 50px !important;
+/* Dropdown CSS */
+.dropdown_point {
+    position: relative;
+}
+.dropdown_panel {
+    position: absolute;
+    -webkit-animation: .3s m-dropdown-fade-in,.3s ease-out m-dropdown-move-up;
+    animation: .3s m-dropdown-fade-in,.3s ease-out m-dropdown-move-up;
+    width: 230px;
+    right: 0;
+    top: 60px;
+    box-shadow: 0 0 15px 2px rgba(69, 65, 78, 0.14);
+    border-radius: 10px;
+    margin: 0;
+}
+.dropdown_body {
+    background: white;
+    max-height: 222px;
+    overflow: auto;
+    border-radius: 10px;
+}
+.dropdown_body:before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 10px 12px 10px;
+    border-color: transparent transparent #ffffff transparent;
+    border-radius: 0 15px 0 0;
+    line-height: 0px;
+    _border-color: #000000 #000000 #ffffff #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+    position: absolute;
+    left: auto;
+    right: 16px;
+    margin: auto;
+    top: -12px;
+}
+.dropdown_list {
+    padding: 0;
+    font-size: 14px;
+    width: 100%;
+}
+.dropdown_list a {
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    padding: 9px 15px;
+    border-bottom: 1px solid #e6e6e6;
+    text-decoration: none !important;
+    color: black !important;
+    background: white;
+}
+.dropdown_list a:hover {
+    background: #05C38F;
+    color: white !important;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.menu_dropdown_panel {
+    width: 200px;
+}
+.dropdown_panel ::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+.dropdown_list a:last-child {
+    border-bottom: 0;
+}
+.user_information {
+    padding: 15px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.header_dropdown_panel {
+    width: 250px;
+}
+.user_information p, .user_information h3 {
+    margin: 0;
+}
+.user_information h3 {
+    font-size: 15px;
+}
+.user_information p {
+    font-size: 13px;
+    color: #a7a7a7;
+    margin-top: 5px;
+}
+.profile_dropdown_panel {
+    width: 250px;
+}
+.profile_dropdown_panel .dropdown_body:before {
+    right: 6px;
+}
+/* Dropdown CSS */
+appadmin-body {
+    margin: 56px 0 0 0;
     display: block;
 }
-/* TEMP CSS */
-
+appadmin-header {
+    display: table-cell;
+    vertical-align: top;
+    background: #F8F8F8;
+    min-height: calc(100vh - 56px);
+    position: relative;
+    top: 56px;
+}
+appadmin-adminbody {
+    display: table;
+}
 /* ********** Responsive ********** */
 
 @media screen and (max-width: 1200px) {
@@ -539,6 +640,9 @@ appadmin-dashboard {
         margin-top: 68px;
         min-height: auto;
     }
+    .dropdown_panel {
+        top: 50px;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -570,5 +674,11 @@ appadmin-dashboard {
     }
     .simple_heading {
         padding: 10px 20px;
+    }
+}
+
+@media screen and (max-height: 300px) {
+    .dropdown_body {
+        max-height: 70vh;
     }
 }

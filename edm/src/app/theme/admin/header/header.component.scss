@@ -12,6 +12,7 @@
     border: 2px solid #556080;
     cursor: pointer;
     position: relative;
+    margin-left: 15px;
 }
 .user_profile_img img {
     width: 100%;
@@ -46,7 +47,7 @@
     line-height: 0;
     cursor: pointer;
 }
-.admin_header p {
+.admin_header .profile_section > p {
     margin: 0;
     padding: 7px 10px;
     cursor: pointer;
@@ -96,32 +97,6 @@
     z-index: 9;
     border-radius: 100%;
 }
-.menu_list > a:before {
-    content: "";
-    margin: auto;
-    left: 0;
-    bottom: 0;
-    top: 0;
-    background-size: 100% 100%;
-    width: 35px;
-    height: 15px;
-    display: inline-block;
-    background-position: center;
-    position: absolute;
-}
-.menu_list > a:after {
-    content: "";
-    margin: auto;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    background-size: 100% 100%;
-    width: 25px;
-    height: 5px;
-    display: inline-block;
-    background-position: center;
-    position: absolute;
-}
 .admin_header {
     border-bottom: 1px solid #E4E4E4;
     background: white;
@@ -139,11 +114,11 @@
     border-right: 1px solid #f1f2f3;
     background: #F8F8F8;
     z-index: 1;
+    min-height: calc(100vh - 56px);
     -webkit-transition: -webkit-transform .3s ease-in-out,width .3s ease-in-out;
     -moz-transition: -moz-transform .3s ease-in-out,width .3s ease-in-out;
     -o-transition: -o-transform .3s ease-in-out,width .3s ease-in-out;
     transition: transform .3s ease-in-out,width .3s ease-in-out;
-    min-height: calc(100vh - 56px);
 }
 .project_logo {
     margin: 0;
@@ -160,6 +135,32 @@
 .project_logo img {
     height: 31px;
     width: auto;
+}
+.menu_list > a:before {
+    content: "";
+    margin: auto;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: 35px;
+    height: 15px;
+    display: inline-block;
+    background-position: center;
+    position: absolute;
+}
+.accordian_menu  > a:after {
+    content: "";
+    margin: auto;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-size: 100% 100%;
+    width: 25px;
+    height: 5px;
+    display: inline-block;
+    background-position: center;
+    position: absolute;
 }
 .menu_list a {
     margin: 0;
@@ -197,36 +198,9 @@
 .mobile_search, .mobile_search_section {
     display: none;
 }
-.admin_mini_menu {
-    .admin_menu {
-        width: 50px !important;
-    }
-    .menu_list a span {
-        font-size: 0px;
-        transition: none;
-        -webkit-transition: none;
-        -moz-transition: none;
-        -ms-transition: none;
-        -o-transition: none;
-    }
-    .menu_list a:after {
-        font-size: 0px;
-    }
-    .menu_list a:before {
-        width: 46px !important;
-    }
-    .menu_list {
-        padding: 13px;
-    }
-    .project_logo {
-        width: 50px;
-    }
-    .project_logo img {
-        visibility: hidden;
-    }
-    .admin_header {
-        width: calc(100% - 50px);
-    }
+.inner_menu .mobile_menus {
+    margin: 0px !important;
+    box-shadow: none !important;
 }
 .mobile_search_section {
     width: 100%;
@@ -269,9 +243,85 @@
 		left: 0
 	}
 }
-
+@-webkit-keyframes animateright {
+    from {
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+@keyframes animateright {
+    from {
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+@-webkit-keyframes animateleft {
+    from {
+        transform: translate3d(-80%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+@keyframes animateleft {
+    from {
+        transform: translate3d(-80%, 0, 0);
+        visibility: visible;
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
 // ********** Responsive **********
 
+@media screen and (min-width: 851px) {
+    .admin_mini_menu {
+        .admin_menu {
+            width: 50px !important;
+        }
+        .menu_list a span {
+            font-size: 0px;
+            transition: none;
+            -webkit-transition: none;
+            -moz-transition: none;
+            -ms-transition: none;
+            -o-transition: none;
+        }
+        .accordian_menu  > a:after {
+            visibility: hidden;
+            transition: none;
+            -webkit-transition: none;
+            -moz-transition: none;
+            -ms-transition: none;
+            -o-transition: none;
+        }
+        .menu_list a:after {
+            font-size: 0px;
+        }
+        .menu_list a:before {
+            width: 46px !important;
+        }
+        .menu_list {
+            padding: 13px;
+        }
+        .project_logo {
+            width: 50px;
+        }
+        .project_logo img {
+            visibility: hidden;
+        }
+        .admin_header {
+            width: calc(100% - 50px);
+        }
+    }
+}
 @media screen and (max-width: 850px) {
     .desktop_search, .user_name {
         display: none;
@@ -280,9 +330,33 @@
         display: inline-block;
     }
     .admin_menu {
-        position: absolute;
+        position: fixed;
+        height: 100vh;
+        top: 0;
+    }
+    .menu_listing {
+        overflow: auto;
+        height: calc(100vh - 56px);
+        top: 56px;
+        position: relative;
     }
     .admin_header {
-        width: calc(100% - 50px) !important;
+        width: 100% !important;
+    }
+    .admin_base .admin_menu {
+        -webkit-animation-name: animateright;
+        animation-name: animateright;
+        animation-duration: 0.4s;
+        -webkit-animation-duration: 0.4s;
+        animation-fill-mode: both;
+        -webkit-animation-fill-mode: both;
+    }
+    .admin_mini_menu .admin_menu {
+        -webkit-animation-name: animateleft;
+        animation-name: animateleft;
+        animation-duration: 0.4s;
+        -webkit-animation-duration: 0.4s;
+        animation-fill-mode: both;
+        -webkit-animation-fill-mode: both;
     }
 }
