@@ -499,16 +499,25 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .dropdown_point {
     position: relative;
 }
+.dropdown_point:hover > .dropdown_panel {
+    display: block;
+}
 .dropdown_panel {
     position: absolute;
-    -webkit-animation: .3s m-dropdown-fade-in,.3s ease-out m-dropdown-move-up;
-    animation: .3s m-dropdown-fade-in,.3s ease-out m-dropdown-move-up;
-    width: 230px;
+    transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
     right: 0;
-    top: 60px;
+    top: 33px;
+    border-radius: 10px;
+    margin: 0;
+    padding-top: 25px;
+    width: 230px;
+    display: none;
+}
+.dropdown_inner {
     box-shadow: 0 0 15px 2px rgba(69, 65, 78, 0.14);
     border-radius: 10px;
     margin: 0;
+    position: relative;
 }
 .dropdown_body {
     background: white;
@@ -516,7 +525,7 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     overflow: auto;
     border-radius: 10px;
 }
-.dropdown_body:before {
+.dropdown_inner:before {
     content: "";
     width: 0;
     height: 0;
@@ -553,10 +562,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     color: white !important;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.menu_dropdown_panel {
+.menu_dropdown_inner {
     width: 200px;
 }
-.dropdown_panel ::-webkit-scrollbar-track {
+.dropdown_inner ::-webkit-scrollbar-track {
     background: #ffffff;
 }
 .dropdown_list a:last-child {
@@ -565,9 +574,6 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .user_information {
     padding: 15px;
     border-bottom: 1px solid #e6e6e6;
-}
-.header_dropdown_panel {
-    width: 250px;
 }
 .user_information p, .user_information h3 {
     margin: 0;
@@ -580,10 +586,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     color: #a7a7a7;
     margin-top: 5px;
 }
-.profile_dropdown_panel {
+.profile_dropdown_inner {
     width: 250px;
 }
-.profile_dropdown_panel .dropdown_body:before {
+.profile_dropdown_inner .dropdown_body:before {
     right: 6px;
 }
 /* Dropdown CSS */
@@ -641,7 +647,7 @@ appadmin-adminbody {
         min-height: auto;
     }
     .dropdown_panel {
-        top: 50px;
+        padding-top: 15px;
     }
 }
 
