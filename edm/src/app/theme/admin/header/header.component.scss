@@ -105,8 +105,11 @@
     top: 0;
     left: auto;
     right: 0;
-    padding: 10px;
+    padding: 10px 20px 10px 10px;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+.profile_dropdown_panel {
+    right: -10px;
 }
 .admin_menu {
     float: left;

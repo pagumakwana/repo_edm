@@ -146,6 +146,9 @@
 //     background-position: center;
 //     position: absolute;
 // }
+.profile_dropdown_panel {
+    right: -10px;
+}
 .mobile_menu_list .accordian_menu > a:after {
     content: "";
     margin: auto;
@@ -195,6 +198,9 @@
 .inner_menu .mobile_menus {
     margin: 0px !important;
     box-shadow: none !important;
+}
+.menu_dropdown_panel {
+    width: 180px;
 }
 
 // ********** Responsive **********
