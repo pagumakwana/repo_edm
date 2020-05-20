@@ -3,8 +3,10 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: "full" },
-  { path: 'login', loadChildren: './auth/login/login.module#LoginModule', pathMatch: "full" }
+  {
+    path: "",
+    loadChildren: "./theme/theme-routing.module#ThemeRoutingModule"
+  }
 ];
 
 @NgModule({

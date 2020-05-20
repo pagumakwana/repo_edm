@@ -11,7 +11,7 @@ const routes: Routes = [
         component: ClientComponent,
         children: [
             {
-                path: "home",
+                path: "",
                 loadChildren: "../home/home.module#HomeModule"
             },
             {
@@ -39,7 +39,7 @@ const routes: Routes = [
                 loadChildren: "../product/product.module#ProductModule"
             },
             {
-                path: "error/404",
+                path: "error",
                 loadChildren: "../errors/errors.module#ErrorsModule"
             },
             {
