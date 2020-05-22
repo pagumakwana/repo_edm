@@ -1,1 +1,67 @@
-DashboardList
+<div class="admin_page">
+    <div class="admin_header">
+        <h4>ALL GENRE</h4>
+    </div>
+    <div class="admin_body">
+        <div class="portlet_body admin_half_forms">
+            <form>
+                <div class="form_group">
+                    <div class="form_area">
+                        <input type="text" name="username" placeholder="Enter Genre Name" />
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area">
+                        <input type="text" name="username" placeholder="Enter Genre Slug" />
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <select name="ParentCategory">
+                            <option disabled>Select Parent Category</option>
+                            <option>options</option>
+                            <option>options</option>
+                            <option>options</option>
+                        </select>
+                        <span class="input_icon dropdown_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area">
+                        <textarea rows="4" placeholder="Coupon Description"></textarea>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <label class="form_label">Upload Service Cover Image</label>
+                    <div class="form_area">
+                        <div class="custom-file">
+							<input type="file" class="custom-file-input" id="customFile">
+							<label class="custom-file-label" for="customFile">Choose file</label>
+						</div>
+                        <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="button_group">
+                    <a class="global_btn primary_btn">
+                        <span>ADD NEW GENRE</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

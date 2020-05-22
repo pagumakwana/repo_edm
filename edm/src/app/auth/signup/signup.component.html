@@ -12,8 +12,9 @@
                         <span class="input_icon user_icon"></span>
                     </div>
                     <div *ngIf="(fullname.invalid && (fullname.dirty || fullname.touched)) || submitted" class="error_msg">
-                        <span class="error_msg" *ngIf="fullname.errors?.required">This
-                            field is Required</span>
+                        <span *ngIf="fullname.errors?.required">
+                            This field is Required
+                        </span>
                     </div>
                 </div>
                 <div class="form_group">
@@ -24,10 +25,12 @@
                         <span class="input_icon email_icon"></span>
                     </div>
                     <div *ngIf="(email.invalid && (email.dirty || email.touched)) || submitted" class="error_msg">
-                        <span class="error_msg" *ngIf="email.errors?.required && submitted">This field
-                            is Required</span>
-                        <span class="error_msg" *ngIf="email.errors?.pattern && submitted">Enter valid email
-                            id</span>
+                        <span *ngIf="email.errors?.required && submitted">
+                            This field is Required
+                        </span>
+                        <span *ngIf="email.errors?.pattern && submitted">
+                            Enter valid email id
+                        </span>
                     </div>
 
                 </div>
@@ -41,7 +44,7 @@
                         <span class="input_icon dropdown_icon"></span>
                     </div>
                     <div *ngIf="(role.invalid && (role.dirty || role.touched)) || submitted" class="error_msg">
-                        <span class="error_msg" *ngIf="role.errors?.required">This
+                        <span *ngIf="role.errors?.required">This
                             field is Required</span>
                     </div>
                 </div>
@@ -52,13 +55,13 @@
                             maxlength="6" />
                         <span class="input_icon password_icon"></span>
                     </div>
-                    <div *ngIf="(password.invalid && (password.dirty || password.touched)) || submitted"
-                        class="error_msg">
-                        <span class="error_msg" *ngIf="password.errors?.required">This
-                            field is Required</span>
-                        <span class="error_msg"
-                            *ngIf="password.errors?.minlength || password.errors?.maxlength">Password must be 6
-                            digit</span>
+                    <div *ngIf="(password.invalid && (password.dirty || password.touched)) || submitted" class="error_msg">
+                        <span *ngIf="password.errors?.required">This
+                            field is Required
+                        </span>
+                        <span *ngIf="password.errors?.minlength || password.errors?.maxlength">Password must be 6
+                            digit
+                        </span>
                     </div>
                 </div>
                 <div class="save_pwd_sec">

@@ -15,6 +15,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 /* scrollbar */
 ::-webkit-scrollbar {
     width: 8px;
+    height: 8px;
 }
 ::-webkit-scrollbar-track {
     background: #e6e5e5; 
@@ -41,6 +42,7 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
 /* For smoooth scrolling */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 /* globally CSS assigned */
 app-header, app-body, app-footer {
@@ -223,6 +225,16 @@ label.checkbox, label.radio {
     border: 1px solid #05C38F;
     color: white !important;
 }
+.red_btn {
+    background: #FF6243;
+    color: white !important;
+    border: 1px solid #FF6243;
+}
+.red_btn:hover {
+    background: #e43c1b;
+    border: 1px solid #e43c1b;
+    color: white !important;
+}
 .grey_btn {
     background: #E9E9E9;
     color: #04af80 !important;
@@ -264,12 +276,27 @@ label.checkbox, label.radio {
     height: 15px !important;
 }
 /* form fields */
-.form_group input, .form_group textarea, .form_group select {
+.form_group input, .form_group textarea, .form_group select, .custom-control-label::before, .custom-file-label, .custom-select {
     padding: 8px 10px;
     border: 1px solid #cccccc;
     border-radius: 7px;
     width: 100%;
-    font-size: 13px;
+    font-size: 13px !important;
+    resize: none;
+    margin: 0;
+}
+.form_group .custom-file-label::after {
+    color: #ffffff;
+    background-color: #05c38f;
+}
+.form_group .custom-file-input {
+    cursor: pointer;
+}
+.form_group .custom-file-label {
+    border-radius: 7px;
+}
+.form_group .custom-file {
+    height: auto;
 }
 .form_group select {
     cursor: pointer;
@@ -302,8 +329,21 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .form_group {
     margin-bottom: 15px;
 }
-.form_group input:focus, .form_group textarea:focus, .form_group select:focus {
-    border: 1px solid #05C38F;
+.form_group input:focus, .form_group textarea:focus, .form_group select:focus, .custom-file-input:focus~.custom-file-label {
+    border: 1px solid #05C38F !important;
+    box-shadow: none !important;
+}
+.form_group .form_label {
+    color: #B6B5BA;
+    font-size: 13px;
+    margin-bottom: 5px;
+    width: 100%;
+}
+.file_formats {
+    font-size: 11px;
+    color: #B6B5BA;
+    padding-top: 5px;
+    display: block;
 }
 /* left slider */
 .left_panel {
@@ -411,6 +451,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .global_slider {
     padding: 0 40px;
 }
+.edm_body {
+    padding-top: 116px;
+}
 /* background Images */
 .user_icon {
     background: url(../images/user_name.svg) no-repeat;
@@ -453,9 +496,6 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .plus_icon {
     background: url(../images/plus.svg) no-repeat;
 }
-.edm_body {
-    padding-top: 116px;
-}
 .bordered_facebook_icon {
     background: url(../images/bordered_facebook.svg) no-repeat;
 }
@@ -494,6 +534,15 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .menu_settings > a:before {
     background: url(../images/settings.svg) no-repeat;
+}
+.edit_icon {
+    background: url(../images/edit.svg) no-repeat;
+}
+.delete_icon {
+    background: url(../images/delete.svg) no-repeat;
+}
+.view_icon {
+    background: url(../images/view.svg) no-repeat;
 }
 /* Dropdown CSS */
 .dropdown_point {
@@ -593,9 +642,14 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     right: 6px;
 }
 /* Dropdown CSS */
+/* Admin Side CSS */
 appadmin-body {
     margin: 56px 0 0 0;
     display: block;
+    width: calc(100vw - 228px);
+}
+.mini_menu_body {
+    width: calc(100vw - 58px);
 }
 appadmin-header {
     display: table-cell;
@@ -608,6 +662,72 @@ appadmin-header {
 appadmin-adminbody {
     display: table;
 }
+.admin_page {
+    padding: 30px;
+    width: 100%;
+    display: inline-block;
+}
+.admin_header {
+    padding-bottom: 30px;
+}
+.admin_header h4 {
+    font-size: 24px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+}
+.portlet_body {
+    width: 100%;
+    display: inline-block;
+    border-radius: 10px;
+    background: white;
+    box-shadow: 0 0 15px 1px #eaeaea;
+    padding: 20px;
+}
+.admin_half_forms {
+    max-width: 550px;
+    padding: 30px 20px;
+}
+.primary_table {
+    overflow-x: auto;
+}
+.primary_table table {
+    width: 100%;
+}
+.primary_table thead {
+    background: #F5F6FA;
+}
+.primary_table thead th, .primary_table thead th * {
+    color: #ACAFBB;
+    font-size: 18px;
+}
+.primary_table thead th, .primary_table tbody td {
+    padding: 10px;
+}
+.primary_table tbody td {
+    border-bottom: 1px solid #F2F2F2;
+    font-size: 18px;
+}
+.primary_table tbody tr:last-child td {
+    border-bottom: 0;
+}
+.primary_table tbody tr:hover {
+    background: #f5f6fa;
+}
+.primary_table .global_btn {
+    margin-bottom: 0;
+}
+.primary_table .table_btn .global_btn {
+    margin: 0 5% 0 0;
+}
+.primary_table .table_btn .global_btn:last-child {
+    margin: 0;
+}
+.primary_table .tbl_img {
+    width: 35px;
+    border-radius: 5px;
+}
+/* Admin Side CSS */
 /* ********** Responsive ********** */
 
 @media screen and (max-width: 1200px) {
@@ -624,6 +744,30 @@ appadmin-adminbody {
     .global_sections {
         margin-bottom: 50px;
     }
+    .admin_header h4 {
+        font-size: 20px;
+    }
+    .admin_page {
+        padding: 20px;
+    }
+    .admin_header {
+        padding-bottom: 20px;
+    }
+    .portlet_body {
+        padding: 15px;
+    }
+    .admin_half_forms {
+        padding: 20px 15px;
+    }
+    .primary_table thead th, .primary_table thead th * {
+        font-size: 15px;
+    }
+    .primary_table tbody td {
+        font-size: 14px;
+    }
+    .primary_table .table_btn .global_btn {
+        margin: 0 15px 0 0;
+    }
 }
 
 @media screen and (max-width: 900px) {
@@ -635,6 +779,12 @@ appadmin-adminbody {
     }
     .global_slider {
         padding: 0 40px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    appadmin-body, .menu_close_body {
+        width: 100vw;
     }
 }
 
@@ -668,6 +818,9 @@ appadmin-adminbody {
     .global_slider {
         padding: 0 30px;
     }
+    .admin_header h4 {
+        font-size: 18px;
+    }
 }
 
 @media screen and (max-width: 550px) {
@@ -680,6 +833,22 @@ appadmin-adminbody {
     }
     .simple_heading {
         padding: 10px 20px;
+    }
+    .admin_page {
+        padding: 15px;
+    }
+    .admin_header {
+        padding-bottom: 15px;
+    }
+    .admin_header h4 {
+        font-size: 16px;
+    }
+    .primary_table thead th, .primary_table thead th * {
+        font-size: 13px;
+    }
+    .primary_table tbody td {
+        border-bottom: 1px solid #F2F2F2;
+        font-size: 13px;
     }
 }
 
