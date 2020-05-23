@@ -3,8 +3,8 @@ import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 
 @Component({
   selector: 'appAdmin-addmodifybeats',
-  templateUrl: './addmodifybeats.component.component.html',
-  styleUrls: ['./addmodifybeats.component.component.scss']
+  templateUrl: './addmodifybeats.component.html',
+  styleUrls: ['./addmodifybeats.component.scss']
 })
 export class AddModifyBeatsComponent implements OnInit {
 
