@@ -68,6 +68,10 @@ const routes: Routes = [
                 path: "gener",
                 loadChildren: "../admin/geners/geners.module#GenersModule"
             },
+            , {
+                path: "beats",
+                loadChildren: "../admin/beats/beats.module#BeatsModule"
+            },
         ],
     }
 ];
