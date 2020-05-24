@@ -72,6 +72,14 @@ const routes: Routes = [
                 path: "beats",
                 loadChildren: "../admin/beats/beats.module#BeatsModule"
             },
+            {
+                path: "tracks",
+                loadChildren: "../admin/track/track.module#TrackModule"
+            },
+            {
+                path: "coupan",
+                loadChildren: "../admin/coupan/coupan.module#CoupanModule"
+            },
         ],
     }
 ];

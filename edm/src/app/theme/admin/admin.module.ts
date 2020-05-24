@@ -9,6 +9,8 @@ import { DashboardModule } from 'src/app/admin/dashboard/dashboard.module';
 import { GenersModule } from 'src/app/admin/geners/geners.module';
 import { AdminComponent } from './admin.component';
 import { BeatsModule } from 'src/app/admin/beats/beats.module';
+import { TrackModule } from 'src/app/admin/track/track.module';
+import { CoupanModule } from 'src/app/admin/coupan/coupan.module';
 @NgModule({
     declarations: [
         AdminComponent,
@@ -21,7 +23,9 @@ import { BeatsModule } from 'src/app/admin/beats/beats.module';
         CommonModule,
         DashboardModule,
         GenersModule,
-        BeatsModule
+        BeatsModule,
+        TrackModule,
+        CoupanModule
     ],
     providers: []
 })
