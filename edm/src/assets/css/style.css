@@ -647,6 +647,21 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .duration_icon {
     background: url(../images/duration.svg) no-repeat;
 }
+.date_icon {
+    background: url(../images/date.svg) no-repeat;
+}
+.question_icon {
+    background: url(../images/question.svg) no-repeat;
+}
+.answer_icon {
+    background: url(../images/answer.svg) no-repeat;
+}
+.included_icon {
+    background: url(../images/included.svg) no-repeat;
+}
+.revision_icon {
+    background: url(../images/revision.svg) no-repeat;
+}
 /* Dropdown CSS */
 .dropdown_point {
     position: relative;
@@ -751,6 +766,7 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .modal {
     padding-right: 0 !important;
+    padding-left: 0 !important;
 }
 .modal-header {
     padding: 10px 15px !important;
@@ -816,9 +832,6 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     margin-bottom: 15px;
     max-width: 220px;
     margin: auto;
-}
-.acknowledge_popup .modal-dialog {
-    max-width: 390px;
 }
 /* Modal CSS */
 /* Admin Side CSS */
@@ -1091,6 +1104,12 @@ appadmin-adminbody {
     }
 }
 
+@media screen and (min-width: 576px) {
+    .acknowledge_popup .modal-dialog {
+        max-width: 390px;
+    }
+}
+
 @media screen and (max-width: 550px) {
     .global_sections {
         margin-bottom: 30px;
@@ -1123,7 +1142,7 @@ appadmin-adminbody {
     }
 }
 
-@media screen and (max-height: 425px) {
+@media screen and (max-width: 425px) {
     .multipul_form_group > div {
         padding-right: 0;
         width: 100%;
