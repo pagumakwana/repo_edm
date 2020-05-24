@@ -89,6 +89,45 @@ a, a:hover {
     font-size: 12px;
     margin: 0;
 }
+.error_color {
+    color: red;
+}
+.right_align {
+    text-align: right;
+}
+.left_align {
+    text-align: left;
+}
+.width_100 {
+    width: 100%  
+}
+.width_90 {
+    width: 90%
+}
+.width_80 {
+    width: 80%
+}
+.width_70 {
+    width: 70%
+}
+.width_60 {
+    width: 60%
+}
+.width_50 {
+    width: 50%
+}
+.width_40 {
+    width: 40%;
+}
+.width_30 {
+    width: 30%;
+}
+.width_20 {
+    width: 20%
+}
+.width_10 {
+    width: 10%
+}
 .disable_section {
     opacity: 0.3;
     pointer-events: none;
@@ -285,6 +324,10 @@ label.checkbox, label.radio {
     resize: none;
     margin: 0;
 }
+.grey_dropdown {
+    background: #F8F8F8;
+    border-color: #E4E4E4;
+}
 .form_group .custom-file-label::after {
     color: #ffffff;
     background-color: #05c38f;
@@ -304,13 +347,20 @@ label.checkbox, label.radio {
     -moz-appearance: none;
     appearance: none
 }
+.form_group input[type=number] {
+    -moz-appearance: textfield;
+}
+.form_group input::-webkit-outer-spin-button,
+.form_group input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     display: none;
 }
 .icon_form_group {
     position: relative;
 }
-.icon_form_group input {
+.icon_form_group input, .icon_form_group select, .icon_form_group textarea {
     padding-right: 35px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
@@ -344,6 +394,24 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     color: #B6B5BA;
     padding-top: 5px;
     display: block;
+}
+.input_icon sup {
+    font-size: 11px;
+    color: #B6B5BA;
+    top: -10px;
+    right: -6px;
+}
+.textarea_icon_form_group .input_icon {
+    bottom: auto;
+    top: 8px;
+}
+.multipul_form_group > div {
+    padding-right: 15px;
+    display: inline-block;
+    vertical-align: top;
+}
+.multipul_form_group > div:last-child {
+    padding-right: 0;
 }
 /* left slider */
 .left_panel {
@@ -481,6 +549,11 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     height: 6px;
     cursor: pointer;
 }
+.down_icon {
+    background: url(../images/down_arrow.svg) no-repeat;
+    height: 8px;
+    cursor: pointer;
+}
 .double_right_icon {
     background: url(../images/double_right_arrow.svg) no-repeat;
 }
@@ -537,12 +610,42 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .edit_icon {
     background: url(../images/edit.svg) no-repeat;
+    background-size: 12px !important;
 }
 .delete_icon {
     background: url(../images/delete.svg) no-repeat;
+    background-size: 10px !important;
 }
 .view_icon {
     background: url(../images/view.svg) no-repeat;
+}
+.ellipsis_icon {
+    background: url(../images/ellipsis.svg) no-repeat;
+}
+.bio_icon {
+    background: url(../images/bio.svg) no-repeat;
+}
+.producer_icon {
+    background: url(../images/producer.svg) no-repeat;
+}
+.track_icon {
+    background: url(../images/track.svg) no-repeat;
+}
+.bmp_icon {
+    background: url(../images/bmp.svg) no-repeat;
+}
+.price_icon {
+    background: url(../images/price.svg) no-repeat;
+}
+.right_icon {
+    background: url(../images/right.svg) no-repeat;
+    background-size: 12px !important;
+}
+.dj_style_icon {
+    background: url(../images/dj_style.svg) no-repeat;
+}
+.duration_icon {
+    background: url(../images/duration.svg) no-repeat;
 }
 /* Dropdown CSS */
 .dropdown_point {
@@ -642,6 +745,82 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     right: 6px;
 }
 /* Dropdown CSS */
+/* Modal CSS */
+.modal-open, .modal-open * {
+    overflow: hidden !important;
+}
+.modal {
+    padding-right: 0 !important;
+}
+.modal-header {
+    padding: 10px 15px !important;
+    height: auto;
+}
+.modal-title {
+    line-height: normal;
+    font-size: 15px;
+    font-weight: normal;
+}
+.modal-header .close {
+    padding: 11px !important;
+    line-height: 0;
+    margin: -10px -15px -10px auto !important;
+    color: #05c38f;
+    opacity: 1;
+}
+.modal-header .close span {
+    line-height: 0;
+    margin: 0;
+    display: table-cell;
+    padding: 7px 0;
+    font-weight: 100;
+    font-size: 31px;
+}
+.modal-body {
+    padding: 10px 15px;
+}
+.modal-footer {
+    padding: 0 !important;
+    flex-wrap: unset !important;
+    border-radius: 0 0 10px 10px !important;
+    overflow: auto;
+}
+.modal-footer button {
+    margin: 0 !important;
+    border-radius: 0;
+    background: #05c38f;
+    font-size: 15px;
+    text-align: center;
+    border-right-color: white !important;
+}
+.modal-footer button:last-child {
+    border-right: 0;
+}
+.modal-content {
+    border-radius: 10px !important;
+}
+.acknowledge_popup .modal-body {
+    padding: 50px 40px;
+    text-align: center;
+}
+.acknowledge_popup .modal-body img {
+    width: 180px;
+    margin: 0 0 15px 0;
+}
+.acknowledge_popup .modal-body h3 {
+    margin: 0 0 15px 0;
+    color: #05C38F;
+    font-size: 25px;
+}
+.acknowledge_popup .modal-body p {
+    margin-bottom: 15px;
+    max-width: 220px;
+    margin: auto;
+}
+.acknowledge_popup .modal-dialog {
+    max-width: 390px;
+}
+/* Modal CSS */
 /* Admin Side CSS */
 appadmin-body {
     margin: 56px 0 0 0;
@@ -670,11 +849,33 @@ appadmin-adminbody {
 .admin_header {
     padding-bottom: 30px;
 }
+.form_heading {
+    text-align: center;
+    width: 100%;
+    margin: 0 0 30px 0;
+    font-size: 30px;
+    font-weight: normal;
+}
 .admin_header h4 {
     font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
     margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    width: calc(100% - 35px);
+}
+.mobile_filter_section {
+    vertical-align: middle;
+    padding: 6px 10px;
+    cursor: pointer;
+    display: none;
+}
+.ellipsis_icon {
+    background-size: 100%;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
 }
 .portlet_body {
     width: 100%;
@@ -685,8 +886,10 @@ appadmin-adminbody {
     padding: 20px;
 }
 .admin_half_forms {
-    max-width: 550px;
+    max-width: calc(50% - 20px);
     padding: 30px 20px;
+    margin: 0 20px 0 0;
+    vertical-align: top;
 }
 .primary_table {
     overflow-x: auto;
@@ -718,7 +921,8 @@ appadmin-adminbody {
     margin-bottom: 0;
 }
 .primary_table .table_btn .global_btn {
-    margin: 0 5% 0 0;
+    margin: 0 5% 5px 0;
+    padding: 5px 10px;
 }
 .primary_table .table_btn .global_btn:last-child {
     margin: 0;
@@ -726,6 +930,55 @@ appadmin-adminbody {
 .primary_table .tbl_img {
     width: 35px;
     border-radius: 5px;
+}
+.filter_section {
+    margin-bottom: 20px;
+    float: left;
+    width: 100%;
+}
+.filter_section > * {
+    display: inline-block;
+}
+.filter_section .form {
+    float: right;
+    margin: 0 10px 0 0;
+}
+.filter_section .form_group {
+    margin: 0 10px 0 0;
+    display: inline-block;
+    width: 180px;
+}
+.filter_section .inline_radio {
+    margin: 4px 0;
+}
+.filter_section form {
+    float: right;
+}
+.filter_section .form_group:last-child {
+    margin-right: 0;
+}
+.tags span {
+    background: #F1F1F1;
+    color: #545454;
+    width: auto;
+    display: inline-block;
+    margin: 8px 8px 0px 0;
+    text-transform: uppercase;
+    font-size: 11px;
+    padding: 8px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.tags {
+    padding-top: 5px;
+}
+.tags span:hover {
+    background: #dedddd;
+}
+.tags img {
+    width: 11px;
+    vertical-align: middle;
+    margin-left: 5px;
 }
 /* Admin Side CSS */
 /* ********** Responsive ********** */
@@ -758,6 +1011,8 @@ appadmin-adminbody {
     }
     .admin_half_forms {
         padding: 20px 15px;
+        max-width: 550px;
+        margin: 0 0 15px 0;
     }
     .primary_table thead th, .primary_table thead th * {
         font-size: 15px;
@@ -767,6 +1022,10 @@ appadmin-adminbody {
     }
     .primary_table .table_btn .global_btn {
         margin: 0 15px 0 0;
+    }
+    .form_heading {
+        margin: 0 0 20px 0;
+        font-size: 25px;
     }
 }
 
@@ -779,6 +1038,12 @@ appadmin-adminbody {
     }
     .global_slider {
         padding: 0 40px;
+    }
+    .mobile_filter_section {
+        display: inline-block;
+    }
+    .desktop_filter_section {
+        display: none;
     }
 }
 
@@ -821,6 +1086,9 @@ appadmin-adminbody {
     .admin_header h4 {
         font-size: 18px;
     }
+    .form_heading {
+        font-size: 20px;
+    }
 }
 
 @media screen and (max-width: 550px) {
@@ -849,6 +1117,16 @@ appadmin-adminbody {
     .primary_table tbody td {
         border-bottom: 1px solid #F2F2F2;
         font-size: 13px;
+    }
+    .form_heading {
+        font-size: 17px;
+    }
+}
+
+@media screen and (max-height: 425px) {
+    .multipul_form_group > div {
+        padding-right: 0;
+        width: 100%;
     }
 }
 

@@ -15,4 +15,11 @@ $(document).ready(function () {
     $(".open_mobile_menu").click(function () {
         $(".mobile_menu").show();
     });
+
+    if (window.matchMedia("(max-width: 850px)").matches) {
+        $(".admin_base").removeClass("admin_mini_menu");
+    } else {
+        $(".admin_base").removeClass("admin_mini_menu");
+    }
+    
 });

@@ -107,6 +107,7 @@
     right: 0;
     padding: 10px 20px 10px 10px;
     transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+    z-index: 2;
 }
 .profile_dropdown_panel {
     right: -10px;
@@ -116,7 +117,7 @@
     width: 220px;
     border-right: 1px solid #f1f2f3;
     background: #F8F8F8;
-    z-index: 1;
+    z-index: 3;
     min-height: calc(100vh - 56px);
     -webkit-transition: -webkit-transform .3s ease-in-out,width .3s ease-in-out;
     -moz-transition: -moz-transform .3s ease-in-out,width .3s ease-in-out;
