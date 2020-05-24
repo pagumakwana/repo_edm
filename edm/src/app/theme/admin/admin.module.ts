@@ -11,6 +11,7 @@ import { AdminComponent } from './admin.component';
 import { BeatsModule } from 'src/app/admin/beats/beats.module';
 import { TrackModule } from 'src/app/admin/track/track.module';
 import { CoupanModule } from 'src/app/admin/coupan/coupan.module';
+import { MastersModule } from 'src/app/admin/masters/masters.module';
 @NgModule({
     declarations: [
         AdminComponent,
@@ -25,7 +26,8 @@ import { CoupanModule } from 'src/app/admin/coupan/coupan.module';
         GenersModule,
         BeatsModule,
         TrackModule,
-        CoupanModule
+        CoupanModule,
+        MastersModule
     ],
     providers: []
 })

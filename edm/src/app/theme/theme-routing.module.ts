@@ -80,6 +80,10 @@ const routes: Routes = [
                 path: "coupan",
                 loadChildren: "../admin/coupan/coupan.module#CoupanModule"
             },
+            {
+                path: "config",
+                loadChildren: "../admin/masters/masters.module#MastersModule"
+            },
         ],
     }
 ];
