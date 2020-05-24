@@ -593,6 +593,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .menu_alltracks > a:before {
     background: url(../images/all_track.svg) no-repeat;
 }
+.menu_allgenre > a:before {
+    background: url() no-repeat;
+}
 .menu_allbeats > a:before {
     background: url() no-repeat;
 }
@@ -604,6 +607,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .menu_support > a:before {
     background: url(../images/support.svg) no-repeat;
+}
+.menu_email_notification > a:before {
+    background: url(../images/email_notification.svg) no-repeat;
 }
 .menu_settings > a:before {
     background: url(../images/settings.svg) no-repeat;
@@ -625,7 +631,7 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .bio_icon {
     background: url(../images/bio.svg) no-repeat;
 }
-.producer_icon {
+.producer_icon, .menu_producer_icon > a:before {
     background: url(../images/producer.svg) no-repeat;
 }
 .track_icon {
