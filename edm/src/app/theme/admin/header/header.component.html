@@ -6,14 +6,14 @@
         </p>
         <div class="menu_listing">
             <div class="menu_list accordian_menu active_menu_list accordian_menu menu_home">
-                <a><span>Home</span></a>
+                <a routerLink="/admin"><span>Home</span></a>
             </div>
             <div class="menu_list accordian_menu menu_alltracks">
                 <a><span>Tracks</span></a>
             </div>
             <div class="inner_menu">
                 <div class="menu_list">
-                    <a><span>All Tracks</span></a>
+                    <a routerLink="tracks"><span>All Tracks</span></a>
                 </div>
                 <div class="menu_list">
                     <a><span>Add New Tracks</span></a>
@@ -27,7 +27,7 @@
             </div>
             <div class="inner_menu">
                 <div class="menu_list">
-                    <a><span>All Beats</span></a>
+                    <a routerLink="beats"><span>All Beats</span></a>
                 </div>
                 <div class="menu_list">
                     <a><span>Add New Beats</span></a>
@@ -41,10 +41,10 @@
             </div>
             <div class="inner_menu">
                 <div class="menu_list">
-                    <a><span>All Genre</span></a>
+                    <a routerLink="gener"><span>All Genre</span></a>
                 </div>
                 <div class="menu_list">
-                    <a><span>Add New Genre</span></a>
+                    <a routerLink="admin/gener/0"><span>Add New Genre</span></a>
                 </div>
             </div>
             <div class="menu_list accordian_menu menu_producer_icon">
@@ -108,18 +108,18 @@
             <!-- <p class="user_name">
                 Pallavi Chapla
             </p> -->
-            <div class="user_profile_img dropdown_point">
-                <img src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" />
+            <div class="user_profile_img dropdown_point" *ngIf="hasLogin">
+                <img [src]="ProfilePic" />
                 <div class="dropdown_panel profile_dropdown_panel">
                     <div class="dropdown_inner">
                         <div class="dropdown_body">
                             <div class="user_information">
-                                <h3>Pallavi Chapla</h3>
-                                <p>pallavi.chapla@gmail.com</p>
+                                <h3>{{FullName}}</h3>
+                                <p>{{EmailID}}</p>
                             </div>
                             <div class="dropdown_list">
-                                <a href="#">
-                                    Administrator
+                                <a routerLink="/">
+                                    User View
                                 </a>
                                 <a href="#">
                                     My Account
@@ -127,7 +127,7 @@
                                 <a href="#">
                                     Get In Touch
                                 </a>
-                                <a href="#">
+                                <a (click)="logOut()">
                                     Logout
                                 </a>
                             </div>

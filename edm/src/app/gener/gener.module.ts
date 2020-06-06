@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { GenerComponent } from './gener.component';
 import { GenerDetailsComponent } from './generdetails/generdetails.component';
-import { GenerService } from './_service/gener.service';
 import { CommonModule } from '@angular/common';
 @NgModule({
     declarations: [
@@ -22,6 +21,6 @@ import { CommonModule } from '@angular/common';
             }
         ]),
     ],
-    providers: [GenerService]
+    providers: []
 })
 export class GenerModule { }

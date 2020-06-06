@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GenerService } from './_service/gener.service';
 import { Helpers } from '../_appModel/helpers';
 import { generModel } from './_model/gener.model';
 
@@ -10,7 +9,7 @@ import { generModel } from './_model/gener.model';
 })
 export class GenerComponent implements OnInit {
 
-  constructor(private _generService: GenerService) { }
+  constructor() { }
 
   public generListData: any;
   _generModel: generModel = {};
@@ -19,14 +18,7 @@ export class GenerComponent implements OnInit {
   }
 
   generList() {
-    this._generModel.Flag = "GENERLIST"
-    this._generService.generList(this._generModel).subscribe(data => {
-      this.generListData = data;
-      console.log("this.generListData", this.generListData);
-      Helpers.setLoading(false);
-    }, error => {
-      Helpers.setLoading(false);
-    });
+    
   }
 
 }

@@ -2,30 +2,34 @@
     <div class="authentication_sec">
         <div class="authentication_box">
             <h2>Log in</h2>
-            <form>
+            <form [formGroup]="formSignIn">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" name="username" placeholder="User Name" />
+                        <input type="text" formControlName="EmailID" id="EmailID" name="EmailID"
+                            placeholder="Enter your email address" aria-describedby="EmailIDHelp" required />
                         <span class="input_icon user_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <div *ngIf="formSignIn.controls.EmailID.invalid && formSignIn.controls.EmailID.touched"
+                        id="EmailIDHelp" class="error_msg">
                         <span>This field is Required</span>
                     </div>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="password" name="password" placeholder="Password" />
+                        <input type="password" formControlName="Password" id="Password" name="Password"
+                            placeholder="Enter your password" aria-describedby="PasswordHelp" required />
                         <span class="input_icon password_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <div *ngIf="formSignIn.controls.Password.invalid && formSignIn.controls.Password.touched"
+                        id="PasswordHelp" class="error_msg">
                         <span>This field is Required</span>
                     </div>
                 </div>
                 <div class="button_group">
-                    <a class="global_btn primary_btn">
+                    <a (click)="setSignInModel()" class="global_btn primary_btn">
                         <span>Login</span>
                     </a>
-                    <a class="global_btn secondary_btn">
+                    <a (click)="signUp()" class="global_btn secondary_btn">
                         <span>Sign Up</span>
                     </a>
                 </div>

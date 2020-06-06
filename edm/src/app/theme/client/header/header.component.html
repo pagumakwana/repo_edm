@@ -11,24 +11,6 @@
                 </a>
             </div>
             <div class="mobile_menu_list">
-                <!-- <div>
-                    <a href="#" target="_blank">Store</a>
-                </div>
-                <div>
-                    <a href="#" target="_blank">Genre</a>
-                </div>
-                <div>
-                    <a href="#" target="_blank">Custom Track</a>
-                </div>
-                <div>
-                    <a href="#" target="_blank">Services</a>
-                </div>
-                <div (click)="redirectUrl('login')">
-                    <a href="#" target="_blank">Sign In</a>
-                </div>
-                <div>
-                    <a href="#" target="_blank">Sign Up</a>
-                </div> -->
                 <div class="mobile_menus active_menu_list">
                     <a><span>Store</span></a>
                 </div>
@@ -37,10 +19,9 @@
                 </div>
                 <div class="inner_menu">
                     <div class="mobile_menus">
-                        <a><span>Genre Inner</span></a>
-                    </div>
-                    <div class="mobile_menus">
-                        <a><span>Genre Inner</span></a>
+                        <a *ngFor="let obj of categoryData" routerLink="/product">
+                            <span>{{obj.CategoryName}}</span>
+                        </a>
                     </div>
                 </div>
                 <div class="mobile_menus">
@@ -69,22 +50,13 @@
                 <a routerLink="/product">Store</a>
             </div>
             <div class="dropdown_point">
-                <a routerLink="/geners">Genre</a>
+                <a>Genre</a>
                 <div class="dropdown_panel menu_dropdown_panel">
                     <div class="dropdown_inner">
                         <div class="dropdown_body">
                             <div class="dropdown_list">
-                                <a href="#">
-                                    Administrator
-                                </a>
-                                <a href="#">
-                                    My Account
-                                </a>
-                                <a href="#">
-                                    Get In Touch
-                                </a>
-                                <a href="#">
-                                    Logout
+                                <a *ngFor="let obj of categoryData" routerLink="/product">
+                                    {{obj.CategoryName}}
                                 </a>
                             </div>
                         </div>
@@ -105,17 +77,17 @@
             </div>
         </div>
         <div class="user_profile">
-            <div class="user_profile_img dropdown_point">
-                <img *ngIf="hasLogin" src="https://pixinvent.com/materialize-material-design-admin-template/app-assets/images/user/12.jpg" />
+            <div class="user_profile_img dropdown_point" *ngIf="hasLogin">
+                <img [src]="ProfilePic" />
                 <div class="dropdown_panel profile_dropdown_panel">
                     <div class="dropdown_inner">
                         <div class="dropdown_body">
                             <div class="user_information">
-                                <h3>Pallavi Chapla</h3>
-                                <p>pallavi.chapla@gmail.com</p>
+                                <h3>{{FullName}}</h3>
+                                <p>{{EmailID}}</p>
                             </div>
                             <div class="dropdown_list">
-                                <a href="#">
+                                <a routerLink="/admin">
                                     Administrator
                                 </a>
                                 <a href="#">
@@ -124,7 +96,7 @@
                                 <a href="#">
                                     Get In Touch
                                 </a>
-                                <a href="#">
+                                <a (click)="logOut()">
                                     Logout
                                 </a>
                             </div>
@@ -133,7 +105,7 @@
                 </div>
             </div>
         </div>
-        <div class="signin_btn" *ngIf="hasLogin">
+        <div class="signin_btn" *ngIf="!hasLogin">
             <a (click)="redirectUrl('login')" class="global_circle_btn primary_btn no_margin">
                 <span>SIGN IN</span>
             </a>

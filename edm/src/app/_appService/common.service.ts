@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.prod';
 import { NavigationEnd, Router } from '@angular/router';
 import { EncryptedStorage } from '../_appModel/encryptedstorage';
 import { enAppSession } from '../_appModel/enAppSession';
+import { FormGroup } from '@angular/forms';
 declare var $: any;
 @Injectable()
 export class CommonService {
@@ -108,5 +109,20 @@ export class CommonService {
         }
         return true;
 
+    }
+
+
+    /**
+* Marks all controls in a form group as touched
+* @param formGroup - The form group to touch
+*/
+    public markFormGroupTouched(formGroup: FormGroup) {
+        (<any>Object).values(formGroup.controls).forEach(control => {
+            control.markAsTouched();
+
+            if (control.controls) {
+                this.markFormGroupTouched(control);
+            }
+        });
     }
 }

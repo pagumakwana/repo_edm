@@ -4,63 +4,58 @@
             <h2>
                 Sign Up
             </h2>
-            <form #formSignUp="ngForm">
+            <form [formGroup]="formSignup">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" [(ngModel)]="_userModel.FullName" name="fullname" #fullname="ngModel"
-                            minlength="5" maxlength="255" placeholder="Enter Your Name" required />
+                        <input type="text" formControlName="FullName" id="FullName" name="FullName"
+                            placeholder="Enter your fullname" aria-describedby="FullNameHelp" required />
                         <span class="input_icon user_icon"></span>
                     </div>
-                    <div *ngIf="(fullname.invalid && (fullname.dirty || fullname.touched)) || submitted" class="error_msg">
-                        <span *ngIf="fullname.errors?.required">
+                    <div *ngIf="formSignup.controls.FullName.invalid && formSignup.controls.FullName.touched"
+                        id="FullNameHelp" class="error_msg">
+                        <span>
                             This field is Required
                         </span>
                     </div>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="email" name="email" placeholder="Enter Your Eamil"
-                            pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [(ngModel)]="_userModel.Email"
-                            #email="ngModel" maxlength="255" required />
+                        <input type="email" formControlName="EmailID" id="EmailID" name="EmailID"
+                            placeholder="Enter your email address" aria-describedby="EmailIDHelp" required />
                         <span class="input_icon email_icon"></span>
                     </div>
-                    <div *ngIf="(email.invalid && (email.dirty || email.touched)) || submitted" class="error_msg">
-                        <span *ngIf="email.errors?.required && submitted">
+                    <div *ngIf="formSignup.controls.EmailID.invalid && formSignup.controls.EmailID.touched"
+                        id="EmailIDHelp" class="error_msg">
+                        <span>
                             This field is Required
-                        </span>
-                        <span *ngIf="email.errors?.pattern && submitted">
-                            Enter valid email id
                         </span>
                     </div>
 
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <select name="role" [(ngModel)]="_userModel.Role" #role="ngModel" required>
+                        <select name="role">
                             <option disabled selected>Enter Your Role</option>
                             <option>I am Producer</option>
                             <option>I am Buyer</option>
                         </select>
                         <span class="input_icon dropdown_icon"></span>
                     </div>
-                    <div *ngIf="(role.invalid && (role.dirty || role.touched)) || submitted" class="error_msg">
-                        <span *ngIf="role.errors?.required">This
+                    <div class="error_msg">
+                        <span>This
                             field is Required</span>
                     </div>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="password" name="password" placeholder="Password" (keypress)="numberOnly($event)"
-                            [(ngModel)]="_userModel.Password" #password="ngModel" required minlength="6"
-                            maxlength="6" />
+                        <input type="password" formControlName="Password" id="Password" name="Password"
+                            placeholder="Enter your password" aria-describedby="PasswordHelp" required />
                         <span class="input_icon password_icon"></span>
                     </div>
-                    <div *ngIf="(password.invalid && (password.dirty || password.touched)) || submitted" class="error_msg">
-                        <span *ngIf="password.errors?.required">This
+                    <div *ngIf="formSignup.controls.Password.invalid && formSignup.controls.Password.touched"
+                        id="PasswordHelp" class="error_msg">
+                        <span>This
                             field is Required
-                        </span>
-                        <span *ngIf="password.errors?.minlength || password.errors?.maxlength">Password must be 6
-                            digit
                         </span>
                     </div>
                 </div>
@@ -73,7 +68,7 @@
                     </p>
                 </div>
                 <div class="button_group">
-                    <a (click)="register(formSignUp)" class="global_btn primary_btn">
+                    <a (click)="setSignupModel()" class="global_btn primary_btn">
                         <span>Sign Up</span>
                     </a>
                     <a (click)="signIn()" class="global_btn secondary_btn">

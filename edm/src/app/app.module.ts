@@ -11,24 +11,25 @@ import { AppSessionService } from './_appService/appsession.service';
 import { BaseServiceHelper } from './_appService/baseHelper.service';
 import { EncryptedStorage } from './_appModel/encryptedstorage';
 import { CommonModule } from '@angular/common';
-import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';  
+import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angularx-social-login';
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { environment } from './../environments/environment'
-export function socialConfigs() {  
-    const config = new AuthServiceConfig(  
-      [  
-        {  
-          id: FacebookLoginProvider.PROVIDER_ID,  
-          provider: new FacebookLoginProvider(environment.facebook_APP_ID)  
-        },  
-        {  
-          id: GoogleLoginProvider.PROVIDER_ID,  
-          provider: new GoogleLoginProvider(environment.google_Web_CLIENT_ID)  
-        }  
-      ]  
-    );  
-    return config;  
-  }
+import { CategoryService } from './_appService/category/category.serviec';
+export function socialConfigs() {
+  const config = new AuthServiceConfig(
+    [
+      {
+        id: FacebookLoginProvider.PROVIDER_ID,
+        provider: new FacebookLoginProvider(environment.facebook_APP_ID)
+      },
+      {
+        id: GoogleLoginProvider.PROVIDER_ID,
+        provider: new GoogleLoginProvider(environment.google_Web_CLIENT_ID)
+      }
+    ]
+  );
+  return config;
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,12 +50,12 @@ export function socialConfigs() {
     AppSessionService,
     BaseServiceHelper,
     EncryptedStorage,
-    
-    AuthService,  
-    {  
-      provide: AuthServiceConfig,  
-      useFactory: socialConfigs  
-    }  
+    CategoryService,
+    AuthService,
+    {
+      provide: AuthServiceConfig,
+      useFactory: socialConfigs
+    },
   ],
   bootstrap: [AppComponent]
 })

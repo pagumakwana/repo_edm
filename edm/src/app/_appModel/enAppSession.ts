@@ -3,11 +3,8 @@ export enum enAppSession {
     Ref_User_ID,
     FullName,
     MobileNumber,
-    Email_ID,
-    IsGuestUser,
-    Ref_GuestUser_ID,
-    Ref_GuestUser_GUID,
-    Ref_User_GUID,
+    EmailID,
+    ProfilePic,
     Ref_Device_GUID,
     HasLogin
 }
