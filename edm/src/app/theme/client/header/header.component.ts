@@ -38,14 +38,16 @@ export class HeaderComponent implements OnInit {
     });
     this.bindCategory();
   }
+  
   redirectUrl(url) {
     this._base._commonService.navigation(url);
   }
+
   bindCategory() {
     this._categoryModel = {
       Flag: '',
       Ref_Category_ID: 0,
-      Ref_Preant_ID: 0
+      Ref_Parent_ID: 0
     }
     this._categoryService.categorylist(this._categoryModel).subscribe((resData: any) => {
       this.categoryData = resData;
@@ -53,7 +55,6 @@ export class HeaderComponent implements OnInit {
   }
 
   logOut() {
-    debugger
     this._base._appSessionService.clearUserSession();
     setTimeout(() => {
       this._base._commonService.navigation('/');

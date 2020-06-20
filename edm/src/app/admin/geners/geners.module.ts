@@ -20,7 +20,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
                 component: GenerListComponent
             },
             {
-                path: ':ref_gener_id',
+                path: ':ref_category_id',
                 component: AddModifyGenersComponent
             }
         ]),

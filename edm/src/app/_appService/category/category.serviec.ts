@@ -8,6 +8,8 @@ export class CategoryService {
 
     constructor(private _base: BaseServiceHelper) { }
 
+    public categoryArray: any;
+
     addmodifycategory(objCategoryModel: CategoryModel) {
         return this._base._ApiService.post(ApiConstant.category.AddModifyCategory, objCategoryModel)
     }

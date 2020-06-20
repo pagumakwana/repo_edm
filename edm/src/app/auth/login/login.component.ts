@@ -13,20 +13,22 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 export class LoginComponent implements OnInit {
 
   constructor(private _base: BaseServiceHelper,
-    private fb: FormBuilder,
+    private _fb: FormBuilder,
     public _registerService: RegisterService,
     public OAuth: AuthService, ) { }
 
   _userModel: userModel = {};
 
-  formSignIn: FormGroup = this.fb.group({
+  formSignIn: FormGroup = this._fb.group({
     EmailID: ['', [Validators.required]],
     Password: ['', [Validators.required]]
   })
 
   setSignInModel() {
+    debugger
     this._base._commonService.markFormGroupTouched(this.formSignIn);
     if (this.formSignIn.valid) {
+      this._userModel.IsSocialLogin = false;
       this._userModel.EmailID = this.formSignIn.value.EmailID;
       this._userModel.Password = this.formSignIn.value.Password;
       this.signIn();
@@ -35,6 +37,7 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     this._registerService.loginCustomer(this._userModel).subscribe(res => {
+      debugger
       if (res[0].Response == 'USERSIGNUP') {
         let responseData = res[0];
         this._base._appSessionService.setUserSession(responseData);

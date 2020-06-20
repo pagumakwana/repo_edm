@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 
 @Component({
   selector: 'appAdmin-body',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminBodyComponent implements OnInit {
 
-  constructor() { }
+  constructor(public _base: BaseServiceHelper,) { }
 
   ngOnInit(): void {
   }

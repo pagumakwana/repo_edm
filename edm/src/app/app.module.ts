@@ -15,6 +15,9 @@ import { GoogleLoginProvider, FacebookLoginProvider, AuthService } from 'angular
 import { SocialLoginModule, AuthServiceConfig } from 'angularx-social-login';
 import { environment } from './../environments/environment'
 import { CategoryService } from './_appService/category/category.serviec';
+import { AlertMessageService } from './_appService/alert/alertmessage.service';
+import { ToastrModule } from 'ngx-toastr';
+import { PageTitleService } from './_appService/_title/title.service';
 export function socialConfigs() {
   const config = new AuthServiceConfig(
     [
@@ -43,6 +46,7 @@ export function socialConfigs() {
     AppRoutingModule,
     ThemeModule,
     SocialLoginModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     ApiService,
@@ -51,6 +55,8 @@ export function socialConfigs() {
     BaseServiceHelper,
     EncryptedStorage,
     CategoryService,
+    AlertMessageService,
+    PageTitleService,
     AuthService,
     {
       provide: AuthServiceConfig,

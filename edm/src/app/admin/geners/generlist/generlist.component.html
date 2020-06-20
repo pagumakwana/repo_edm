@@ -1,91 +1,106 @@
-<div class="admin_page">
-    <div class="admin_header">
-        <h4>ALL GENRE</h4>
-        <div class="mobile_filter_section" data-toggle="modal" data-target="#mobile_filter">
-            <span title="More Filters" class="ellipsis_icon"></span>
-        </div>
-    </div>
-    <div class="admin_body">
-        <div class="filter_section desktop_filter_section">
-            <form>
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="filterbygenretype" class="grey_dropdown">
-                            <option disabled selected>Filter By Genre Type</option>
-                            <option>For Tracks</option>
-                            <option>For Beats</option>
-                        </select>
-                        <span class="input_icon down_icon"></span>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="portlet_body">
-            <div class="primary_table">
-                <table style="min-width: 688px;">
-                    <thead>
-                        <tr>
-                            <th>IMAGE</th>
-                            <th>GENRE NAME</th>
-                            <th>TRACKS</th>
-                            <th style="width: 350px;">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let obj of categoryData">
-                            <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
-                            <td>{{obj.CategoryName}}</td>
-                            <td>29</td>
-                            <td class="table_btn">
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Edit</span>
-                                    <span class="edit_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Delete</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn grey_btn">
-                                    <span>View</span>
-                                    <span class="view_icon btn_icon"></span>
-                                </a>
-                            </td>
-                        </tr>                        
-                    </tbody>
-                </table>
+<div class="filter_section desktop_filter_section">
+    <form>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="filterbygenretype" class="grey_dropdown">
+                    <option disabled selected>Filter By Genre Type</option>
+                    <option>For Tracks</option>
+                    <option>For Beats</option>
+                </select>
+                <span class="input_icon down_icon"></span>
             </div>
         </div>
-        <div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
-            <div class="modal-md modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">More Filters</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="filter_list">
-                            <form>
-                                <div class="form_group">
-                                    <label class="form_label">Sort by Genre Type</label>
-                                    <div class="form_area icon_form_group">
-                                        <select name="filterbygenretype" class="grey_dropdown">
-                                            <option disabled selected>Filter By Genre Type</option>
-                                            <option>For Tracks</option>
-                                            <option>For Beats</option>
-                                        </select>
-                                        <span class="input_icon down_icon"></span>
-                                    </div>
-                                </div>
-                            </form>
+    </form>
+</div>
+<div class="portlet_body">
+    <div class="primary_table">
+        <table style="min-width: 688px;">
+            <thead>
+                <tr>
+                    <th>IMAGE</th>
+                    <th>GENRE NAME</th>
+                    <th>TRACKS</th>
+                    <th style="width: 350px;">ACTION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let obj of categoryData">
+                    <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                    <td>{{obj.CategoryName}}</td>
+                    <td>29</td>
+                    <td class="table_btn">
+                        <a (click)="modifycategory(obj,'MODIFYCATEGORY')" class="global_btn primary_btn">
+                            <!-- <span>Edit</span> -->
+                            <i class="fa fa-pencil"></i>
+                        </a>
+                        <a (click)="modifycategory(obj,'DELETECATEGORY')" class="btn btn-danger btn-xs "
+                            [ngClass]="{'disabled':obj.IsActive==false}" data-toggle="modal"
+                            data-target="#modal-deleteconfirmation" class="global_btn icon_btn red_btn">
+                            <!-- <span>Delete</span>
+                            <span class="delete_icon btn_icon"></span> -->
+                            <i class="fa fa-trash"></i>
+                        </a>
+                        <a class="global_btn icon_btn grey_btn">
+                            <!-- <span>View</span>
+                            <span class="view_icon btn_icon"></span> -->
+                            <i class="fa fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">More Filters</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="filter_list">
+                    <form>
+                        <div class="form_group">
+                            <label class="form_label">Sort by Genre Type</label>
+                            <div class="form_area icon_form_group">
+                                <select name="filterbygenretype" class="grey_dropdown">
+                                    <option disabled selected>Filter By Genre Type</option>
+                                    <option>For Tracks</option>
+                                    <option>For Beats</option>
+                                </select>
+                                <span class="input_icon down_icon"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-block primary_btn">Apply Filter</button>
-                        <button type="button" class="btn btn-block primary_btn" data-dismiss="modal">Close</button>
-                    </div>
+                    </form>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-block primary_btn">Apply Filter</button>
+                <button type="button" class="btn btn-block primary_btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal-deleteconfirmation">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>Once you delete data can not be rollback. Do you still want to continue?</p>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-default" (click)="cancelGenre()" data-dismiss="modal">Cancel</a>
+                <a (click)="removeGenre()" class="btn btn-primary" data-dismiss="modal">Yes</a>
             </div>
         </div>
     </div>
