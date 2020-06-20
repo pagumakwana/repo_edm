@@ -16,12 +16,12 @@
                     <input name="tracks" type="radio">Sold Out Tracks
                     <span></span>
                 </label>
-                <label class="radio">
-                    <input name="tracks" type="radio">Approved Tracks
+                <label class="radio error_color">
+                    <input name="tracks" type="radio">Rejected Tracks
                     <span></span>
                 </label>
                 <label class="radio error_color">
-                    <input name="tracks" type="radio">Rejected Tracks
+                    <input name="tracks" type="radio">Pending Tracks
                     <span></span>
                 </label>
             </div>
@@ -29,7 +29,7 @@
                 <div class="form_group">
                     <div class="form_area icon_form_group">
                         <select name="filterbytracks" class="grey_dropdown">
-                            <option disabled selected>Filter By Tracks</option>
+                            <option disabled selected>Filter By Genre</option>
                             <option>Options</option>
                             <option>Options</option>
                         </select>
@@ -48,106 +48,121 @@
                 </div>
             </form>
         </div>
-        <div class="portlet_body">
-            <div class="primary_table">
-                <table style="min-width: 888px;">
-                    <thead>
-                        <tr>
-                            <th>IMAGE</th>
-                            <th>TRACK NAME</th>
-                            <th>PRICE</th>
-                            <th>GANRE</th>
-                            <th style="width: 350px;">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
-                            <td>Raindrop</td>
-                            <td>&#36;300</td>
-                            <td>Bigroom</td>
-                            <td class="table_btn">
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Edit</span>
-                                    <span class="edit_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Delete</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn grey_btn">
-                                    <span>View</span>
-                                    <span class="view_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Approve</span>
-                                    <span class="right_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Reject</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
-                            <td>Raindrop</td>
-                            <td>&#36;300</td>
-                            <td>Bigroom</td>
-                            <td class="table_btn">
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Edit</span>
-                                    <span class="edit_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Delete</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn grey_btn">
-                                    <span>View</span>
-                                    <span class="view_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Approve</span>
-                                    <span class="right_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Reject</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
-                            <td>Raindrop</td>
-                            <td>&#36;300</td>
-                            <td>Bigroom</td>
-                            <td class="table_btn">
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Edit</span>
-                                    <span class="edit_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Delete</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn grey_btn">
-                                    <span>View</span>
-                                    <span class="view_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Approve</span>
-                                    <span class="right_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Reject</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="primary_table">
+            <table style="min-width: 998px;">
+                <thead>
+                    <tr>
+                        <th>IMAGE</th>
+                        <th>NAME</th>
+                        <th>PRICE</th>
+                        <th>GANRE</th>
+                        <th>STATUS</th>
+                        <th width="270px">COMMENT</th>
+                        <th>TRACK APPROVAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                        <td>Raindrop</td>
+                        <td>&#36;300</td>
+                        <td>Bigroom</td>
+                        <td>Pending</td>
+                        <td>
+                            <span class="comment_area" style="width: 250px;">Lorem Ipsum is simply dummy text of the printing and typesetting industry simply dummy text of the printing and typesetting industry</span>
+                            <a class="read_more" href="#"> READ MORE</a>
+                        </td>
+                        <td class="table_btn">
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Approve</span>
+                                <span class="right_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Reject</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Edit</span>
+                                <span class="edit_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Delete</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn grey_btn">
+                                <span>View</span>
+                                <span class="view_icon btn_icon"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                        <td>Raindrop</td>
+                        <td>&#36;300</td>
+                        <td>Bigroom</td>
+                        <td>Pending</td>
+                        <td>
+                            <span class="comment_area" style="width: 250px;">Lorem Ipsum is simply dummy text of the printing and typesetting industry simply dummy text of the printing and typesetting industry</span>
+                            <a class="read_more" href="#"> READ MORE</a>
+                        </td>
+                        <td class="table_btn">
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Approve</span>
+                                <span class="right_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Reject</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Edit</span>
+                                <span class="edit_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Delete</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn grey_btn">
+                                <span>View</span>
+                                <span class="view_icon btn_icon"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                        <td>Raindrop</td>
+                        <td>&#36;300</td>
+                        <td>Bigroom</td>
+                        <td>Pending</td>
+                        <td>
+                            <span class="comment_area" style="width: 250px;">Lorem Ipsum is simply dummy text of the printing and typesetting industry simply dummy text of the printing and typesetting industry</span>
+                            <a class="read_more" href="#"> READ MORE</a>
+                        </td>
+                        <td class="table_btn">
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Approve</span>
+                                <span class="right_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Reject</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Edit</span>
+                                <span class="edit_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Delete</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn grey_btn">
+                                <span>View</span>
+                                <span class="view_icon btn_icon"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
         <div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
             <div class="modal-md modal-dialog modal-dialog-centered" role="document">
@@ -173,12 +188,12 @@
                                                 <input name="tracks" type="radio">Sold Out Tracks
                                                 <span></span>
                                             </label>
-                                            <label class="radio">
-                                                <input name="tracks" type="radio">Approved Tracks
+                                            <label class="radio error_color">
+                                                <input name="tracks" type="radio">Rejected Tracks
                                                 <span></span>
                                             </label>
                                             <label class="radio error_color">
-                                                <input name="tracks" type="radio">Rejected Tracks
+                                                <input name="tracks" type="radio">Pending Tracks
                                                 <span></span>
                                             </label>
                                         </div>
@@ -188,7 +203,7 @@
                                     <label class="form_label">Sort by Tracks</label>
                                     <div class="form_area icon_form_group">
                                         <select name="filterbytracks" class="grey_dropdown">
-                                            <option disabled selected>Filter By Tracks</option>
+                                            <option disabled selected>Filter By Genre</option>
                                             <option>Options</option>
                                             <option>Options</option>
                                         </select>

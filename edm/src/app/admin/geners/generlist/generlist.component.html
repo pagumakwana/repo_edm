@@ -20,40 +20,38 @@
                 </div>
             </form>
         </div>
-        <div class="portlet_body">
-            <div class="primary_table">
-                <table style="min-width: 688px;">
-                    <thead>
-                        <tr>
-                            <th>IMAGE</th>
-                            <th>GENRE NAME</th>
-                            <th>TRACKS</th>
-                            <th style="width: 350px;">ACTION</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let obj of categoryData">
-                            <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
-                            <td>{{obj.CategoryName}}</td>
-                            <td>29</td>
-                            <td class="table_btn">
-                                <a class="global_btn icon_btn primary_btn">
-                                    <span>Edit</span>
-                                    <span class="edit_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn red_btn">
-                                    <span>Delete</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                                <a class="global_btn icon_btn grey_btn">
-                                    <span>View</span>
-                                    <span class="view_icon btn_icon"></span>
-                                </a>
-                            </td>
-                        </tr>                        
-                    </tbody>
-                </table>
-            </div>
+        <div class="primary_table">
+            <table style="min-width: 688px;">
+                <thead>
+                    <tr>
+                        <th>IMAGE</th>
+                        <th>GENRE NAME</th>
+                        <th>TRACKS</th>
+                        <th style="width: 350px;">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let obj of categoryData">
+                        <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                        <td>{{obj.CategoryName}}</td>
+                        <td>29</td>
+                        <td class="table_btn">
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Edit</span>
+                                <span class="edit_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Delete</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn grey_btn">
+                                <span>View</span>
+                                <span class="view_icon btn_icon"></span>
+                            </a>
+                        </td>
+                    </tr>                        
+                </tbody>
+            </table>
         </div>
         <div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
             <div class="modal-md modal-dialog modal-dialog-centered" role="document">
