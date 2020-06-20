@@ -413,6 +413,13 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .multipul_form_group > div:last-child {
     padding-right: 0;
 }
+.inline_form_group .form_label {
+    margin-right: 15px;
+}
+.inline_form_group .form_label, .inline_form_group .form_area {
+    display: inline-block;
+    width: auto;
+}
 /* left slider */
 .left_panel {
     position: fixed;
@@ -912,6 +919,7 @@ appadmin-adminbody {
 }
 .primary_table {
     overflow-x: auto;
+    clear: both;
 }
 .primary_table table {
     width: 100%;
@@ -921,14 +929,29 @@ appadmin-adminbody {
 }
 .primary_table thead th, .primary_table thead th * {
     color: #ACAFBB;
-    font-size: 18px;
+    font-size: 14px;
 }
 .primary_table thead th, .primary_table tbody td {
-    padding: 10px;
+    padding: 15px 10px;
 }
 .primary_table tbody td {
     border-bottom: 1px solid #F2F2F2;
-    font-size: 18px;
+    font-size: 14px;
+}
+.primary_table tbody td .comment_area {
+    color: grey;
+    font-size: 11px;
+    line-height: normal;
+    font-style: italic;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.primary_table tbody td .read_more {
+    text-decoration: underline;
+    font-size: 10px;
+    font-weight: bold;
 }
 .primary_table tbody tr:last-child td {
     border-bottom: 0;
@@ -940,8 +963,8 @@ appadmin-adminbody {
     margin-bottom: 0;
 }
 .primary_table .table_btn .global_btn {
-    margin: 0 5% 5px 0;
-    padding: 5px 10px;
+    margin: 0 2% 5px 0;
+    padding: 3px 5px;
 }
 .primary_table .table_btn .global_btn:last-child {
     margin: 0;
@@ -1033,14 +1056,8 @@ appadmin-adminbody {
         max-width: 550px;
         margin: 0 0 15px 0;
     }
-    .primary_table thead th, .primary_table thead th * {
-        font-size: 15px;
-    }
-    .primary_table tbody td {
-        font-size: 14px;
-    }
     .primary_table .table_btn .global_btn {
-        margin: 0 15px 0 0;
+        margin: 0 8px 0 0;
     }
     .form_heading {
         margin: 0 0 20px 0;

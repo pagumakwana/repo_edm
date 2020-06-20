@@ -50,30 +50,78 @@
             </tbody>
         </table>
     </div>
-</div>
-<div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" keyboard="true">
-    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">More Filters</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="filter_list">
-                    <form>
-                        <div class="form_group">
-                            <label class="form_label">Sort by Genre Type</label>
-                            <div class="form_area icon_form_group">
-                                <select name="filterbygenretype" class="grey_dropdown">
-                                    <option disabled selected>Filter By Genre Type</option>
-                                    <option>For Tracks</option>
-                                    <option>For Beats</option>
-                                </select>
-                                <span class="input_icon down_icon"></span>
-                            </div>
+    <div class="admin_body">
+        <div class="filter_section desktop_filter_section">
+            <form>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <select name="filterbygenretype" class="grey_dropdown">
+                            <option disabled selected>Filter By Genre Type</option>
+                            <option>For Tracks</option>
+                            <option>For Beats</option>
+                        </select>
+                        <span class="input_icon down_icon"></span>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="primary_table">
+            <table style="min-width: 688px;">
+                <thead>
+                    <tr>
+                        <th>IMAGE</th>
+                        <th>GENRE NAME</th>
+                        <th>TRACKS</th>
+                        <th style="width: 350px;">ACTION</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let obj of categoryData">
+                        <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                        <td>{{obj.CategoryName}}</td>
+                        <td>29</td>
+                        <td class="table_btn">
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Edit</span>
+                                <span class="edit_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn red_btn">
+                                <span>Delete</span>
+                                <span class="delete_icon btn_icon"></span>
+                            </a>
+                            <a class="global_btn icon_btn grey_btn">
+                                <span>View</span>
+                                <span class="view_icon btn_icon"></span>
+                            </a>
+                        </td>
+                    </tr>                        
+                </tbody>
+            </table>
+        </div>
+        <div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+            <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">More Filters</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="filter_list">
+                            <form>
+                                <div class="form_group">
+                                    <label class="form_label">Sort by Genre Type</label>
+                                    <div class="form_area icon_form_group">
+                                        <select name="filterbygenretype" class="grey_dropdown">
+                                            <option disabled selected>Filter By Genre Type</option>
+                                            <option>For Tracks</option>
+                                            <option>For Beats</option>
+                                        </select>
+                                        <span class="input_icon down_icon"></span>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </form>
                 </div>
