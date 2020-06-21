@@ -1,92 +1,9 @@
 <div class="portlet_body admin_half_forms">
-    <h2 class="form_heading">Beats Information</h2>
     <form>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="text" name="trackname" placeholder="Track Name" />
-                <span class="input_icon track_icon"></span>
-            </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
-        </div>
-        <div class="form_group">
-            <label class="form_label">Upload Beats Cover Image</label>
-            <div class="form_area">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
-            </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
-        </div>
-        <div class="multipul_form_group">
-            <div class="width_60">
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="beatsgenre">
-                            <option disabled selected>Select Beats Genre</option>
-                            <option>Options</option>
-                            <option>Options</option>
-                        </select>
-                        <span class="input_icon dropdown_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </div>
-            <div class="width_40">
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="beatssubgenre">
-                            <option disabled selected>Select Beats Sub Genre</option>
-                            <option>Options</option>
-                            <option>Options</option>
-                        </select>
-                        <span class="input_icon dropdown_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="multipul_form_group">
-            <div class="width_60">
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="mood">
-                            <option disabled selected>Mood</option>
-                            <option>Options</option>
-                            <option>Options</option>
-                        </select>
-                        <span class="input_icon dropdown_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </div>
-            <div class="width_40">
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <input type="number" name="beatsbmp" placeholder="Beats BMP" />
-                        <span class="input_icon bmp_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form_group">
-            <div class="form_area icon_form_group">
-                <input type="text" name="producername" placeholder="Producer Name" />
-                <span class="input_icon producer_icon"></span>
+                <input type="text" name="servicetitle" placeholder="Service Title" />
+                <span class="input_icon "></span>
             </div>
             <div class="error_msg">
                 <span>This field is Required</span>
@@ -94,27 +11,8 @@
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="number" name="beatsprice" placeholder="Beats Price" />
-                <span class="input_icon price_icon"></span>
-            </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
-        </div>
-        <div class="form_group">
-            <div class="form_area icon_form_group textarea_icon_form_group">
-                <textarea rows="4" placeholder="Beats Short Bio"></textarea>
-                <span class="input_icon bio_icon"></span>
-            </div>
-            <span class="file_formats right_align">At least 50 to 100 words</span>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
-        </div>
-        <div class="form_group">
-            <div class="form_area icon_form_group">
-                <select name="key">
-                    <option disabled selected>Key</option>
+                <select name="parentcategory">
+                    <option disabled selected>Select Category</option>
                     <option>Options</option>
                     <option>Options</option>
                 </select>
@@ -125,76 +23,143 @@
             </div>
         </div>
         <div class="form_group">
+            <div class="form_area icon_form_group textarea_icon_form_group">
+                <textarea rows="4" placeholder="Describe your Service"></textarea>
+                <span class="input_icon bio_icon"></span>
+            </div>
+            <span class="file_formats right_align">Max 1200 caractors</span>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <label class="form_label">Add FAQ's</label>
             <div class="form_area icon_form_group">
-                <input type="text" name="beatstags" placeholder="Enter Beats Tags" />
-                <span class="input_icon"><sup>0/3</sup></span>
-            </div>
-            <div class="tags">
-                <span>
-                    demo
-                    <img src="../../../../assets/images/close.svg" alt="Delete Tag" title="Delete Tag">
-                </span>
-                <span>
-                    demo
-                    <img src="../../../../assets/images/close.svg" alt="Delete Tag" title="Delete Tag">
-                </span>
-                <span>
-                    demo
-                    <img src="../../../../assets/images/close.svg" alt="Delete Tag" title="Delete Tag">
-                </span>
-            </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
-        </div>
-    </form>
-</div>
-<div class="portlet_body admin_half_forms">
-    <h2 class="form_heading">Upload Beats Files</h2>
-    <form>
-        <div class="form_group">
-            <label class="form_label">Urtogged</label>
-            <div class="form_area">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <input type="text" name="servicetitle" placeholder="Add Question" />
+                <span class="input_icon question_icon"></span>
             </div>
             <div class="error_msg">
                 <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group">
-            <label class="form_label">Track Steams</label>
-            <div class="form_area">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
-                </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : Zip, Rar</span>
-            </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
-        </div>
-        <div class="form_group">
-            <div class="form_area">
-                <label class="checkbox">
-                    <input name="agree" type="checkbox">I agree to T & C of Dope Track
-                    <span></span>
-                </label>
+            <div class="form_area icon_form_group textarea_icon_form_group">
+                <textarea rows="3" placeholder="Add Answer"></textarea>
+                <span class="input_icon answer_icon"></span>
             </div>
             <div class="error_msg">
                 <span>This field is Required</span>
             </div>
         </div>
         <div class="button_group">
-            <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
-                <span>SAVE & VERIFY MY TRACK</span>
+            <a class="global_btn icon_btn primary_btn">
+                <span>Add</span>
+                <span class="right_icon btn_icon"></span>
+            </a>
+            <a class="global_btn icon_btn red_btn">
+                <span>Cancel</span>
+                <span class="delete_icon btn_icon"></span>
             </a>
         </div>
     </form>
+</div>
+<div class="portlet_body admin_half_forms">
+    <form>
+        <div class="multipul_form_group">
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="text" name="enterprice" placeholder="Enter Price" />
+                        <span class="input_icon price_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="text" name="filesincluded" placeholder="Files Included" />
+                        <span class="input_icon included_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="multipul_form_group">
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="date" name="deliverydate" placeholder="Delivery Date" />
+                        <span class="input_icon date_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="text" name="Revision" placeholder="Revision" />
+                        <span class="input_icon revision_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="multipul_form_group">
+            <div class="width_50">
+                <div class="form_group">
+                    <label class="form_label">Upload Service Video</label>
+                    <div class="form_area">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg,
+                            .png</span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+            <div class="width_50">
+                <div class="service_thumbnail_sec">
+                    <img src="../../../assets/images/product_thumbnail.jpg" />
+                    <div class="service_thumbnail_hover_sec">
+                        <img src="../../../assets/images/play_video.svg" title="Play" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="width_40">
+    <div class="form_group">
+        <label class="form_label">Upload Service Cover Image</label>
+        <div class="form_area">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+            <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
+        </div>
+        <div class="error_msg">
+            <span>This field is Required</span>
+        </div>
+    </div>
+    <div class="button_group">
+        <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
+            <span>SAVE & CONTINUE</span>
+        </a>
+    </div>
 </div>
 <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
@@ -203,7 +168,7 @@
             <div class="modal-body">
                 <img src="../../../../assets/images/success_tick.svg" alt="Beats Submitted Successfully">
                 <h3>Thank You</h3>
-                <p>Your Beat has been submitted will notify you the status of track approval.</p>
+                <p>Your Service has been submitted will notify you the status of Service approval.</p>
             </div>
         </div>
     </div>
