@@ -1,80 +1,78 @@
-<div class="admin_page">
-    <div class="admin_header">
-        <h4>ALL GENRE</h4>
-    </div>
-    <div class="admin_body">
-        <div class="portlet_body admin_half_forms">
-            <form [formGroup]="formCategory">
-                <div class="form_group">
-                    <div class="form_area">
-                        <input type="text" formControlName="CategoryName" id="CategoryName" name="CategoryName"
-                            placeholder="Enter Genre Name" aria-describedby="CategoryNameHelp" />
-                    </div>
-                    <div class="error_msg" *ngIf="formCategory.controls.CategoryName.invalid && formCategory.controls.CategoryName.touched">
-                        <span id="CategoryNameHelp">This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area">
-                        <input type="text" formControlName="CategorySlug" id="CategorySlug" name="CategorySlug"
-                            placeholder="Enter Genre Slug" aria-describedby="CategorySlugHelp" />
-                    </div>
-                    <div class="error_msg" *ngIf="formCategory.controls.CategorySlug.invalid && formCategory.controls.CategorySlug.touched">
-                        <span id="CategorySlugHelp">This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="ParentCategory">
-                            <option disabled selected>Select Parent Category</option>
-                            <option>For Tracks</option>
-                            <option>For Beats</option>
-                        </select>
-                        <span class="input_icon dropdown_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area">
-                        <textarea rows="4" formControlName="CategoryDescription" id="CategoryDescription"
-                            placeholder="Enter Genre Name" aria-describedby="CategoryDescriptionHelp"
-                            placeholder="Category Description"></textarea>
-                    </div>
-                    <div class="error_msg" *ngIf="formCategory.controls.CategoryDescription.invalid && formCategory.controls.CategoryDescription.touched">
-                        <span id="CategoryDescriptionHelp">This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <label class="form_label">Upload Service Cover Image</label>
-                    <div class="form_area">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
-                        </div>
-                        <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-                <div class="button_group">
-                    <a type="submit" (click)="setCategoryModel()" class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
-                        <span>ADD NEW GENRE</span>
-                    </a>
-                </div>
-            </form>
+<div class="portlet_body admin_half_forms">
+    <form [formGroup]="formCategory">
+        <div class="form_group">
+            <div class="form_area">
+                <input type="text" formControlName="CategoryName" id="CategoryName" name="CategoryName"
+                    placeholder="Enter Genre Name" aria-describedby="CategoryNameHelp" />
+            </div>
+            <div class="error_msg"
+                *ngIf="formCategory.controls.CategoryName.invalid && formCategory.controls.CategoryName.touched">
+                <span id="CategoryNameHelp">This field is Required</span>
+            </div>
         </div>
-        <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
-            <div class="modal-md modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <img src="../../../../assets/images/success_tick.svg" alt="Beats Submitted Successfully">
-                        <h3>Thank You</h3>
-                        <p>Your Genre has been submitted will notify you the status of Genre approval.</p>
-                    </div>
+        <div class="form_group">
+            <div class="form_area">
+                <input type="text" formControlName="CategorySlug" id="CategorySlug" name="CategorySlug"
+                    placeholder="Enter Genre Slug" aria-describedby="CategorySlugHelp" />
+            </div>
+            <div class="error_msg"
+                *ngIf="formCategory.controls.CategorySlug.invalid && formCategory.controls.CategorySlug.touched">
+                <span id="CategorySlugHelp">This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="ParentCategory">
+                    <option disabled selected>Select Parent Category</option>
+                    <option>For Tracks</option>
+                    <option>For Beats</option>
+                </select>
+                <span class="input_icon dropdown_icon"></span>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area">
+                <textarea rows="4" formControlName="CategoryDescription" id="CategoryDescription"
+                    placeholder="Enter Genre Name" aria-describedby="CategoryDescriptionHelp"
+                    placeholder="Category Description"></textarea>
+            </div>
+            <div class="error_msg"
+                *ngIf="formCategory.controls.CategoryDescription.invalid && formCategory.controls.CategoryDescription.touched">
+                <span id="CategoryDescriptionHelp">This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <label class="form_label">Upload Service Cover Image</label>
+            <div class="form_area">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="button_group">
+            <a type="submit" (click)="setCategoryModel()" class="global_btn primary_btn" data-toggle="modal"
+                data-target="#acknowledge_popup">
+                <span>ADD NEW GENRE</span>
+            </a>
+        </div>
+    </form>
+</div>
+<div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="../../../../assets/images/success_tick.svg" alt="Beats Submitted Successfully">
+                <h3>Thank You</h3>
+                <p>Your Genre has been submitted will notify you the status of Genre approval.</p>
             </div>
         </div>
     </div>

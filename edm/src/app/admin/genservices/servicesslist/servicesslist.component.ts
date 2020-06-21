@@ -11,7 +11,7 @@ export class ServicesListComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    this._base._pageTitleService.setTitle("Service Management", "Service Management");
   }
 
  
