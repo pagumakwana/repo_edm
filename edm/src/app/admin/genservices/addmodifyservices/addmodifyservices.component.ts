@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 
 @Component({
-  selector: 'appAdmin-addmodifybeats',
-  templateUrl: './addmodifybeats.component.html',
-  styleUrls: ['./addmodifybeats.component.scss']
+  selector: 'appAdmin-addmodifyservices',
+  templateUrl: './addmodifyservices.component.html',
+  styleUrls: ['./addmodifyservices.component.scss']
 })
-export class AddModifyBeatsComponent implements OnInit {
+export class AddModifyServicesComponent implements OnInit {
 
   constructor(public _base: BaseServiceHelper) { }
 

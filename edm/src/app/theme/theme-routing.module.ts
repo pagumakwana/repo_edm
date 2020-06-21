@@ -11,7 +11,7 @@ const routes: Routes = [
         component: ClientComponent,
         children: [
             {
-                path: "",
+                path: "home",
                 loadChildren: "../home/home.module#HomeModule"
             },
             {
@@ -62,28 +62,28 @@ const routes: Routes = [
         children: [
             {
                 path: "",
-                loadChildren: "../admin/dashboard/dashboard.module#DashboardModule"
+                loadChildren: () => import('../admin/dashboard/dashboard.module').then(m => m.DashboardModule)
             },
             {
                 path: "gener",
-                loadChildren: "../admin/geners/geners.module#GenersModule"
-            },
-            {
-                path: "beats",
-                loadChildren: "../admin/beats/beats.module#BeatsModule"
+                loadChildren: () => import('../admin/geners/geners.module').then(m => m.GenersModule)
             },
             {
                 path: "tracks",
-                loadChildren: "../admin/track/track.module#TrackModule"
+                loadChildren: () => import('../admin/track/track.module').then(m => m.TrackModule)
+            },
+            {
+                path: "services",
+                loadChildren: () => import('../admin/genservices/genservices.module').then(m => m.GenServiceModule)
             },
             {
                 path: "coupan",
-                loadChildren: "../admin/coupan/coupan.module#CoupanModule"
+                loadChildren: () => import('../admin/coupan/coupan.module').then(m => m.CoupanModule)
             },
             {
                 path: "config",
-                loadChildren: "../admin/masters/masters.module#MastersModule"
-            },
+                loadChildren: () => import('../admin/masters/masters.module').then(m => m.MastersModule)
+            }
         ],
     }
 ];

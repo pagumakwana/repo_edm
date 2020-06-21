@@ -20,6 +20,6 @@ import { RegisterService } from 'src/app/_appService/register.service';
         ]),
 
     ],
-    providers: [RegisterService]
+    providers: []
 })
 export class SignUpModule { }

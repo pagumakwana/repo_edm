@@ -18,6 +18,7 @@ import { CategoryService } from './_appService/category/category.serviec';
 import { AlertMessageService } from './_appService/alert/alertmessage.service';
 import { ToastrModule } from 'ngx-toastr';
 import { PageTitleService } from './_appService/_title/title.service';
+import { RegisterService } from './_appService/register.service';
 export function socialConfigs() {
   const config = new AuthServiceConfig(
     [
@@ -58,6 +59,7 @@ export function socialConfigs() {
     AlertMessageService,
     PageTitleService,
     AuthService,
+    RegisterService,
     {
       provide: AuthServiceConfig,
       useFactory: socialConfigs

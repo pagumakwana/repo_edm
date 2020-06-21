@@ -3,10 +3,7 @@ import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 
 
 const routes: Routes = [
-  {
-    path: "",
-    loadChildren: "./theme/theme-routing.module#ThemeRoutingModule"
-  }
+  { path: '', redirectTo: 'home', pathMatch: "full" },
 ];
 
 @NgModule({

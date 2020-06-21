@@ -2,26 +2,26 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { BeatsListComponent } from './beatslist/beatslist.component';
-import { AddModifyBeatsComponent } from './addmodifybeats/addmodifybeats.component';
+import { ServicesListComponent } from './servicesslist/servicesslist.component';
+import { AddModifyServicesComponent } from './addmodifyservices/addmodifyservices.component';
 @NgModule({
     declarations: [
-        BeatsListComponent,
-        AddModifyBeatsComponent
+        ServicesListComponent,
+        AddModifyServicesComponent
     ],
     imports: [
         CommonModule,
         RouterModule.forChild([
             {
                 path: '',
-                component: BeatsListComponent
+                component: ServicesListComponent
             },
             {
-                path: 'addmodify',
-                component: AddModifyBeatsComponent
+                path: ':Ref_Service_ID',
+                component: AddModifyServicesComponent
             }
         ]),
     ],
     providers: []
 })
-export class BeatsModule { }
+export class GenServiceModule { }
