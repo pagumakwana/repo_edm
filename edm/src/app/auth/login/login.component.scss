@@ -23,6 +23,13 @@
     font-weight: bold;
     margin: 5px 0 20px 0;
 }
+.authentication_box > p {
+    font-size: 12px;
+    text-align: center;
+    width: 85%;
+    margin: auto auto 30px auto;
+    line-height: 20px;
+}
 .save_pwd_sec {
     margin: 10px 0 15px 0;
 }
@@ -70,12 +77,10 @@
     margin: auto;
     height: 1px;
 }
-.social_login_sec .button_group {
-    margin-bottom: 20px;
-}
 .become_member {
     font-size: 13px;
     text-align: center;
+    margin-top: 20px;
 }
 .become_member p {
     margin: 0;
@@ -92,6 +97,21 @@
 .google_btn, .google_btn:hover {
     color: #6A6A72 !important;
     border: 1px solid #6A6A72;
+}
+.enter_otp span {
+    display: inline-block;
+}
+.enter_otp span input {
+    font-size: 18px !important;
+    width: 38px;
+    margin: 0 5px;
+    text-align: center;
+    padding: 15px 5px;
+    border-color: black;
+    border-radius: 0;
+}
+.enter_otp {
+    text-align: center;
 }
 
 // ********** Responsive **********
@@ -110,6 +130,12 @@
     }
     .social_login_sec .button_group {
         text-align: center;
-        margin-bottom: 10px;
+    }
+    .become_member {
+        margin-top: 10px;
+    }
+    .authentication_box > p {   
+        width: 100%;
+        margin: auto auto 20px auto;
     }
 }

@@ -98,6 +98,12 @@ a, a:hover {
 .left_align {
     text-align: left;
 }
+.center_align {
+    text-align: center;
+}
+.float_none {
+    float: none !important;
+}
 .width_100 {
     width: 100%  
 }
