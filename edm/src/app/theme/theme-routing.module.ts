@@ -15,6 +15,10 @@ const routes: Routes = [
                 loadChildren: "../home/home.module#HomeModule"
             },
             {
+                path: "forgotpassword",
+                loadChildren: () => import('../auth/forgotpassword/forgotpassword.module').then(m => m.ForgotPasswordModule)
+            },
+            {
                 path: "login",
                 loadChildren: "../auth/login/login.module#LoginModule"
             },
@@ -83,7 +87,10 @@ const routes: Routes = [
             {
                 path: "config",
                 loadChildren: () => import('../admin/masters/masters.module').then(m => m.MastersModule)
-            }
+            }, {
+                path: "profileupdate",
+                loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
+            },
         ],
     }
 ];
