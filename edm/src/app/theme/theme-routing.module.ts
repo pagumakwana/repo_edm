@@ -69,7 +69,7 @@ const routes: Routes = [
                 loadChildren: () => import('../admin/dashboard/dashboard.module').then(m => m.DashboardModule)
             },
             {
-                path: "gener",
+                path: "category",
                 loadChildren: () => import('../admin/geners/geners.module').then(m => m.GenersModule)
             },
             {

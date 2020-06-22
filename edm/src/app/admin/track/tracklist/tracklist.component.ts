@@ -11,8 +11,8 @@ export class TrackListComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    this._base._pageTitleService.setTitle("Manage Tracks/Beats","Manage Tracks/Beats");
   }
 
- 
+
 }

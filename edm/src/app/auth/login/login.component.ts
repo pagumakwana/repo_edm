@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   constructor(private _base: BaseServiceHelper,
     private _fb: FormBuilder,
     public _registerService: RegisterService,
-    public OAuth: AuthService, ) { }
+    public OAuth: AuthService,) { }
 
   _userModel: userModel = {};
 
@@ -105,5 +105,9 @@ export class LoginComponent implements OnInit {
         }
       });
     });
+  }
+
+  forgotPassword() {
+    this._base._router.navigate(['forgotpassword']);
   }
 }

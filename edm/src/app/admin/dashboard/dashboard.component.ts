@@ -11,8 +11,9 @@ export class DashboardComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    this._base._pageTitleService.setTitle("Dashboard", "Dashboard");
   }
 
- 
+
+
 }

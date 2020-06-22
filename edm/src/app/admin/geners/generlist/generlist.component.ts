@@ -15,9 +15,10 @@ export class GenerListComponent implements OnInit {
   _categoryModel: CategoryModel = {};
   public categoryData: any;
   ngAfterViewInit(): void {
-    this._base._pageTitleService.setTitle('ALL Genre', 'ALL GENRE');
+   
   }
   ngOnInit(): void {
+    this._base._pageTitleService.setTitle('Manage Category', 'Manage Category');
     this.bindCategory();
   }
   bindCategory() {
