@@ -224,7 +224,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
         console.log(data);
         this.commonService.hideLoader();
-        $('#acknowledge_popup').modal('show');
+        // $('#acknowledge_popup').modal('show');
       },e=>{
         this.commonService.hideLoader();
       })
