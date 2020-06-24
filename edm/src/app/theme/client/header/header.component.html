@@ -47,6 +47,9 @@
     <div class="project_menu">
         <div class="menu_list">
             <div>
+                <a routerLink="/admin">Admin</a>
+            </div>
+            <div>
                 <a routerLink="/product">Store</a>
             </div>
             <div class="dropdown_point">
@@ -77,7 +80,7 @@
             </div>
         </div>
         <div class="user_profile">
-            <div class="user_profile_img dropdown_point" *ngIf="hasLogin">
+            <div class="user_profile_img dropdown_point" [hidden]="!hasLogin">
                 <img [src]="ProfilePic" />
                 <div class="dropdown_panel profile_dropdown_panel">
                     <div class="dropdown_inner">
@@ -105,7 +108,7 @@
                 </div>
             </div>
         </div>
-        <div class="signin_btn" *ngIf="!hasLogin">
+        <div class="signin_btn" [hidden]="hasLogin">
             <a (click)="redirectUrl('login')" class="global_circle_btn primary_btn no_margin">
                 <span>SIGN IN</span>
             </a>

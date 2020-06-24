@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
   })
 
   setSignInModel() {
-    debugger
     this._base._commonService.markFormGroupTouched(this.formSignIn);
     if (this.formSignIn.valid) {
       this._userModel.IsSocialLogin = false;
@@ -36,14 +35,13 @@ export class LoginComponent implements OnInit {
   }
 
   signIn() {
-    this._registerService.loginCustomer(this._userModel).subscribe(res => {
-      debugger
-      if (res[0].Response == 'USERSIGNUP') {
-        let responseData = res[0];
-        this._base._appSessionService.setUserSession(responseData);
-        setTimeout(() => {
-          this._base._commonService.navigation('/');
-        }, 500);
+    this._registerService.loginCustomer(this._userModel).subscribe((resData: any) => {
+      if (resData[0].ResponseMessage == 'USERSIGNINSUCCESS') {
+        let responseData = resData[0];
+        this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
+          if (res)
+            this._base._router.navigate(['/']);
+        });
       } else {
       }
     });

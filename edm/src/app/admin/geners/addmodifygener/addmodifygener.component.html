@@ -12,29 +12,27 @@
         </div>
         <div class="form_group">
             <div class="form_area">
-                <input type="text" formControlName="CategorySlug" id="CategorySlug" name="CategorySlug"
-                    placeholder="Enter Genre Slug" aria-describedby="CategorySlugHelp" />
+                <input type="text" formControlName="AliasName" id="AliasName" name="AliasName"
+                    placeholder="Enter Genre Slug" aria-describedby="AliasNameHelp" />
             </div>
             <div class="error_msg"
-                *ngIf="formCategory.controls.CategorySlug.invalid && formCategory.controls.CategorySlug.touched">
-                <span id="CategorySlugHelp">This field is Required</span>
+                *ngIf="formCategory.controls.AliasName.invalid && formCategory.controls.AliasName.touched">
+                <span id="AliasNameHelp">This field is Required</span>
             </div>
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <select name="ParentCategory">
-                    <option disabled selected>Select Parent Category</option>
-                    <option>For Tracks</option>
-                    <option>For Beats</option>
+                <select name="ParentCategory" formControlName="Ref_Parent_ID">
+                    <option value="0">Select Parent Category</option>
+                    <option *ngFor="let objCategory of categoryData" [value]="objCategory.Ref_Category_ID">
+                        {{objCategory.CategoryName}}</option>
                 </select>
                 <span class="input_icon dropdown_icon"></span>
-            </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group">
             <div class="form_area">
+                <!-- <edm-texteditor formControl></edm-texteditor> -->
                 <textarea rows="4" formControlName="CategoryDescription" id="CategoryDescription"
                     placeholder="Enter Genre Name" aria-describedby="CategoryDescriptionHelp"
                     placeholder="Category Description"></textarea>
@@ -45,22 +43,30 @@
             </div>
         </div>
         <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="CategoryUseBy" formControlName="CategoryUseBy">
+                    <option value="0">Select Parent Category</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
+                </select>
+                <span class="input_icon dropdown_icon"></span>
+            </div>
+        </div>
+        <div class="form_group">
             <label class="form_label">Upload Service Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile">
+                    <input type="file" class="custom-file-input" id="exampleFormControlFile1"
+                        (change)="fileChoosen($event)">
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
         </div>
         <div class="button_group">
-            <a type="submit" (click)="setCategoryModel()" class="global_btn primary_btn" data-toggle="modal"
-                data-target="#acknowledge_popup">
-                <span>ADD NEW GENRE</span>
+            <a type="submit" (click)="setCategoryModel()" class="global_btn primary_btn">
+                <span>{{btnTitle}}</span>
             </a>
         </div>
     </form>

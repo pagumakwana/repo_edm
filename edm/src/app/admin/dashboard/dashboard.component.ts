@@ -14,6 +14,4 @@ export class DashboardComponent implements OnInit {
     this._base._pageTitleService.setTitle("Dashboard", "Dashboard");
   }
 
-
-
 }

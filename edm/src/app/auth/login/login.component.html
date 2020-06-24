@@ -9,10 +9,7 @@
                             placeholder="Enter your email address" aria-describedby="EmailIDHelp" required />
                         <span class="input_icon user_icon"></span>
                     </div>
-                    <div *ngIf="formSignIn.controls.EmailID.invalid && formSignIn.controls.EmailID.touched"
-                        id="EmailIDHelp" class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
+                    <edm-error [control]="formSignIn.controls.EmailID"></edm-error>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
@@ -20,10 +17,7 @@
                             placeholder="Enter your password" aria-describedby="PasswordHelp" required />
                         <span class="input_icon password_icon"></span>
                     </div>
-                    <div *ngIf="formSignIn.controls.Password.invalid && formSignIn.controls.Password.touched"
-                        id="PasswordHelp" class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
+                    <edm-error [control]="formSignIn.controls.Password"></edm-error>
                 </div>
                 <div class="button_group">
                     <a (click)="setSignInModel()" class="global_btn primary_btn">

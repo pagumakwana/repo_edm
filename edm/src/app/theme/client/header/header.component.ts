@@ -11,15 +11,8 @@ import { CategoryModel } from 'src/app/_appModel/category/category.model';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private _base: BaseServiceHelper, private _categoryService: CategoryService) { }
-  _categoryModel: CategoryModel = {};
-  public categoryData: any;
-  hasLogin: boolean = false;
-  public FullName: string = '';
-  public Ref_User_ID: number = 0;
-  public EmailID: string = '';
-  public ProfilePic: string = '';
-  ngOnInit(): void {
+  constructor(private _base: BaseServiceHelper, private _categoryService: CategoryService) {
+    debugger
     this._base._encryptedStorage.get(enAppSession.HasLogin).then(HasLogin => {
       this.hasLogin = HasLogin;
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
@@ -30,26 +23,35 @@ export class HeaderComponent implements OnInit {
               this.Ref_User_ID = Ref_User_ID;
               this.EmailID = EmailID;
               this.ProfilePic = ProfilePic;
-              debugger
             });
           });
         });
       });
     });
+  }
+  _categoryModel: CategoryModel = {};
+  public categoryData: any;
+  hasLogin: boolean = false;
+  public FullName: string = '';
+  public Ref_User_ID: number = 0;
+  public EmailID: string = '';
+  public ProfilePic: string = '';
+  ngOnInit(): void {
+
     this.bindCategory();
   }
-  
+
   redirectUrl(url) {
     this._base._commonService.navigation(url);
   }
 
   bindCategory() {
-    this._categoryModel = {
-      Flag: '',
-      Ref_Category_ID: 0,
-      Ref_Parent_ID: 0
-    }
-    this._categoryService.categorylist(this._categoryModel).subscribe((resData: any) => {
+    // this._categoryModel = {
+    //   Flag: '',
+    //   Ref_Category_ID: 0,
+    //   Ref_Parent_ID: 0
+    // }
+    this._categoryService.categorylist().subscribe((resData: any) => {
       this.categoryData = resData;
     });
   }

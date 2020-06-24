@@ -11,12 +11,7 @@
                             placeholder="Enter your fullname" aria-describedby="FullNameHelp" required />
                         <span class="input_icon user_icon"></span>
                     </div>
-                    <div *ngIf="formSignup.controls.FullName.invalid && formSignup.controls.FullName.touched"
-                        id="FullNameHelp" class="error_msg">
-                        <span>
-                            This field is Required
-                        </span>
-                    </div>
+                    <edm-error [control]="formSignup.controls.FullName"></edm-error>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
@@ -24,12 +19,7 @@
                             placeholder="Enter your email address" aria-describedby="EmailIDHelp" required />
                         <span class="input_icon email_icon"></span>
                     </div>
-                    <div *ngIf="formSignup.controls.EmailID.invalid && formSignup.controls.EmailID.touched"
-                        id="EmailIDHelp" class="error_msg">
-                        <span>
-                            This field is Required
-                        </span>
-                    </div>
+                    <edm-error [control]="formSignup.controls.EmailID"></edm-error>
 
                 </div>
                 <div class="form_group">
@@ -41,9 +31,6 @@
                         </select>
                         <span class="input_icon dropdown_icon"></span>
                     </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
@@ -51,16 +38,12 @@
                             placeholder="Enter your password" aria-describedby="PasswordHelp" required />
                         <span class="input_icon password_icon"></span>
                     </div>
-                    <div *ngIf="formSignup.controls.Password.invalid && formSignup.controls.Password.touched"
-                        id="PasswordHelp" class="error_msg">
-                        <span>This field is Required
-                        </span>
-                    </div>
+                    <edm-error [control]="formSignup.controls.Password"></edm-error>
                 </div>
                 <div class="save_pwd_sec">
                     <p class="remember_me">
                         <label class="checkbox">
-                            <input name="remember" type="checkbox">I agree to receive email
+                            <input name="remember" type="checkbox" checked disabled>I agree to receive email
                             <span></span>
                         </label>
                     </p>
