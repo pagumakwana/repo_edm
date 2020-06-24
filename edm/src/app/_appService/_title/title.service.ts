@@ -8,8 +8,10 @@ export class PageTitleService {
     constructor(private _title: Title) { }
 
     public setTitle(newTitle: string, moduleTitle: string = null, moduleSubTitle: string = null) {
-        this._title.setTitle(newTitle + ' | DopeTrack');
-        this.moduleTitle = moduleTitle;
-        this.moduleSubTitle = moduleSubTitle;
+        setTimeout(() => {
+            this.moduleTitle = moduleTitle;
+            this.moduleSubTitle = moduleSubTitle;
+            this._title.setTitle(newTitle + ' | DopeTrack');
+        }, 0);
     }
 }

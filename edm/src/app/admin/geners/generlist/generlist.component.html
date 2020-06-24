@@ -14,7 +14,8 @@
 </div>
 <div class="portlet_body">
     <div class="primary_table">
-        <table style="min-width: 688px;">
+        <com-datatable #dataTableCom [config]='tableConfig' (tableEvent)="tableClick($event)"></com-datatable>
+        <!-- <table style="min-width: 688px;">
             <thead>
                 <tr>
                     <th>IMAGE</th>
@@ -29,26 +30,26 @@
                     <td>{{obj.CategoryName}}</td>
                     <td>29</td>
                     <td class="table_btn">
-                        <a (click)="modifycategory(obj,'MODIFYCATEGORY')" class="global_btn primary_btn">
-                            <!-- <span>Edit</span> -->
+                        <a (click)="modifycategory(tableItem,'MODIFYCATEGORY')" class="global_btn primary_btn">
+                             <span>Edit</span> 
                             <i class="fa fa-pencil"></i>
                         </a>
                         <a (click)="modifycategory(obj,'DELETECATEGORY')" class="btn btn-danger btn-xs "
                             [ngClass]="{'disabled':obj.IsActive==false}" data-toggle="modal"
                             data-target="#modal-deleteconfirmation" class="global_btn icon_btn red_btn">
-                            <!-- <span>Delete</span>
-                            <span class="delete_icon btn_icon"></span> -->
+                            <span>Delete</span>
+                            <span class="delete_icon btn_icon"></span>
                             <i class="fa fa-trash"></i>
                         </a>
                         <a class="global_btn icon_btn grey_btn">
-                            <!-- <span>View</span>
-                            <span class="view_icon btn_icon"></span> -->
+                             <span>View</span>
+                            <span class="view_icon btn_icon"></span> 
                             <i class="fa fa-eye"></i>
                         </a>
                     </td>
                 </tr>
             </tbody>
-        </table>
+        </table> -->
     </div>
 </div>
 

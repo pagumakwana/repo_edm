@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   apiBaseURL: "http://edmapi.webdroids.in/api",
+  imageURL: "http://edmapi.webdroids.in",
   //apiBaseURL: "http://localhost:2763/api",
   oneSignalID: "11d4c1e1-6e94-4733-9d48-705d2c7f1927",
   ipifyUrl: 'https://api.ipify.org/?format=json',

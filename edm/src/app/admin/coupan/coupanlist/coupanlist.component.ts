@@ -11,8 +11,8 @@ export class CoupanListComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    this._base._pageTitleService.setTitle("Manage Coupan", "Manage Coupan");
   }
 
- 
+
 }

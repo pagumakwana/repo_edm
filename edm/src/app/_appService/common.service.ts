@@ -5,6 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { EncryptedStorage } from '../_appModel/encryptedstorage';
 import { enAppSession } from '../_appModel/enAppSession';
 import { FormGroup } from '@angular/forms';
+import { ApiConstant } from '../_appmodel/apiconstant';
 declare var $: any;
 @Injectable()
 export class CommonService {
@@ -124,5 +125,28 @@ export class CommonService {
                 this.markFormGroupTouched(control);
             }
         });
+    }
+    //image Upload
+    uploadFile(files: FileList | string, moduleName: string) {
+        return new Promise((resolve, reject) => {
+            if (typeof files == 'string') {
+                resolve(files)
+            } else {
+                let file: File = files ? (files.length > 0 ? files[0] : null) : null
+                if (file) {
+                    let formData: FormData = new FormData()
+                    formData.append('uploadFile', file, file.name)
+                    this.commonImageUpload(formData, moduleName).subscribe(url => {
+                        resolve(url)
+                    })
+                } else {
+                    resolve(null)
+                }
+            }
+        })
+    }
+
+    commonImageUpload(formData: FormData, ModuleName: string) {
+        return this._apiService.postFile(`${ApiConstant.common.thumbnail}?ModuleName=${ModuleName}`, formData)
     }
 }

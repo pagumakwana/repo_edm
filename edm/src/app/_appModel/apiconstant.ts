@@ -9,7 +9,11 @@ export class ApiConstant {
         registerGuest: "Admin/UserManagement/RegisterGuest",
     }
     public static category = {
-        AddModifyCategory:"Admin/MasterManagement/AddModifyCategory",
-        category:"Admin/MasterManagement/Category"
+        AddModifyCategory: "Admin/MasterManagement/Category",
+        category: "Admin/MasterManagement/Category"
+    }
+    public static common = {
+        thumbnail: "Admin/Common/Image",
+        uploadfiles: "Admin/Common/File"
     }
 }

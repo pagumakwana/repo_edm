@@ -13,7 +13,7 @@ export class CategoryService {
     addmodifycategory(objCategoryModel: CategoryModel) {
         return this._base._ApiService.post(ApiConstant.category.AddModifyCategory, objCategoryModel)
     }
-    categorylist(objCategoryModel: CategoryModel) {
-        return this._base._ApiService.post(ApiConstant.category.category, objCategoryModel);
+    categorylist() {
+        return this._base._ApiService.get(ApiConstant.category.category);
     }
 }

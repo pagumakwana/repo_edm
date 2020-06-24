@@ -1,0 +1,64 @@
+<table #dataTable [hidden]="ishide" class="table table-stripped table-hover table-bordered">
+    <thead>
+        <tr>
+            <!-- <th>Sr#</th> -->
+            <th *ngFor="let title of config?.tableConfig">{{title.title}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let tableItem of config?.tableData;let i = index">
+            <!-- <td>{{i+1}}</td> -->
+            <td *ngFor="let key of config?.tableConfig">
+                <ng-container *ngIf="key?.type == 'text'">
+                    {{tableItem[key.identifer]}}
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'link'">
+                    <a (click)="tableClick(tableItem,key)">
+                        {{tableItem[key.identifer]}}
+                    </a>
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'image'">
+                    <!-- <a (click)="tableClick(tableItem,key)">
+                        {{tableItem[key.identifer]}}
+                    </a> -->
+                    <img [src]="imageBaseUrl + tableItem[key.identifer]" [style.height]="key?.size?.height"
+                        [style.width]="key?.size?.width">
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'custom'">
+                    <!-- <a [title]="config?.tableConfig[i][key.navigate]">
+                        {{tableItem[key.identifer]}}
+                    </a> -->
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'button'">
+                    <!-- <ng-container *ngComponentOutlet="DatatablesComponent; 
+                                content: [key.reference]"></ng-container> -->
+                    <!-- <a [title]="config?.tableConfig[i][key.navigate]">
+                        {{tableItem[key.identifer]}}
+                    </a> -->
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'flag'">
+                    <i [ngClass]="tableItem[key.identifer] ? 'fa-check' : 'fa-times'" class="fa"></i>
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'button'">
+                    <a *ngFor="let button of key?.buttonList" (click)="tableClick(tableItem,key,button)"
+                        class="{{button.class}}">
+                        <span>{{button.name}}</span>
+                        <span *ngIf="button?.iconClass" class="{{button.iconClass}}"></span>
+                    </a>
+                    <!-- <a class="global_btn primary_btn" >
+                        <span>Delete</span>
+                        <span class="delete_icon btn_icon"></span>
+                    </a>
+                    <a class="global_btn primary_btn" >
+                        <span>Delete</span>
+                        <span class="delete_icon btn_icon"></span>
+                    </a> -->
+                </ng-container>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+<!-- <div #button>
+    <h1>button</h1>
+</div> -->

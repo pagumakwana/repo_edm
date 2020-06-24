@@ -36,45 +36,31 @@ export class SignupComponent implements OnInit {
       this._userModel.FullName = this.formSignup.value.FullName;
       this._userModel.EmailID = this.formSignup.value.EmailID;
       this._userModel.Password = this.formSignup.value.Password;
+      this._userModel.CreatedName = this.formSignup.value.FullName;
       this.register();
     }
   }
   register() {
-    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
-      this._userModel.Ref_User_Id = Ref_User_ID;
-      this._userModel.CreatedName = this._userModel.FullName;
-      this._registerService.registerCustomer(this._userModel).subscribe(response => {
-        if (response == 'REGISTEREDSUCCESS') {
-          this._registerService.loginCustomer(this._userModel).subscribe(res => {
-            if (res[0].Response == 'USERSIGNUP') {
-              let responseData = res[0];
-              // this._base._CommonService.showAlert("Registered success!", false);
-              this._base._appSessionService.setUserSession(responseData);
-              // this._communicationModel = {
-              //   Recipients: responseData.Email,
-              //   TemplateSelector: 'WELCOME_EMAIL',
-              //   KeyValues: 'STORE_NAME|PickPro,CUSTOMER_NAME|' + responseData.FullName + ',STORE_EMAIL|info@webdroids.in'
-              // }
-              // this._communication.sendWelcomeMail(this._communicationModel).subscribe((res: any) => {
-              // })
-              setTimeout(() => {
-                this._base._commonService.navigation('/');
-                //this._events.publish('user:signedIn', responseData);
-              }, 500);
-            } else {
-              // this._base._vibration.vibrate(100);
-              // this._base._CommonService.showAlert("Please try after sometime!", false);
-            }
-          });
-        } else if (response[0].Response == 'USERALREADYEXISTS') {
-          // this._base._vibration.vibrate(100);
-          // this._base._CommonService.showAlert("User already exits!", false);
-        }
-        else {
-          // this._base._vibration.vibrate(100);
-          // this._base._CommonService.showAlert("Please try after sometime!", false);
-        }
-      });
+    this._registerService.registerCustomer(this._userModel).subscribe((response: any) => {
+      if (response == 'USERADDEDSUCCESS') {
+        this._registerService.loginCustomer(this._userModel).subscribe(res => {
+          if (res[0].ResponseMessage == 'USERSIGNINSUCCESS') {
+            let responseData = res[0];
+            this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
+              if (res)
+                this._base._router.navigate(['/']);
+            });
+            // this._communicationModel = {
+            //   Recipients: responseData.Email,
+            //   TemplateSelector: 'WELCOME_EMAIL',
+            //   KeyValues: 'STORE_NAME|PickPro,CUSTOMER_NAME|' + responseData.FullName + ',STORE_EMAIL|info@webdroids.in'
+            // }
+            // this._communication.sendWelcomeMail(this._communicationModel).subscribe((res: any) => {
+            // })
+          }
+        });
+      } else if (response == 'USERALREADYEXISTS') {
+      }
     });
   }
   numberOnly(event) {
