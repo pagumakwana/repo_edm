@@ -22,6 +22,9 @@ export class ApiService {
     post(endpoint: string, body?: any) {
         return this.http.post(this.apiURL + '/' + endpoint, body, httpOptions);
     }
+    postFile(endpoint: string, bodyFile?: any) {
+        return this.http.post(this.apiURL + '/' + endpoint, bodyFile);
+    }
 
     getExternal(endpoint: string, reqOpts?: any) {
         return this.http.get(endpoint, reqOpts);

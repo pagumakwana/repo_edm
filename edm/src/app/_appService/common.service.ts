@@ -125,4 +125,13 @@ export class CommonService {
             }
         });
     }
+    showLoader() { //call this fn to show loader
+   
+        $('#mainloader').css('display', 'block');
+    }
+     hideLoader() { //call this fn to show loader
+        
+         $('#mainloader').css('display', 'none');
+    }
 }
+

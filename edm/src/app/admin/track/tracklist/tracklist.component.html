@@ -54,7 +54,40 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr *ngFor="let track of data">
+                <td><img class="tbl_img" [src]="track.ThumbnailImageUrl" /></td>
+                <td>{{track.TrackName}}</td>
+                <td>&#36;{{track.Price}}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
+                    <a class="read_more"> READ MORE</a>
+                </td>
+                <td class="table_btn">
+                    <a class="global_btn icon_btn primary_btn">
+                        <span>Approve</span>
+                        <span class="right_icon btn_icon"></span>
+                    </a>
+                    <a class="global_btn icon_btn red_btn">
+                        <span>Reject</span>
+                        <span class="delete_icon btn_icon"></span>
+                    </a>
+                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="global_btn icon_btn primary_btn">
+                        <span>Edit</span>
+                        <span class="edit_icon btn_icon"></span>
+                    </a>
+                    <a class="global_btn icon_btn red_btn">
+                        <span>Delete</span>
+                        <span class="delete_icon btn_icon"></span>
+                    </a>
+                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="global_btn icon_btn grey_btn">
+                        <span>View</span>
+                        <span class="view_icon btn_icon"></span>
+                    </a>
+                </td>
+            </tr>
+            <!-- <tr>
                 <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
                 <td>Raindrop</td>
                 <td>&#36;300</td>
@@ -121,46 +154,11 @@
                         <span class="view_icon btn_icon"></span>
                     </a>
                 </td>
-            </tr>
-            <tr>
-                <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
-                <td>Raindrop</td>
-                <td>&#36;300</td>
-                <td>Bigroom</td>
-                <td>Pending</td>
-                <td>
-                    <span class="comment_area" style="width: 250px;">Lorem Ipsum is simply dummy text of the printing
-                        and typesetting industry simply dummy text of the printing and typesetting industry</span>
-                    <a class="read_more" href="#"> READ MORE</a>
-                </td>
-                <td class="table_btn">
-                    <a class="global_btn icon_btn primary_btn">
-                        <span>Approve</span>
-                        <span class="right_icon btn_icon"></span>
-                    </a>
-                    <a class="global_btn icon_btn red_btn">
-                        <span>Reject</span>
-                        <span class="delete_icon btn_icon"></span>
-                    </a>
-                    <a class="global_btn icon_btn primary_btn">
-                        <span>Edit</span>
-                        <span class="edit_icon btn_icon"></span>
-                    </a>
-                    <a class="global_btn icon_btn red_btn">
-                        <span>Delete</span>
-                        <span class="delete_icon btn_icon"></span>
-                    </a>
-                    <a class="global_btn icon_btn grey_btn">
-                        <span>View</span>
-                        <span class="view_icon btn_icon"></span>
-                    </a>
-                </td>
-            </tr>
+            </tr> -->
         </tbody>
     </table>
 </div>
-<div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true" keyboard="true">
+<div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-md modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">

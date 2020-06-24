@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,11 @@ import { AlertMessageService } from './_appService/alert/alertmessage.service';
 import { ToastrModule } from 'ngx-toastr';
 import { PageTitleService } from './_appService/_title/title.service';
 import { RegisterService } from './_appService/register.service';
+import { FileUploadService } from './_appService/fileUploadService/fileUploadService';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from "ngx-spinner";
+import * as bootstrap from "bootstrap";
+import * as $ from "jquery";
 export function socialConfigs() {
   const config = new AuthServiceConfig(
     [
@@ -47,8 +52,12 @@ export function socialConfigs() {
     AppRoutingModule,
     ThemeModule,
     SocialLoginModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot()
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     ApiService,
     CommonService,
@@ -60,6 +69,7 @@ export function socialConfigs() {
     PageTitleService,
     AuthService,
     RegisterService,
+    FileUploadService,
     {
       provide: AuthServiceConfig,
       useFactory: socialConfigs

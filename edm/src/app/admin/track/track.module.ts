@@ -3,11 +3,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TrackListComponent } from './tracklist/tracklist.component';
-import { AddModifyTrackComponent } from './addmodifytrack/addmodifytrack.component';
+//import { AddModifyTrackComponent } from './addmodifytrack/addmodifytrack.component';
 @NgModule({
     declarations: [
         TrackListComponent,
-        AddModifyTrackComponent
+       // AddModifyTrackComponent
     ],
     imports: [
         CommonModule,
@@ -16,10 +16,10 @@ import { AddModifyTrackComponent } from './addmodifytrack/addmodifytrack.compone
                 path: '',
                 component: TrackListComponent
             },
-            {
-                path: 'addmodify',
-                component: AddModifyTrackComponent
-            }
+            // {
+            //     path: 'addmodify',
+            //     component: AddModifyTrackComponent
+            // }
         ]),
     ],
     providers: []
