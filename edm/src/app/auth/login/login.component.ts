@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   constructor(private _base: BaseServiceHelper,
     private _fb: FormBuilder,
     public _registerService: RegisterService,
-    public OAuth: AuthService,) { }
+    public OAuth: AuthService, ) { }
 
   _userModel: userModel = {};
 
@@ -40,8 +40,10 @@ export class LoginComponent implements OnInit {
       if (resData[0].ResponseMessage == 'USERSIGNINSUCCESS') {
         let responseData = resData[0];
         this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
-          if (res)
+          if (res) {
+            this._base._commonService.setHasLoginSubscribe.next(true)
             this._base._router.navigate(['/']);
+          }
         });
       } else {
       }
@@ -95,6 +97,7 @@ export class LoginComponent implements OnInit {
           // this._communication.sendWelcomeMail(this._communicationModel).subscribe((res: any) => {
           // })
           setTimeout(() => {
+            this._base._commonService.setHasLoginSubscribe.next(true)
             this._base._commonService.navigation('/');
             //this._events.publish('user:signedIn', responseData);
           }, 500);

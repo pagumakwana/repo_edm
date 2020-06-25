@@ -5,7 +5,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { EncryptedStorage } from '../_appModel/encryptedstorage';
 import { enAppSession } from '../_appModel/enAppSession';
 import { FormGroup } from '@angular/forms';
-import { ApiConstant } from '../_appmodel/apiconstant';
+import { ApiConstant } from '../_appModel/apiconstant';
+import { Subject } from 'rxjs';
 declare var $: any;
 @Injectable()
 export class CommonService {
@@ -18,6 +19,9 @@ export class CommonService {
     public isOnline: boolean = true;
     public hasOnline: boolean = false;
     public ipAddress: string = "";
+
+    public setHasLoginSubscribe = new Subject<boolean>();
+
 
     public navigation(url: any) {
         this._router.navigate([url]);
@@ -127,12 +131,12 @@ export class CommonService {
         });
     }
     showLoader() { //call this fn to show loader
-   
+
         $('#mainloader').css('display', 'block');
     }
-     hideLoader() { //call this fn to show loader
-        
-         $('#mainloader').css('display', 'none');
+    hideLoader() { //call this fn to show loader
+
+        $('#mainloader').css('display', 'none');
     }
 
     //image Upload
