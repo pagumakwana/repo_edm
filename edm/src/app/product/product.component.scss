@@ -49,7 +49,7 @@
     background: #05C38F;
     color: white;
 }
-.product_box {
+.product_list .product_box {
     display: inline-block;
     width: 25%;
     padding: 10px 10px 50px 10px;
@@ -101,7 +101,7 @@
 /* ********** Responsive ********** */
 
 @media screen and (max-width: 1200px) {
-    .product_box {
+    .product_list .product_box {
         width: 33%;
     }
 }
@@ -118,7 +118,7 @@
 }
 
 @media screen and (max-width: 950px) {
-    .product_box {
+    .product_list .product_box {
         width: 50%;
         padding: 10px 10px 40px 10px;
     }
@@ -136,7 +136,7 @@
         padding: 20px 10px;
         margin-top: 20px;
     }
-    .product_box {
+    .product_list .product_box {
         width: 33%;
     }
     .filter_heading {
@@ -146,14 +146,14 @@
 }
 
 @media screen and (max-width: 700px) {
-    .product_box {
+    .product_list .product_box {
         width: 50%;
         padding: 10px 10px 30px 10px;
     }
 }
 
 @media screen and (max-width: 500px) {
-    .product_box {
+    .product_list .product_box {
         width: 100%;
         padding: 10px 10px 20px 10px;
     }

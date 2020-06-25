@@ -1,17 +1,17 @@
 swiper>.swiper.s-wrapper .swiper-pagination .swiper-pagination-handle .swiper-pagination-bullet.swiper-pagination-bullet-first, swiper>.swiper.s-wrapper .swiper-pagination .swiper-pagination-handle .swiper-pagination-bullet.swiper-pagination-bullet-last {
-    border: 0;
+    border: 0 !important;
 }
 .swiper-pagination-bullet {
-    background: #DCDCDC;
-    opacity: 0.4;
+    background: #DCDCDC !important;
+    opacity: 0.4 !important;
 }
 swiper>.swiper.s-wrapper.swiper-container-horizontal>.swiper-pagination .swiper-pagination-handle .swiper-pagination-bullet.swiper-pagination-bullet-first, swiper>.swiper.s-wrapper.swiper-container-horizontal>.swiper-pagination .swiper-pagination-handle .swiper-pagination-bullet.swiper-pagination-bullet-last {
-    margin: 0;
+    margin: 0 !important;
 }
 swiper>.swiper.s-wrapper .swiper-pagination .swiper-pagination-handle {
-    padding: 0;
-    margin: 4px;
+    padding: 0 !important;
+    margin: 4px !important;
 }
 .swiper-pagination-bullet-active {
-    background: #05C38F;
+    background: #05C38F !important;
 }
