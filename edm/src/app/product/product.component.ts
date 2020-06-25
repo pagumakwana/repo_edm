@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 // import { Options, LabelType } from 'ng5-slider';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
-  styleUrls: ['./product.component.scss', '../widgets/featuredProductSlider/featuredProductSlider.component.scss']
+  styleUrls: ['./product.component.scss', '../widgets/featuredProductSlider/featuredProductSlider.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 
 export class ProductComponent implements OnInit {

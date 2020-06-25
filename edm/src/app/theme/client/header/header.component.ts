@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
@@ -7,7 +7,8 @@ import { CategoryModel } from 'src/app/_appModel/category/category.model';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnInit {
 

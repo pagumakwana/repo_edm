@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from './../../../_appService/baseHelper.service';
 import { FileUploadService } from './../../../_appService/fileUploadService/fileUploadService'
 import { ApiConstant } from './../../../_appModel/apiconstant'
@@ -9,7 +9,8 @@ import { CategoryService } from './../../../_appService/category/category.servie
 @Component({
   selector: 'appAdmin-addmodifytrack',
   templateUrl: './addmodifytrack.component.html',
-  styleUrls: ['./addmodifytrack.component.scss']
+  styleUrls: ['./addmodifytrack.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddModifyTrackComponent implements OnInit {
   model: any = {};

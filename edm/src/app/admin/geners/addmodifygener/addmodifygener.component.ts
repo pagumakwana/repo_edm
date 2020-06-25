@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { CategoryModel } from 'src/app/_appModel/category/category.model';
@@ -9,7 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'appAdmin-addmodifygener',
   templateUrl: './addmodifygener.component.html',
-  styleUrls: ['./addmodifygener.component.scss']
+  styleUrls: ['./addmodifygener.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AddModifyGenersComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from './../../../_appService/baseHelper.service';
 import { ApiConstant } from './../../../_appModel/apiconstant'
 import { from } from 'rxjs';
@@ -8,7 +8,8 @@ import { CategoryService } from './../../../_appService/category/category.servie
 @Component({
   selector: 'appAdmin-tracklist',
   templateUrl: './tracklist.component.html',
-  styleUrls: ['./tracklist.component.scss']
+  styleUrls: ['./tracklist.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class TrackListComponent implements OnInit {
   data: any;

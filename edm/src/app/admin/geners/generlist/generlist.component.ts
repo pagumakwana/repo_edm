@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { CategoryModel } from 'src/app/_appModel/category/category.model';
@@ -9,7 +9,8 @@ import { dataTableConfig, tableEvent } from 'src/app/commonmodule/datatables/dat
 @Component({
   selector: 'appAdmin-generlist',
   templateUrl: './generlist.component.html',
-  styleUrls: ['./generlist.component.scss']
+  styleUrls: ['./generlist.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class GenerListComponent implements OnInit {
   @ViewChild('dataTableCom', { static: false }) tableObj: DatatablesComponent;
