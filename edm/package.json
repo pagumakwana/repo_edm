@@ -27,6 +27,7 @@
     "datatables.net-dt": "^1.10.21",
     "jquery": "^3.5.1",
     "ng5-slider": "^1.2.4",
+    "ngx-spinner": "^9.0.2",
     "ngx-swiper-wrapper": "^9.0.1",
     "ngx-toastr": "^12.1.0",
     "rxjs": "~6.5.4",

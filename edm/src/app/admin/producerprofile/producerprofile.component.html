@@ -1,0 +1,171 @@
+<div class="admin_page">
+    <div class="admin_header">
+        <h4>Enter Your Personal Details</h4>
+    </div>
+    <div class="admin_body">
+        <div class="producer_progress_section">
+            <div class="progress_section">
+                <div class="step_name">
+                    Personal Information
+                </div>
+                <div class="step_name">
+                    Connect Socially
+                </div>
+                <div class="step_name">
+                    Payout Details
+                </div>
+            </div>
+            <div class="progress_section">
+                <div class="step active_step">
+                    <div></div>
+                </div>
+                <div class="step active_step">
+                    <div></div>
+                </div>
+                <div class="step">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <form class="producer_form">
+            <!-- Step 1 -->
+            <div>
+                <div class="upload_profile_pic">
+                    <div class="user_photo">
+                        <img src="https://lh3.googleusercontent.com/proxy/SIV2OUn5ST7Bz05R4zFbPG5_BXHUiauiVvWeXjlkjoujjJtmWpEQdkO6Uv8DaNTseyDx3ktzhe2JSHXskYSNY1Y736VjT_A" alt="Profile Photo" />
+                    </div>
+                    <label class="align_center">Upload your profile picture</label>
+                </div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="text" name="artistname" placeholder="Enter your producer / artist name" />
+                        <span class="input_icon user_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <select name="country">
+                            <option disabled selected>Select Your Country</option>
+                            <option>Options</option>
+                            <option>Options</option>
+                        </select>
+                        <span class="input_icon dropdown_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area">
+                        <textarea rows="4" placeholder="Description about your self"></textarea>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area">
+                        <input type="text" name="studiogears" placeholder="Enter your studio gears" />
+                    </div>
+                    <div class="tags">
+                        <span>demo</span>
+                        <span>demo</span>
+                        <span>demo</span>
+                    </div>
+                </div>
+                <div class="button_group center_align">
+                    <a class="global_btn primary_btn float_none">
+                        <span>Next</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="url" name="facebookurl" placeholder="Enter Your Facebook Profile URL" />
+                        <span class="input_icon facebook_blue_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="url" name="soundcloudurl" placeholder="Enter Your SoundCloud Profile URL" />
+                        <span class="input_icon soundcloud_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="url" name="spotifyurl" placeholder="Enter Your Spotify Profile URL" />
+                        <span class="input_icon spotify_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="button_group center_align">
+                    <a class="global_btn primary_btn float_none">
+                        <span>Next</span>
+                    </a>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="email" name="paypalemail" placeholder="Enter Your Paypal Email for Payout" />
+                        <span class="input_icon paypal_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <div class="form_area icon_form_group three_icon_form_group">
+                        <input type="email" name="confirmpaypalemail" placeholder="Confirm Your Email" />
+                        <span class="input_icon revision_grey_icon"></span>
+                        <span class="input_icon upload_icon"></span>
+                        <span class="input_icon error_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+                <div class="form_group">
+                    <label class="form_label">Upload Your ID GOVT Proof</label>
+                    <div class="form_area">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="exampleFormControlFile1">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <span class="file_formats">Note: File upload limit - 2MB, Attchment format : jpg, jpeg, png</span>
+                    </div>
+                </div>
+                <div class="button_group center_align">
+                    <a class="global_btn primary_btn float_none" data-toggle="modal" data-target="#acknowledge_popup">
+                        <span>Save & Verify My Account</span>
+                    </a>
+                </div>
+            </div>
+        </form>
+        <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+            <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img src="../../../../assets/images/success_tick.svg" alt="Profile Successfully Updated">
+                        <h3>Thank You</h3>
+                        <p>Your Profile has been Successfully Updated.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -660,6 +660,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     background: url(../images/right.svg) no-repeat;
     background-size: 12px !important;
 }
+.active_step > div {
+    background: url(../images/right.svg) no-repeat;
+}
 .dj_style_icon {
     background: url(../images/dj_style.svg) no-repeat;
 }
@@ -680,6 +683,30 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .revision_icon {
     background: url(../images/revision.svg) no-repeat;
+}
+.facebook_blue_icon {
+    background: url(../images/facebook_blue.svg) no-repeat;
+}
+.spotify_icon {
+    background: url(../images/spotify.svg) no-repeat;
+}
+.soundcloud_icon {
+    background: url(../images/soundcloud.svg) no-repeat;
+}
+.paypal_icon {
+    background: url(../images/paypal.svg) no-repeat;
+}
+.revision_grey_icon {
+    background: url(../images/revision_grey.svg) no-repeat;
+}
+.upload_icon {
+    background: url(../images/upload.svg) no-repeat;
+}
+.error_icon {
+    background: url(../images/error.svg) no-repeat;
+}
+.user_profile_img, .user_photo {
+    background: url(../images/user_profile.svg) no-repeat;
 }
 /* Dropdown CSS */
 .dropdown_point {
@@ -1029,6 +1056,7 @@ appadmin-adminbody {
     margin-left: 5px;
 }
 /* Admin Side CSS */
+
 /* ********** Responsive ********** */
 
 @media screen and (max-width: 1200px) {
