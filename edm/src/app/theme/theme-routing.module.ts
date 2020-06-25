@@ -28,35 +28,35 @@ const routes: Routes = [
             },
             {
                 path: "geners",
-                loadChildren: "../gener/gener.module#GenerModule"
+                loadChildren: () => import('../gener/gener.module').then(m => m.GenerModule)
             },
             {
                 path: "geners/details",
-                loadChildren: "../gener/gener.module#GenerModule"
+                loadChildren: () => import('../gener/gener.module').then(m => m.GenerModule)
             },
             {
                 path: "product",
-                loadChildren: "../product/product.module#ProductModule"
+                loadChildren: () => import('../product/product.module').then(m => m.ProductModule)
             },
             {
                 path: "product/details",
-                loadChildren: "../product/product.module#ProductModule"
+                loadChildren: () => import('../product/product.module').then(m => m.ProductModule)
             },
             {
                 path: "error",
-                loadChildren: "../errors/errors.module#ErrorsModule"
+                loadChildren: () => import('../errors/errors.module').then(m => m.ErrorsModule)
             },
             {
                 path: "service",
-                loadChildren: "../service/service.module#ServiceModule"
+                loadChildren: () => import('../service/service.module').then(m => m.ServiceModule)
             },
             {
                 path: "service/details",
-                loadChildren: "../service/service.module#ServiceModule"
+                loadChildren: () => import('../service/service.module').then(m => m.ServiceModule)
             },
             {
                 path: "profile",
-                loadChildren: "../profiles/profile.module#ProfileModule"
+                loadChildren: () => import('../profiles/profile.module').then(m => m.ProfileModule)
             }
         ],
     },
@@ -76,7 +76,7 @@ const routes: Routes = [
                 path: "tracks/:module",
                 loadChildren: () => import('../admin/track/track.module').then(m => m.TrackModule)
             },
-	     {
+	        {
                 path: "addmodifytracks/:module/:id",
                 loadChildren: () => import('../admin/track/addmodifytrack/addmodifytrack.module').then(m => m.AddModifyTrackModule)
             },
