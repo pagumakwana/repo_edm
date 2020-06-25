@@ -82,7 +82,7 @@ const routes: Routes = [
             },
 	    
             {
-                path: "addmodify",
+                path: "services",
                 loadChildren: () => import('../admin/genservices/genservices.module').then(m => m.GenServiceModule)
             },
             {
