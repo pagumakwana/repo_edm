@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { userModel } from 'src/app/_appModel/customer.model';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
@@ -8,7 +8,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['../login/login.component.scss']
+  styleUrls: ['../login/login.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class SignupComponent implements OnInit {
   constructor(

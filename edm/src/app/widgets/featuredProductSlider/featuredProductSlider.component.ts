@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import {
     SwiperComponent, SwiperDirective, SwiperConfigInterface,
@@ -8,7 +8,8 @@ import {
 @Component({
     selector: 'app-featuredProductSlider',
     templateUrl: './featuredProductSlider.component.html',
-    styleUrls: ['./featuredProductSlider.component.scss']
+    styleUrls: ['./featuredProductSlider.component.scss'],
+    encapsulation: ViewEncapsulation.None,
 })
 export class FeaturedProductSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;

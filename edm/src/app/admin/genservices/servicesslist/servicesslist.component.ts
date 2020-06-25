@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 
 @Component({
   selector: 'appAdmin-servicesslist',
   templateUrl: './servicesslist.component.html',
-  styleUrls: ['./servicesslist.component.scss']
+  styleUrls: ['./servicesslist.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class ServicesListComponent implements OnInit {
 

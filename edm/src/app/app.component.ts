@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Helpers } from './_appModel/helpers';
 import { enAppSession } from './_appModel/enAppSession';
 import { BaseServiceHelper } from './_appService/baseHelper.service';
@@ -7,7 +7,8 @@ import { RegisterService } from './_appService/register.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   title = 'edm';
