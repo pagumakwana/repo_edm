@@ -3,7 +3,7 @@
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input class="form-control" type="text" name="trackname" placeholder="{{moduleName}} Name" [(ngModel)]="model.trackname" #trackname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackImg.invalid }" required>
+                <input class="form-control" type="text" name="trackname" placeholder="{{moduleName}} Name" [(ngModel)]="model.trackname" #trackname="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackname.invalid }" required>
                 <span class=" input_icon track_icon"></span>
             </div>
             <div *ngIf="f.submitted && trackname.invalid">
@@ -183,11 +183,12 @@
                            
                         </select>
                 <span class="input_icon dropdown_icon"></span>
+                <div class="tags">
+                    <span>demo</span>
+                    <span>demo</span>
+                </div>
             </div>
-            <div class="tags">
-                <span>demo</span>
-                <span>demo</span>
-            </div>
+
             <!-- <div *ngIf="f.submitted && trackDaw.invalid">
                 <div *ngIf="trackDaw.errors.required">
                     <div class="error_msg">

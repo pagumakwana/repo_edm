@@ -20,20 +20,20 @@
     <form>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <select name="filterbytracks" class="grey_dropdown">
+                <select (change)="onGenreChange($event.target.value)" name="filterbytracks" class="grey_dropdown">
                     <option disabled selected>Filter By Genre</option>
-                    <option>Options</option>
-                    <option>Options</option>
+                    <option  value="0">All</option>
+                    <option *ngFor="let genre of genrelist" [value]="genre.Ref_Category_ID">{{genre.CategoryName}}</option>
                 </select>
                 <span class="input_icon down_icon"></span>
             </div>
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <select name="filterbyprice" class="grey_dropdown">
+                <select (change)="onPriceChange($event.target.value)" name="filterbyprice" class="grey_dropdown">
                     <option disabled selected>Filter By Price</option>
-                    <option>Options</option>
-                    <option>Options</option>
+                    <option value="0">Low to High</option>
+                    <option value="1">High to Low</option>
                 </select>
                 <span class="input_icon down_icon"></span>
             </div>
@@ -59,7 +59,7 @@
                 <td>{{track.TrackName}}</td>
                 <td>&#36;{{track.Price}}</td>
                 <td>{{track.Ref_Category_ID}}</td>
-                <td></td>
+                <td>-</td>
                 <td>
                     <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
                     <a class="read_more"> READ MORE</a>
@@ -156,6 +156,9 @@
                 </td>
             </tr> -->
         </tbody>
+        <div *ngIf="data?.length == 0">
+            <div>No record found</div>
+        </div>
     </table>
 </div>
 <div class="modal fade" id="mobile_filter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">

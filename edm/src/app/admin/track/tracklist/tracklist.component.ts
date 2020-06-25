@@ -22,12 +22,12 @@ export class TrackListComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
-      this.getAllTracks();
+      this.getAllTracks("0");
       this.bindCategory();
     })
     
   }
-  public getAllTracks() {
+  public getAllTracks(genreid) {
     this._base._ApiService.get(ApiConstant.TrackManagement.Track + '?TrackID=0').subscribe((data: any) => {
       if (this.moduleName == "Track") {
         data = data.filter(res => res.IsTrack == true);
@@ -35,7 +35,12 @@ export class TrackListComponent implements OnInit {
         data = data.filter(res => res.IsTrack == false);
       }
       console.log(data);
-      this.data = data;
+      if(genreid != "0"){
+       
+        this.data = data.filter(a => a.Ref_Category_ID == genreid);
+      }else{
+        this.data = data;
+      }
       this.data.filter(item => {
         item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
         item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
@@ -54,6 +59,22 @@ export class TrackListComponent implements OnInit {
     let genre = this.genrelist.filter(r => r.Ref_Category_ID == id);
     let genrename = genre[0].CategoryName;
     return genrename
+  }
+  onGenreChange(e){
+    if(e == "0"){
+      this.getAllTracks("0");  
+    }else{
+      this.getAllTracks(e);
+    }
+    console.log(e);
+  }
+  onPriceChange(e){
+    // if(e == "0"){
+    //   this.getAllTracks("0");  
+    // }else{
+    //   this.getAllTracks(e);
+    // }
+    // console.log(e);
   }
   public redirectToaddmodifytrack(trackId) {
     debugger;
