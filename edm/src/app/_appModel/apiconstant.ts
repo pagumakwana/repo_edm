@@ -19,4 +19,7 @@ export class ApiConstant {
     public static TrackManagement = {
         Track: "Admin/TrackManagement/Track",
     }
+    public static MasterManagement = {
+        DAW: "Admin/MasterManagement/DAW",
+    }
 }

@@ -21,7 +21,6 @@ import { PageTitleService } from './_appService/_title/title.service';
 import { RegisterService } from './_appService/register.service';
 import { FileUploadService } from './_appService/fileUploadService/fileUploadService';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgxSpinnerModule } from "ngx-spinner";
 import * as bootstrap from "bootstrap";
 import * as $ from "jquery";
 export function socialConfigs() {
@@ -54,7 +53,6 @@ export function socialConfigs() {
     SocialLoginModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxSpinnerModule,
     ToastrModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
