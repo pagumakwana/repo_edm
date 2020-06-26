@@ -1169,7 +1169,7 @@ appadmin-adminbody {
     display: inline-block;
 }
 
-.admin_header {
+.admin_heading {
     padding-bottom: 30px;
 }
 
@@ -1181,7 +1181,7 @@ appadmin-adminbody {
     font-weight: normal;
 }
 
-.admin_header h4 {
+.admin_heading h4 {
     font-size: 24px;
     font-weight: bold;
     text-transform: uppercase;
@@ -1373,13 +1373,13 @@ appadmin-adminbody {
     .global_sections {
         margin-bottom: 50px;
     }
-    .admin_header h4 {
+    .admin_heading h4 {
         font-size: 20px;
     }
     .admin_page {
         padding: 20px;
     }
-    .admin_header {
+    .admin_heading {
         padding-bottom: 20px;
     }
     .portlet_body {
@@ -1454,7 +1454,7 @@ appadmin-adminbody {
     .global_slider {
         padding: 0 30px;
     }
-    .admin_header h4 {
+    .admin_heading h4 {
         font-size: 18px;
     }
     .form_heading {
@@ -1482,10 +1482,10 @@ appadmin-adminbody {
     .admin_page {
         padding: 15px;
     }
-    .admin_header {
+    .admin_heading {
         padding-bottom: 15px;
     }
-    .admin_header h4 {
+    .admin_heading h4 {
         font-size: 16px;
     }
     .primary_table thead th,
