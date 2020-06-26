@@ -17,13 +17,21 @@ export class AddModifyTrackComponent implements OnInit {
   model2: any = {};
   moduleName
   trackId = 0;
-  imgFile
+  imgFile;
   formDataTrackImg
   uploadImage
   audioFile
   formDataaudio
   uploadAudio;
   trackImg: any;
+  trackImguploaded: boolean = true;
+  masterfileuploaded: boolean = true;
+  unmasterfileuploaded: boolean = true;
+  mixdowfileuploaded: boolean = true;
+  urtoggedfileuploaded: boolean = true;
+  stemsfileuploaded: boolean = true;
+  MIDIfileuploaded: boolean = true;
+  projectfileuploaded: boolean = true;
   uploadmasterfile: any;
   uploadunmasterfile: any;
   uploadmixdowfile: any;
@@ -38,6 +46,7 @@ export class AddModifyTrackComponent implements OnInit {
   projectfileurl: any;
   uploadurtoggedfile: any;
   urtoggedfile: any;
+  urtoggedfileurl: any;
   finalsubmition: boolean = false;
   genrelist;
   selectedGenreName;
@@ -98,14 +107,16 @@ export class AddModifyTrackComponent implements OnInit {
     { "Ref_User_ID": 0, "Ref_Key_ID": 2, "Ref_Parent_ID": 0, "KeyName": "D minor", "AliasName": "D minor", "CategoryUseBy": "", "Description": "For Beat upload", "ThumbnailImageUrl": "", "IsActive": true },
   ]
   DAWlist
-  //= [
-  //{"Ref_User_ID":0,"Ref_DAW_ID":1,"Ref_Parent_ID":0,"DAWName":"For Track1","AliasName":"for-Beat1","CategoryUseBy":"","Description":"For Track upload","ThumbnailImageUrl":"","IsActive":true},
-  //{"Ref_User_ID":0,"Ref_DAW_ID":2,"Ref_Parent_ID":0,"DAWName":"For Track2","AliasName":"for-Beat2","CategoryUseBy":"","Description":"For Track upload","ThumbnailImageUrl":"","IsActive":true}
-  //]
   RADIO_LIST = [
     { name: 'Yes', value: 'true', checked: false },
     { name: 'No', value: 'false', checked: false }
   ];
+  masterfile: any;
+  unmasterfile: any;
+  mixdowfile: any;
+  stemsfile: any;
+  projectfile: any;
+  MIDIfile: any
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
@@ -115,18 +126,28 @@ export class AddModifyTrackComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    //this.model.trackname = "ddd"
     this.route.params.subscribe(params => {
       this.moduleName = params['module']
-      // if(params['module'] == 'Track'){
-      //   this.moduleName = 'Track'
-      // }else{
-      //   this.moduleName = 'Beat'
-      // }
       this.trackId = params['id'];
       if (this.trackId != 0) {
         this.getTrackDetails(this.trackId);
       } else {
+        this.model = {};
+        this.trackImg = undefined;
+        this.masterfile = undefined;
+        this.unmasterfile = undefined;
+        this.mixdowfile = undefined;
+        this.MIDIfile = undefined;
+        this.stemsfile = undefined;
+        this.urtoggedfile = undefined;
+        this.projectfile = undefined;
+        this.masterfileurl = undefined
+        this.unmasterfileurl = undefined
+        this.mixdowfileurl = undefined
+        this.stemsfileurl = undefined
+        this.urtoggedfileurl = undefined
+        this.midifileurl = undefined
+        this.projectfileurl = undefined
         this.trackId = 0;
         this.Category_ID = 0;
         this.MoodID = 0;
@@ -174,12 +195,12 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackprice = data[0].Price
       this.model.trackImg = data[0].ThumbnailImageUrl
       this.trackImg = data[0].ThumbnailImageUrl
-      this.model2.masterfile = data[0].MasterFileUrl
-      this.model2.unmasterfile = data[0].UnmasteredFileUrl
-      this.model2.mixdowfile = data[0].MixdowFileUrl
-      this.model2.stemsfile = data[0].StemsUrl
+      this.masterfile = data[0].MasterFileUrl
+      this.unmasterfile = data[0].UnmasteredFileUrl
+      this.mixdowfile = data[0].MixdowFileUrl
+      this.stemsfile = data[0].StemsUrl
       //this.model2.MIDIfile= data[0].MIDIfile
-      this.model2.projectfile = data[0].ProjectFilesUrl;
+      this.projectfile = data[0].ProjectFilesUrl;
       this.masterfileurl = data[0].MasterFileUrl
       this.unmasterfileurl = data[0].UnmasteredFileUrl
       this.mixdowfileurl = data[0].MixdowFileUrl
@@ -212,13 +233,12 @@ export class AddModifyTrackComponent implements OnInit {
         that.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
         reader.readAsDataURL(this.imgFile)
         reader.onload = (_event) => {
-          // this.uploadImage = reader.result;
-          // this.fileUploadService.uploadImageonServer = reader.result;
         }
+        this.trackImg = this.imgFile.name;
         this.fileUploadService.uploadonServer('Track', 'Image', '', this.formDataTrackImg, '').then(trackcover => {
           console.log(trackcover);
           this.trackImg = trackcover;
-          // this.trackcoverfilecheck = true;
+          this.trackImguploaded = true;
           this.commonService.hideLoader();
         }, e => {
           this.commonService.hideLoader();
@@ -230,46 +250,55 @@ export class AddModifyTrackComponent implements OnInit {
   }
   changeListenerfile($event, fileType): void {
     debugger;
-    this.commonService.showLoader()
     this.audioFile = $event.target.files[0];
     console.log(this.audioFile);
-    // var that = this;
-    // var readerAudio = new FileReader();
     if (this.audioFile) {
-      if (this.audioFile.type == 'audio/mpeg') {
-        if (fileType == 'Masterfile') {
-          this.uploadmasterfile = new FormData();
-          this.uploadmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'Unmasterfile') {
-          this.uploadunmasterfile = new FormData();
-          this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'Mixdowfile') {
-          this.uploadmixdowfile = new FormData();
-          this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'Stemsfile') {
-          this.uploadstemsfile = new FormData();
-          this.uploadstemsfile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'MIDIfile') {
-          this.uploadmidifile = new FormData();
-          this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'Projectfile') {
-          this.uploadprojectfile = new FormData();
-          this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'Urtoggedfile') {
+      if (fileType == 'Urtoggedfile') {
+        if (/\.(zip|rar)$/i.test(this.audioFile.name) === true) {
+          this.commonService.showLoader()
+          this.urtoggedfile = this.audioFile.name;
           this.uploadurtoggedfile = new FormData();
           this.uploadurtoggedfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          this.uploadfile(fileType);
+        } else {
+          alert('Please select .zip or .rar file');
+          this.audioFile = "";
         }
-        this.uploadfile(fileType)
-        //that.formDataaudio = new FormData();
-        // that.formDataaudio.append('uploadFile', this.audioFile, this.audioFile.name);
-        // readerAudio.onload = (_event) => { 
-        // this.fileUploadService.uploadAudioonServer = readerAudio.result;
-
-        // }
       } else {
-        alert('invalid formate');
-        this.audioFile = "";
+        if (/\.(mp3|war)$/i.test(this.audioFile.name) === true) {
+          this.commonService.showLoader()
+          if (fileType == 'Masterfile') {
+            this.masterfile = this.audioFile.name;
+            this.uploadmasterfile = new FormData();
+            this.uploadmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'Unmasterfile') {
+            this.unmasterfile = this.audioFile.name;
+            this.uploadunmasterfile = new FormData();
+            this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'Mixdowfile') {
+            this.mixdowfile = this.audioFile.name;
+            this.uploadmixdowfile = new FormData();
+            this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'Stemsfile') {
+            this.stemsfile = this.audioFile.name;
+            this.uploadstemsfile = new FormData();
+            this.uploadstemsfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'MIDIfile') {
+            this.midifileurl = this.audioFile.name;
+            this.uploadmidifile = new FormData();
+            this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'Projectfile') {
+            this.projectfile = this.audioFile.name;
+            this.uploadprojectfile = new FormData();
+            this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          }
+          this.uploadfile(fileType);
+        } else {
+          alert('Please select .mp3 or .war file');
+          this.audioFile = "";
+        }
       }
+
     }
   }
   uploadfile(fileType) {
@@ -278,42 +307,49 @@ export class AddModifyTrackComponent implements OnInit {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
         console.log(data);
         this.uploadmasterfile = data;
+        this.masterfileuploaded = true;
         this.commonService.hideLoader();
       })
     } else if (fileType == 'Unmasterfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadunmasterfile, '').then(data => {
         console.log(data);
         this.unmasterfileurl = data;
+        this.unmasterfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Mixdowfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmixdowfile, '').then(data => {
         console.log(data);
         this.mixdowfileurl = data;
+        this.mixdowfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Stemsfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadstemsfile, '').then(data => {
         console.log(data);
         this.stemsfileurl = data;
+        this.stemsfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'MIDIfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmidifile, '').then(data => {
         console.log(data);
         this.midifileurl = data;
+        this.MIDIfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Projectfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadprojectfile, '').then(data => {
         console.log(data);
         this.projectfileurl = data;
+        this.projectfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Urtoggedfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
         console.log(data);
-        this.urtoggedfile = data;
+        this.urtoggedfileurl = data;
+        this.urtoggedfileuploaded = true;
         this.commonService.hideLoader()
       })
     }
@@ -323,52 +359,91 @@ export class AddModifyTrackComponent implements OnInit {
     // })
   }
   onSubmit() {
-    if (this.trackImg != undefined || this.trackImg != null || this.trackImg != "") {
+    if (this.trackImg != undefined) {
       this.finalsubmition = true;
     } else {
-      alert('Please choose Track cover');
+      this.trackImguploaded = false;
     }
-
-
   }
   finaltrackSubmit() {
-    this.commonService.showLoader()
-    this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-      let ObjTrackDetails = {
-        "Ref_Track_ID": this.trackId,
-        "Ref_Category_ID": this.model.trackgenre,
-        "TrackType": this.model.trackdjstyle == undefined ? '' : this.model.trackdjstyle,
-        "TrackName": this.model.trackname,
-        "Bio": this.model.trackshortBio,
-        "Mood": this.model.mood == undefined ? '' : this.model.mood,
-        "Key": this.model.beatkey == undefined ? '' : this.model.beatkey,
-        "Tag": this.model.tags == undefined ? '' : this.model.tags,
-        "Duration": this.model.trackduration == undefined ? '' : this.model.trackduration,
-        "BMP": this.model.trackbmp,
-        "DAW": this.model.trackDaw == undefined ? '' : this.model.trackDaw,
-        "IsVocals": this.moduleName == 'Track' ? JSON.parse(this.model.trackvocals) : '',
-        "IsTrack": this.moduleName == 'Track' ? true : false,
-        "Price": this.model.trackprice,
-        "PriceWithProjectFiles": 0,
-        "BigImageUrl": this.trackImg,
-        "ThumbnailImageUrl": this.trackImg,
-        "MasterFileUrl": this.masterfileurl == undefined ? '' : this.masterfileurl,
-        "UnmasteredFileUrl": this.unmasterfileurl == undefined ? '' : this.unmasterfileurl,
-        "MixdowFileUrl": this.mixdowfileurl == undefined ? '' : this.mixdowfileurl,
-        "StemsUrl": this.stemsfileurl == undefined ? '' : this.stemsfileurl,
-        "MIDIUrl": this.midifileurl == undefined ? '' : this.midifileurl,
-        "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
-        "IsActive": true,
-        "CreatedBy": FullName
-      }
-      this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
-        console.log(data);
-        this.commonService.hideLoader();
-        //$('#acknowledge_popup').modal('show');
-      }, e => {
-        this.commonService.hideLoader();
+    if (this.checkfileuploaded()) {
+      this.commonService.showLoader()
+      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+        let ObjTrackDetails = {
+          "Ref_Track_ID": this.trackId,
+          "Ref_Category_ID": this.model.trackgenre,
+          "TrackType": this.model.trackdjstyle == undefined ? '' : this.model.trackdjstyle,
+          "TrackName": this.model.trackname,
+          "Bio": this.model.trackshortBio,
+          "Mood": this.model.mood == undefined ? '' : this.model.mood,
+          "Key": this.model.beatkey == undefined ? '' : this.model.beatkey,
+          "Tag": this.model.tags == undefined ? '' : this.model.tags,
+          "Duration": this.model.trackduration == undefined ? '' : this.model.trackduration,
+          "BMP": this.model.trackbmp,
+          "DAW": this.model.trackDaw == undefined ? '' : this.model.trackDaw,
+          "IsVocals": this.moduleName == 'Track' ? JSON.parse(this.model.trackvocals) : '',
+          "IsTrack": this.moduleName == 'Track' ? true : false,
+          "Price": this.model.trackprice,
+          "PriceWithProjectFiles": 0,
+          "BigImageUrl": this.trackImg,
+          "ThumbnailImageUrl": this.trackImg,
+          "MasterFileUrl": this.masterfileurl == undefined ? '' : this.masterfileurl,
+          "UnmasteredFileUrl": this.unmasterfileurl == undefined ? '' : this.unmasterfileurl,
+          "MixdowFileUrl": this.mixdowfileurl == undefined ? '' : this.mixdowfileurl,
+          "StemsUrl": this.stemsfileurl == undefined ? '' : this.stemsfileurl,
+          "MIDIUrl": this.midifileurl == undefined ? '' : this.midifileurl,
+          "UrtroggedUrl": this.urtoggedfileurl == undefined ? '' : this.urtoggedfileurl,
+          "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
+          "IsActive": true,
+          "CreatedBy": FullName
+        }
+        this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
+          console.log(data);
+          alert(data);
+          this.commonService.hideLoader();
+          // $('#acknowledge_popup').modal('show');
+        }, e => {
+          this.commonService.hideLoader();
+        })
       })
-    })
+    } else {
+      if (this.masterfileurl == undefined) {
+        this.masterfileuploaded = false;
+      }
+      if (this.unmasterfileurl == undefined) {
+        this.unmasterfileuploaded = false;
+      }
+      if (this.mixdowfileurl == undefined) {
+        this.mixdowfileuploaded = false;
+      }
+      if (this.stemsfileurl == undefined) {
+        this.stemsfileuploaded = false;
+      }
+      if (this.urtoggedfileurl == undefined) {
+        this.urtoggedfileuploaded = false;
+      }
+      if (this.midifileurl == undefined) {
+        this.MIDIfileuploaded = false;
+      }
+      if (this.projectfileurl == undefined) {
+        this.projectfileuploaded = false;
+      }
+    }
+  }
+  checkfileuploaded() {
+    if (this.moduleName == "Track") {
+      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfile != undefined && this.projectfileurl != undefined && this.midifileurl != undefined) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      if (this.stemsfile != undefined && this.urtoggedfileurl != undefined) {
+        return true
+      } else {
+        return false
+      }
+    }
   }
 
 }

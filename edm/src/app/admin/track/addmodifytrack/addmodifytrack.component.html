@@ -18,18 +18,13 @@
             <label class="form_label">Upload {{moduleName}} Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept="image/*" id="customFile" name="trackImg" [(ngModel)]="model.trackImg" #trackImg="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackImg.invalid }" (change)="changeListenerTrackImg($event)"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model.trackImg}}</label>
+                    <input type="file" class="custom-file-input" accept="image/*" id="customFile" [(ngModel)]="trackImg" (change)="changeListenerTrackImg($event)">
+                    <label class="custom-file-label">{{trackImg}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
             </div>
-            <div *ngIf="f.submitted && trackImg.invalid">
-                <div *ngIf="trackImg.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+            <div class="error_msg" *ngIf="!trackImguploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="multipul_form_group" *ngIf="moduleName == 'Track'">
@@ -157,17 +152,16 @@
             <div class="form_area">
                 <div class="inline_radio">
                     <label class="radio">
-                                <input name="trackvocals" value=true type="radio" checked="checked" id="trackvocals" class="form-check-input" [(ngModel)]="model.trackvocals" #trackvocals="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackvocals.invalid
-                            }" required>Yes
+                                <input name="trackvocals" [value]="true" type="radio" id="trackvocalsyes" class="form-check-input custom-control-input" [(ngModel)]="model.trackvocals" #trackvocals="ngModel" required>Yes
                                 <span></span>
                             </label>
                     <label class="radio">
-                                <input name="trackvocals" value=false type="radio" id="trackvocals" class="form-check-input" [(ngModel)]="model.trackvocals" #trackvocals="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackvocals.invalid }">No
+                                <input name="trackvocals" [value]="false" type="radio" id="trackvocalsnow" class="form-check-input custom-control-input" [(ngModel)]="model.trackvocals" #trackvocals="ngModel" required>No
                                 <span></span>
                             </label>
                 </div>
             </div>
-            <div *ngIf="f.submitted && trackvocals.invalid" class="invalid-feedback">
+            <div *ngIf="f.submitted && trackvocals.invalid">
                 <div *ngIf="trackvocals.errors.required">
                     <div class="error_msg">
                         <span>This field is Required</span>
@@ -175,30 +169,31 @@
                 </div>
             </div>
         </div>
-        <div class="form_group">
-            <div class="form_area icon_form_group" *ngIf="moduleName == 'Track'">
+        <div class="form_group" *ngIf="moduleName == 'Track'">
+            <div class="form_area icon_form_group">
                 <select name="trackDaw" [value]="DAWID" class="form-control" [(ngModel)]="model.trackDaw" #trackDaw="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackDaw.invalid }" required>
                             <option [value]="undefined" disabled hidden>Project Daw</option>
                             <option *ngFor="let DAW of DAWlist" [value]="DAW.Ref_DAW_ID" [selected]="DAW.Ref_DAW_ID == DAWID">{{DAW.DAW}}</option>
                            
                         </select>
                 <span class="input_icon dropdown_icon"></span>
-                <div class="tags">
-                    <span>demo</span>
-                    <span>demo</span>
-                </div>
-            </div>
 
-            <!-- <div *ngIf="f.submitted && trackDaw.invalid">
+            </div>
+            <div *ngIf="f.submitted && trackDaw.invalid">
                 <div *ngIf="trackDaw.errors.required">
                     <div class="error_msg">
                         <span>This field is Required</span>
                     </div>
                 </div>
-            </div> -->
+            </div>
+            <div class="tags">
+                <span>demo</span>
+                <span>demo</span>
+            </div>
+
         </div>
-        <div class="form_group">
-            <div class="form_area icon_form_group" *ngIf="moduleName == 'Beat'">
+        <div class="form_group" *ngIf="moduleName == 'Beat'">
+            <div class="form_area icon_form_group">
                 <select name="beatkey" [value]="KeyID" class="form-control" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required>
                             <option [value]="undefined" disabled hidden>Key</option>
                             <option *ngFor="let key of keylist" [value]="key.Ref_Key_ID" [selected]="key.Ref_Key_ID == KeyID">{{key.KeyName}}</option>
@@ -207,13 +202,13 @@
                 <span class="input_icon dropdown_icon"></span>
             </div>
 
-            <!-- <div *ngIf="f.submitted && beatkey.invalid">
+            <div *ngIf="f.submitted && beatkey.invalid">
                 <div *ngIf="beatkey.errors.required">
                     <div class="error_msg">
                         <span>This field is Required</span>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Beat'">
             <div class="form_area icon_form_group">
@@ -235,9 +230,6 @@
         </div>
         <div class="button_group">
             <button class="global_btn primary_btn">SAVE & CONTINUE</button>
-            <!-- <a class="global_btn primary_btn">
-                        <span>SAVE & CONTINUE</span>
-                    </a> -->
         </div>
     </form>
 </div>
@@ -248,126 +240,95 @@
             <label class="form_label">Upload Master</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="masterfile" name="masterfile" [(ngModel)]="model2.masterfile" #masterfile="ngModel" (change)="changeListenerfile($event, 'Masterfile')" [ngClass]="{ 'is-invalid': f2.submitted && masterfile.invalid }"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.masterfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="masterfile" name="masterfile" [(ngModel)]="masterfile" (change)="changeListenerfile($event, 'Masterfile')">
+                    <label class="custom-file-label" for="customFile">{{masterfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
-            <div *ngIf="f2.submitted && masterfile.invalid">
-                <div *ngIf="masterfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+            <div class="error_msg" *ngIf="!masterfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Upload Master & Unmastered</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="unmasterfile" name="unmasterfile" [(ngModel)]="model2.unmasterfile" #unmasterfile="ngModel" (change)="changeListenerfile($event, 'Unmasterfile')" [ngClass]="{ 'is-invalid': f2.submitted && unmasterfile.invalid }"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.unmasterfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
+                    <label class="custom-file-label" for="customFile">{{unmasterfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
-            <div *ngIf="f2.submitted && unmasterfile.invalid">
-                <div *ngIf="unmasterfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+
+            <div class="error_msg" *ngIf="!unmasterfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Upload Mixdow Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="model2.mixdowfile" #mixdowfile="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && mixdowfile.invalid }"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.mixdowfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
+                    <label class="custom-file-label" for="customFile">{{mixdowfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
-            <div *ngIf="f2.submitted && mixdowfile.invalid">
-                <div *ngIf="mixdowfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+            <div class="error_msg" *ngIf="!mixdowfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Beat'">
             <label class="form_label">Urtogged Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="model2.urtoggedfile" #urtoggedfile="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && urtoggedfile.invalid}"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.urtoggedfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".zip, .rar" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="urtoggedfile">
+                    <label class="custom-file-label" for="customFile">{{urtoggedfile}}</label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Attchment format : .zip, .rar</span>
             </div>
-            <div *ngIf="f2.submitted && urtoggedfile.invalid">
-                <div *ngIf="urtoggedfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+
+            <div class="error_msg" *ngIf="!urtoggedfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group">
             <label class="form_label">Upload Stems</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="model2.stemsfile" #stemsfile="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && stemsfile.invalid }"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.stemsfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="stemsfile">
+                    <label class="custom-file-label" for="customFile">{{stemsfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
-            <div *ngIf="f2.submitted && stemsfile.invalid">
-                <div *ngIf="stemsfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+            <div class="error_msg" *ngIf="!stemsfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Upload MIDI</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="model2.MIDIfile" #MIDIfile="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && MIDIfile.invalid }"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.MIDIfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="MIDIfile">
+                    <label class="custom-file-label" for="customFile">{{MIDIfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
-            <div *ngIf="f2.submitted && MIDIfile.invalid">
-                <div *ngIf="MIDIfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+
+            <div class="error_msg" *ngIf="!MIDIfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Project Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input form-control" accept=".mp3, .war" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="model2.projectfile" #projectfile="ngModel" [ngClass]="{ 'is-invalid': f2.submitted && projectfile.invalid}"
-                        required>
-                    <label class="custom-file-label" for="customFile">{{model2.projectfile}}</label>
+                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="projectfile">
+                    <label class="custom-file-label" for="customFile">{{projectfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
-            <div *ngIf="f2.submitted && projectfile.invalid">
-                <div *ngIf="projectfile.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
+
+            <div class="error_msg" *ngIf="!projectfileuploaded">
+                <span>This field is Required</span>
             </div>
         </div>
         <div class="form_group">
