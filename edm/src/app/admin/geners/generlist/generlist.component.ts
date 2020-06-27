@@ -41,7 +41,7 @@ export class GenerListComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this._base._pageTitleService.setTitle('Manage Category', 'Manage Category');
+    this._base._pageTitleService.setTitle('Manage Category', 'MANAGE GENRE / CATEGORY');
     this.bindCategory();
   }
   bindCategory() {

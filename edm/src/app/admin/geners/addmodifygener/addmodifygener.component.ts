@@ -22,7 +22,7 @@ export class AddModifyGenersComponent implements OnInit {
   _categoryModel: CategoryModel = {};
   public categoryData: any = [];
   isCategoryModify: boolean = false;
-  btnTitle: string = 'Add'
+  btnTitle: string = 'ADD NEW'
   imgCategory: any;
   thumbnail: any;
   formCategory: FormGroup = this._fbGener.group({
@@ -34,7 +34,7 @@ export class AddModifyGenersComponent implements OnInit {
   })
 
   ngAfterViewInit(): void {
-    this._base._pageTitleService.setTitle('Category', this.btnTitle + ' Category');
+    this._base._pageTitleService.setTitle('Category', this.btnTitle + ' GENRE / Category');
   }
   ngOnInit(): void {
     this.bindCategory();

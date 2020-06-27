@@ -23,7 +23,7 @@
         <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="ParentCategory" formControlName="Ref_Parent_ID">
-                    <option value="0">Select Parent Category</option>
+                    <option value="0">Select Parent Category / Genre</option>
                     <option *ngFor="let objCategory of categoryData" [value]="objCategory.Ref_Category_ID">
                         {{objCategory.CategoryName}}</option>
                 </select>
@@ -61,7 +61,7 @@
                         (change)="fileChoosen($event)">
                     <label class="custom-file-label" for="customFile">Choose file</label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
+                <span class="file_formats">Note: File upload limit - 1GB</span>
             </div>
         </div>
         <div class="button_group">
