@@ -321,10 +321,10 @@
             <label class="form_label">Project Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="projectfile">
+                    <input type="file" class="custom-file-input" accept=".zip, .rar" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="projectfile">
                     <label class="custom-file-label" for="customFile">{{projectfile}}</label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Attchment format : .zip, .rar</span>
             </div>
 
             <div class="error_msg" *ngIf="!projectfileuploaded">

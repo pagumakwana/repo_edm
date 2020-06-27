@@ -55,7 +55,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let track of data">
-                <td><img class="tbl_img" [src]="track.ThumbnailImageUrl" /></td>
+                <td><img class="tbl_img" [src]="track.ThumbnailImageUrl" (click)="playaudio(track.StemsUrl)" /></td>
                 <td>{{track.TrackName}}</td>
                 <td>&#36;{{track.Price}}</td>
                 <td>{{track.Ref_Category_ID}}</td>

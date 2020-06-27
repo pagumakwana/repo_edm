@@ -54,7 +54,6 @@ export class AddModifyTrackComponent implements OnInit {
   MoodID;
   KeyID;
   DAWID;
-  //trackcoverfilecheck:boolean = true;
   moodlist = [
     { "Ref_User_ID": 0, "Ref_Mood_ID": 1, "Ref_Parent_ID": 0, "MoodName": "Accomplished", "AliasName": "Accomplished", "CategoryUseBy": "", "Description": "For Beat upload", "ThumbnailImageUrl": "", "IsActive": true },
     { "Ref_User_ID": 0, "Ref_Mood_ID": 2, "Ref_Parent_ID": 0, "MoodName": "Adored", "AliasName": "Adored", "CategoryUseBy": "", "Description": "For Beat upload", "ThumbnailImageUrl": "", "IsActive": true },
@@ -253,12 +252,18 @@ export class AddModifyTrackComponent implements OnInit {
     this.audioFile = $event.target.files[0];
     console.log(this.audioFile);
     if (this.audioFile) {
-      if (fileType == 'Urtoggedfile') {
+      if (fileType == 'Urtoggedfile' || fileType == 'Projectfile') {
         if (/\.(zip|rar)$/i.test(this.audioFile.name) === true) {
           this.commonService.showLoader()
-          this.urtoggedfile = this.audioFile.name;
-          this.uploadurtoggedfile = new FormData();
-          this.uploadurtoggedfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          if(fileType == 'Urtoggedfile'){
+            this.urtoggedfile = this.audioFile.name;
+            this.uploadurtoggedfile = new FormData();
+            this.uploadurtoggedfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          }else  if(fileType == 'Projectfile'){
+            this.projectfile = this.audioFile.name;
+            this.uploadprojectfile = new FormData();
+            this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          }
           this.uploadfile(fileType);
         } else {
           alert('Please select .zip or .rar file');
@@ -287,10 +292,6 @@ export class AddModifyTrackComponent implements OnInit {
             this.midifileurl = this.audioFile.name;
             this.uploadmidifile = new FormData();
             this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
-          } else if (fileType == 'Projectfile') {
-            this.projectfile = this.audioFile.name;
-            this.uploadprojectfile = new FormData();
-            this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
           this.uploadfile(fileType);
         } else {
@@ -302,7 +303,6 @@ export class AddModifyTrackComponent implements OnInit {
     }
   }
   uploadfile(fileType) {
-
     if (fileType == 'Masterfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
         console.log(data);

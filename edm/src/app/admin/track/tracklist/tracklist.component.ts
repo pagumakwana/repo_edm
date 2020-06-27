@@ -15,18 +15,21 @@ export class TrackListComponent implements OnInit {
   data: any;
   moduleName;
   genrelist;
+  audio;
+  audioplay: boolean = false;
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private route: ActivatedRoute,
     private _categoryService: CategoryService) { }
 
   ngOnInit(): void {
+    debugger;
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
-      this.getAllTracks("0");
       this.bindCategory();
+      this.getAllTracks("0");
     })
-    
+
   }
   public getAllTracks(genreid) {
     this._base._ApiService.get(ApiConstant.TrackManagement.Track + '?TrackID=0').subscribe((data: any) => {
@@ -36,16 +39,21 @@ export class TrackListComponent implements OnInit {
         data = data.filter(res => res.IsTrack == false);
       }
       console.log(data);
-      if(genreid != "0"){
-       
+      if (genreid != "0") {
         this.data = data.filter(a => a.Ref_Category_ID == genreid);
-      }else{
+        this.data.filter(item => {
+          item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
+          item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
+        })
+      } else {
         this.data = data;
+        this.data.filter(item => {
+          item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
+          item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
+        })
+        console.log(this.data);
       }
-      this.data.filter(item => {
-        item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
-        item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
-      })
+
     })
   }
   bindCategory() {
@@ -61,21 +69,53 @@ export class TrackListComponent implements OnInit {
     let genrename = genre[0].CategoryName;
     return genrename
   }
-  onGenreChange(e){
-    if(e == "0"){
-      this.getAllTracks("0");  
-    }else{
+  onGenreChange(e) {
+    if (e == "0") {
+      this.getAllTracks("0");
+    } else {
       this.getAllTracks(e);
     }
     console.log(e);
   }
-  onPriceChange(e){
-    // if(e == "0"){
-    //   this.getAllTracks("0");  
-    // }else{
-    //   this.getAllTracks(e);
-    // }
-    // console.log(e);
+  onPriceChange(e) {
+    this.data.sort(this.GetSortOrder("Price", e));
+    for (var item in this.data) {
+    }
+  }
+  GetSortOrder(prop, e) {
+    return function (a, b) {
+      if (e == "0") {
+        if (a[prop] > b[prop]) {
+          return 1;
+        } else if (a[prop] < b[prop]) {
+          return -1;
+        }
+        return 0;
+      } else {
+        if (a[prop] < b[prop]) {
+          return 1;
+        } else if (a[prop] > b[prop]) {
+          return -1;
+        }
+        return 0;
+      }
+
+    }
+  }
+  playaudio(path) {
+    if (!this.audioplay) {
+      this.audio = new Audio();
+      this.audio.src = environment.imageURL + path;
+      this.audio.load();
+      this.audio.play();
+      this.audioplay = true;
+    } else {
+      this.audio.pause();
+      this.audioplay = false;
+    }
+
+
+
   }
   public redirectToaddmodifytrack(trackId) {
     debugger;
