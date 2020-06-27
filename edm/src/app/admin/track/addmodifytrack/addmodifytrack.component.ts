@@ -121,7 +121,6 @@ export class AddModifyTrackComponent implements OnInit {
     public commonService: CommonService,
     public route: ActivatedRoute,
     private _categoryService: CategoryService) {
-
   }
 
   ngOnInit(): void {
@@ -195,16 +194,18 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackImg = data[0].ThumbnailImageUrl
       this.trackImg = data[0].ThumbnailImageUrl
       this.masterfile = data[0].MasterFileUrl
+      this.urtoggedfile = data[0].MasterFileUrl
       this.unmasterfile = data[0].UnmasteredFileUrl
       this.mixdowfile = data[0].MixdowFileUrl
       this.stemsfile = data[0].StemsUrl
-      //this.model2.MIDIfile= data[0].MIDIfile
+      this.MIDIfile= data[0].MIDIFileUrl
+      this.midifileurl= data[0].MIDIFileUrl
       this.projectfile = data[0].ProjectFilesUrl;
-      this.masterfileurl = data[0].MasterFileUrl
+      this.masterfileurl = data[0].MasterFileUrl;
+      this.urtoggedfileurl = data[0].MasterFileUrl;
       this.unmasterfileurl = data[0].UnmasteredFileUrl
-      this.mixdowfileurl = data[0].MixdowFileUrl
-      this.stemsfileurl = data[0].StemsUrl
-      // this.midifileurl,
+      this.mixdowfileurl = data[0].MixdowFileUrl;
+      this.stemsfileurl = data[0].StemsUrl;
       this.projectfileurl = data[0].ProjectFilesUrl;
       this.Category_ID = data[0].Ref_Category_ID;
       this.MoodID = data[0].Mood;
@@ -215,8 +216,6 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackDaw = data[0].DAW
       this.model.trackgenre = data[0].Ref_Category_ID
       this.model.tags = data[0].Tag;
-      //this.trackcoverfilecheck = true;
-
     })
   }
   changeListenerTrackImg($event): void {
@@ -306,7 +305,7 @@ export class AddModifyTrackComponent implements OnInit {
     if (fileType == 'Masterfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
         console.log(data);
-        this.uploadmasterfile = data;
+        this.masterfileurl = data;
         this.masterfileuploaded = true;
         this.commonService.hideLoader();
       })
@@ -348,9 +347,9 @@ export class AddModifyTrackComponent implements OnInit {
     } else if (fileType == 'Urtoggedfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
         console.log(data);
-        this.urtoggedfileurl = data;
-        this.urtoggedfileuploaded = true;
-        this.commonService.hideLoader()
+        this.masterfileurl = data;
+        this.masterfileuploaded = true;
+        this.commonService.hideLoader();
       })
     }
     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadtrackfile,'').then(data => {
@@ -391,8 +390,7 @@ export class AddModifyTrackComponent implements OnInit {
           "UnmasteredFileUrl": this.unmasterfileurl == undefined ? '' : this.unmasterfileurl,
           "MixdowFileUrl": this.mixdowfileurl == undefined ? '' : this.mixdowfileurl,
           "StemsUrl": this.stemsfileurl == undefined ? '' : this.stemsfileurl,
-          "MIDIUrl": this.midifileurl == undefined ? '' : this.midifileurl,
-          "UrtroggedUrl": this.urtoggedfileurl == undefined ? '' : this.urtoggedfileurl,
+          "MIDIFileUrl": this.midifileurl == undefined ? '' : this.midifileurl,
           "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
           "IsActive": true,
           "CreatedBy": FullName
