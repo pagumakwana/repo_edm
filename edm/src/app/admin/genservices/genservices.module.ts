@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ServicesListComponent } from './servicesslist/servicesslist.component';
 import { AddModifyServicesComponent } from './addmodifyservices/addmodifyservices.component';
+import { GenService } from 'src/app/_appService/genservice/genservice.service';
+import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @NgModule({
     declarations: [
         ServicesListComponent,
@@ -21,7 +24,10 @@ import { AddModifyServicesComponent } from './addmodifyservices/addmodifyservice
                 component: AddModifyServicesComponent
             }
         ]),
+        ErrorModule,
+        FormsModule,
+        ReactiveFormsModule
     ],
-    providers: []
+    providers: [GenService]
 })
 export class GenServiceModule { }

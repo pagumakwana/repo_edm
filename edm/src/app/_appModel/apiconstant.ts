@@ -12,6 +12,9 @@ export class ApiConstant {
         AddModifyCategory: "Admin/MasterManagement/Category",
         category: "Admin/MasterManagement/Category"
     }
+    public static genService = {
+        Service: "Admin/ServiceManagement/Service"
+    }
     public static common = {
         thumbnail: "Admin/Common/Image",
         uploadfiles: "Admin/Common/File"
