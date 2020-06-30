@@ -55,14 +55,22 @@
         </thead>
         <tbody>
             <tr *ngFor="let track of data">
-                <td><img class="tbl_img" [src]="track.ThumbnailImageUrl" (click)="playaudio(track.StemsUrl)" /></td>
+                <td>
+                    <div class="play_upper_layer">
+                        <img class="tbl_img" [src]="track.ThumbnailImageUrl" (click)="playaudio(track.StemsUrl)" />
+                        <div class="play_audio">
+                            <span title="Play" class="play"></span>
+                            <span title="Pause" class="pause" style="display: none;"></span>
+                        </div>
+                    </div>
+                </td>
                 <td>{{track.TrackName}}</td>
                 <td>&#36;{{track.Price}}</td>
                 <td>{{track.Ref_Category_ID}}</td>
                 <td>-</td>
                 <td>
                     <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
-                    <a class="read_more"> READ MORE</a>
+                    <a class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
                 </td>
                 <td class="table_btn">
                     <a class="global_btn icon_btn primary_btn">
@@ -88,7 +96,15 @@
                 </td>
             </tr>
             <!-- <tr>
-                <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                <td>
+                    <div class="play_upper_layer">
+                        <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                        <div class="play_audio">
+                            <span title="Play" class="play"></span>
+                            <span title="Pause" class="pause" style="display: none;"></span>
+                        </div>
+                    </div>
+                </td>
                 <td>Raindrop</td>
                 <td>&#36;300</td>
                 <td>Bigroom</td>
@@ -96,7 +112,7 @@
                 <td>
                     <span class="comment_area" style="width: 250px;">Lorem Ipsum is simply dummy text of the printing
                         and typesetting industry simply dummy text of the printing and typesetting industry</span>
-                    <a class="read_more" href="#"> READ MORE</a>
+                    <a class="read_more" data-toggle="modal" data-target="#readmore_popup" href="#"> READ MORE</a>
                 </td>
                 <td class="table_btn">
                     <a class="global_btn icon_btn primary_btn">
@@ -122,7 +138,15 @@
                 </td>
             </tr>
             <tr>
-                <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                <td>
+                    <div class="play_upper_layer">
+                        <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                        <div class="play_audio">
+                            <span title="Play" class="play"></span>
+                            <span title="Pause" class="pause" style="display: none;"></span>
+                        </div>
+                    </div>
+                </td>
                 <td>Raindrop</td>
                 <td>&#36;300</td>
                 <td>Bigroom</td>
@@ -130,7 +154,7 @@
                 <td>
                     <span class="comment_area" style="width: 250px;">Lorem Ipsum is simply dummy text of the printing
                         and typesetting industry simply dummy text of the printing and typesetting industry</span>
-                    <a class="read_more" href="#"> READ MORE</a>
+                    <a class="read_more" data-toggle="modal" data-target="#readmore_popup" href="#"> READ MORE</a>
                 </td>
                 <td class="table_btn">
                     <a class="global_btn icon_btn primary_btn">
@@ -224,6 +248,22 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-block primary_btn">Apply Filter</button>
                 <button type="button" class="btn btn-block primary_btn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade plain_content" id="readmore_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-sm modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Comment</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
         </div>
     </div>

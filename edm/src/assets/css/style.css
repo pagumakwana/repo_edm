@@ -340,6 +340,7 @@ label.checkbox, label.radio {
 }
 .form_group .custom-file-input {
     cursor: pointer;
+    margin-bottom: 34px;
 }
 .form_group .custom-file-label {
     border-radius: 7px;
@@ -424,6 +425,38 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .inline_form_group .form_label, .inline_form_group .form_area {
     display: inline-block;
     width: auto;
+}
+.image_preview {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    z-index: 2;
+    right: 5px;
+    top: 2px;
+    bottom: 35px;
+    margin: auto;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form_group .custom-file-label:after {
+    position: absolute;
+    bottom: -35px;
+    right: auto;
+    top: auto;
+    left: 0;
+    line-height: normal;
+    padding: 5px 10px !important;
+    height: auto;
+    font-size: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form_group .upload_btn::after {
+    left: 70px;
+    content: "Upload" !important;
+    background: #e6e6e6;
+    color: #5A5A5A;
+    border: 0;
 }
 /* left slider */
 .left_panel {
@@ -706,6 +739,12 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .user_profile_img, .user_photo {
     background: url(../images/user_profile.svg) no-repeat;
+}
+.play {
+    background: url(../images/play.svg) no-repeat;
+}
+.pause {
+    background: url(../images/pause.svg) no-repeat;
 }
 /* Dropdown CSS */
 .dropdown_point {
@@ -1002,8 +1041,46 @@ appadmin-adminbody {
     margin: 0;
 }
 .primary_table .tbl_img {
-    width: 35px;
+    max-width: 35px;
+    max-height: 35px;
     border-radius: 5px;
+    width: auto;
+    height: auto;
+}
+.play_upper_layer {
+    position: relative;
+    width: 35px;
+    height: 35px;
+    display: table-cell;
+    vertical-align: middle;
+}
+.play_upper_layer:hover .play_audio {
+    display: block;
+}
+.play_audio {
+    position: absolute;
+    width: calc(100% + 1px);
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 5px;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    background: #00000036;
+    display: none;
+}
+.play, .pause {
+    background-size: contain;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-position: center;
+    margin: auto;
+    cursor: pointer;
 }
 .filter_section {
     margin-bottom: 20px;
@@ -1053,6 +1130,9 @@ appadmin-adminbody {
     width: 11px;
     vertical-align: middle;
     margin-left: 5px;
+}
+.plain_content .modal-body {
+    font-size: 13px;
 }
 /* Admin Side CSS */
 

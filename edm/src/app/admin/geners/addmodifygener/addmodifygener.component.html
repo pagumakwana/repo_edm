@@ -57,9 +57,12 @@
             <label class="form_label">Upload Service Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleFormControlFile1"
-                        (change)="fileChoosen($event)">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <input type="file" class="custom-file-input" id="exampleFormControlFile1" (change)="fileChoosen($event)">
+                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
+                    <label class="custom-file-label" for="customFile">
+                        Choose file
+                    </label>
+                    <label class="custom-file-label upload_btn"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 1GB</span>
             </div>

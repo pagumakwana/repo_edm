@@ -36,7 +36,15 @@
             </thead>
             <tbody>
                 <tr *ngFor="let obj of categoryData">
-                    <td><img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /></td>
+                    <td>
+                        <div class="play_upper_layer">
+                            <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                            <div class="play_audio">
+                                <span title="Play" class="play"></span>
+                                <span title="Pause" class="pause" style="display: none;"></span>
+                            </div>
+                        </div>
+                    </td>
                     <td>{{obj.CategoryName}}</td>
                     <td>29</td>
                     <td class="table_btn">
@@ -64,20 +72,21 @@
 </div>
 
 
-<div class="modal fade" id="modal-deleteconfirmation">
-    <div class="modal-dialog">
+<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <p>Once you delete data can not be rollback. Do you still want to continue?</p>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-default" (click)="cancelGenre()" data-dismiss="modal">Cancel</a>
-                <a (click)="removeGenre()" class="btn btn-primary" data-dismiss="modal">Yes</a>
+                <a type="button" class="btn btn-block primary_btn" (click)="cancelGenre()" data-dismiss="modal">Cancel</a>
+                <a (click)="removeGenre()" class="btn btn-block primary_btn" data-dismiss="modal">Yes</a>
             </div>
         </div>
     </div>
