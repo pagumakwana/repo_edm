@@ -5,7 +5,8 @@ import { ApiConstant } from './../../../_appModel/apiconstant'
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { CommonService } from './../../../_appService/common.service';
 import { ActivatedRoute } from '@angular/router';
-import { CategoryService } from './../../../_appService/category/category.serviec'
+import { CategoryService } from './../../../_appService/category/category.serviec';
+import { environment } from './../../../../environments/environment.prod';
 @Component({
   selector: 'appAdmin-addmodifytrack',
   templateUrl: './addmodifytrack.component.html',
@@ -54,6 +55,7 @@ export class AddModifyTrackComponent implements OnInit {
   MoodID;
   KeyID;
   DAWID;
+  preview
   moodlist = [
     { "Ref_User_ID": 0, "Ref_Mood_ID": 1, "Ref_Parent_ID": 0, "MoodName": "Accomplished", "AliasName": "Accomplished", "CategoryUseBy": "", "Description": "For Beat upload", "ThumbnailImageUrl": "", "IsActive": true },
     { "Ref_User_ID": 0, "Ref_Mood_ID": 2, "Ref_Parent_ID": 0, "MoodName": "Adored", "AliasName": "Adored", "CategoryUseBy": "", "Description": "For Beat upload", "ThumbnailImageUrl": "", "IsActive": true },
@@ -192,7 +194,8 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackvocals = data[0].IsVocals
       this.model.trackprice = data[0].Price
       this.model.trackImg = data[0].ThumbnailImageUrl
-      this.trackImg = data[0].ThumbnailImageUrl
+      this.trackImg = environment.imageURL + data[0].ThumbnailImageUrl
+      this.preview = environment.imageURL + data[0].ThumbnailImageUrl
       this.masterfile = data[0].MasterFileUrl
       this.urtoggedfile = data[0].MasterFileUrl
       this.unmasterfile = data[0].UnmasteredFileUrl
@@ -220,27 +223,20 @@ export class AddModifyTrackComponent implements OnInit {
   }
   changeListenerTrackImg($event): void {
     debugger;
-    this.commonService.showLoader()
+   
     this.imgFile = $event.target.files[0];
     console.log(this.imgFile);
     var that = this;
     var reader = new FileReader();
     if (this.imgFile) {
       if (this.imgFile.type == 'image/jpeg' || this.imgFile.type == 'image/jpg' || this.imgFile.type == 'image/png') {
-        that.formDataTrackImg = new FormData();
-        that.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
+        this.formDataTrackImg = new FormData();
+        this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
         reader.readAsDataURL(this.imgFile)
         reader.onload = (_event) => {
+          this.preview = reader.result;
         }
-        this.trackImg = this.imgFile.name;
-        this.fileUploadService.uploadonServer('Track', 'Image', '', this.formDataTrackImg, '').then(trackcover => {
-          console.log(trackcover);
-          this.trackImg = trackcover;
-          this.trackImguploaded = true;
-          this.commonService.hideLoader();
-        }, e => {
-          this.commonService.hideLoader();
-        })
+        this.trackImg = this.imgFile.name;   
       } else {
         alert('invalid formate');
       }
@@ -270,7 +266,7 @@ export class AddModifyTrackComponent implements OnInit {
         }
       } else {
         if (/\.(mp3|war)$/i.test(this.audioFile.name) === true) {
-          this.commonService.showLoader()
+        
           if (fileType == 'Masterfile') {
             this.masterfile = this.audioFile.name;
             this.uploadmasterfile = new FormData();
@@ -292,7 +288,7 @@ export class AddModifyTrackComponent implements OnInit {
             this.uploadmidifile = new FormData();
             this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
-          this.uploadfile(fileType);
+         // this.uploadfile(fileType);
         } else {
           alert('Please select .mp3 or .war file');
           this.audioFile = "";
@@ -301,7 +297,19 @@ export class AddModifyTrackComponent implements OnInit {
 
     }
   }
+  uploadImg(){
+    this.commonService.showLoader()
+    this.fileUploadService.uploadonServer('Track', 'Image', '', this.formDataTrackImg, '').then(trackcover => {
+      console.log(trackcover);
+      this.trackImg = trackcover;
+      this.trackImguploaded = true;
+      this.commonService.hideLoader();
+    }, e => {
+      this.commonService.hideLoader();
+    })
+  }
   uploadfile(fileType) {
+    this.commonService.showLoader()
     if (fileType == 'Masterfile') {
       this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
         console.log(data);

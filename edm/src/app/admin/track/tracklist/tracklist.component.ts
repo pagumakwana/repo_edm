@@ -15,8 +15,9 @@ export class TrackListComponent implements OnInit {
   data: any;
   moduleName;
   genrelist;
-  audio;
+  audio = new Audio();
   audioplay: boolean = false;
+  playpause: string = 'play'
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private route: ActivatedRoute,
@@ -47,7 +48,7 @@ export class TrackListComponent implements OnInit {
         })
       } else {
         this.data = data;
-        this.data.filter(item => {
+        this.data.map(item => {
           item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
           item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
         })
@@ -102,20 +103,29 @@ export class TrackListComponent implements OnInit {
 
     }
   }
-  playaudio(path) {
-    if (!this.audioplay) {
+  playaudio(path, id, data) {
+    debugger
+    if ($('.playpause_' + id).hasClass('pause')) {
+      data.filter(item => {
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+      })
+      this.audio.pause();
       this.audio = new Audio();
+     // $('.playpause_' + id).removeClass('pause');
+      //$('.playpause_' + id).addClass('play');
+    } else if ($('.playpause_' + id).hasClass('play')) {
       this.audio.src = environment.imageURL + path;
+      data.filter(item => {
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+      })
+      this.audio.pause();
       this.audio.load();
       this.audio.play();
-      this.audioplay = true;
-    } else {
-      this.audio.pause();
-      this.audioplay = false;
+      $('.playpause_' + id).removeClass('play');
+      $('.playpause_' + id).addClass('pause');
     }
-
-
-
   }
   public redirectToaddmodifytrack(trackId) {
     debugger;

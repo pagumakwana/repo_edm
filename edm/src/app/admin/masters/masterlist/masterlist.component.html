@@ -1,0 +1,33 @@
+<div class="button_group">
+    <a *ngIf="modulename=='master'" class="global_btn primary_btn" routerLink="/admin/config/addmodifymasters/master/0"><span>Add Master</span></a>
+    <a *ngIf="modulename=='masterdata'" class="global_btn primary_btn" routerLink="/admin/config/addmodifymasters/masterdata/0"><span>Add MasterData</span></a>
+</div>
+
+<div class="primary_table">
+    <table style="min-width: 998px;">
+        <thead>
+            <tr>
+                <th *ngIf="modulename=='master'">Master Name</th>
+                <th *ngIf="modulename=='masterdata'">MasterData Name</th>
+                <th>Description</th>
+                <th *ngIf="modulename=='master'">Is Compulsory</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="modulename=='master'">
+            <tr *ngFor="let usermaster of data">
+                <td (click)="redirectToaddmodifymaster(usermaster.Ref_UserMaster_ID)">{{usermaster.UserMaster}}</td>
+                <td>{{usermaster.Description}}</td>
+                <td>{{usermaster.IsMandatory}}</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="modulename=='masterdata'">
+            <tr *ngFor="let usermasterdata of data">
+                <td (click)="redirectToaddmodifymaster(usermasterdata.Ref_UserMasterData_ID)">{{usermasterdata.UserMasterData}}</td>
+                <td>{{usermasterdata.Description}}</td>
+            </tr>
+        </tbody>
+        <div *ngIf="data?.length == 0">
+            <div>No record found</div>
+        </div>
+    </table>
+</div>
