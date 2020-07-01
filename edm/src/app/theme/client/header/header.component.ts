@@ -67,7 +67,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
     //   Ref_Category_ID: 0,
     //   Ref_Parent_ID: 0
     // }
-    this._categoryService.categorylist().subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
       this.categoryData = resData;
     });
   }

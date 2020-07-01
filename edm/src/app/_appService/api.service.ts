@@ -22,8 +22,13 @@ export class ApiService {
     post(endpoint: string, body?: any) {
         return this.http.post(this.apiURL + '/' + endpoint, body, httpOptions);
     }
-    postFile(endpoint: string, body?: any) {
-        return this.http.post(this.apiURL + '/' + endpoint, body);
+    postFile(endpoint: string, bodyFile?: any) {
+        const formData = new FormData();
+        for (let i = 0; i < bodyFile.length; i++) {
+            let file: File = bodyFile[i];
+            formData.append('UploadFile_' + i, file, file.name)
+        }
+        return this.http.post(this.apiURL + '/' + endpoint, formData);
     }
 
     getExternal(endpoint: string, reqOpts?: any) {

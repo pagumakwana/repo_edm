@@ -45,12 +45,7 @@ export class GenerListComponent implements OnInit {
     this.bindCategory();
   }
   bindCategory() {
-    // this._categoryModel = {
-    //   Flag: '',
-    //   Ref_Category_ID: 0,
-    //   Ref_Parent_ID: 0
-    // }
-    this._categoryService.categorylist().subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
       let categoryData = []
       categoryData = Array.isArray(resData) ? resData : []
       console.log("categoryData", categoryData);
@@ -67,7 +62,6 @@ export class GenerListComponent implements OnInit {
         this._categoryModel.Ref_Parent_ID = data.Ref_Parent_ID;
         this._categoryModel.CategoryName = data.CategoryName;
         this._categoryModel.Description = data.Description;
-        this._categoryModel.ThumbnailImageUrl = data.ThumbnailImageUrl;
         this._categoryModel.CreatedName = FullName;
         this._categoryModel.AliasName = data.AliasName;
         if (flag == 'MODIFYCATEGORY') {
@@ -99,6 +93,5 @@ export class GenerListComponent implements OnInit {
     this._categoryModel.Ref_Parent_ID = 0;
     this._categoryModel.CategoryName = '';
     this._categoryModel.Description = '';
-    this._categoryModel.ThumbnailImageUrl = '';
   }
 }

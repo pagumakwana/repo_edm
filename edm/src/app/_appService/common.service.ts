@@ -6,7 +6,7 @@ import { EncryptedStorage } from '../_appModel/encryptedstorage';
 import { enAppSession } from '../_appModel/enAppSession';
 import { FormGroup } from '@angular/forms';
 import { ApiConstant } from '../_appModel/apiconstant';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 declare var $: any;
 @Injectable()
 export class CommonService {
@@ -139,27 +139,55 @@ export class CommonService {
         $('#mainloader').css('display', 'none');
     }
 
-    //image Upload
-    uploadFile(files: FileList | string, moduleName: string) {
+    filesUpload(files: FileList | string, moduleName: string) {
         return new Promise((resolve, reject) => {
-            if (typeof files == 'string') {
-                resolve(files)
+            let isUpload: boolean = files ? (files.length > 0) : false
+            debugger
+            if (isUpload) {
+                this.uploadFile(files, moduleName).subscribe(url => {
+                    resolve(url)
+                })
             } else {
-                let file: File = files ? (files.length > 0 ? files[0] : null) : null
-                if (file) {
-                    let formData: FormData = new FormData()
-                    formData.append('uploadFile', file, file.name)
-                    this.commonImageUpload(formData, moduleName).subscribe(url => {
-                        resolve(url)
-                    })
-                } else {
-                    resolve(null)
-                }
+                resolve(null)
             }
         })
     }
 
-    commonImageUpload(formData: FormData, ModuleName: string) {
-        return this._apiService.postFile(`${ApiConstant.common.thumbnail}?ModuleName=${ModuleName}`, formData)
+    uploadFile(filesData, ModuleName) {
+        return this._apiService.postFile(ApiConstant.common.uploadFileData + "?ModuleName=" + ModuleName, filesData);
+    }
+
+    getImageDimension(fileInput): Observable<any> {
+        return new Observable(observer => {
+            let _URL = window.URL
+            let img;
+            img = new Image();
+            img.onload = function () {
+                img.height = this.height;
+                img.width = this.width;
+            }
+            img.src = _URL.createObjectURL(fileInput);
+            setTimeout(() => {
+                let size = { width: img.width, height: img.height }
+                observer.next(size);
+                observer.complete();
+            }, 1000);
+        });
+    }
+
+    readImage(inputValue: any): Observable<any> {
+        return new Observable(observer => {
+            let imageFile: any;
+            var file: File = inputValue.files[0];
+            var myReader: FileReader = new FileReader();
+            myReader.readAsDataURL(file);
+            myReader.onloadend = (e) => {
+                setTimeout(() => {
+                    imageFile = myReader.result;
+                    observer.next(imageFile);
+                    observer.complete();
+                }, 1000);
+            }
+        });
     }
 }
