@@ -2,14 +2,14 @@
     <div class="portlet_body admin_half_forms">
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="text" name="masterName" formControlName="masterName" placeholder="Master Name" />
+                <input type="text" name="masterName" formControlName="masterName" [(ngModel)]="masterName" placeholder="Master Name" />
                 <span class="input_icon "></span>
             </div>
             <edm-error [control]="addmodifymaster.controls.masterName"></edm-error>
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group textarea_icon_form_group">
-                <textarea rows="4" placeholder="Describe" formControlName="Description"></textarea>
+                <textarea rows="4" placeholder="Describe" formControlName="Description" [(ngModel)]="Description"></textarea>
                 <span class="input_icon bio_icon"></span>
             </div>
             <span class="file_formats right_align">Max 1200 caractors</span>
@@ -20,11 +20,11 @@
             <div class="form_area">
                 <div class="inline_radio">
                     <label class="radio">
-                                <input name="IsParent" formControlName="IsParent" [value]="true" type="radio" id="IsParent" class="form-check-input custom-control-input">Yes
+                                <input name="IsParent" formControlName="IsParent" [(ngModel)]="IsParent" [value]="true" type="radio" id="IsParent" class="form-check-input custom-control-input">Yes
                                 <span></span>
                             </label>
                     <label class="radio">
-                                <input name="IsParent" formControlName="IsParent" [value]="false" type="radio" id="IsParent" class="form-check-input custom-control-input">No
+                                <input name="IsParent" formControlName="IsParent" [(ngModel)]="IsParent" [value]="false" type="radio" id="IsParent" class="form-check-input custom-control-input">No
                                 <span></span>
                             </label>
                 </div>
@@ -34,7 +34,7 @@
         </div>
         <div class="form_group" *ngIf="addmodifymaster.value.IsParent == true">
             <div class="form_area icon_form_group">
-                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID">
+                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
                             <option [value]="undefined" disabled hidden>Select Parent Master</option>
                             <option *ngFor="let parentmaster of parentmasterlist" [value]="parentmaster.Ref_UserMaster_ID" [selected]="parentmaster.Ref_UserMaster_ID == Ref_UserMaster_ID">{{parentmaster.userMasterName}}</option>
                            
@@ -47,9 +47,9 @@
         </div>
         <div class="form_group" *ngIf="modulename=='masterdata'">
             <div class="form_area icon_form_group">
-                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID">
+                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
                             <option [value]="undefined" disabled hidden>Select Master</option>
-                            <option *ngFor="let master of masterlist" [value]="master.Ref_UserMaster_ID" [selected]="master.Ref_UserMaster_ID == Ref_UserMaster_ID">{{master.userMasterName}}</option>
+                            <option *ngFor="let master of masterlist" [value]="master.Ref_UserMaster_ID" [selected]="master.Ref_UserMaster_ID == Ref_UserMaster_ID">{{master.UserMaster}}</option>
                            
                         </select>
                 <span class="input_icon dropdown_icon"></span>
@@ -63,11 +63,11 @@
             <div class="form_area">
                 <div class="inline_radio">
                     <label class="radio">
-                                <input name="IsMandatory" formControlName="IsMandatory" [value]="true" type="radio" id="IsMandatory" class="form-check-input custom-control-input">Yes
+                                <input name="IsMandatory" formControlName="IsMandatory" [(ngModel)]="IsMandatory" [value]="true" type="radio" id="IsMandatory" class="form-check-input custom-control-input">Yes
                                 <span></span>
                             </label>
                     <label class="radio">
-                                <input name="IsMandatory" formControlName="IsMandatory" [value]="false" type="radio" id="IsMandatory" class="form-check-input custom-control-input">No
+                                <input name="IsMandatory" formControlName="IsMandatory" [(ngModel)]="IsMandatory" [value]="false" type="radio" id="IsMandatory" class="form-check-input custom-control-input">No
                                 <span></span>
                             </label>
                 </div>

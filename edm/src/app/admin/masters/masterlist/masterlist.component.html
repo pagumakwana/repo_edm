@@ -11,6 +11,7 @@
                 <th *ngIf="modulename=='masterdata'">MasterData Name</th>
                 <th>Description</th>
                 <th *ngIf="modulename=='master'">Is Compulsory</th>
+                <th>Is Active</th>
             </tr>
         </thead>
         <tbody *ngIf="modulename=='master'">
@@ -18,12 +19,14 @@
                 <td (click)="redirectToaddmodifymaster(usermaster.Ref_UserMaster_ID)">{{usermaster.UserMaster}}</td>
                 <td>{{usermaster.Description}}</td>
                 <td>{{usermaster.IsMandatory}}</td>
+                <td>{{usermaster.IsActive}}</td>
             </tr>
         </tbody>
         <tbody *ngIf="modulename=='masterdata'">
             <tr *ngFor="let usermasterdata of data">
                 <td (click)="redirectToaddmodifymaster(usermasterdata.Ref_UserMasterData_ID)">{{usermasterdata.UserMasterData}}</td>
                 <td>{{usermasterdata.Description}}</td>
+                <td>{{usermasterdata.IsActive}}</td>
             </tr>
         </tbody>
         <div *ngIf="data?.length == 0">
