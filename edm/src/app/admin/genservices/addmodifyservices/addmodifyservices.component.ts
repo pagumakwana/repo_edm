@@ -64,24 +64,41 @@ export class AddModifyServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this._base._pageTitleService.setTitle("Service Management", "Service Management");
-    let serviceId: any = this._activatedRoute.snapshot.params.serviceId
-    if (serviceId > 0) {
-      this.getClients(serviceId)
+    let serviceId: any = this._activatedRoute.snapshot.params.Ref_Service_ID
+    if (serviceId != '0') {
+      this.getService(serviceId)
     }
     else {
       this.initialize()
+      // this.getService(0)
+
     }
 
 
   }
 
-  getClients(serviceId) {
+  getService(serviceId) {
     this._service.getService(serviceId).subscribe((res: any) => {
       this.addService = Array.isArray(res) ? res[0] : null
       if (this.addService) {
+        this.addServiceForm.controls.ServiceTitle.setValue(this.addService.ServiceTitle)
+        this.addServiceForm.controls.Category.setValue(this.addService.Ref_Category_ID)
+        this.addServiceForm.controls.Description.setValue(this.addService.Description)
+        this.addServiceForm.controls.Price.setValue(this.addService.Price)
+        this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
+        this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
+        this.addServiceForm.controls.DeliveryDate.setValue(this.addService.DeliveryDate)
+        // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
+        // this.addServiceForm.controls.BigImageUrl.setValue(this.addService.BigImageUrl)
+
+        
+        // this.addServiceForm.controls.FAQDetails.setValue(this.addService.FAQDetails)
         // this.addServiceForm.controls.clientName.setValue(this.addService.ClientName);
         // this.addServiceForm.controls.shortDesc.setValue(this.addService.Descripation);
         // this.addServiceForm.controls.IsActive.setValue(this.addService.IsActive);
+        if (Array.isArray(this.addService.FAQDetails))
+          this.addService.FAQDetails.filter(item => { this.addFaq(item.Questions, item.Answer) })
+
       }
     })
   }
@@ -111,6 +128,8 @@ export class AddModifyServicesComponent implements OnInit {
 
   saveService() {
     this._base._commonService.markFormGroupTouched(this.addServiceForm)
+    console.log("saveService", this.addServiceForm, this.addService)
+
     if (this.addServiceForm.valid) {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
         // this._base._commonService.uploadFile(this.fileChoosenData.choosenFile, 'Client').then((url: string) => {
@@ -132,7 +151,6 @@ export class AddModifyServicesComponent implements OnInit {
         this.addService.CreatedBy = FullName
         this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
 
-        console.log("saveService", this.addServiceForm, this.addService)
         this.addServices()
         // })
       })
