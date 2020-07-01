@@ -25,5 +25,8 @@ export class ApiConstant {
     }
     public static MasterManagement = {
         DAW: "Admin/MasterManagement/DAW",
+        UserMaster: "Admin/MasterManagement/UserMaster",
+        ParentUserMaster: "Admin/MasterManagement/ParentUserMaster",
+        UserMasterData: "Admin/MasterManagement/UserMasterData",
     }
 }

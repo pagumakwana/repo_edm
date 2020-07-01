@@ -12,7 +12,7 @@ export class AddModifyMasterDataComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    
   }
 
  

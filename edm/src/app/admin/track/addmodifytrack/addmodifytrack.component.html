@@ -19,11 +19,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept="image/*" id="customFile" [(ngModel)]="trackImg" (change)="changeListenerTrackImg($event)">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
+                    <img *ngIf="preview" [src]="preview" class="image_preview" />
                     <label class="custom-file-label" for="customFile">
                         {{trackImg}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadImg()"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
             </div>
@@ -245,11 +245,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".mp3, .war" id="masterfile" name="masterfile" [(ngModel)]="masterfile" (change)="changeListenerfile($event, 'Masterfile')">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="masterfile">
                         {{masterfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Masterfile')"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
@@ -262,11 +262,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".mp3, .war" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="unmasterfile">
                         {{unmasterfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Unmasterfile')"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
@@ -280,11 +280,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".mp3, .war" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="mixdowfile">
                         {{mixdowfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Mixdowfile')"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
@@ -297,11 +297,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".zip, .rar" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="urtoggedfile">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="urtoggedfile">
                         {{urtoggedfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Urtoggedfile')"></label>
                 </div>
                 <span class="file_formats">Attchment format : .zip, .rar</span>
             </div>
@@ -315,11 +315,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".mp3, .war" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="stemsfile">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="stemsfile">
                         {{stemsfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Stemsfile')"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
@@ -332,11 +332,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".mp3, .war" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="MIDIfile">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="MIDIfile">
                         {{MIDIfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('MIDIfile')"></label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
             </div>
@@ -350,11 +350,11 @@
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" class="custom-file-input" accept=".zip, .rar" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="projectfile">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="projectfile">
                         {{projectfile}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Projectfile')"></label>
                 </div>
                 <span class="file_formats">Attchment format : .zip, .rar</span>
             </div>
