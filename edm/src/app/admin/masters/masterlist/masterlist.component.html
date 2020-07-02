@@ -16,7 +16,7 @@
         </thead>
         <tbody *ngIf="modulename=='master'">
             <tr *ngFor="let usermaster of data">
-                <td (click)="redirectToaddmodifymaster(usermaster.Ref_UserMaster_ID)">{{usermaster.UserMaster}}</td>
+                <td><a (click)="redirectToaddmodifymaster(usermaster.Ref_UserMaster_ID)">{{usermaster.UserMaster}}</a></td>
                 <td>{{usermaster.Description}}</td>
                 <td>{{usermaster.IsMandatory}}</td>
                 <td>{{usermaster.IsActive}}</td>
@@ -24,7 +24,7 @@
         </tbody>
         <tbody *ngIf="modulename=='masterdata'">
             <tr *ngFor="let usermasterdata of data">
-                <td (click)="redirectToaddmodifymaster(usermasterdata.Ref_UserMasterData_ID)">{{usermasterdata.UserMasterData}}</td>
+                <td><a (click)="redirectToaddmodifymaster(usermasterdata.Ref_UserMasterData_ID)">{{usermasterdata.UserMasterData}}</a></td>
                 <td>{{usermasterdata.Description}}</td>
                 <td>{{usermasterdata.IsActive}}</td>
             </tr>

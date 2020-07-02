@@ -36,7 +36,7 @@
             <div class="form_area icon_form_group">
                 <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
                             <option [value]="undefined" disabled hidden>Select Parent Master</option>
-                            <option *ngFor="let parentmaster of parentmasterlist" [value]="parentmaster.Ref_UserMaster_ID" [selected]="parentmaster.Ref_UserMaster_ID == Ref_UserMaster_ID">{{parentmaster.userMasterName}}</option>
+                            <option *ngFor="let parentmaster of parentmasterlist" [value]="parentmaster.Ref_UserMaster_ID" [selected]="parentmaster.Ref_UserMaster_ID == Ref_UserMaster_ID">{{parentmaster.UserMaster}}</option>
                            
                         </select>
                 <span class="input_icon dropdown_icon"></span>

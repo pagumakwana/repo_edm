@@ -21,45 +21,46 @@ export class AddModifyMasterComponent implements OnInit {
   masterlist: any;
   Ref_UserMaster_ID;
   parentmaster: any
+  public addmodifymaster: FormGroup;
   constructor(public _base: BaseServiceHelper,
     private fb: FormBuilder,
     private _mastersServices: MastersServices,
     public route: ActivatedRoute,) {
 
   }
-  addmodifymaster: FormGroup = this.fb.group({
-    masterName: ['', [Validators.required]],
-    Description: ['', [Validators.required]],
-    IsParent: ['', [Validators.required]],
-    parentmaster: ['', [Validators.required]],
-    IsMandatory: ['', [Validators.required]],
-  })
+
   ngOnInit(): void {
-    console.log(this.masterName)
-    console.log(this.Description)
-    console.log(this.IsParent)
-    console.log(this.parentmaster)
-    console.log(this.IsMandatory)
+    this._base._commonService.showLoader();
     this.route.params.subscribe(params => {
       this.usermasterID = params['id']
       this.modulename = params['module']
       if (this.modulename == 'master') {
+        this.addmodifymaster = this.fb.group({
+          masterName: ['', [Validators.required]],
+          Description: ['', [Validators.required]],
+          IsParent: ['', [Validators.required]],
+          parentmaster: ['', []],
+          IsMandatory: ['', [Validators.required]],
+        })
+        this.getParentMasterlist();
         if (this.usermasterID != 0) {
-          this.getParentMasterlist();
+
           this._mastersServices.getMasterlist(this.usermasterID).subscribe(data => {
+            this._base._commonService.hideLoader();
             this.addmodifymaster.value.masterName = data[0].UserMaster
             this.addmodifymaster.value.Description = data[0].Description
-            this.addmodifymaster.value.IsParent = data[0].MandatoryMasterIDs== ""? false: true;
+            this.addmodifymaster.value.IsParent = data[0].MandatoryMasterIDs == "0" || data[0].MandatoryMasterIDs == "" ? false : true;
             this.addmodifymaster.value.parentmaster = data[0].ParentIDs
             this.addmodifymaster.value.IsMandatory = data[0].IsMandatory
             this.masterName = data[0].UserMaster
             this.Description = data[0].Description
-            this.IsParent = data[0].MandatoryMasterIDs== ""? false: true;
+            this.IsParent = data[0].MandatoryMasterIDs == "0" || data[0].MandatoryMasterIDs == "" ? false : true;
             this.parentmaster = data[0].MandatoryMasterIDs
             this.IsMandatory = data[0].IsMandatory
             this.Ref_UserMaster_ID == data[0].ParentIDs
           })
         } else {
+          this._base._commonService.hideLoader();
           this.addmodifymaster.value.masterName = undefined
           this.addmodifymaster.value.Description = undefined
           this.addmodifymaster.value.IsParent = undefined
@@ -67,18 +68,27 @@ export class AddModifyMasterComponent implements OnInit {
           this.addmodifymaster.value.IsMandatory = undefined
         }
       } else {
+        this.addmodifymaster = this.fb.group({
+          masterName: ['', [Validators.required]],
+          Description: ['', [Validators.required]],
+          IsParent: ['', []],
+          parentmaster: ['', [Validators.required]],
+          IsMandatory: ['', []],
+        })
         this.getMasterlist();
         if (this.usermasterID != 0) {
           this._mastersServices.getMasterDatalist(this.usermasterID).subscribe(data => {
+            this._base._commonService.hideLoader();
             this.addmodifymaster.value.masterName = data[0].UserMasterData
             this.addmodifymaster.value.Description = data[0].Description
-            this.addmodifymaster.value.parentmaster = 2
+            this.addmodifymaster.value.parentmaster = data[0].Ref_UserMaster_ID
             this.masterName = data[0].UserMasterData
             this.Description = data[0].Description
-            this.parentmaster = 2
-            this.Ref_UserMaster_ID == 2
+            this.parentmaster = data[0].Ref_UserMaster_ID
+            this.Ref_UserMaster_ID == data[0].Ref_UserMaster_ID
           })
         } else {
+          this._base._commonService.hideLoader();
           this.addmodifymaster.value.masterName = undefined
           this.addmodifymaster.value.Description = undefined
           this.addmodifymaster.value.IsParent = undefined
@@ -90,7 +100,7 @@ export class AddModifyMasterComponent implements OnInit {
     });
   }
   getParentMasterlist() {
-    this._mastersServices.getParentMasterlist(0).subscribe(res => {
+    this._mastersServices.getMasterlist(0).subscribe(res => {
       this.parentmasterlist = res;
     })
   }
@@ -101,50 +111,66 @@ export class AddModifyMasterComponent implements OnInit {
   }
   addmodifymastersubmit() {
     debugger;
+
     this._base._commonService.markFormGroupTouched(this.addmodifymaster);
     console.log(this.addmodifymaster.value.masterName)
     console.log(this.addmodifymaster.value.Description)
     console.log(this.addmodifymaster.value.IsParent)
     console.log(this.addmodifymaster.value.parentmaster)
     console.log(this.addmodifymaster.value.IsMandatory)
-    // if(this.addmodifymaster.valid){
-    this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-      if (this.modulename == 'master') {
-        let ObjUserMaster = {
-          "Ref_UserMaster_ID": this.usermasterID,
-          "ControlName": this.addmodifymaster.value.masterName,
-          "UserMaster": this.addmodifymaster.value.masterName,
-          "Description": this.addmodifymaster.value.Description,
-          "MandatoryMasterIDs": "string",
-          "NonMandatoryMasterIDs": "string",
-          "IsMandatory": this.addmodifymaster.value.IsMandatory,
-          "IsActive": true,
-          "AddedBy": FullName
+    if (this.addmodifymaster.valid) {
+      this._base._commonService.showLoader();
+      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+        if (this.modulename == 'master') {
+          let ObjUserMaster = {
+            "Ref_UserMaster_ID": this.usermasterID,
+            "ControlName": this.addmodifymaster.value.masterName,
+            "UserMaster": this.addmodifymaster.value.masterName,
+            "Description": this.addmodifymaster.value.Description,
+            "MandatoryMasterIDs": this.addmodifymaster.value.IsParent == true ? this.addmodifymaster.value.parentmaster : 0,
+            "NonMandatoryMasterIDs": "string",
+            "IsMandatory": this.addmodifymaster.value.IsMandatory,
+            "IsActive": true,
+            "AddedBy": FullName
+          }
+          this._mastersServices.addmodifyMaster(ObjUserMaster).subscribe(res => {
+            console.log(res);
+            alert(res);
+            if (this.usermasterID == 0) {
+              this.addmodifymaster.reset();
+            }
+            this._base._commonService.hideLoader();
+          }, e => {
+            this._base._commonService.hideLoader();
+          })
+        } else {
+          let ObjUserMasterData = {
+            "Ref_UserMasterData_ID": this.usermasterID,
+            "Ref_UserMaster_ID": this.addmodifymaster.value.parentmaster,
+            "UserMasterData": this.addmodifymaster.value.masterName,
+            "UserMaster": "",
+            "Description": this.addmodifymaster.value.Description,
+            "MandatoryMasterIDs": "",
+            "NonMandatoryMasterIDs": "",
+            "IsActive": true,
+            "AddedBy": FullName
+          }
+          this._mastersServices.addmodifyMasterData(ObjUserMasterData).subscribe(res => {
+            console.log(res);
+            if (this.usermasterID == 0) {
+              this.addmodifymaster.reset();
+            }
+            alert(res);
+            this._base._commonService.hideLoader();
+          }, e => {
+            this._base._commonService.hideLoader();
+          })
         }
-        this._mastersServices.addmodifyMaster(ObjUserMaster).subscribe(res => {
-          console.log(res);
-        })
-      } else {
-        let ObjUserMasterData = {
-          "Ref_UserMasterData_ID": this.usermasterID,
-          "Ref_UserMaster_ID":this.addmodifymaster.value.parentmaster,
-          "UserMasterData": this.addmodifymaster.value.masterName,
-          "UserMaster": "",
-          "Description": this.addmodifymaster.value.Description,
-          "MandatoryMasterIDs": "",
-          "NonMandatoryMasterIDs": "",
-          "IsActive": true,
-          "AddedBy": FullName
-        }
-        this._mastersServices.addmodifyMasterData(ObjUserMasterData).subscribe(res => {
-          console.log(res);
-        })
-      }
 
-    })
+      })
+
+    }
 
   }
-
-
 
 }
