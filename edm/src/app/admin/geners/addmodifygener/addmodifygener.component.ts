@@ -22,9 +22,9 @@ export class AddModifyGenersComponent implements OnInit {
   _categoryModel: CategoryModel = {};
   public categoryData: any = [];
   isCategoryModify: boolean = false;
-  btnTitle: string = 'ADD NEW'
+  btnTitle: string = 'ADD'
   imgCategory: any;
-  thumbnail: any;
+  fileData: any;
   formCategory: FormGroup = this._fbGener.group({
     Ref_Parent_ID: ['',],
     CategoryName: ['', [Validators.required]],
@@ -38,9 +38,11 @@ export class AddModifyGenersComponent implements OnInit {
   }
   ngOnInit(): void {
     this.bindCategory();
+    debugger
     let aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
     if (aliasName != 'new') {
       this.getCategory();
+      this.btnTitle="MODIFY"
     } else {
       this.intialise();
     }
@@ -48,17 +50,19 @@ export class AddModifyGenersComponent implements OnInit {
 
   intialise() {
     this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-      this._categoryModel = {
-        Flag: '',
-        Ref_Parent_ID: 0,
-        CategoryName: '',
-        AliasName: '',
-        Description: '',
-        CategoryUseBy: '',
-        ThumbnailImageUrl: '',
-        Ref_User_ID: 0,
-        CreatedName: FullName
-      }
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+        this._categoryModel = {
+          Flag: '',
+          Ref_Parent_ID: 0,
+          CategoryName: '',
+          AliasName: '',
+          Description: '',
+          CategoryUseBy: '',
+          ImageUrls: [],
+          Ref_User_ID: Ref_User_ID,
+          CreatedName: FullName
+        }
+      });
     });
   }
 
@@ -76,14 +80,13 @@ export class AddModifyGenersComponent implements OnInit {
   setCategoryModel() {
     this._base._commonService.markFormGroupTouched(this.formCategory)
     if (this.formCategory.valid) {
-      this._base._commonService.uploadFile(this.thumbnail, 'Category').then((thumbnailUrl: string) => {
+      this._base._commonService.filesUpload(this.fileData, 'Category').then((ImageUrls: string) => {
         this._categoryModel.Ref_Parent_ID = this.formCategory.value.Ref_Parent_ID;
         this._categoryModel.CategoryName = this.formCategory.value.CategoryName;
         this._categoryModel.AliasName = this.formCategory.value.AliasName;
         this._categoryModel.Description = this.formCategory.value.CategoryDescription;
-        this._categoryModel.ThumbnailImageUrl = thumbnailUrl;
-        this._categoryModel.IsActive = true;
         this._categoryModel.CategoryUseBy = this.formCategory.value.CategoryUseBy;
+        this._categoryModel.ImageUrls = ImageUrls;
         this.addmodifycategory();
       });
     }
@@ -110,7 +113,7 @@ export class AddModifyGenersComponent implements OnInit {
   }
 
   bindCategory() {
-    this._categoryService.categorylist().subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
       resData.filter((res) => {
         if (res.Ref_Parent_ID == 0) {
           this.categoryData.push(res);
@@ -119,8 +122,7 @@ export class AddModifyGenersComponent implements OnInit {
     });
   }
   fileChoosen($event) {
-    console.log("fileChoosen", $event)
-    this.thumbnail = $event.target.files;
+    this.fileData = $event.target.files;
   }
 
 }

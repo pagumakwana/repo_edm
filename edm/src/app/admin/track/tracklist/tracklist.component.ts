@@ -58,7 +58,7 @@ export class TrackListComponent implements OnInit {
     })
   }
   bindCategory() {
-    this._categoryService.categorylist().subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
       let categoryData = []
       categoryData = Array.isArray(resData) ? resData : []
       console.log("categoryData", categoryData);
