@@ -57,9 +57,10 @@ export class AddModifyServicesComponent implements OnInit {
   })
 
   fileChoosenData = {
-    choosenFile: null
+    ServiceVideoUrl: null,
+    BigImageUrl: null
   }
-
+  bannerImg: string = '';
   addService: ServiceModel
 
   ngOnInit(): void {
@@ -91,7 +92,7 @@ export class AddModifyServicesComponent implements OnInit {
         // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
         // this.addServiceForm.controls.BigImageUrl.setValue(this.addService.BigImageUrl)
 
-        
+
         // this.addServiceForm.controls.FAQDetails.setValue(this.addService.FAQDetails)
         // this.addServiceForm.controls.clientName.setValue(this.addService.ClientName);
         // this.addServiceForm.controls.shortDesc.setValue(this.addService.Descripation);
@@ -133,26 +134,27 @@ export class AddModifyServicesComponent implements OnInit {
     if (this.addServiceForm.valid) {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
         // this._base._commonService.uploadFile(this.fileChoosenData.choosenFile, 'Client').then((url: string) => {
-        // this.addService.ImageUrl = url ? url : null
+        this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl, 'Service').then((ImageUrls: string) => {
+          // this.addService.ImageUrl = url ? url : null
 
-        // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
-        // this.addService.Ref_Category_ID = this.addServiceForm.value.Ref_Category_ID
-        this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
-        this.addService.Description = this.addServiceForm.value.Description
-        this.addService.Price = this.addServiceForm.value.Price
-        this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-        // this.addService.BigImageUrl = this.addServiceForm.value.BigImageUrl
-        // this.addService.ThumbnailImageUrl = this.addServiceForm.value.ThumbnailImageUrl
-        // this.addService.ServiceVideoUrl = this.addServiceForm.value.ServiceVideoUrl
-        // this.addService.ProjectFilesUrl = this.addServiceForm.value.ProjectFilesUrl
-        this.addService.Revision = this.addServiceForm.value.Revision
-        this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
-        // this.addService.IsActive = this.addServiceForm.value.IsActive
-        this.addService.CreatedBy = FullName
-        this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+          // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
+          // this.addService.Ref_Category_ID = this.addServiceForm.value.Ref_Category_ID
+          this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
+          this.addService.Description = this.addServiceForm.value.Description
+          this.addService.Price = this.addServiceForm.value.Price
+          this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
+          // this.addService.BigImageUrl = this.addServiceForm.value.BigImageUrl
+          // this.addService.ThumbnailImageUrl = this.addServiceForm.value.ThumbnailImageUrl
+          // this.addService.ServiceVideoUrl = this.addServiceForm.value.ServiceVideoUrl
+          // this.addService.ProjectFilesUrl = this.addServiceForm.value.ProjectFilesUrl
+          this.addService.Revision = this.addServiceForm.value.Revision
+          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
+          // this.addService.IsActive = this.addServiceForm.value.IsActive
+          this.addService.CreatedBy = FullName
+          this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
 
-        this.addServices()
-        // })
+          this.addServices()
+        })
       })
     }
   }
@@ -172,7 +174,10 @@ export class AddModifyServicesComponent implements OnInit {
 
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event)
-    this.fileChoosenData[fieldName] = $event.target.files
+    this.fileChoosenData[fieldName] = $event.target.files;
+    this._base._commonService.readImage($event.target).subscribe(res => {
+      this.bannerImg = res;
+    })
   }
 
   get FaqListArray(): FormArray {
