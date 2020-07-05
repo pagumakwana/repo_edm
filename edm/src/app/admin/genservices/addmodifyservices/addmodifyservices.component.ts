@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ServiceModel } from 'src/app/_appModel/genservices/service.model';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
+import { CategoryService } from 'src/app/_appService/category/category.serviec';
 declare var $: any;
 
 @Component({
@@ -20,25 +21,10 @@ export class AddModifyServicesComponent implements OnInit {
   constructor(public _base: BaseServiceHelper,
     private _activatedRoute: ActivatedRoute,
     private _service: GenService,
+    private _categoryService: CategoryService,
     private fb: FormBuilder) { }
 
-  addService1 = {
-    Ref_Service_ID: null,
-    Ref_Category_ID: null,
-    ServiceTitle: null,
-    Description: null,
-    Price: null,
-    PriceWithProjectFiles: null, //missing
-    BigImageUrl: null,
-    ThumbnailImageUrl: null,
-    ServiceVideoUrl: null, //yes
-    ProjectFilesUrl: null,
-    Revision: null,
-    DeliveryDate: null,
-    IsActive: null,
-    // CreatedBy: FullName,
-    FAQDetails: []
-  }
+  categoryData: []
 
   addServiceForm: FormGroup = this.fb.group({
     ServiceTitle: ['', [Validators.required]],
@@ -66,6 +52,7 @@ export class AddModifyServicesComponent implements OnInit {
   ngOnInit(): void {
     this._base._pageTitleService.setTitle("Service Management", "Service Management");
     let serviceId: any = this._activatedRoute.snapshot.params.Ref_Service_ID
+    this.getCategory()
     if (serviceId != '0') {
       this.getService(serviceId)
     }
@@ -78,6 +65,17 @@ export class AddModifyServicesComponent implements OnInit {
 
   }
 
+  getCategory() {
+    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
+      this.categoryData = resData
+      // resData.filter((res) => {
+      //   if (res.Ref_Parent_ID == 0) {
+      //     this.categoryData.push(res);
+      //   }
+      // });
+    });
+  }
+
   getService(serviceId) {
     this._service.getService(serviceId).subscribe((res: any) => {
       this.addService = Array.isArray(res) ? res[0] : null
@@ -88,7 +86,8 @@ export class AddModifyServicesComponent implements OnInit {
         this.addServiceForm.controls.Price.setValue(this.addService.Price)
         this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
         this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
-        this.addServiceForm.controls.DeliveryDate.setValue(this.addService.DeliveryDate)
+        this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
+        // this.addServiceForm.controls.DeliveryDate.setValue(new Dyate())
         // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
         // this.addServiceForm.controls.BigImageUrl.setValue(this.addService.BigImageUrl)
 
@@ -97,8 +96,13 @@ export class AddModifyServicesComponent implements OnInit {
         // this.addServiceForm.controls.clientName.setValue(this.addService.ClientName);
         // this.addServiceForm.controls.shortDesc.setValue(this.addService.Descripation);
         // this.addServiceForm.controls.IsActive.setValue(this.addService.IsActive);
-        if (Array.isArray(this.addService.FAQDetails))
-          this.addService.FAQDetails.filter(item => { this.addFaq(item.Questions, item.Answer) })
+        if (Array.isArray(this.addService.FAQDetails)) {
+          if (this.addService.FAQDetails.length > 0)
+            this.addService.FAQDetails.filter(item => { this.addFaq(item.Questions, item.Answer) })
+          else
+            this.addFaq('', '')
+        }
+
 
       }
     })
@@ -138,7 +142,7 @@ export class AddModifyServicesComponent implements OnInit {
           // this.addService.ImageUrl = url ? url : null
 
           // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
-          // this.addService.Ref_Category_ID = this.addServiceForm.value.Ref_Category_ID
+          this.addService.Ref_Category_ID = this.addServiceForm.value.Category
           this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
           this.addService.Description = this.addServiceForm.value.Description
           this.addService.Price = this.addServiceForm.value.Price
@@ -152,6 +156,8 @@ export class AddModifyServicesComponent implements OnInit {
           // this.addService.IsActive = this.addServiceForm.value.IsActive
           this.addService.CreatedBy = FullName
           this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+
+          console.log("saveService", this.addServiceForm, this.addService)
 
           this.addServices()
         })
@@ -168,7 +174,7 @@ export class AddModifyServicesComponent implements OnInit {
       }
       this._base._alertMessageService.success(msg[res]);
       $('#acknowledge_popup').modal('show')
-      setTimeout(() => { this._base._router.navigate(['admin', 'services']) }, 3000);
+      setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin', 'services']) }, 3000);
     })
   }
 

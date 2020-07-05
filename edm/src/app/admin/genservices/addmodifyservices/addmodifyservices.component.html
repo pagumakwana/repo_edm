@@ -13,8 +13,7 @@
                 <div class="form_area icon_form_group">
                     <select name="parentcategory" formControlName="Category">
                         <option disabled selected>Select Category</option>
-                        <option>Options</option>
-                        <option>Options</option>
+                        <option *ngFor="let category of categoryData" [value]="category.Ref_Category_ID">{{category.CategoryName}}</option>
                     </select>
                     <span class="input_icon dropdown_icon"></span>
                 </div>

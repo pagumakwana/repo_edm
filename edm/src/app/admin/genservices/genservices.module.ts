@@ -7,6 +7,7 @@ import { AddModifyServicesComponent } from './addmodifyservices/addmodifyservice
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatatablesModule } from 'src/app/commonmodule/datatables/datatables.module';
 @NgModule({
     declarations: [
         ServicesListComponent,
@@ -26,6 +27,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ]),
         ErrorModule,
         FormsModule,
+        DatatablesModule,
         ReactiveFormsModule
     ],
     providers: [GenService]
