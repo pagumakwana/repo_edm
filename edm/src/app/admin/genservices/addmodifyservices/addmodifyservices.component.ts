@@ -6,6 +6,7 @@ import { ServiceModel } from 'src/app/_appModel/genservices/service.model';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
+import { formatDate } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -35,8 +36,8 @@ export class AddModifyServicesComponent implements OnInit {
     Revision: ['', [Validators.required]],
     DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],
-    ServiceVideoUrl: ['', [Validators.required]],
-    BigImageUrl: ['', [Validators.required]],
+    ServiceVideoUrl: ['', []],
+    BigImageUrl: ['', []],
     // ThumbnailImageUrl: ['', [Validators.required]],
     // IsActive: ['', [Validators.required]],
     FAQDetails: this.fb.array([])
@@ -86,7 +87,8 @@ export class AddModifyServicesComponent implements OnInit {
         this.addServiceForm.controls.Price.setValue(this.addService.Price)
         this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
         this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
-        this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
+        this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
+        // this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
         // this.addServiceForm.controls.DeliveryDate.setValue(new Dyate())
         // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
         // this.addServiceForm.controls.BigImageUrl.setValue(this.addService.BigImageUrl)
