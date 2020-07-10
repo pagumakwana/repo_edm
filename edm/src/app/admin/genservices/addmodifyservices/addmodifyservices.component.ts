@@ -161,7 +161,7 @@ export class AddModifyServicesComponent implements OnInit {
 
             console.log("saveService", this.addServiceForm, this.addService)
 
-            // this.addServices()
+            this.addServices()
           })
         })
       })
