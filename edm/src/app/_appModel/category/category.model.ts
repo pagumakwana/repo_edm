@@ -6,7 +6,7 @@ export class CategoryModel {
     AliasName?: string;
     Description?: string;
     CategoryUseBy?: string;
-    ImageUrls?: any;
+    FileUrls?: any;
     Ref_User_ID?: number;
     CreatedName?: string;
 }
