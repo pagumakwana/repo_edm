@@ -4,7 +4,10 @@ import { ApiConstant } from './../../../_appModel/apiconstant'
 import { from } from 'rxjs';
 import { Router, ActivatedRoute, Route } from '@angular/router';
 import { environment } from './../../../../environments/environment.prod';
-import { CategoryService } from './../../../_appService/category/category.serviec'
+import { CategoryService } from './../../../_appService/category/category.serviec';
+import { enAppSession } from './../../../_appModel/enAppSession';
+import * as bootstrap from "bootstrap"
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 @Component({
   selector: 'appAdmin-tracklist',
   templateUrl: './tracklist.component.html',
@@ -18,21 +21,29 @@ export class TrackListComponent implements OnInit {
   audio = new Audio();
   audioplay: boolean = false;
   playpause: string = 'play'
+  rejectReason;
+  rejectTrackId;
+  public addrejectreason: FormGroup;
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private route: ActivatedRoute,
-    private _categoryService: CategoryService) { }
+    private _categoryService: CategoryService,
+    private fb: FormBuilder,) { }
 
   ngOnInit(): void {
     debugger;
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
       this.bindCategory();
-      this.getAllTracks("0");
+      this.getAllTracks("0", 'All');
+    })
+    this.addrejectreason = this.fb.group({
+      rejectReason: ['', [Validators.required]]
     })
 
   }
-  public getAllTracks(genreid) {
+  public getAllTracks(genreid, status) {
+    this._base._commonService.showLoader();
     this._base._ApiService.get(ApiConstant.TrackManagement.Track + '?TrackID=0').subscribe((data: any) => {
       if (this.moduleName == "Track") {
         data = data.filter(res => res.IsTrack == true);
@@ -46,13 +57,25 @@ export class TrackListComponent implements OnInit {
           item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
           item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
         })
+        this._base._commonService.hideLoader();
       } else {
-        this.data = data;
-        this.data.map(item => {
-          item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
-          item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
-        })
+        if(status != "All"){
+          this.data = data.filter(a => a.TrackStatus == status.toUpperCase());
+          this.data.map(item => {
+            item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
+            item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
+          })
+        }else{
+          this.data = data
+          this.data.map(item => {
+            item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
+            item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
+          })
+        }
+        //this.data = data;
+       
         console.log(this.data);
+        this._base._commonService.hideLoader();
       }
 
     })
@@ -67,14 +90,18 @@ export class TrackListComponent implements OnInit {
   }
   filtergenre(id) {
     let genre = this.genrelist.filter(r => r.Ref_Category_ID == id);
-    let genrename = genre[0].CategoryName;
+    let genrename
+    if(genre.length != 0){
+      genrename= genre[0].CategoryName;
+    }
     return genrename
+    
   }
   onGenreChange(e) {
     if (e == "0") {
-      this.getAllTracks("0");
+      this.getAllTracks("0",'All');
     } else {
-      this.getAllTracks(e);
+      this.getAllTracks(e, 'All');
     }
     console.log(e);
   }
@@ -82,6 +109,9 @@ export class TrackListComponent implements OnInit {
     this.data.sort(this.GetSortOrder("Price", e));
     for (var item in this.data) {
     }
+  }
+  onStatusChange(status){
+    this.getAllTracks("0", status);
   }
   GetSortOrder(prop, e) {
     return function (a, b) {
@@ -145,6 +175,65 @@ export class TrackListComponent implements OnInit {
           console.log("Navigation has failed!");
         }
       });
+    }
+  }
+  public manageTrackBeat(id, action){
+    this._base._commonService.showLoader();
+    if(action == 'Approve'){
+      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+       let ObjApproveAndRejact =  {
+          "TrackIDs": id,
+          "Action": action,
+          "Reason": "",
+          "ActionBy": FullName
+        }
+      this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
+        alert(data)
+       // this._base._commonService.hideLoader();
+        this.getAllTracks("0", action);
+      },e=>{
+        console.log(e)
+        this._base._commonService.hideLoader();
+      })
+    })
+    }else if(action == 'Reject'){
+     //  $('#rejectReason_popup').modal('show');
+       (<any>$('#rejectReason_popup')).modal('show');
+       this.rejectTrackId = id;
+    }else{
+      this._base._ApiService.get(ApiConstant.TrackManagement.ManageTrack + '?TrackIDs='+ id + '&Action='+ action).subscribe((data: any) => {
+        alert(data)
+       // this._base._commonService.hideLoader();
+        this.getAllTracks("0", 'All');
+      },e=>{
+        console.log(e)
+        this._base._commonService.hideLoader();
+        this.getAllTracks("0", 'All');
+      })
+    }
+   
+  }
+
+  public accept(){
+    this._base._commonService.markFormGroupTouched(this.addrejectreason);
+    if (this.addrejectreason.valid) {
+      this._base._commonService.showLoader();
+      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+       let ObjApproveAndRejact =  {
+          "TrackIDs": this.rejectTrackId,
+          "Action": 'Rejact',
+          "Reason": this.rejectReason,
+          "ActionBy": FullName
+        }
+      this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
+        alert(data)
+        this.getAllTracks("0", 'Reject');
+        (<any>$('#rejectReason_popup')).modal('hide');
+      },e=>{
+        console.log(e)
+        this._base._commonService.hideLoader();
+      })
+    })
     }
   }
 

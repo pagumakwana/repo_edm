@@ -249,7 +249,7 @@ export class AddModifyTrackComponent implements OnInit {
     if (this.audioFile) {
       if (fileType == 'Urtoggedfile' || fileType == 'Projectfile') {
         if (/\.(zip|rar)$/i.test(this.audioFile.name) === true) {
-          this.commonService.showLoader()
+          //this.commonService.showLoader()
           if(fileType == 'Urtoggedfile'){
             this.urtoggedfile = this.audioFile.name;
             this.uploadurtoggedfile = new FormData();
@@ -259,7 +259,7 @@ export class AddModifyTrackComponent implements OnInit {
             this.uploadprojectfile = new FormData();
             this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
-          this.uploadfile(fileType);
+          //this.uploadfile(fileType);
         } else {
           alert('Please select .zip or .rar file');
           this.audioFile = "";

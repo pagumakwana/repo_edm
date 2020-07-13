@@ -1,18 +1,18 @@
 <div class="filter_section desktop_filter_section">
     <div class="inline_radio">
         <label class="radio">
-            <input name="tracks" type="radio" checked="checked">Available Tracks
+            <input name="tracks" type="radio"  (change)="onStatusChange('All')">Available Tracks
             <span></span>
         </label>
         <label class="radio">
-            <input name="tracks" type="radio">Sold Out Tracks
+            <input name="tracks" type="radio" (change)="onStatusChange('SoldOut')">Sold Out Tracks
             <span></span>
         </label>
         <label class="radio error_color">
-            <input name="tracks" type="radio">Rejected Tracks
+            <input name="tracks" type="radio" (change)="onStatusChange('Rejected')">Rejected Tracks
             <span></span>
         </label>
-        <label class="radio error_color">
+        <label class="radio error_color" (change)="onStatusChange('Pending')">
             <input name="tracks" type="radio">Pending Tracks
             <span></span>
         </label>
@@ -67,17 +67,17 @@
                 <td>{{track.TrackName}}</td>
                 <td>&#36;{{track.Price}}</td>
                 <td>{{track.Ref_Category_ID}}</td>
-                <td>-</td>
+                <td>{{track.TrackStatus}}</td>
                 <td>
                     <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
-                    <a class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
+                    <a *ngIf="track.TrackStatus == 'Reject'" class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
                 </td>
                 <td class="table_btn">
-                    <a class="global_btn icon_btn primary_btn">
+                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Approve')" class="global_btn icon_btn primary_btn">
                         <span>Approve</span>
                         <span class="right_icon btn_icon"></span>
                     </a>
-                    <a class="global_btn icon_btn red_btn">
+                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Reject')" class="global_btn icon_btn red_btn">
                         <span>Reject</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>
@@ -85,7 +85,7 @@
                         <span>Edit</span>
                         <span class="edit_icon btn_icon"></span>
                     </a>
-                    <a class="global_btn icon_btn red_btn">
+                    <a (click)="manageTrackBeat(track.Ref_Track_ID, 'Delete')" class="global_btn icon_btn red_btn">
                         <span>Delete</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>
@@ -267,6 +267,31 @@
                 survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
                 desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
             </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade plain_content" id="rejectReason_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-sm modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Reason</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="addrejectreason">
+                    <input type="text" name="rejectReason" formControlName="rejectReason" placeholder="Reason" [(ngModel)]="rejectReason" />
+                    <edm-error [control]="addrejectreason.controls.rejectReason"></edm-error>
+
+                </form>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" (click)="accept()">Reject</button>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </div>
