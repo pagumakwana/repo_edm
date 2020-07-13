@@ -6,6 +6,7 @@ import { ServiceModel } from 'src/app/_appModel/genservices/service.model';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
+import { formatDate } from '@angular/common';
 declare var $: any;
 
 @Component({
@@ -43,8 +44,14 @@ export class AddModifyServicesComponent implements OnInit {
   })
 
   fileChoosenData = {
-    ServiceVideoUrl: null,
-    BigImageUrl: null
+    ServiceVideoUrl: {
+      file: null,
+      thumb: null,
+    },
+    BigImageUrl: {
+      file: null,
+      thumb: null,
+    }
   }
   bannerImg: string = '';
   addService: ServiceModel
@@ -68,11 +75,7 @@ export class AddModifyServicesComponent implements OnInit {
   getCategory() {
     this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       this.categoryData = resData
-      // resData.filter((res) => {
-      //   if (res.Ref_Parent_ID == 0) {
-      //     this.categoryData.push(res);
-      //   }
-      // });
+
     });
   }
 
@@ -86,7 +89,8 @@ export class AddModifyServicesComponent implements OnInit {
         this.addServiceForm.controls.Price.setValue(this.addService.Price)
         this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
         this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
-        this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
+        this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
+        // this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
         // this.addServiceForm.controls.DeliveryDate.setValue(new Dyate())
         // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
         // this.addServiceForm.controls.BigImageUrl.setValue(this.addService.BigImageUrl)
@@ -98,9 +102,9 @@ export class AddModifyServicesComponent implements OnInit {
         // this.addServiceForm.controls.IsActive.setValue(this.addService.IsActive);
         if (Array.isArray(this.addService.FAQDetails)) {
           if (this.addService.FAQDetails.length > 0)
-            this.addService.FAQDetails.filter(item => { this.addFaq(item.Questions, item.Answer) })
+            this.addService.FAQDetails.filter((item, index) => { this.addFaq(index, true, item.Questions, item.Answer) })
           else
-            this.addFaq('', '')
+            this.addFaq(0, true)
         }
 
 
@@ -127,7 +131,7 @@ export class AddModifyServicesComponent implements OnInit {
         CreatedBy: FullName,
         FAQDetails: []
       }
-      this.addFaq('', '')
+      this.addFaq(0, true)
     });
   }
 
@@ -137,29 +141,28 @@ export class AddModifyServicesComponent implements OnInit {
 
     if (this.addServiceForm.valid) {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-        // this._base._commonService.uploadFile(this.fileChoosenData.choosenFile, 'Client').then((url: string) => {
-        this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl, 'Service').then((ImageUrls: string) => {
-          // this.addService.ImageUrl = url ? url : null
+        this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl.file, 'Service').then((ImageUrls: string) => {
+          this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'Service').then((serviceUrl: string) => {
+            // this.addService.ImageUrl = url ? url : null
 
-          // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
-          this.addService.Ref_Category_ID = this.addServiceForm.value.Category
-          this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
-          this.addService.Description = this.addServiceForm.value.Description
-          this.addService.Price = this.addServiceForm.value.Price
-          this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-          // this.addService.BigImageUrl = this.addServiceForm.value.BigImageUrl
-          // this.addService.ThumbnailImageUrl = this.addServiceForm.value.ThumbnailImageUrl
-          // this.addService.ServiceVideoUrl = this.addServiceForm.value.ServiceVideoUrl
-          // this.addService.ProjectFilesUrl = this.addServiceForm.value.ProjectFilesUrl
-          this.addService.Revision = this.addServiceForm.value.Revision
-          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
-          // this.addService.IsActive = this.addServiceForm.value.IsActive
-          this.addService.CreatedBy = FullName
-          this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+            // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
+            this.addService.Ref_Category_ID = this.addServiceForm.value.Category
+            this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
+            this.addService.Description = this.addServiceForm.value.Description
+            this.addService.Price = this.addServiceForm.value.Price
+            this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
+            this.addService.BigImageUrl = ImageUrls
+            this.addService.ThumbnailImageUrl = ImageUrls
+            this.addService.ServiceVideoUrl = serviceUrl
+            this.addService.Revision = this.addServiceForm.value.Revision
+            this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
+            this.addService.CreatedBy = FullName
+            this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
 
-          console.log("saveService", this.addServiceForm, this.addService)
+            console.log("saveService", this.addServiceForm, this.addService)
 
-          this.addServices()
+            this.addServices()
+          })
         })
       })
     }
@@ -180,9 +183,9 @@ export class AddModifyServicesComponent implements OnInit {
 
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event)
-    this.fileChoosenData[fieldName] = $event.target.files;
+    this.fileChoosenData[fieldName].file = $event.target.files;
     this._base._commonService.readImage($event.target).subscribe(res => {
-      this.bannerImg = res;
+      this.fileChoosenData[fieldName].thumb = res;
     })
   }
 
@@ -190,13 +193,17 @@ export class AddModifyServicesComponent implements OnInit {
     return this.addServiceForm.get("FAQDetails") as FormArray
   }
 
-  addFaq(Questions: string, Answer: string) {
-    let control: FormGroup
-    control = this.fb.group({
-      Questions: [Questions, [Validators.required]],
-      Answer: [Answer, [Validators.required]]
-    })
-    this.FaqListArray.push(control)
+  addFaq(index: number, isAdd: boolean, Questions: string = '', Answer: string = '') {
+    if (isAdd) {
+      let control: FormGroup
+      control = this.fb.group({
+        Questions: [Questions, [Validators.required]],
+        Answer: [Answer, [Validators.required]]
+      })
+      this.FaqListArray.insert(index, control)
+    } else {
+      this.FaqListArray.removeAt(index)
+    }
   }
 
 

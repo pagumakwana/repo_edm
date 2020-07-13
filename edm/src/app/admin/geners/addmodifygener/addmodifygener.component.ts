@@ -58,7 +58,7 @@ export class AddModifyGenersComponent implements OnInit {
           AliasName: '',
           Description: '',
           CategoryUseBy: '',
-          ImageUrls: [],
+          FileUrls: [],
           Ref_User_ID: Ref_User_ID,
           CreatedName: FullName
         }
@@ -80,13 +80,13 @@ export class AddModifyGenersComponent implements OnInit {
   setCategoryModel() {
     this._base._commonService.markFormGroupTouched(this.formCategory)
     if (this.formCategory.valid) {
-      this._base._commonService.filesUpload(this.fileData, 'Category').then((ImageUrls: string) => {
+      this._base._commonService.filesUpload(this.fileData, 'Category').then((FileUrls: string) => {
         this._categoryModel.Ref_Parent_ID = this.formCategory.value.Ref_Parent_ID;
         this._categoryModel.CategoryName = this.formCategory.value.CategoryName;
         this._categoryModel.AliasName = this.formCategory.value.AliasName;
         this._categoryModel.Description = this.formCategory.value.CategoryDescription;
         this._categoryModel.CategoryUseBy = this.formCategory.value.CategoryUseBy;
-        this._categoryModel.ImageUrls = ImageUrls;
+        this._categoryModel.FileUrls = FileUrls;
         this.addmodifycategory();
       });
     }

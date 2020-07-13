@@ -13,7 +13,8 @@
                 <div class="form_area icon_form_group">
                     <select name="parentcategory" formControlName="Category">
                         <option disabled selected>Select Category</option>
-                        <option *ngFor="let category of categoryData" [value]="category.Ref_Category_ID">{{category.CategoryName}}</option>
+                        <option *ngFor="let category of categoryData" [value]="category.Ref_Category_ID">
+                            {{category.CategoryName}}</option>
                     </select>
                     <span class="input_icon dropdown_icon"></span>
                 </div>
@@ -45,17 +46,18 @@
                         </div>
                         <edm-error [control]="faq.controls.Answer"></edm-error>
                     </div>
+                    <div class="button_group">
+                        <a class="global_btn icon_btn primary_btn" (click)="addFaq(i+1,true)">
+                            <span>Add</span>
+                            <span class="right_icon btn_icon"></span>
+                        </a>
+                        <a class="global_btn icon_btn red_btn" *ngIf="FaqListArray.controls.length>1"
+                            (click)="addFaq(i,false)">
+                            <span>Cancel</span>
+                            <span class="delete_icon btn_icon"></span>
+                        </a>
+                    </div>
                 </ng-container>
-            </div>
-            <div class="button_group">
-                <a class="global_btn icon_btn primary_btn" (click)="addFaq('','')">
-                    <span>Add</span>
-                    <span class="right_icon btn_icon"></span>
-                </a>
-                <a class="global_btn icon_btn red_btn">
-                    <span>Cancel</span>
-                    <span class="delete_icon btn_icon"></span>
-                </a>
             </div>
             <!-- </form> -->
         </div>
@@ -109,9 +111,11 @@
                         <label class="form_label">Upload Service Video</label>
                         <div class="form_area">
                             <div class="custom-file">
-                                <input type="file" formControlName="ServiceVideoUrl" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
+                                <input type="file" formControlName="ServiceVideoUrl"
+                                    (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
                                     id="customFile">
-                                <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
+                                <img [src]="fileChoosenData.ServiceVideoUrl.thumb" class="image_preview" />
+                                <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                                 <label class="custom-file-label" for="customFile">
                                     Choose file
                                 </label>
@@ -141,8 +145,9 @@
                 <label class="form_label">Upload Service Cover Image</label>
                 <div class="form_area">
                     <div class="custom-file">
-                        <input type="file" formControlName="BigImageUrl" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input" id="customFile">
-                        <img [src]="bannerImg" class="image_preview" />
+                        <input type="file" formControlName="BigImageUrl" (change)="fileChoosen($event,'BigImageUrl')"
+                            class="custom-file-input" id="customFile">
+                        <img [src]="fileChoosenData.BigImageUrl.thumb" class="image_preview" />
                         <label class="custom-file-label" for="customFile">
                             Choose file
                         </label>
