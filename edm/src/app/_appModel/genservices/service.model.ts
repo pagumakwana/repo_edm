@@ -13,5 +13,6 @@ export class ServiceModel {
     DeliveryDate: string;
     IsActive: boolean;
     CreatedBy: string;
+    FileUrls: Array<any>
     FAQDetails: Array<{ Questions: string, Answer: string }>
 }

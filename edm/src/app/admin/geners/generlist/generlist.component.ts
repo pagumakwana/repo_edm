@@ -18,6 +18,7 @@ export class GenerListComponent implements OnInit {
   constructor(public _base: BaseServiceHelper, private _categoryService: CategoryService) { }
   _categoryModel: CategoryModel = {};
   public categoryData: any;
+  public categoryFilterData: any;
 
   tableConfig: dataTableConfig = {
     tableData: [],
@@ -45,12 +46,17 @@ export class GenerListComponent implements OnInit {
     this.bindCategory();
   }
   bindCategory() {
-    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
-      let categoryData = []
-      categoryData = Array.isArray(resData) ? resData : []
-      console.log("categoryData", categoryData);
-      this.tableConfig.tableData = categoryData
-      this.tableObj.initializeTable()
+    return new Promise((resolve, reject) => {
+      this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
+        this.categoryData = []
+        this.categoryData = Array.isArray(resData) ? resData : [];
+        console.log("categoryData", this.categoryData);
+        this.tableConfig.tableData = this.categoryData;
+        this.tableObj.initializeTable()
+        setTimeout(() => {
+          resolve(true);
+        }, 500);
+      });
     });
   }
   modifycategory(data, flag) {
@@ -93,5 +99,22 @@ export class GenerListComponent implements OnInit {
     this._categoryModel.Ref_Parent_ID = 0;
     this._categoryModel.CategoryName = '';
     this._categoryModel.Description = '';
+  }
+
+  changeFilter(event) {
+    debugger
+    this.bindCategory().then((res: any) => {
+      if (res) {
+        if (event.target.value == 1) {
+          this.tableConfig.tableData = this.categoryData.sort((a, b) => b.CreatedDateTime.localeCompare(a.CreatedDateTime));
+        } else if (event.target.value > 1) {
+        
+        this.tableConfig.tableData = this.categoryData.filter((res: any) => {
+          return res.CategoryType = event.target.value;
+        })
+      }
+        this.tableObj.initializeTable();
+      }
+    });
   }
 }

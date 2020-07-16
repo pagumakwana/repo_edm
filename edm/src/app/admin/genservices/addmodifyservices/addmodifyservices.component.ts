@@ -7,6 +7,7 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { formatDate } from '@angular/common';
+import { environment } from 'src/environments/environment.prod';
 declare var $: any;
 
 @Component({
@@ -26,7 +27,7 @@ export class AddModifyServicesComponent implements OnInit {
     private fb: FormBuilder) { }
 
   categoryData: []
-
+  fileURL = environment.cdnURL;
   addServiceForm: FormGroup = this.fb.group({
     ServiceTitle: ['', [Validators.required]],
     Category: ['', [Validators.required]],
@@ -66,16 +67,20 @@ export class AddModifyServicesComponent implements OnInit {
     else {
       this.initialize()
       // this.getService(0)
-
     }
 
-
+  }
+  concatArray(...args) {
+    let data = args.reduce((acc, val) => {
+      console.log("concatArray", acc, val)
+      return [...acc, ...val];
+    });
+    return data;
   }
 
   getCategory() {
     this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       this.categoryData = resData
-
     });
   }
 
@@ -90,6 +95,7 @@ export class AddModifyServicesComponent implements OnInit {
         this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
         this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
         this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
+        // this.addServiceForm.controls.FileUrls.setValue(this.addService.FileUrls)
         // this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
         // this.addServiceForm.controls.DeliveryDate.setValue(new Dyate())
         // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
@@ -129,7 +135,8 @@ export class AddModifyServicesComponent implements OnInit {
         DeliveryDate: null,
         IsActive: true,
         CreatedBy: FullName,
-        FAQDetails: []
+        FAQDetails: [],
+        FileUrls: []
       }
       this.addFaq(0, true)
     });
@@ -141,8 +148,8 @@ export class AddModifyServicesComponent implements OnInit {
 
     if (this.addServiceForm.valid) {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-        this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl.file, 'Service').then((ImageUrls: string) => {
-          this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'Service').then((serviceUrl: string) => {
+        this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl.file, 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
+          this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
             // this.addService.ImageUrl = url ? url : null
 
             // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
@@ -151,12 +158,16 @@ export class AddModifyServicesComponent implements OnInit {
             this.addService.Description = this.addServiceForm.value.Description
             this.addService.Price = this.addServiceForm.value.Price
             this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-            this.addService.BigImageUrl = ImageUrls
-            this.addService.ThumbnailImageUrl = ImageUrls
-            this.addService.ServiceVideoUrl = serviceUrl
+            // this.addService.BigImageUrl = ImageUrls
+            this.addService.FileUrls = ImageUrls
+            // this.addService.ServiceVideoUrl = serviceUrl
             this.addService.Revision = this.addServiceForm.value.Revision
             this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
             this.addService.CreatedBy = FullName
+            // this.addService.FileUrls = this.createFileArray([{ identifer: 'BigImageUrl', file: ImageUrls }, { identifer: 'ServiceVideoUrl', file: serviceUrl }])
+            // console.log("Arrays", this.createFileArray(this.joinArray([{ identifier: null }], [{ identifier: null }]), ['BigImageUrl', 'ImageUrls']));
+
+            this.addService.FileUrls = this.createFileArray(this.joinArray(ImageUrls, serviceUrl), ['BigImageUrl', 'ServiceVideoUrl'])
             this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
 
             console.log("saveService", this.addServiceForm, this.addService)
@@ -166,6 +177,19 @@ export class AddModifyServicesComponent implements OnInit {
         })
       })
     }
+  }
+
+  createFileArray(filesArray, identiferList: Array<string>): Array<any> {
+    if (filesArray.length == identiferList.length) {
+      for (let i in filesArray) {
+        filesArray[i].FileIdentifier = identiferList[i]
+      }
+    }
+    return filesArray
+  }
+
+  joinArray(...args) {
+    return args.reduce((acc, val) => [...acc, ...val]);
   }
 
   addServices() {
@@ -181,18 +205,13 @@ export class AddModifyServicesComponent implements OnInit {
     })
   }
 
-  fileChoosen($event, fieldName) {
-    console.log("fileChoosen", $event)
-    this.fileChoosenData[fieldName].file = $event.target.files;
-    this._base._commonService.readImage($event.target).subscribe(res => {
-      this.fileChoosenData[fieldName].thumb = res;
-    })
-  }
+
 
   get FaqListArray(): FormArray {
     return this.addServiceForm.get("FAQDetails") as FormArray
   }
 
+  //add remove FAQ
   addFaq(index: number, isAdd: boolean, Questions: string = '', Answer: string = '') {
     if (isAdd) {
       let control: FormGroup
@@ -206,7 +225,38 @@ export class AddModifyServicesComponent implements OnInit {
     }
   }
 
+  fileChoosen($event, fieldName) {
+    console.log("fileChoosen", $event)
+    this.fileChoosenData[fieldName].file = $event.target.files;
+    this.addServiceForm.controls[fieldName].setValue('upload')
+    this.addServiceForm.controls[fieldName].updateValueAndValidity()
+    this._base._commonService.readImage($event.target).subscribe(res => {
+      this.fileChoosenData[fieldName].thumb = res;
+    })
+  }
 
+  removeFile(fieldName) {
+    console.log("removeFile", fieldName)
+    this.fileChoosenData[fieldName].file = null
+    this.fileChoosenData[fieldName].thumb = null
+    this.addServiceForm.controls[fieldName].setValue(null)
+  }
+
+  removeThumbnail(ref_image_id) {
+    this._base._commonService.removeFile(ref_image_id).subscribe((res: any) => {
+      if (res == 'SUCCESS') {
+        this._base._alertMessageService.success('File removed successfully!');
+      } else {
+        this._base._alertMessageService.error('Something went wrong!');
+      }
+    })
+  }
+
+  // switchControl() {
+  //   // this.FaqListArray.moveControl(event.previousIndex, event.currentIndex);
+  //   moveItemInFormArray
+  //   this.FaqListArray
+  // }
 
 
 }

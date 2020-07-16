@@ -194,8 +194,8 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackvocals = data[0].IsVocals
       this.model.trackprice = data[0].Price
       this.model.trackImg = data[0].ThumbnailImageUrl
-      this.trackImg = environment.imageURL + data[0].ThumbnailImageUrl
-      this.preview = environment.imageURL + data[0].ThumbnailImageUrl
+      this.trackImg = environment.cdnURL + data[0].ThumbnailImageUrl
+      this.preview = environment.cdnURL + data[0].ThumbnailImageUrl
       this.masterfile = data[0].MasterFileUrl
       this.urtoggedfile = data[0].MasterFileUrl
       this.unmasterfile = data[0].UnmasteredFileUrl

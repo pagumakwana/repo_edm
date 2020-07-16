@@ -19,7 +19,7 @@ export class DatatablesComponent implements OnInit {
   @Output() tableEvent = new EventEmitter();
   @ViewChild('dataTable', { static: true }) table: ElementRef;
   dataTable: any;
-  imageBaseUrl: string = environment.imageURL
+  imageBaseUrl: string = environment.cdnURL
   ishide: boolean = true
 
   constructor(public _base: BaseServiceHelper) { }
