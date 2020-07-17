@@ -126,8 +126,8 @@ export class TrackListComponent implements OnInit {
     console.log(e);
   }
   onPriceChange(e) {
-    this.data.sort(this.GetSortOrder("Price", e));
-    for (var item in this.data) {
+    this.filteredProducts.sort(this.GetSortOrder("Price", e));
+    for (var item in this.filteredProducts) {
     }
   }
   onStatusChange(status){
