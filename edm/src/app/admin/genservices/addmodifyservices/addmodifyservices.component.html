@@ -47,6 +47,10 @@
                         <edm-error [control]="faq.controls.Answer"></edm-error>
                     </div>
                     <div class="button_group">
+                        <!-- <a class="global_btn icon_btn primary_btn" (click)="switchControl()">
+                            <span>switch</span>
+                            <span class="right_icon btn_icon"></span>
+                        </a> -->
                         <a class="global_btn icon_btn primary_btn" (click)="addFaq(i+1,true)">
                             <span>Add</span>
                             <span class="right_icon btn_icon"></span>
@@ -106,15 +110,15 @@
                 </div>
             </div>
             <div class="multipul_form_group">
-                <div class="width_50">
+                <div class="width_100" *ngIf="!fileChoosenData.ServiceVideoUrl.thumb">
                     <div class="form_group">
                         <label class="form_label">Upload Service Video</label>
                         <div class="form_area">
                             <div class="custom-file">
-                                <input type="file" formControlName="ServiceVideoUrl"
+                                <input type="file"
                                     (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
                                     id="customFile">
-                                <img [src]="fileChoosenData.ServiceVideoUrl.thumb" class="image_preview" />
+                                <!-- <img [src]="fileChoosenData.ServiceVideoUrl.thumb" class="image_preview" /> -->
                                 <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                                 <label class="custom-file-label" for="customFile">
                                     Choose file
@@ -127,13 +131,25 @@
                         <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
                     </div>
                 </div>
-                <div class="width_50">
+                <div class="width_100" *ngIf="fileChoosenData.ServiceVideoUrl.thumb">
                     <div class="service_thumbnail_sec">
-                        <img src="../../../assets/images/product_thumbnail.jpg" />
+                        <label class="form_label">Upload Service Video</label>
+
+                        <!-- <img src="../../../assets/images/product_thumbnail.jpg" />
                         <div class="service_thumbnail_hover_sec">
                             <img src="../../../assets/images/play_video.svg" title="Play" />
-                        </div>
+                        </div> -->
+                        <video height="300" controls>
+                            <source [src]="fileChoosenData.ServiceVideoUrl.thumb" type="video/mp4">
+                            <!-- <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4"> -->
+                            <!-- <source src="mov_bbb.ogg" type="video/ogg"> -->
+                            Your browser does not support HTML video.
+                        </video>
                     </div>
+                    <a class="remImage" id="delete" (click)="removeFile('ServiceVideoUrl')">
+                        remove video
+                        <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                    </a>
                 </div>
             </div>
             <!-- </form> -->
@@ -141,11 +157,20 @@
 
 
         <div class="width_40">
-            <div class="form_group">
+            <div class="form_group" *ngIf="fileChoosenData.BigImageUrl.thumb">
+                <label class="form_label">Upload Service Cover Image</label>
+                <div id="imgPreview" class="imgPreview">
+                    <img height="80" width="120" [src]="fileChoosenData.BigImageUrl.thumb" />
+                    <a class="remImage" id="delete" (click)="removeFile('BigImageUrl')">
+                        <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                    </a>
+                </div>
+            </div>
+            <div class="form_group" *ngIf="!fileChoosenData.BigImageUrl.thumb">
                 <label class="form_label">Upload Service Cover Image</label>
                 <div class="form_area">
                     <div class="custom-file">
-                        <input type="file" formControlName="BigImageUrl" (change)="fileChoosen($event,'BigImageUrl')"
+                        <input type="file" (change)="fileChoosen($event,'BigImageUrl')"
                             class="custom-file-input" id="customFile">
                         <img [src]="fileChoosenData.BigImageUrl.thumb" class="image_preview" />
                         <label class="custom-file-label" for="customFile">

@@ -2,15 +2,16 @@
     <form>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <select name="filterbygenretype" class="grey_dropdown">
+                <select name="filterbygenretype" class="grey_dropdown" (change)="changeFilter($event)">
                     <option disabled selected>Filter By Genre Type</option>
-                    <option>For Tracks</option>
-                    <option>For Beats</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
                 </select>
                 <span class="input_icon down_icon"></span>
             </div>
         </div>
-        <div class="form_group">
+        <!-- <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="filterbyservicetype" class="grey_dropdown">
                     <option disabled selected>Filter By Service Type</option>
@@ -19,7 +20,7 @@
                 </select>
                 <span class="input_icon down_icon"></span>
             </div>
-        </div>
+        </div> -->
     </form>
 </div>
 <div class="portlet_body">
@@ -72,7 +73,8 @@
 </div>
 
 
-<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-md modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -85,7 +87,8 @@
                 <p>Once you delete data can not be rollback. Do you still want to continue?</p>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-block primary_btn" (click)="cancelGenre()" data-dismiss="modal">Cancel</a>
+                <a type="button" class="btn btn-block primary_btn" (click)="cancelGenre()"
+                    data-dismiss="modal">Cancel</a>
                 <a (click)="removeGenre()" class="btn btn-block primary_btn" data-dismiss="modal">Yes</a>
             </div>
         </div>

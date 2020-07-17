@@ -18,7 +18,8 @@ export class ApiConstant {
     public static common = {
         thumbnail: "Admin/Common/Image",
         uploadfiles: "Admin/Common/File",
-        uploadFileData: "Admin/Common/FileUpload"
+        uploadFileData: "Admin/Common/FileUpload",
+        removefile: "Common/RemoveFile"
     }
     public static TrackManagement = {
         Track: "Admin/TrackManagement/Track",

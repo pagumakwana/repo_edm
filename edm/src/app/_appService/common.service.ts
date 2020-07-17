@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment.prod';
 import { NavigationEnd, Router } from '@angular/router';
 import { EncryptedStorage } from '../_appModel/encryptedstorage';
 import { enAppSession } from '../_appModel/enAppSession';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { ApiConstant } from '../_appModel/apiconstant';
 import { Subject, Observable } from 'rxjs';
 declare var $: any;
@@ -139,16 +139,17 @@ export class CommonService {
         $('#mainloader').css('display', 'none');
     }
 
-    filesUpload(files: FileList | string, moduleName: string) {
+    sampleRes = [{ CreatedBy: null, CreatedDateTime: null, CreatedName: null, FileExtension: ".mp4", FileIdentifier: null, FileName: "videogular_2020-07-16-13-22-38.mp4", FilePath: "/FileStorage/ServiceVideo/videogular_2020-07-16-13-22-38.mp4", FileSize: 24406814, FileType: "video/mp4", FileUrls: null, Flag: null, IsActive: null, IsDeleted: null, ModuleName: "ServiceVideo", Ref_File_ID: 0, Ref_ID: 0, Ref_User_ID: 0, UpdatedBy: null, UpdatedDateTime: null, UpdatedName: null }]
+    filesUpload(files: FileList | string, moduleName: string, type = 'upload') {
         return new Promise((resolve, reject) => {
-            let isUpload: boolean = files ? (files.length > 0) : false
-            debugger
+            let isUpload: boolean = files && type == 'upload' ? (files.length > 0) : false
             if (isUpload) {
                 this.uploadFile(files, moduleName).subscribe(url => {
                     resolve(url)
                 })
             } else {
-                resolve(null)
+                // resolve(JSON.parse(JSON.stringify(this.sampleRes)))
+                resolve([])
             }
         })
     }
@@ -189,5 +190,8 @@ export class CommonService {
                 }, 1000);
             }
         });
+    }
+    removeFile(ref_file_id) {
+        return this._apiService.post(ApiConstant.common.removefile + "?Ref_File_ID=" + ref_file_id);
     }
 }
