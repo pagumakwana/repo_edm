@@ -1,19 +1,19 @@
 <div class="filter_section desktop_filter_section">
-    <div class="inline_radio">
-        <label class="radio">
-            <input name="tracks" type="radio"  (change)="onStatusChange('All')">Available Tracks
+    <div class="inline_checkbox">
+        <label class="checkbox">
+            <input name="tracks" [(ngModel)]="filter.Approved" type="checkbox"  (change)="onStatusChange('Approve')">Available Tracks
             <span></span>
         </label>
-        <label class="radio">
-            <input name="tracks" type="radio" (change)="onStatusChange('SoldOut')">Sold Out Tracks
+        <label class="checkbox">
+            <input name="tracks" [(ngModel)]="filter.SoldOut" type="checkbox" (change)="onStatusChange('SoldOut')">Sold Out Tracks
             <span></span>
         </label>
-        <label class="radio error_color">
-            <input name="tracks" type="radio" (change)="onStatusChange('Rejected')">Rejected Tracks
+        <label class="checkbox error_color">
+            <input name="tracks" [(ngModel)]="filter.Rejected" type="checkbox" (change)="onStatusChange('Rejax`cted')">Rejected Tracks
             <span></span>
         </label>
-        <label class="radio error_color" (change)="onStatusChange('Pending')">
-            <input name="tracks" type="radio">Pending Tracks
+        <label class="checkbox">
+            <input name="tracks" [(ngModel)]="filter.Pending" type="checkbox" (change)="onStatusChange('Pending')">Pending Tracks
             <span></span>
         </label>
     </div>
@@ -54,7 +54,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let track of data">
+            <tr *ngFor="let track of filteredProducts">
                 <td>
                     <div class="play_upper_layer">
                         <img class="tbl_img" [src]="track.ThumbnailImageUrl" />
@@ -70,7 +70,7 @@
                 <td>{{track.TrackStatus}}</td>
                 <td>
                     <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
-                    <a *ngIf="track.TrackStatus == 'Reject'" class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
+                    <a *ngIf="track.TrackStatus == 'REJACTED'" class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
                 </td>
                 <td class="table_btn">
                     <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Approve')" class="global_btn icon_btn primary_btn">
@@ -180,7 +180,7 @@
                 </td>
             </tr> -->
         </tbody>
-        <div *ngIf="data?.length == 0">
+        <div *ngIf="filteredProducts?.length == 0">
             <div>No record found</div>
         </div>
     </table>

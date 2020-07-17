@@ -24,6 +24,8 @@ export class TrackListComponent implements OnInit {
   rejectReason;
   rejectTrackId;
   public addrejectreason: FormGroup;
+  filteredProducts;
+  filter = { Approved: false, SoldOut: false, Rejected: false, Pending: false };
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private route: ActivatedRoute,
@@ -34,16 +36,27 @@ export class TrackListComponent implements OnInit {
     debugger;
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
-      this.bindCategory();
-      this.getAllTracks("0", 'All');
+      this._base._commonService.showLoader();
+      this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
+        let categoryData = []
+        categoryData = Array.isArray(resData) ? resData : []
+        console.log("categoryData", categoryData);
+        this.genrelist = categoryData;
+        this.getAllTracks("0", 'All');
+      },e =>{
+        this._base._commonService.hideLoader();
+      });
+       
+     
     })
+    this._base._pageTitleService.setTitle("All Tracks / Beats", "All Tracks / Beats");
     this.addrejectreason = this.fb.group({
       rejectReason: ['', [Validators.required]]
     })
 
   }
   public getAllTracks(genreid, status) {
-    this._base._commonService.showLoader();
+ 
     this._base._ApiService.get(ApiConstant.TrackManagement.Track + '?TrackID=0').subscribe((data: any) => {
       if (this.moduleName == "Track") {
         data = data.filter(res => res.IsTrack == true);
@@ -53,31 +66,38 @@ export class TrackListComponent implements OnInit {
       console.log(data);
       if (genreid != "0") {
         this.data = data.filter(a => a.Ref_Category_ID == genreid);
+        this._base._commonService.hideLoader();
         this.data.filter(item => {
           item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
           item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
         })
-        this._base._commonService.hideLoader();
+        this.filteredProducts = this.data;
+        
       } else {
+        this._base._commonService.hideLoader();
         if(status != "All"){
           this.data = data.filter(a => a.TrackStatus == status.toUpperCase());
           this.data.map(item => {
             item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
             item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
           })
+          this.filteredProducts = this.data;
         }else{
           this.data = data
           this.data.map(item => {
             item.ThumbnailImageUrl = environment.imageURL + item.ThumbnailImageUrl;
             item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
           })
+          this.filteredProducts = this.data;
         }
         //this.data = data;
        
         console.log(this.data);
-        this._base._commonService.hideLoader();
+       
       }
 
+    },e=>{
+      this._base._commonService.hideLoader();
     })
   }
   bindCategory() {
@@ -111,7 +131,19 @@ export class TrackListComponent implements OnInit {
     }
   }
   onStatusChange(status){
-    this.getAllTracks("0", status);
+    if(!this.filter.Approved && !this.filter.SoldOut && !this.filter.Rejected && !this.filter.Pending){
+      this.filteredProducts = this.data
+    }else{
+      this.filteredProducts = this.data.filter(x => 
+        (x.TrackStatus == 'Approve' && this.filter.Approved)
+        || (x.TrackStatus == 'SoldOut' && this.filter.SoldOut)
+        || (x.TrackStatus == 'REJACTED' && this.filter.Rejected)
+        || (x.TrackStatus == 'Pending' && this.filter.Pending)
+     );
+     console.log( this.filteredProducts)
+    }
+   
+   
   }
   GetSortOrder(prop, e) {
     return function (a, b) {

@@ -102,7 +102,7 @@ export class FileUploadService {
           //   this.uploadImageonServer = '';
           // }
        } else {
-          this.apiService.postFile('Admin/Common/'+fileType+'?ModuleName=' + Module, browseFromWeb).subscribe((data) => {
+          this.apiService.postFile('Admin/Common/FileUpload?ModuleName=' + Module, browseFromWeb).subscribe((data) => {
             console.log(data);
             resolve(data);
             // this.uploadImageonServer = '';

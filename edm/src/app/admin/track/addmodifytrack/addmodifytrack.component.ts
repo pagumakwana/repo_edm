@@ -127,11 +127,13 @@ export class AddModifyTrackComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.moduleName = params['module']
+      this.moduleName = params['module'];
       this.trackId = params['id'];
       if (this.trackId != 0) {
+        this._base._pageTitleService.setTitle("Modify " + this.moduleName, "Modify " + this.moduleName);
         this.getTrackDetails(this.trackId);
       } else {
+        this._base._pageTitleService.setTitle("Add " + this.moduleName, "Add " + this.moduleName);
         this.model = {};
         this.trackImg = undefined;
         this.masterfile = undefined;
@@ -194,7 +196,7 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackvocals = data[0].IsVocals
       this.model.trackprice = data[0].Price
       this.model.trackImg = data[0].ThumbnailImageUrl
-      this.trackImg = environment.imageURL + data[0].ThumbnailImageUrl
+      this.trackImg = data[0].ThumbnailImageUrl
       this.preview = environment.imageURL + data[0].ThumbnailImageUrl
       this.masterfile = data[0].MasterFileUrl
       this.urtoggedfile = data[0].MasterFileUrl
@@ -225,13 +227,15 @@ export class AddModifyTrackComponent implements OnInit {
     debugger;
    
     this.imgFile = $event.target.files[0];
+   
     console.log(this.imgFile);
     var that = this;
     var reader = new FileReader();
     if (this.imgFile) {
       if (this.imgFile.type == 'image/jpeg' || this.imgFile.type == 'image/jpg' || this.imgFile.type == 'image/png') {
-        this.formDataTrackImg = new FormData();
-        this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
+       // this.formDataTrackImg = new FormData();
+      //  this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
+        this.formDataTrackImg = $event.target.files
         reader.readAsDataURL(this.imgFile)
         reader.onload = (_event) => {
           this.preview = reader.result;
@@ -252,12 +256,12 @@ export class AddModifyTrackComponent implements OnInit {
           //this.commonService.showLoader()
           if(fileType == 'Urtoggedfile'){
             this.urtoggedfile = this.audioFile.name;
-            this.uploadurtoggedfile = new FormData();
-            this.uploadurtoggedfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadurtoggedfile = $event.target.files; //new FormData();
+            //this.uploadurtoggedfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }else  if(fileType == 'Projectfile'){
             this.projectfile = this.audioFile.name;
-            this.uploadprojectfile = new FormData();
-            this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadprojectfile = $event.target.files; //new FormData();
+           // this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
           //this.uploadfile(fileType);
         } else {
@@ -269,24 +273,24 @@ export class AddModifyTrackComponent implements OnInit {
         
           if (fileType == 'Masterfile') {
             this.masterfile = this.audioFile.name;
-            this.uploadmasterfile = new FormData();
-            this.uploadmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadmasterfile = $event.target.files; //new FormData();
+           // this.uploadmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
           } else if (fileType == 'Unmasterfile') {
             this.unmasterfile = this.audioFile.name;
-            this.uploadunmasterfile = new FormData();
-            this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadunmasterfile = $event.target.files;// new FormData();
+           // this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
           } else if (fileType == 'Mixdowfile') {
             this.mixdowfile = this.audioFile.name;
-            this.uploadmixdowfile = new FormData();
-            this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadmixdowfile = $event.target.files; //new FormData();
+           // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
           } else if (fileType == 'Stemsfile') {
             this.stemsfile = this.audioFile.name;
-            this.uploadstemsfile = new FormData();
-            this.uploadstemsfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadstemsfile = $event.target.files; //new FormData();
+           // this.uploadstemsfile.append('uploadFile', this.audioFile, this.audioFile.name);
           } else if (fileType == 'MIDIfile') {
             this.midifileurl = this.audioFile.name;
-            this.uploadmidifile = new FormData();
-            this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
+            this.uploadmidifile = $event.target.files; //new FormData();
+          //  this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
          // this.uploadfile(fileType);
         } else {
@@ -299,71 +303,82 @@ export class AddModifyTrackComponent implements OnInit {
   }
   uploadImg(){
     this.commonService.showLoader()
-    this.fileUploadService.uploadonServer('Track', 'Image', '', this.formDataTrackImg, '').then(trackcover => {
-      console.log(trackcover);
-      this.trackImg = trackcover;
+    this._base._commonService.filesUpload(this.formDataTrackImg, 'Track').then(res =>{
+      console.log(res[0].FilePath);
+      this.trackImg = res[0].FilePath;
       this.trackImguploaded = true;
       this.commonService.hideLoader();
     }, e => {
       this.commonService.hideLoader();
     })
+    // this.fileUploadService.uploadonServer('Track', 'Image', '', this.formDataTrackImg, '').then(trackcover => {
+    //   console.log(trackcover);
+    
+    //   this.commonService.hideLoader();
+    // }, e => {
+    //   this.commonService.hideLoader();
+    // })
   }
   uploadfile(fileType) {
     this.commonService.showLoader()
     if (fileType == 'Masterfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
-        console.log(data);
-        this.masterfileurl = data;
+      this._base._commonService.filesUpload(this.uploadmasterfile, 'Track').then(data =>{
+     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
+        console.log(data[0].FilePath);
+        this.masterfileurl = data[0].FilePath;
         this.masterfileuploaded = true;
         this.commonService.hideLoader();
       })
     } else if (fileType == 'Unmasterfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadunmasterfile, '').then(data => {
-        console.log(data);
-        this.unmasterfileurl = data;
+      this._base._commonService.filesUpload(this.uploadunmasterfile, 'Track').then(data =>{
+      //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadunmasterfile, '').then(data => {
+        console.log(data[0].FilePath);
+        this.unmasterfileurl = data[0].FilePath;
         this.unmasterfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Mixdowfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmixdowfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadmixdowfile, 'Track').then(data =>{
+     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmixdowfile, '').then(data => {
         console.log(data);
-        this.mixdowfileurl = data;
+        this.mixdowfileurl = data[0].FilePath;
         this.mixdowfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Stemsfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadstemsfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadstemsfile, 'Track').then(data =>{
+     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadstemsfile, '').then(data => {
         console.log(data);
-        this.stemsfileurl = data;
+        this.stemsfileurl = data[0].FilePath;
         this.stemsfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'MIDIfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmidifile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadmidifile, 'Track').then(data =>{
+      //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmidifile, '').then(data => {
         console.log(data);
-        this.midifileurl = data;
+        this.midifileurl = data[0].FilePath;
         this.MIDIfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Projectfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadprojectfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadprojectfile, 'Track').then(data =>{
+     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadprojectfile, '').then(data => {
         console.log(data);
-        this.projectfileurl = data;
+        this.projectfileurl = data[0].FilePath;
         this.projectfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Urtoggedfile') {
-      this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
-        console.log(data);
-        this.masterfileurl = data;
+      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then(data =>{
+     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
+        console.log(data[0].FilePath);
+        this.masterfileurl = data[0].FilePath;
         this.masterfileuploaded = true;
+        this.urtoggedfileuploaded = true;
         this.commonService.hideLoader();
       })
     }
-    // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadtrackfile,'').then(data => {
-    //   console.log(data);
-    //   this.trackfileurl = data;
-    // })
   }
   onSubmit() {
     if (this.trackImg != undefined) {
@@ -405,7 +420,8 @@ export class AddModifyTrackComponent implements OnInit {
         }
         this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
           console.log(data);
-          alert(data);
+         // alert(data);
+          (<any>$('#acknowledge_popup')).modal('show');
           this.commonService.hideLoader();
           // $('#acknowledge_popup').modal('show');
         }, e => {
@@ -438,13 +454,13 @@ export class AddModifyTrackComponent implements OnInit {
   }
   checkfileuploaded() {
     if (this.moduleName == "Track") {
-      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfile != undefined && this.projectfileurl != undefined && this.midifileurl != undefined) {
+      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfileurl != undefined && this.projectfileurl != undefined && this.midifileurl != undefined) {
         return true
       } else {
         return false
       }
     } else {
-      if (this.stemsfile != undefined && this.urtoggedfileurl != undefined) {
+      if (this.stemsfileurl != undefined && this.masterfileurl != undefined) {
         return true
       } else {
         return false
