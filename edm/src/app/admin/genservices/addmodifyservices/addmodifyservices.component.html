@@ -115,9 +115,8 @@
                         <label class="form_label">Upload Service Video</label>
                         <div class="form_area">
                             <div class="custom-file">
-                                <input type="file"
-                                    (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
-                                    id="customFile">
+                                <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')"
+                                    class="custom-file-input" id="customFile">
                                 <!-- <img [src]="fileChoosenData.ServiceVideoUrl.thumb" class="image_preview" /> -->
                                 <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                                 <label class="custom-file-label" for="customFile">
@@ -170,9 +169,10 @@
                 <label class="form_label">Upload Service Cover Image</label>
                 <div class="form_area">
                     <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'BigImageUrl')"
-                            class="custom-file-input" id="customFile">
-                        <img [src]="fileChoosenData.BigImageUrl.thumb" class="image_preview" />
+                        <input type="file" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input"
+                            id="customFile">
+                        <img [src]="fileChoosenData.BigImageUrl.thumb ? fileChoosenData.BigImageUrl.thumb : '../../../../assets/images/product_thumbnail.jpg'"
+                            class="image_preview" />
                         <label class="custom-file-label" for="customFile">
                             Choose file
                         </label>

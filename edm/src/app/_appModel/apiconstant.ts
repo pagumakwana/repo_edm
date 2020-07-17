@@ -19,7 +19,7 @@ export class ApiConstant {
         thumbnail: "Admin/Common/Image",
         uploadfiles: "Admin/Common/File",
         uploadFileData: "Admin/Common/FileUpload",
-        removefile: "Common/RemoveFile"
+        removefile: "Admin/Common/RemoveFile"
     }
     public static TrackManagement = {
         Track: "Admin/TrackManagement/Track",
