@@ -5,6 +5,8 @@ import { CategoryModel } from 'src/app/_appModel/category/category.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { ActivatedRoute } from '@angular/router';
+import * as _ from "lodash";
+
 
 @Component({
   selector: 'appAdmin-addmodifygener',
@@ -20,6 +22,7 @@ export class AddModifyGenersComponent implements OnInit {
     private _activatedRouter: ActivatedRoute) { }
 
   _categoryModel: CategoryModel = {};
+  aliasName: string;
   public categoryData: any = [];
   isCategoryModify: boolean = false;
   btnTitle: string = 'ADD'
@@ -30,21 +33,23 @@ export class AddModifyGenersComponent implements OnInit {
     CategoryName: ['', [Validators.required]],
     AliasName: ['', [Validators.required]],
     CategoryDescription: [''],
-    CategoryUserBy: ['']
+    CategoryUseBy: ['']
   })
 
   ngAfterViewInit(): void {
     this._base._pageTitleService.setTitle('Category', this.btnTitle + ' GENRE / Category');
   }
   ngOnInit(): void {
-    this.bindCategory();
-    debugger
-    let aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
-    if (aliasName != 'new') {
-      this.getCategory();
-      this.btnTitle="MODIFY"
+    this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
+    if (this.aliasName != '0') {
+      this.bindCategory('ALL', 0).then((res: any) => {
+        if (res) {
+          this.getCategory();
+        }
+      })
     } else {
       this.intialise();
+      this.bindCategory('ALL', 0);
     }
   }
 
@@ -67,14 +72,20 @@ export class AddModifyGenersComponent implements OnInit {
   }
 
   getCategory() {
-    this._categoryModel = this._categoryService.categoryArray;
-    this.isCategoryModify = true;
-    this.btnTitle = 'Modify'
-    this.formCategory.controls.Ref_Parent_ID.setValue(this._categoryModel.Ref_Parent_ID);
-    this.formCategory.controls.CategoryName.setValue(this._categoryModel.CategoryName);
-    this.formCategory.controls.AliasName.setValue(this._categoryModel.AliasName);
-    this.formCategory.controls.CategoryDescription.setValue(this._categoryModel.Description);
-    this.formCategory.controls.CategoryUseBy.setValue(this._categoryModel.CategoryUseBy);
+    let index = _.findIndex(this.categoryData, (o) => {
+      return o.AliasName == this.aliasName
+    })
+    if (index > -1) {
+      this._categoryModel = this.categoryData[index];
+      console.log("catData", this._categoryModel);
+      this.isCategoryModify = true;
+      this.btnTitle = 'Modify'
+      this.formCategory.controls.Ref_Parent_ID.setValue(this._categoryModel.Ref_Parent_ID);
+      this.formCategory.controls.CategoryName.setValue(this._categoryModel.CategoryName);
+      this.formCategory.controls.AliasName.setValue(this._categoryModel.AliasName);
+      this.formCategory.controls.CategoryDescription.setValue(this._categoryModel.Description);
+      this.formCategory.controls.CategoryUseBy.setValue(this._categoryModel.CategoryUseBy);
+    }
   }
 
   setCategoryModel() {
@@ -112,14 +123,15 @@ export class AddModifyGenersComponent implements OnInit {
     });
   }
 
-  bindCategory() {
-    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
-      resData.filter((res) => {
-        if (res.Ref_Parent_ID == 0) {
+  bindCategory(flag, ref_category_id, aliasName = null) {
+    return new Promise((resolve, rej) => {
+      this._categoryService.categorylist(flag, ref_category_id, aliasName).subscribe((resData: any) => {
+        resData.filter((res) => {
           this.categoryData.push(res);
-        }
+        });
+        resolve(true);
       });
-    });
+    })
   }
   fileChoosen($event) {
     this.fileData = $event.target.files;
