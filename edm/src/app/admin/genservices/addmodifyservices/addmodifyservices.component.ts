@@ -8,6 +8,8 @@ import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { formatDate } from '@angular/common';
 import { environment } from 'src/environments/environment.prod';
+import * as _ from "lodash";
+
 declare var $: any;
 
 @Component({
@@ -95,6 +97,9 @@ export class AddModifyServicesComponent implements OnInit {
         this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
         this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
         this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
+
+        this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
+        this.initFilesUrl(this.addService.FileUrls)
         // this.addServiceForm.controls.FileUrls.setValue(this.addService.FileUrls)
         // this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
         // this.addServiceForm.controls.DeliveryDate.setValue(new Dyate())
@@ -116,6 +121,18 @@ export class AddModifyServicesComponent implements OnInit {
 
       }
     })
+  }
+
+  //setting up files during modify
+  initFilesUrl(filesUrl: Array<any>) {
+    console.log("initFilesUrl")
+    for (let i in filesUrl) {
+      if (filesUrl[i].FileIdentifier) {
+        this.fileChoosenData[filesUrl[i].FileIdentifier].thumb = this.fileURL + filesUrl[i].FilePath
+        this.addServiceForm.controls[filesUrl[i].FileIdentifier].setValue('uploaded')
+        this.addServiceForm.controls[filesUrl[i].FileIdentifier].updateValueAndValidity()
+      }
+    }
   }
 
   initialize() {
@@ -167,7 +184,7 @@ export class AddModifyServicesComponent implements OnInit {
             // this.addService.FileUrls = this.createFileArray([{ identifer: 'BigImageUrl', file: ImageUrls }, { identifer: 'ServiceVideoUrl', file: serviceUrl }])
             // console.log("Arrays", this.createFileArray(this.joinArray([{ identifier: null }], [{ identifier: null }]), ['BigImageUrl', 'ImageUrls']));
 
-            this.addService.FileUrls = this.createFileArray(this.joinArray(ImageUrls, serviceUrl), ['BigImageUrl', 'ServiceVideoUrl'])
+            this.addService.FileUrls = this.joinArray(this.createFileArray(ImageUrls, 'BigImageUrl'), this.createFileArray(serviceUrl, 'ServiceVideoUrl'))
             this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
 
             console.log("saveService", this.addServiceForm, this.addService)
@@ -179,11 +196,10 @@ export class AddModifyServicesComponent implements OnInit {
     }
   }
 
-  createFileArray(filesArray, identiferList: Array<string>): Array<any> {
-    if (filesArray.length == identiferList.length) {
-      for (let i in filesArray) {
-        filesArray[i].FileIdentifier = identiferList[i]
-      }
+  createFileArray(filesArray, identiferList: string): Array<any> {
+    filesArray = Array.isArray(filesArray) ? filesArray : []
+    for (let i in filesArray) {
+      filesArray[i].FileIdentifier = identiferList
     }
     return filesArray
   }
@@ -239,6 +255,13 @@ export class AddModifyServicesComponent implements OnInit {
     console.log("removeFile", fieldName)
     this.fileChoosenData[fieldName].file = null
     this.fileChoosenData[fieldName].thumb = null
+    if (this.addServiceForm.controls[fieldName].value == 'uploaded') {
+      let index = _.findIndex(this.addService.FileUrls, (o: any) => {
+        return o.FileIdentifier == fieldName
+      })
+      if (index > -1)
+        this.removeThumbnail(this.addService.FileUrls[index].Ref_File_ID)
+    }
     this.addServiceForm.controls[fieldName].setValue(null)
   }
 

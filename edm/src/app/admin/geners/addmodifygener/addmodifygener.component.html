@@ -57,7 +57,8 @@
             <label class="form_label">Upload Service Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleFormControlFile1" (change)="fileChoosen($event)">
+                    <input type="file" class="custom-file-input" id="exampleFormControlFile1"
+                        (change)="fileChoosen($event)">
                     <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
                     <label class="custom-file-label" for="customFile">
                         Choose file
@@ -70,6 +71,9 @@
         <div class="button_group">
             <a type="submit" (click)="setCategoryModel()" class="global_btn primary_btn">
                 <span>{{btnTitle}}</span>
+            </a>
+            <a routerLink='/admin/category' class="global_btn primary_btn">
+                <span>Cancel</span>
             </a>
         </div>
     </form>
