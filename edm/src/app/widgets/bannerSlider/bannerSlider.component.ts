@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-
+import { BaseServiceHelper } from './../../_appService/baseHelper.service';
 import {
     SwiperComponent, SwiperDirective, SwiperConfigInterface,
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
+import { ApiConstant } from './../../_appModel/apiconstant';
+import { environment } from './../../../environments/environment.prod';
 
 @Component({
     selector: 'app-bannerSlider',
@@ -13,15 +15,9 @@ import {
 })
 export class BannerSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
-    constructor() { }
-    public slides = [
-        'First slide',
-        'Second slide',
-        'Third slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide'
-    ]; public config: SwiperConfigInterface = {
+    constructor(public _base: BaseServiceHelper,) { }
+    public slides = [];
+    public config: SwiperConfigInterface = {
         direction: 'horizontal',
         slidesPerView: 1,
         pagination: true,
@@ -41,6 +37,12 @@ export class BannerSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
+        this._base._ApiService.get(ApiConstant.MasterManagement.CarouselList + '?CarouselID=0').subscribe((data: any) => {
+            this.slides = data;
+            this.slides.map(item => {
+                item.ImageUrl = environment.cdnURL + item.ImageUrl;
+              })
+        })
     }
 
 }

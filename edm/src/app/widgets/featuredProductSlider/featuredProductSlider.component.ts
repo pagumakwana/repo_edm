@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-
+import { BaseServiceHelper } from './../../_appService/baseHelper.service';
 import {
     SwiperComponent, SwiperDirective, SwiperConfigInterface,
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
+import { ApiConstant } from './../../_appModel/apiconstant';
+import { environment } from './../../../environments/environment.prod';
 
 @Component({
     selector: 'app-featuredProductSlider',
@@ -13,24 +15,8 @@ import {
 })
 export class FeaturedProductSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
-    constructor() { }
-    public slides = [
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide'
-    ];
+    constructor(public _base: BaseServiceHelper) { }
+    public slides = [];
     public config: SwiperConfigInterface = {
         direction: 'horizontal',
         navigation: false,
@@ -69,6 +55,12 @@ export class FeaturedProductSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
+        this._base._ApiService.get(ApiConstant.TrackManagement.FeaturedTrack).subscribe((data: any) => {
+            this.slides = data.filter(a => a.IsTrack == 'Track');
+            this.slides.map(item => {
+                item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
+              })
+        })
     }
 
 }

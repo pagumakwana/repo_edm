@@ -73,18 +73,22 @@
         Explore Artist Branding
     </h2>
     <div class="hp_block_section">
-        <div class="branding_sec">
+        <div class="branding_sec" *ngFor="let data of artistBranding">
             <div class="branding_data">
-                <img src="../../assets/images/logo_designing.jpg">
-                <p>Logo Designing</p>
+                <img [src]="data.ThumbnailImageUrl">
+                <p>{{data.ServiceTitle}}</p>
             </div>
         </div>
-        <div class="branding_sec">
-            <div class="branding_data">
-                <img src="../../assets/images/website_designing.jpg">
-                <p>Website Designing</p>
-            </div>
+        <div *ngIf="artistBranding?.length == 0">
+            <div>No record found</div>
         </div>
+        <!-- <div class="branding_sec">
+                <div class="branding_data">
+                    <img src="../../assets/images/website_designing.jpg">
+                    <p>Website Designing</p>
+                </div>
+            </div>
+       
         <div class="branding_sec">
             <div class="branding_data">
                 <img src="../../assets/images/album_art.jpg">
@@ -96,7 +100,7 @@
                 <img src="../../assets/images/artist_illustration.jpg">
                 <p>Artist Illustration</p>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 

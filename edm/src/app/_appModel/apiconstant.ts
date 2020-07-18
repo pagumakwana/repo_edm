@@ -23,13 +23,18 @@ export class ApiConstant {
     }
     public static TrackManagement = {
         Track: "Admin/TrackManagement/Track",
-        ManageTrack: "Admin/TrackManagement/ManageTrack",
         ApproveAndRejact: "Admin/TrackManagement/ApproveAndRejact",
+        ManageTrack: "Admin/TrackManagement/ManageTrack",
+        FeaturedTrack: "User/Track/FeaturedTrack",
     }
     public static MasterManagement = {
         DAW: "Admin/MasterManagement/DAW",
         UserMaster: "Admin/MasterManagement/UserMaster",
         ParentUserMaster: "Admin/MasterManagement/ParentUserMaster",
         UserMasterData: "Admin/MasterManagement/UserMasterData",
+        CarouselList: "Admin/MasterManagement/CarouselList",
+    }
+    public static Service = {
+        Service: "User/Service/ServiceByCategory",
     }
 }

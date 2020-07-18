@@ -2,23 +2,23 @@
     <div *ngFor="let slide of slides" class="swiper-slide">
         <div class="slider_product">
             <div class="product_img">
-                <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
+                <img [src]="slide.ThumbnailImageUrl" class="product_thumbnail">
                 <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                 <div class="product_upper_layer">
                     <img src="../../../assets/images/play_video.svg" title="Play" />
-                    <p class="product_name">ZAPPIER</p>
-                    <p class="product_bass">Future Bass</p>
+                    <p class="product_name">{{slide.TrackName}}</p>
+                    <p class="product_bass">{{slide.CategoryName}}</p>
                 </div>
             </div>
             <div class="product_details">
                 <div class="left_details">
-                    <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites"/>
+                    <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
                     <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                    <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More"/>
+                    <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
                 </div>
                 <div class="right_details">
                     <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                        <span>&#36;999</span>
+                        <span>&#36;{{slide.Price}}</span>
                         <span class="add_to_cart_icon btn_icon"></span>
                     </a>
                 </div>
