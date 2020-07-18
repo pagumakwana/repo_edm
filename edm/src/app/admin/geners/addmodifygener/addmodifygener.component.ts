@@ -29,7 +29,7 @@ export class AddModifyGenersComponent implements OnInit {
   imgCategory: any;
   fileData: any;
   formCategory: FormGroup = this._fbGener.group({
-    Ref_Parent_ID: ['',],
+    Ref_Parent_ID: [''],
     CategoryName: ['', [Validators.required]],
     AliasName: ['', [Validators.required]],
     CategoryDescription: [''],

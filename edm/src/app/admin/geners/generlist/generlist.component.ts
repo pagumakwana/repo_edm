@@ -24,7 +24,7 @@ export class GenerListComponent implements OnInit {
     tableData: [],
     tableConfig: [
       // { identifer: "Sr", title: "Sr" },
-      { identifer: "ThumbnailImageUrl", title: "Thumbnail", type: "image", size: { height: "100px", width: "100px" } },
+      { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "100px", width: "100px" } },
       { identifer: "CategoryName", title: "CategoryName", type: "link" },
       { identifer: "Description", title: "Description", type: "text" },
       // { identifer: "CreatedBy", title: "CreatedBy", type: "text" },
@@ -36,6 +36,7 @@ export class GenerListComponent implements OnInit {
     console.log("test", dataItem);
     if (dataItem.action.type == 'link' || (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Edit")) {
       this.modifycategory(dataItem.tableItem, 'MODIFYCATEGORY');
+    } else if (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Delete") {
     }
   }
   ngAfterViewInit(): void {

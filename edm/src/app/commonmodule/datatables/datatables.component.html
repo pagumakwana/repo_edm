@@ -21,8 +21,8 @@
                     <!-- <a (click)="tableClick(tableItem,key)">
                         {{tableItem[key.identifer]}}
                     </a> -->
-                    <img [src]="imageBaseUrl + tableItem[key.identifer]" [style.height]="key?.size?.height"
-                        [style.width]="key?.size?.width">
+                    <img [src]="imageBaseUrl + (key?.dataType?.type == 'array' ? getNestedObject(tableItem[key.identifer],key.dataType.path) : tableItem[key.identifer])"
+                        [style.height]="key?.size?.height" [style.width]="key?.size?.width">
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'custom'">
                     <!-- <a [title]="config?.tableConfig[i][key.navigate]">
