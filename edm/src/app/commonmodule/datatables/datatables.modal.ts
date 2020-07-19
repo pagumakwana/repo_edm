@@ -7,6 +7,10 @@ export class tableConfig {
     identifer: string;
     title: string;
     type: string; // Text | link | image
+    dataType?: {
+        type: string; // array | string |number
+        path: Array<string>;
+    }
     size?: {
         height: string,
         width: string

@@ -33,7 +33,15 @@ export class DatatablesComponent implements OnInit {
       this.dataTable = $(this.table.nativeElement);
       this.dataTable.DataTable();
       this.ishide = false
+      console.log("inside_table_debugger", this.config)
     }, 500);
+  }
+
+  getNestedObject(data: Array<any> | object, path: Array<string>) {
+    path.forEach(function (key) {
+      data = data[key] ? data[key] : '';
+    });
+    return data;
   }
 
   tableClick(tableItem, action, actionInfo?) {

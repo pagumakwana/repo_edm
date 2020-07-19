@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   signIn() {
     this._registerService.loginCustomer(this._userModel).subscribe((resData: any) => {
-      if (resData[0].ResponseMessage == 'USERSIGNINSUCCESS') {
+      if (resData[0].Response == 'USERSIGNINSUCCESS') {
         let responseData = resData[0];
         this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
           if (res) {
