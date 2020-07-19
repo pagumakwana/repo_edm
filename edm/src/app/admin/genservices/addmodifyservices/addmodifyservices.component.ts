@@ -100,17 +100,6 @@ export class AddModifyServicesComponent implements OnInit {
 
         this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
         this.initFilesUrl(this.addService.FileUrls)
-        // this.addServiceForm.controls.FileUrls.setValue(this.addService.FileUrls)
-        // this.addServiceForm.controls.DeliveryDate.setValue(new Date(this.addService.DeliveryDate))
-        // this.addServiceForm.controls.DeliveryDate.setValue(new Dyate())
-        // this.addServiceForm.controls.ServiceVideoUrl.setValue(this.addService.ServiceVideoUrl)
-        // this.addServiceForm.controls.BigImageUrl.setValue(this.addService.BigImageUrl)
-
-
-        // this.addServiceForm.controls.FAQDetails.setValue(this.addService.FAQDetails)
-        // this.addServiceForm.controls.clientName.setValue(this.addService.ClientName);
-        // this.addServiceForm.controls.shortDesc.setValue(this.addService.Descripation);
-        // this.addServiceForm.controls.IsActive.setValue(this.addService.IsActive);
         if (Array.isArray(this.addService.FAQDetails)) {
           if (this.addService.FAQDetails.length > 0)
             this.addService.FAQDetails.filter((item, index) => { this.addFaq(index, true, item.Questions, item.Answer) })
@@ -167,28 +156,19 @@ export class AddModifyServicesComponent implements OnInit {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
         this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl.file, 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
           this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
-            // this.addService.ImageUrl = url ? url : null
-
-            // this.addService.Ref_Service_ID = this.addServiceForm.value.Ref_Service_ID
+    
             this.addService.Ref_Category_ID = this.addServiceForm.value.Category
             this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
             this.addService.Description = this.addServiceForm.value.Description
             this.addService.Price = this.addServiceForm.value.Price
             this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-            // this.addService.BigImageUrl = ImageUrls
             this.addService.FileUrls = ImageUrls
-            // this.addService.ServiceVideoUrl = serviceUrl
             this.addService.Revision = this.addServiceForm.value.Revision
             this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
             this.addService.CreatedBy = FullName
-            // this.addService.FileUrls = this.createFileArray([{ identifer: 'BigImageUrl', file: ImageUrls }, { identifer: 'ServiceVideoUrl', file: serviceUrl }])
-            // console.log("Arrays", this.createFileArray(this.joinArray([{ identifier: null }], [{ identifier: null }]), ['BigImageUrl', 'ImageUrls']));
-
             this.addService.FileUrls = this.joinArray(this.createFileArray(ImageUrls, 'BigImageUrl'), this.createFileArray(serviceUrl, 'ServiceVideoUrl'))
             this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
-
             console.log("saveService", this.addServiceForm, this.addService)
-
             this.addServices()
           })
         })
