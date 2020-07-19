@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-
+import { BaseServiceHelper } from './../../_appService/baseHelper.service';
 import {
     SwiperComponent, SwiperDirective, SwiperConfigInterface,
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
-
+import { ApiConstant } from './../../_appModel/apiconstant';
+import { environment } from './../../../environments/environment.prod';
 @Component({
     selector: 'app-producerSlider',
     templateUrl: './producerSlider.component.html',
@@ -13,24 +14,9 @@ import {
 })
 export class ProducerSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
-    constructor() { }
-    public slides = [
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide',
-        'Fourth slide',
-        'Fifth slide',
-        'Sixth slide'
-    ]; public config: SwiperConfigInterface = {
+    constructor(public _base: BaseServiceHelper) { }
+    public slides = []; 
+    public config: SwiperConfigInterface = {
         direction: 'horizontal',
         navigation: false,
         pagination: false,
@@ -68,6 +54,12 @@ export class ProducerSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
+        this._base._ApiService.post(ApiConstant.customer.Producers+ '?StartCount=0&EndCount=5').subscribe((data: any) => {
+            this.slides = data;
+            this.slides.map(item => {
+                item.ProfilePhoto = environment.cdnURL + item.ProfilePhoto;
+              })
+        })
     }
 
 }

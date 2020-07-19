@@ -7,6 +7,7 @@ export class ApiConstant {
         forgotPassword: "Admin/UserManagement/ForgotPassword",
         requestOTP: "Admin/UserManagement/RequestOTP",
         registerGuest: "Admin/UserManagement/RegisterGuest",
+        Producers: "User/Producers",
     }
     public static category = {
         AddModifyCategory: "Admin/MasterManagement/Category",
@@ -36,5 +37,8 @@ export class ApiConstant {
     }
     public static Service = {
         Service: "User/Service/ServiceByCategory",
+    }
+    public static Shared = {
+        GlobalSearch: "User/Shared/GlobalSearch",
     }
 }

@@ -6,14 +6,14 @@
                 <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                 <div class="producer_upper_layer">
                     <div class="producer_profile_photo">
-                        <img src="../../../assets/images/producer_profile.jpg" />
+                        <img [src]="slide.ProfilePhoto" />
                     </div>
                     <p class="product_name">
                         CLOCK TYPE
                         <!-- <img src="" /> -->
                     </p>
                     <p class="producer_info">
-                        I will be you <br>dope music producer
+                        {{slide.Bio}}
                     </p>
                 </div>
             </div>
@@ -29,5 +29,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div *ngIf="slides?.length == 0">
+        <div>No record found</div>
     </div>
 </swiper>

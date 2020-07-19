@@ -55,6 +55,7 @@ export class FeaturedProductSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
+        debugger
         this._base._ApiService.get(ApiConstant.TrackManagement.FeaturedTrack).subscribe((data: any) => {
             this.slides = data.filter(a => a.IsTrack == 'Track');
             this.slides.map(item => {

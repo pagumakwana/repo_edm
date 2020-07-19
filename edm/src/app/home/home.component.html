@@ -7,15 +7,26 @@
         <div class="banner_cross_part"></div>
         <app-bannerSlider></app-bannerSlider>
     </div>
+
     <div class="search_track_sec">
         <div class="serch_inner_sec">
             <h2>Find The Perfect Service For Your Next Hit</h2>
             <div class="search_track">
                 <img src="../../assets/images/search.svg" />
-                <input type="text" name="searchtrack" />
-                <a class="global_btn primary_btn">
+                <input type="text" name="searchtrack" [(ngModel)]="globalSearch" (input)="getGlobalSearch()" />
+                <button [ngStyle]="{'opacity':globalSearch.length == 0 ? '0.5' : '1' }" class="global_btn primary_btn" [disabled]="globalSearch.length == 0 " (click)="getGlobalSearch()">
                     <span>SEARCH</span>
-                </a>
+                    </button>
+
+            </div>
+            <div class="global_search" *ngIf="globalSearchData?.length > 0 && globalSearch.length > 0">
+                <div *ngFor="let global of globalSearchData" class="global_search_text">
+                    <label (click)="redirecttopage(global)"> <img class="global_search_img" [src]="global.ThumbnailImageUrl" /> {{global.Title}}</label>
+                </div>
+
+            </div>
+            <div class="global_search" *ngIf="globalSearchData?.length == 0">
+                <div>No record found</div>
             </div>
             <div class="popular_tags_section">
                 <h2>Popular:</h2>
