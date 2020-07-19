@@ -166,7 +166,7 @@ export class AddModifyServicesComponent implements OnInit {
             this.addService.Revision = this.addServiceForm.value.Revision
             this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
             this.addService.CreatedBy = FullName
-            this.addService.FileUrls = this.joinArray(this.createFileArray(ImageUrls, 'BigImageUrl'), this.createFileArray(serviceUrl, 'ServiceVideoUrl'))
+            this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl'), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl'))
             this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
             console.log("saveService", this.addServiceForm, this.addService)
             this.addServices()
@@ -176,17 +176,7 @@ export class AddModifyServicesComponent implements OnInit {
     }
   }
 
-  createFileArray(filesArray, identiferList: string): Array<any> {
-    filesArray = Array.isArray(filesArray) ? filesArray : []
-    for (let i in filesArray) {
-      filesArray[i].FileIdentifier = identiferList
-    }
-    return filesArray
-  }
-
-  joinArray(...args) {
-    return args.reduce((acc, val) => [...acc, ...val]);
-  }
+  
 
   addServices() {
     this._service.addmodifyService(this.addService).subscribe((res: any) => {

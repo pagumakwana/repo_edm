@@ -53,13 +53,23 @@
                 <span class="input_icon dropdown_icon"></span>
             </div>
         </div>
-        <div class="form_group">
+        <div class="form_group" *ngIf="fileChoosenData.ImageUrl.thumb">
+            <label class="form_label">Upload Service Cover Image</label>
+            <div id="imgPreview" class="imgPreview">
+                <img height="80" width="120" [src]="fileChoosenData.ImageUrl.thumb" />
+                <a class="remImage" id="delete" (click)="removeFile('ImageUrl')">
+                    <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                </a>
+            </div>
+        </div>
+        <div class="form_group" *ngIf="!fileChoosenData.ImageUrl.thumb">
             <label class="form_label">Upload Service Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleFormControlFile1"
-                        (change)="fileChoosen($event)">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
+                    <input type="file" (change)="fileChoosen($event,'ImageUrl')" class="custom-file-input"
+                        id="customFile">
+                    <img [src]="fileChoosenData.ImageUrl.thumb ? fileChoosenData.ImageUrl.thumb : '../../../../assets/images/product_thumbnail.jpg'"
+                        class="image_preview" />
                     <label class="custom-file-label" for="customFile">
                         Choose file
                     </label>

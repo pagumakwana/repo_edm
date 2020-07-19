@@ -139,7 +139,6 @@ export class CommonService {
         $('#mainloader').css('display', 'none');
     }
 
-    sampleRes = [{ CreatedBy: null, CreatedDateTime: null, CreatedName: null, FileExtension: ".mp4", FileIdentifier: null, FileName: "videogular_2020-07-16-13-22-38.mp4", FilePath: "/FileStorage/ServiceVideo/videogular_2020-07-16-13-22-38.mp4", FileSize: 24406814, FileType: "video/mp4", FileUrls: null, Flag: null, IsActive: null, IsDeleted: null, ModuleName: "ServiceVideo", Ref_File_ID: 0, Ref_ID: 0, Ref_User_ID: 0, UpdatedBy: null, UpdatedDateTime: null, UpdatedName: null }]
     filesUpload(files: FileList | string, moduleName: string, type = 'upload') {
         return new Promise((resolve, reject) => {
             let isUpload: boolean = files && type == 'upload' ? (files.length > 0) : false
@@ -152,6 +151,20 @@ export class CommonService {
                 resolve([])
             }
         })
+    }
+
+    //Added Identifer in FilesUrl Array
+    createFileArray(filesArray, identiferList: string): Array<any> {
+        filesArray = Array.isArray(filesArray) ? filesArray : []
+        for (let i in filesArray) {
+            filesArray[i].FileIdentifier = identiferList
+        }
+        return filesArray
+    }
+
+    //Joins Multiple Array into One
+    joinArray(...args) {
+        return args.reduce((acc, val) => [...acc, ...val]);
     }
 
     uploadFile(filesData, ModuleName) {

@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
+import { environment } from 'src/environments/environment.prod';
 
 
 @Component({
@@ -27,14 +28,25 @@ export class AddModifyGenersComponent implements OnInit {
   isCategoryModify: boolean = false;
   btnTitle: string = 'ADD'
   imgCategory: any;
-  fileData: any;
+  fileURL = environment.cdnURL;
+
+  // fileData: any;
+
   formCategory: FormGroup = this._fbGener.group({
     Ref_Parent_ID: [''],
     CategoryName: ['', [Validators.required]],
     AliasName: ['', [Validators.required]],
     CategoryDescription: [''],
-    CategoryUseBy: ['']
+    CategoryUseBy: [''],
+    ImageUrl: [''],
   })
+
+  fileChoosenData = {
+    ImageUrl: {
+      file: null,
+      thumb: null,
+    }
+  }
 
   ngAfterViewInit(): void {
     this._base._pageTitleService.setTitle('Category', this.btnTitle + ' GENRE / Category');
@@ -85,19 +97,34 @@ export class AddModifyGenersComponent implements OnInit {
       this.formCategory.controls.AliasName.setValue(this._categoryModel.AliasName);
       this.formCategory.controls.CategoryDescription.setValue(this._categoryModel.Description);
       this.formCategory.controls.CategoryUseBy.setValue(this._categoryModel.CategoryUseBy);
+      this._categoryModel.FileUrls = Array.isArray(this._categoryModel.FileUrls) ? this._categoryModel.FileUrls : []
+      this.initFilesUrl(this._categoryModel.FileUrls)
+    }
+  }
+
+  //setting up files during modify
+  initFilesUrl(filesUrl: Array<any>) {
+    console.log("initFilesUrl")
+    for (let i in filesUrl) {
+      filesUrl[i].FileIdentifier = 'ImageUrl' // Hardcode Need to remove when praggu change in SP
+      if (filesUrl[i].FileIdentifier) {
+        this.fileChoosenData[filesUrl[i].FileIdentifier].thumb = this.fileURL + filesUrl[i].FilePath
+        this.formCategory.controls[filesUrl[i].FileIdentifier].setValue('uploaded')
+        this.formCategory.controls[filesUrl[i].FileIdentifier].updateValueAndValidity()
+      }
     }
   }
 
   setCategoryModel() {
     this._base._commonService.markFormGroupTouched(this.formCategory)
     if (this.formCategory.valid) {
-      this._base._commonService.filesUpload(this.fileData, 'Category').then((FileUrls: string) => {
+      this._base._commonService.filesUpload(this.fileChoosenData.ImageUrl.file, 'Category', this.formCategory.controls.ImageUrl.value).then((ImageUrls: Array<any>) => {
         this._categoryModel.Ref_Parent_ID = this.formCategory.value.Ref_Parent_ID;
         this._categoryModel.CategoryName = this.formCategory.value.CategoryName;
         this._categoryModel.AliasName = this.formCategory.value.AliasName;
         this._categoryModel.Description = this.formCategory.value.CategoryDescription;
         this._categoryModel.CategoryUseBy = this.formCategory.value.CategoryUseBy;
-        this._categoryModel.FileUrls = FileUrls;
+        this._categoryModel.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'ImageUrl'))
         this.addmodifycategory();
       });
     }
@@ -133,8 +160,38 @@ export class AddModifyGenersComponent implements OnInit {
       });
     })
   }
-  fileChoosen($event) {
-    this.fileData = $event.target.files;
+  fileChoosen($event, fieldName) {
+    console.log("fileChoosen", $event)
+    this.fileChoosenData[fieldName].file = $event.target.files;
+    this.formCategory.controls[fieldName].setValue('upload')
+    this.formCategory.controls[fieldName].updateValueAndValidity()
+    this._base._commonService.readImage($event.target).subscribe(res => {
+      this.fileChoosenData[fieldName].thumb = res;
+    })
+  }
+
+  removeFile(fieldName) {
+    console.log("removeFile", fieldName)
+    this.fileChoosenData[fieldName].file = null
+    this.fileChoosenData[fieldName].thumb = null
+    if (this.formCategory.controls[fieldName].value == 'uploaded') {
+      let index = _.findIndex(this._categoryModel.FileUrls, (o: any) => {
+        return o.FileIdentifier == fieldName
+      })
+      if (index > -1)
+        this.removeThumbnail(this._categoryModel.FileUrls[index].Ref_File_ID)
+    }
+    this.formCategory.controls[fieldName].setValue(null)
+  }
+
+  removeThumbnail(ref_image_id) {
+    this._base._commonService.removeFile(ref_image_id).subscribe((res: any) => {
+      if (res == 'SUCCESS') {
+        this._base._alertMessageService.success('File removed successfully!');
+      } else {
+        this._base._alertMessageService.error('Something went wrong!');
+      }
+    })
   }
 
 }

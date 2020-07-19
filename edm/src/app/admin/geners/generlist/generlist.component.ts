@@ -65,9 +65,7 @@ export class GenerListComponent implements OnInit {
           return item.CategoryUseByName = track[item.CategoryUseBy]
         })
         console.log("categoryData", this.categoryData);
-        setTimeout(() => {
-          resolve(resData);
-        }, 500);
+        resolve(resData);
       });
     });
   }
