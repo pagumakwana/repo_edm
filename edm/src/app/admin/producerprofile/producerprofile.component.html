@@ -16,34 +16,43 @@
                 </div>
             </div>
             <div class="progress_section">
-                <div class="step active_step">
+                <div [ngClass]="{'active_step' : stage.completed >= 1}"
+                    (click)="stage.completed >= 1 ? changeDirect(1) :'' " class="step">
                     <div></div>
                 </div>
-                <div class="step active_step">
+                <div [ngClass]="{'active_step' : stage.completed >= 2}"
+                    (click)="stage.completed >= 2 ? changeDirect(2) :'' " class="step">
                     <div></div>
                 </div>
-                <div class="step">
+                <div [ngClass]="{'active_step' : stage.completed >= 3}"
+                    (click)="stage.completed >= 3 ? changeDirect(3) :'' " class="step">
                     <div></div>
                 </div>
             </div>
         </div>
-        <form class="producer_form">
+        <form class="producer_form" [formGroup]="addProfileForm">
             <!-- Step 1 -->
-            <div>
+            <div *ngIf="stage.current == 1" formGroupName="step1">
                 <div class="upload_profile_pic">
                     <div class="user_photo">
-                        <img src="https://lh3.googleusercontent.com/proxy/SIV2OUn5ST7Bz05R4zFbPG5_BXHUiauiVvWeXjlkjoujjJtmWpEQdkO6Uv8DaNTseyDx3ktzhe2JSHXskYSNY1Y736VjT_A" alt="Profile Photo" />
+                        <img src="https://lh3.googleusercontent.com/proxy/SIV2OUn5ST7Bz05R4zFbPG5_BXHUiauiVvWeXjlkjoujjJtmWpEQdkO6Uv8DaNTseyDx3ktzhe2JSHXskYSNY1Y736VjT_A"
+                            alt="Profile Photo" />
                     </div>
                     <label class="align_center">Upload your profile picture</label>
+                    <!-- <edm-error [control]="addProfileForm.controls.step1.controls.BigImageUrl"></edm-error> -->
+
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" name="artistname" placeholder="Enter your producer / artist name" />
+                        <input type="text" name="artistname" formControlName="FullName"
+                            placeholder="Enter your producer / artist name" />
                         <span class="input_icon user_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <edm-error [control]="addProfileForm.controls.step1.controls.FullName"></edm-error>
+
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
@@ -54,17 +63,21 @@
                         </select>
                         <span class="input_icon dropdown_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <!-- <edm-error [control]="addProfileForm.controls.step1.controls.BigImageUrl"></edm-error> -->
+
                 </div>
                 <div class="form_group">
                     <div class="form_area">
-                        <textarea rows="4" placeholder="Description about your self"></textarea>
+                        <textarea rows="4" formControlName="Bio" placeholder="Description about your self"></textarea>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <edm-error [control]="addProfileForm.controls.step1.controls.Bio"></edm-error>
+
                 </div>
                 <div class="form_group">
                     <div class="form_area">
@@ -76,68 +89,81 @@
                         <span>demo</span>
                     </div>
                 </div>
-                <div class="button_group center_align">
+                <div class="button_group center_align" (click)="changeStage()">
                     <a class="global_btn primary_btn float_none">
                         <span>Next</span>
                     </a>
                 </div>
             </div>
             <!-- Step 2 -->
-            <div>
+            <div *ngIf="stage.current == 2" formGroupName="step2">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="url" name="facebookurl" placeholder="Enter Your Facebook Profile URL" />
+                        <input type="url" formControlName='SocialProfileUrl' name="facebookurl"
+                            placeholder="Enter Your Facebook Profile URL" />
                         <span class="input_icon facebook_blue_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <edm-error [control]="addProfileForm.controls.step2.controls.SocialProfileUrl"></edm-error>
+
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
                         <input type="url" name="soundcloudurl" placeholder="Enter Your SoundCloud Profile URL" />
                         <span class="input_icon soundcloud_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <!-- <edm-error [control]="addProfileForm.controls.step2.controls.BigImageUrl"></edm-error> -->
+
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
                         <input type="url" name="spotifyurl" placeholder="Enter Your Spotify Profile URL" />
                         <span class="input_icon spotify_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <!-- <edm-error [control]="addProfileForm.controls.step2.controls.BigImageUrl"></edm-error> -->
+
                 </div>
-                <div class="button_group center_align">
+                <div class="button_group center_align" (click)="changeStage()">
                     <a class="global_btn primary_btn float_none">
                         <span>Next</span>
                     </a>
                 </div>
             </div>
             <!-- Step 3 -->
-            <div>
+            <div *ngIf="stage.current == 3" formGroupName="step3">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="email" name="paypalemail" placeholder="Enter Your Paypal Email for Payout" />
+                        <input type="email" name="paypalemail" formControlName='PayPalEmailID'
+                            placeholder="Enter Your Paypal Email for Payout" />
                         <span class="input_icon paypal_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <edm-error [control]="addProfileForm.controls.step3.controls.PayPalEmailID"></edm-error>
+
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group three_icon_form_group">
-                        <input type="email" name="confirmpaypalemail" placeholder="Confirm Your Email" />
+                        <input type="email" name="confirmpaypalemail" formControlName='EmailID'
+                            placeholder="Confirm Your Email" />
                         <span class="input_icon revision_grey_icon"></span>
                         <span class="input_icon upload_icon"></span>
                         <span class="input_icon error_icon"></span>
                     </div>
-                    <div class="error_msg">
+                    <!-- <div class="error_msg">
                         <span>This field is Required</span>
-                    </div>
+                    </div> -->
+                    <edm-error [control]="addProfileForm.controls.step3.controls.EmailID"></edm-error>
+
                 </div>
                 <div class="form_group">
                     <label class="form_label">Upload Your ID GOVT Proof</label>
@@ -150,17 +176,21 @@
                             </label>
                             <!-- <label class="custom-file-label upload_btn"></label> -->
                         </div>
-                        <span class="file_formats">Note: File upload limit - 2MB, Attchment format : jpg, jpeg, png</span>
+                        <span class="file_formats">Note: File upload limit - 2MB, Attchment format : jpg, jpeg,
+                            png</span>
+                        <edm-error [control]="addProfileForm.controls.step3.controls.GovitID"></edm-error>
+
                     </div>
                 </div>
-                <div class="button_group center_align">
+                <div class="button_group center_align" (click)="changeStage()">
                     <a class="global_btn primary_btn float_none" data-toggle="modal" data-target="#acknowledge_popup">
                         <span>Save & Verify My Account</span>
                     </a>
                 </div>
             </div>
         </form>
-        <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+        <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
             <div class="modal-md modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
