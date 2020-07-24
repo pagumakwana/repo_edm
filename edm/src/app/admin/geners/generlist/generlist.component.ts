@@ -57,7 +57,7 @@ export class GenerListComponent implements OnInit {
   }
   bindCategory() {
     return new Promise((resolve, reject) => {
-      let track = { 1: 'Track', 2: 'Beats', 3: 'Blog' }
+      let track = { 1: 'Track', 2: 'Beats', 3: 'Blog', 4: 'Service', 5: 'News'}
       this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
         this.categoryData = []
         this.categoryData = Array.isArray(resData) ? resData : [];
