@@ -18,3 +18,8 @@ export class ServiceModel {
     FileUrls?: Array<any>;
     FAQDetails?: Array<{ Questions: string, Answer: string }>;
 }
+
+export class fileChoosenDataModel {
+    file: any;
+    thumb: string;
+}

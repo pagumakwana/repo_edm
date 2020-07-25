@@ -8,6 +8,8 @@ import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatatablesModule } from 'src/app/commonmodule/datatables/datatables.module';
+import { DragulaModule } from 'ng2-dragula';
+
 @NgModule({
     declarations: [
         ServicesListComponent,
@@ -28,7 +30,8 @@ import { DatatablesModule } from 'src/app/commonmodule/datatables/datatables.mod
         ErrorModule,
         FormsModule,
         DatatablesModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DragulaModule.forRoot()
     ],
     providers: [GenService]
 })
