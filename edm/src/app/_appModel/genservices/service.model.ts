@@ -17,4 +17,7 @@ export class ServiceModel {
     CreatedName?: string;
     FileUrls?: Array<any>;
     FAQDetails?: Array<{ Questions: string, Answer: string }>;
+    MetaTitle?: string;
+    MetaKeywords?: string;
+    MetaDescription?: string;
 }

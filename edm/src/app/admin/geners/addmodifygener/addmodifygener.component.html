@@ -80,6 +80,36 @@
                 <span class="file_formats">Note: File upload limit - 1GB</span>
             </div>
         </div>
+        <div class="form_group">
+            <div class="form_area">
+                <input type="text" formControlName="MetaTitle" id="MetaTitle" name="MetaTitle"
+                    placeholder="Enter meta title here" aria-describedby="MetaTitleHelp" />
+            </div>
+            <div class="error_msg"
+                *ngIf="formCategory.controls.MetaTitle.invalid && formCategory.controls.MetaTitle.touched">
+                <span id="MetaTitleHelp">This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area">
+                <input type="text" formControlName="MetaKeywords" id="MetaKeywords" name="MetaKeywords"
+                    placeholder="Enter meta keywords here" aria-describedby="MetaKeywordsHelp" />
+            </div>
+            <div class="error_msg"
+                *ngIf="formCategory.controls.MetaKeywords.invalid && formCategory.controls.MetaKeywords.touched">
+                <span id="MetaKeywordsHelp">This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area">
+                <textarea rows="4" formControlName="MetaDescription" id="MetaDescription"
+                    placeholder="Enter meta description here" aria-describedby="MetaDescriptionHelp"></textarea>
+            </div>
+            <div class="error_msg"
+                *ngIf="formCategory.controls.MetaDescription.invalid && formCategory.controls.MetaDescription.touched">
+                <span id="MetaDescriptionHelp">This field is Required</span>
+            </div>
+        </div>
         <div class="button_group">
             <a type="submit" (click)="setCategoryModel()" class="global_btn primary_btn">
                 <span>{{btnTitle}}</span>

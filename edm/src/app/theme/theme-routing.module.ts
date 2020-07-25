@@ -76,13 +76,13 @@ const routes: Routes = [
                 path: "tracks/:module",
                 loadChildren: () => import('../admin/track/track.module').then(m => m.TrackModule)
             },
-	        {
+            {
                 path: "addmodifytracks/:module/:id",
                 loadChildren: () => import('../admin/track/addmodifytrack/addmodifytrack.module').then(m => m.AddModifyTrackModule)
             },
-	    
+
             {
-                path: "services",
+                path: "service",
                 loadChildren: () => import('../admin/genservices/genservices.module').then(m => m.GenServiceModule)
             },
             {

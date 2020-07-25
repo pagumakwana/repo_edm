@@ -117,6 +117,36 @@
                     </div>
                 </div>
             </div>
+            <div class="form_group">
+                <div class="form_area">
+                    <input type="text" formControlName="MetaTitle" id="MetaTitle" name="MetaTitle"
+                        placeholder="Enter meta title here" aria-describedby="MetaTitleHelp" />
+                </div>
+                <div class="error_msg"
+                    *ngIf="addServiceForm.controls.MetaTitle.invalid && addServiceForm.controls.MetaTitle.touched">
+                    <span id="MetaTitleHelp">This field is Required</span>
+                </div>
+            </div>
+            <div class="form_group">
+                <div class="form_area">
+                    <input type="text" formControlName="MetaKeywords" id="MetaKeywords" name="MetaKeywords"
+                        placeholder="Enter meta keywords here" aria-describedby="MetaKeywordsHelp" />
+                </div>
+                <div class="error_msg"
+                    *ngIf="addServiceForm.controls.MetaKeywords.invalid && addServiceForm.controls.MetaKeywords.touched">
+                    <span id="MetaKeywordsHelp">This field is Required</span>
+                </div>
+            </div>
+            <div class="form_group">
+                <div class="form_area">
+                    <textarea rows="4" formControlName="MetaDescription" id="MetaDescription"
+                        placeholder="Enter meta description here" aria-describedby="MetaDescriptionHelp"></textarea>
+                </div>
+                <div class="error_msg"
+                    *ngIf="addServiceForm.controls.MetaDescription.invalid && addServiceForm.controls.MetaDescription.touched">
+                    <span id="MetaDescriptionHelp">This field is Required</span>
+                </div>
+            </div>
             <div class="multipul_form_group">
                 <div class="width_100" *ngIf="!fileChoosenData.ServiceVideoUrl.thumb">
                     <div class="form_group">

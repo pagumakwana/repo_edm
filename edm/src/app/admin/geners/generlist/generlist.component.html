@@ -1,6 +1,11 @@
 <div class="filter_section desktop_filter_section">
     <form>
         <div class="form_group">
+            <a routerLink='/admin/category/0' class="global_btn primary_btn">
+                <span>New Category</span>
+            </a>
+        </div>
+        <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="filterbygenretype" class="grey_dropdown" (change)="changeFilter($event)">
                     <option disabled selected>Filter By Genre Type</option>

@@ -9,4 +9,7 @@ export class CategoryModel {
     FileUrls?: any;
     Ref_User_ID?: number;
     CreatedName?: string;
+    MetaTitle?: string;
+    MetaKeywords?: string;
+    MetaDescription?: string;
 }

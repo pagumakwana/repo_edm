@@ -1,10 +1,31 @@
+<div class="filter_section desktop_filter_section">
+    <form>
+        <div class="form_group">
+            <a routerLink='/admin/service/0' class="global_btn primary_btn">
+                <span>New Service</span>
+            </a>
+        </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="filterbygenretype" class="grey_dropdown">
+                    <option disabled selected>Filter By Genre Type</option>
+                    <option value="0">ALL</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
+                    <option value="4">Service</option>
+                    <option value="5">News</option>
+                </select>
+                <span class="input_icon down_icon"></span>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="portlet_body">
     <div class="primary_table">
         <com-datatable #dataTableCom [config]='tableConfig' (tableEvent)="tableClick($event)"></com-datatable>
     </div>
 </div>
-
-
 <div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-md modal-dialog modal-dialog-centered">

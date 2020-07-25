@@ -6,7 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
-import { environment } from 'src/environments/environment.prod';
+import { environment } from '../../../../environments/environment.prod';
+import { Meta } from '@angular/platform-browser';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class AddModifyGenersComponent implements OnInit {
   constructor(public _base: BaseServiceHelper,
     private _fbGener: FormBuilder,
     private _categoryService: CategoryService,
-    private _activatedRouter: ActivatedRoute) { }
+    private _activatedRouter: ActivatedRoute,) { }
 
   _categoryModel: CategoryModel = {};
   aliasName: string;
@@ -39,6 +40,9 @@ export class AddModifyGenersComponent implements OnInit {
     CategoryDescription: [''],
     CategoryUseBy: [''],
     ImageUrl: [''],
+    MetaTitle: [''],
+    MetaKeywords: [''],
+    MetaDescription: [''],
   })
 
   fileChoosenData = {
@@ -82,7 +86,10 @@ export class AddModifyGenersComponent implements OnInit {
           CategoryUseBy: '',
           FileUrls: [],
           Ref_User_ID: Ref_User_ID,
-          CreatedName: FullName
+          CreatedName: FullName,
+          MetaTitle: '',
+          MetaKeywords: '',
+          MetaDescription: ''
         }
       });
     });
@@ -97,6 +104,9 @@ export class AddModifyGenersComponent implements OnInit {
       console.log("catData", this._categoryModel);
       this.isCategoryModify = true;
       this.btnTitle = 'Modify'
+      this.formCategory.controls.MetaTitle.setValue(this._categoryModel.MetaTitle);
+      this.formCategory.controls.MetaKeywords.setValue(this._categoryModel.MetaKeywords);
+      this.formCategory.controls.MetaDescription.setValue(this._categoryModel.MetaDescription);
       this.formCategory.controls.Ref_Parent_ID.setValue(this._categoryModel.Ref_Parent_ID);
       this.formCategory.controls.CategoryName.setValue(this._categoryModel.CategoryName);
       this.formCategory.controls.AliasName.setValue(this._categoryModel.AliasName);
@@ -130,6 +140,9 @@ export class AddModifyGenersComponent implements OnInit {
         this._categoryModel.Description = this.formCategory.value.CategoryDescription;
         this._categoryModel.CategoryUseBy = this.formCategory.value.CategoryUseBy;
         this._categoryModel.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'ImageUrl'))
+        this._categoryModel.MetaTitle = this.formCategory.value.MetaTitle;
+        this._categoryModel.MetaKeywords = this.formCategory.value.MetaKeywords;
+        this._categoryModel.MetaDescription = this.formCategory.value.MetaDescription;
         this.addmodifycategory();
       });
     }

@@ -44,7 +44,10 @@ export class AddModifyServicesComponent implements OnInit {
     BigImageUrl: ['', [Validators.required]],
     // ThumbnailImageUrl: ['', [Validators.required]],
     // IsActive: ['', [Validators.required]],
-    FAQDetails: this.fb.array([])
+    FAQDetails: this.fb.array([]),
+    MetaTitle: [''],
+    MetaKeywords: [''],
+    MetaDescription: [''],
   })
 
   fileChoosenData = {
@@ -98,7 +101,9 @@ export class AddModifyServicesComponent implements OnInit {
           this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
           this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
           this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
-
+          this.addServiceForm.controls.MetaTitle.setValue(this.addService.MetaTitle);
+          this.addServiceForm.controls.MetaKeywords.setValue(this.addService.MetaKeywords);
+          this.addServiceForm.controls.MetaDescription.setValue(this.addService.MetaDescription);
           this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
           this.initFilesUrl(this.addService.FileUrls)
           if (Array.isArray(this.addService.FAQDetails)) {
@@ -144,7 +149,10 @@ export class AddModifyServicesComponent implements OnInit {
         DeliveryDate: null,
         CreatedName: FullName,
         FAQDetails: [],
-        FileUrls: []
+        FileUrls: [],
+        MetaTitle: '',
+        MetaKeywords: '',
+        MetaDescription: ''
       }
       this.addFaq(0, true)
     });
@@ -170,6 +178,9 @@ export class AddModifyServicesComponent implements OnInit {
             this.addService.CreatedName = FullName
             this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl'), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl'))
             this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+            this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
+            this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
+            this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
             console.log("saveService", this.addServiceForm, this.addService)
             this.addServices()
           })
