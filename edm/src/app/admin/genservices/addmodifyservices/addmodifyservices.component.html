@@ -14,7 +14,7 @@
                     <input type="text" formControlName="AliasName" id="AliasName" name="AliasName"
                         placeholder="Enter Slug" aria-describedby="AliasNameHelp" />
                 </div>
-                <edm-error [control]="addServiceForm.controls.ServiceTitle"></edm-error>
+                <edm-error [control]="addServiceForm.controls.AliasName"></edm-error>
 
             </div>
             <div class="form_group">
@@ -189,45 +189,59 @@
                     </a>
                 </div>
             </div>
+            <div class="width_40">
+                <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
+
+                <!-- <div class="form_group">
+                        <label class="form_label">Upload Service Cover Image</label>
+                        <div id="imgPreview" class="imgPreview">
+                            <img height="80" width="120" [src]="thumb" />
+                            <a class="remImage" id="delete" (click)="removeFile('BigImageUrl')">
+                                <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                            </a>
+                        </div>
+                    </div> -->
+                <div class="form_group">
+                    <label class="form_label">Upload Service Cover Image</label>
+                    <div dragula="MANY_ITEMS" [(dragulaModel)]='dragItems'>
+                        <ng-container *ngFor="let thumb of dragItems">
+                            <div id="imgPreview" class="imgPreview">
+                                <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" />
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+
+                <div class="form_group">
+                    <label class="form_label">Upload Service Cover Image</label>
+                    <div class="form_area">
+                        <div class="custom-file">
+                            <input type="file" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input"
+                                multiple id="customFile">
+                            <!-- <img [src]="thumb ? thumb : '../../../../assets/images/product_thumbnail.jpg'"
+                                class="image_preview" /> -->
+                            <label class="custom-file-label" for="customFile">
+                                Choose file
+                            </label>
+                            <!-- <label class="custom-file-label upload_btn"></label> -->
+                        </div>
+                        <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
+                    </div>
+                    <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
+
+                </div>
+
+            </div>
             <!-- </form> -->
         </div>
 
-
-        <div class="width_40">
-            <div class="form_group" *ngIf="fileChoosenData.BigImageUrl.thumb">
-                <label class="form_label">Upload Service Cover Image</label>
-                <div id="imgPreview" class="imgPreview">
-                    <img height="80" width="120" [src]="fileChoosenData.BigImageUrl.thumb" />
-                    <a class="remImage" id="delete" (click)="removeFile('BigImageUrl')">
-                        <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
-                    </a>
-                </div>
-            </div>
-            <div class="form_group" *ngIf="!fileChoosenData.BigImageUrl.thumb">
-                <label class="form_label">Upload Service Cover Image</label>
-                <div class="form_area">
-                    <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input"
-                            id="customFile">
-                        <img [src]="fileChoosenData.BigImageUrl.thumb ? fileChoosenData.BigImageUrl.thumb : '../../../../assets/images/product_thumbnail.jpg'"
-                            class="image_preview" />
-                        <label class="custom-file-label" for="customFile">
-                            Choose file
-                        </label>
-                        <!-- <label class="custom-file-label upload_btn"></label> -->
-                    </div>
-                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
-                </div>
-                <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
-
-            </div>
-            <div class="button_group">
-                <!-- <a class="global_btn primary_btn" (click)="saveService()" data-toggle="modal" data-target="#acknowledge_popup"> -->
-                <a class="global_btn primary_btn" (click)="saveService()">
-                    <span>SAVE & CONTINUE</span>
-                </a>
-            </div>
+        <div class="button_group">
+            <!-- <a class="global_btn primary_btn" (click)="saveService()" data-toggle="modal" data-target="#acknowledge_popup"> -->
+            <a class="global_btn primary_btn" (click)="saveService()">
+                <span>{{btnTitle}}</span>
+            </a>
         </div>
+
     </form>
 </div>
 <div class="modal fade acknowledge_popup" #acknowledge_popup id="acknowledge_popup" tabindex="-1" role="dialog"

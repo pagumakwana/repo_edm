@@ -2,13 +2,15 @@ import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@an
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { ServiceModel } from 'src/app/_appModel/genservices/service.model';
+import { ServiceModel, fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { formatDate } from '@angular/common';
 import { environment } from 'src/environments/environment.prod';
 import * as _ from "lodash";
+import { Subscription } from 'rxjs';
+import { DragulaService } from 'ng2-dragula';
 
 declare var $: any;
 
@@ -26,10 +28,13 @@ export class AddModifyServicesComponent implements OnInit {
     private _activatedRouter: ActivatedRoute,
     private _service: GenService,
     private _categoryService: CategoryService,
+    private dragulaService: DragulaService,
     private fb: FormBuilder) { }
 
   categoryData: []
   fileURL = environment.cdnURL;
+  btnTitle: string = 'ADD'
+  isServiceModify: boolean = false;
   addServiceForm: FormGroup = this.fb.group({
     ServiceTitle: ['', [Validators.required]],
     AliasName: ['', [Validators.required]],
@@ -50,14 +55,18 @@ export class AddModifyServicesComponent implements OnInit {
     MetaDescription: [''],
   })
 
+  dragItems = [1, 2, 3]
+  subs = new Subscription();
+
+
   fileChoosenData = {
     ServiceVideoUrl: {
       file: null,
       thumb: null,
     },
     BigImageUrl: {
-      file: null,
-      thumb: null,
+      file: [],
+      thumb: [],
     }
   }
   bannerImg: string = '';
@@ -65,7 +74,7 @@ export class AddModifyServicesComponent implements OnInit {
   aliasName: string;
 
   ngOnInit(): void {
-    this._base._pageTitleService.setTitle("Manage Service", "Manage Service");
+    this._base._pageTitleService.setTitle("Manage Service", this.btnTitle + " Service");
     this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
     this.getCategory()
     if (this.aliasName != '0') {
@@ -73,14 +82,34 @@ export class AddModifyServicesComponent implements OnInit {
     } else {
       this.initialize();
     }
+
+    this.addServiceForm.controls.ServiceTitle.valueChanges.subscribe((value: string) => {
+      this.addServiceForm.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
+      this.addServiceForm.controls.AliasName.updateValueAndValidity()
+    })
+
+    this.subs.add(this.dragulaService.dropModel('MANY_ITEMS')
+      .subscribe(({ el, target, source, sourceModel, targetModel, item }) => {
+        console.log('dropModel:');
+        console.log(el);
+        console.log(source);
+        console.log(target);
+        console.log(sourceModel);
+        console.log(targetModel);
+        console.log(item);
+      })
+    );
+    this.subs.add(this.dragulaService.removeModel('MANY_ITEMS')
+      .subscribe(({ el, source, item, sourceModel }) => {
+        console.log('removeModel:');
+        console.log(el);
+        console.log(source);
+        console.log(sourceModel);
+        console.log(item);
+      })
+    );
   }
-  concatArray(...args) {
-    let data = args.reduce((acc, val) => {
-      console.log("concatArray", acc, val)
-      return [...acc, ...val];
-    });
-    return data;
-  }
+
 
   getCategory() {
     this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
@@ -93,6 +122,8 @@ export class AddModifyServicesComponent implements OnInit {
       this._service.getService(flag, ref_service_id, aliasName).subscribe((res: any) => {
         this.addService = Array.isArray(res) ? res[0] : null
         if (this.addService) {
+          this.isServiceModify = true;
+          this.btnTitle = 'Modify'
           this.addServiceForm.controls.ServiceTitle.setValue(this.addService.ServiceTitle)
           this.addServiceForm.controls.AliasName.setValue(this.addService.AliasName);
           this.addServiceForm.controls.Category.setValue(this.addService.Ref_Category_ID)
@@ -164,27 +195,26 @@ export class AddModifyServicesComponent implements OnInit {
 
     if (this.addServiceForm.valid) {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-        this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl.file, 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
-          this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
+        // this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl, 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
+        this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
 
-            this.addService.Ref_Category_ID = this.addServiceForm.value.Category
-            this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
-            this.addService.Description = this.addServiceForm.value.Description
-            this.addService.Price = this.addServiceForm.value.Price
-            this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-            this.addService.FileUrls = ImageUrls
-            this.addService.Revision = this.addServiceForm.value.Revision
-            this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
-            this.addService.CreatedName = FullName
-            this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl'), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl'))
-            this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
-            this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
-            this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
-            this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
-            console.log("saveService", this.addServiceForm, this.addService)
-            this.addServices()
-          })
+          this.addService.Ref_Category_ID = this.addServiceForm.value.Category
+          this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
+          this.addService.Description = this.addServiceForm.value.Description
+          this.addService.Price = this.addServiceForm.value.Price
+          this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
+          // this.addService.FileUrls = ImageUrls
+          this.addService.Revision = this.addServiceForm.value.Revision
+          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
+          this.addService.CreatedName = FullName
+          // this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl'), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl'))
+          this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+          this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
+          this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
+          this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
+          // this.addServices()
         })
+        // })
       })
     }
   }
@@ -225,8 +255,11 @@ export class AddModifyServicesComponent implements OnInit {
   }
 
   fileChoosen($event, fieldName) {
-    console.log("fileChoosen", $event)
+    console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
+
+
     this.fileChoosenData[fieldName].file = $event.target.files;
+
     this.addServiceForm.controls[fieldName].setValue('upload')
     this.addServiceForm.controls[fieldName].updateValueAndValidity()
     this._base._commonService.readImage($event.target).subscribe(res => {

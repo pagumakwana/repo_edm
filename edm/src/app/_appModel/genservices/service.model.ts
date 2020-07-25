@@ -21,3 +21,8 @@ export class ServiceModel {
     MetaKeywords?: string;
     MetaDescription?: string;
 }
+
+export class fileChoosenDataModel {
+    file: any;
+    thumb: string;
+}
