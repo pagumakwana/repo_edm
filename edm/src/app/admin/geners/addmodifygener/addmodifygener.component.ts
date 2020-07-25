@@ -63,6 +63,11 @@ export class AddModifyGenersComponent implements OnInit {
       this.intialise();
       this.bindCategory('ALL', 0);
     }
+    this.formCategory.controls.CategoryName.valueChanges.subscribe((value: string) => {
+      console.log("CategoryName.valueChanges", value)
+      this.formCategory.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
+      this.formCategory.controls.AliasName.updateValueAndValidity()
+    })
   }
 
   intialise() {
