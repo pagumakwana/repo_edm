@@ -26,12 +26,11 @@ export class GenerListComponent implements OnInit {
   tableConfig: dataTableConfig = {
     tableData: [],
     tableConfig: [
-      // { identifer: "Sr", title: "Sr" },
       { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "100px", width: "100px" } },
       { identifer: "CategoryName", title: "CategoryName", type: "link" },
       { identifer: "CategoryUseByName", title: "Type", type: "text" },
       { identifer: "Description", title: "Description", type: "text" },
-      // { identifer: "CreatedBy", title: "CreatedBy", type: "text" },
+      { identifer: "CreatedName", title: "CreatedBy", type: "text" },
       { identifer: "IsActive", title: "IsActive", type: "flag" },
       { identifer: "", title: "Action", type: "button", buttonList: [{ name: 'Edit', class: 'global_btn primary_btn', iconClass: 'delete_icon btn_icon' }, { name: 'Delete', class: 'global_btn icon_btn red_btn', iconClass: 'delete_icon btn_icon' }] }
     ]
@@ -49,7 +48,7 @@ export class GenerListComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this._base._pageTitleService.setTitle('Manage Category', 'MANAGE GENRE / CATEGORY');
+    this._base._pageTitleService.setTitle('Manage Category', 'MANAGE CATEGORY');
     this.bindCategory().then(res => {
       this.tableConfig.tableData = this.categoryData;
       this.tableObj.initializeTable()

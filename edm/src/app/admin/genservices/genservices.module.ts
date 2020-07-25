@@ -21,7 +21,7 @@ import { DatatablesModule } from 'src/app/commonmodule/datatables/datatables.mod
                 component: ServicesListComponent
             },
             {
-                path: ':Ref_Service_ID',
+                path: ':slug',
                 component: AddModifyServicesComponent
             }
         ]),

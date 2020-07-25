@@ -12,7 +12,8 @@ export class GenService {
     addmodifyService(objServiceModel: ServiceModel) {
         return this._base._ApiService.post(ApiConstant.genService.Service, objServiceModel)
     }
-    getService(ServiceID) {
-        return this._base._ApiService.get(`${ApiConstant.genService.Service}?ServiceID=${ServiceID}`);
+    getService(flag, ref_service_id, AliasName = null) {
+        let params = `?Flag=${flag}&Ref_Service_ID=${ref_service_id}&AliasName=${AliasName}`
+        return this._base._ApiService.get(ApiConstant.genService.Service + params);
     }
 }

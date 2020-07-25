@@ -23,7 +23,7 @@ declare var $: any;
 export class AddModifyServicesComponent implements OnInit {
 
   constructor(public _base: BaseServiceHelper,
-    private _activatedRoute: ActivatedRoute,
+    private _activatedRouter: ActivatedRoute,
     private _service: GenService,
     private _categoryService: CategoryService,
     private fb: FormBuilder) { }
@@ -58,19 +58,17 @@ export class AddModifyServicesComponent implements OnInit {
   }
   bannerImg: string = '';
   addService: ServiceModel
+  aliasName: string;
 
   ngOnInit(): void {
-    this._base._pageTitleService.setTitle("Service Management", "Service Management");
-    let serviceId: any = this._activatedRoute.snapshot.params.Ref_Service_ID
+    this._base._pageTitleService.setTitle("Manage Service", "Manage Service");
+    this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
     this.getCategory()
-    if (serviceId != '0') {
-      this.getService(serviceId)
+    if (this.aliasName != '0') {
+      this.bindService('SERVICEDETAILS', 0, this.aliasName);
+    } else {
+      this.initialize();
     }
-    else {
-      this.initialize()
-      // this.getService(0)
-    }
-
   }
   concatArray(...args) {
     let data = args.reduce((acc, val) => {
@@ -86,29 +84,33 @@ export class AddModifyServicesComponent implements OnInit {
     });
   }
 
-  getService(serviceId) {
-    this._service.getService(serviceId).subscribe((res: any) => {
-      this.addService = Array.isArray(res) ? res[0] : null
-      if (this.addService) {
-        this.addServiceForm.controls.ServiceTitle.setValue(this.addService.ServiceTitle)
-        this.addServiceForm.controls.Category.setValue(this.addService.Ref_Category_ID)
-        this.addServiceForm.controls.Description.setValue(this.addService.Description)
-        this.addServiceForm.controls.Price.setValue(this.addService.Price)
-        this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
-        this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
-        this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
+  bindService(flag, ref_service_id, aliasName = null) {
+    return new Promise((resolve, rej) => {
+      this._service.getService(flag, ref_service_id, aliasName).subscribe((res: any) => {
+        this.addService = Array.isArray(res) ? res[0] : null
+        if (this.addService) {
+          this.addServiceForm.controls.ServiceTitle.setValue(this.addService.ServiceTitle)
+          this.addServiceForm.controls.AliasName.setValue(this.addService.AliasName);
+          this.addServiceForm.controls.Category.setValue(this.addService.Ref_Category_ID)
+          this.addServiceForm.controls.Description.setValue(this.addService.Description)
+          this.addServiceForm.controls.Price.setValue(this.addService.Price)
+          this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
+          this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
+          this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
 
-        this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
-        this.initFilesUrl(this.addService.FileUrls)
-        if (Array.isArray(this.addService.FAQDetails)) {
-          if (this.addService.FAQDetails.length > 0)
-            this.addService.FAQDetails.filter((item, index) => { this.addFaq(index, true, item.Questions, item.Answer) })
-          else
-            this.addFaq(0, true)
+          this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
+          this.initFilesUrl(this.addService.FileUrls)
+          if (Array.isArray(this.addService.FAQDetails)) {
+            if (this.addService.FAQDetails.length > 0)
+              this.addService.FAQDetails.filter((item, index) => { this.addFaq(index, true, item.Questions, item.Answer) })
+            else
+              this.addFaq(0, true)
+          }
+          setTimeout(() => {
+            resolve(true);
+          }, 500);
         }
-
-
-      }
+      })
     })
   }
 
@@ -139,8 +141,7 @@ export class AddModifyServicesComponent implements OnInit {
         ProjectFilesUrl: null,
         Revision: null,
         DeliveryDate: null,
-        IsActive: true,
-        CreatedBy: FullName,
+        CreatedName: FullName,
         FAQDetails: [],
         FileUrls: []
       }
@@ -156,7 +157,7 @@ export class AddModifyServicesComponent implements OnInit {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
         this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl.file, 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
           this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
-    
+
             this.addService.Ref_Category_ID = this.addServiceForm.value.Category
             this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
             this.addService.Description = this.addServiceForm.value.Description
@@ -165,7 +166,7 @@ export class AddModifyServicesComponent implements OnInit {
             this.addService.FileUrls = ImageUrls
             this.addService.Revision = this.addServiceForm.value.Revision
             this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
-            this.addService.CreatedBy = FullName
+            this.addService.CreatedName = FullName
             this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl'), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl'))
             this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
             console.log("saveService", this.addServiceForm, this.addService)
@@ -176,7 +177,7 @@ export class AddModifyServicesComponent implements OnInit {
     }
   }
 
-  
+
 
   addServices() {
     this._service.addmodifyService(this.addService).subscribe((res: any) => {

@@ -49,7 +49,7 @@ export class AddModifyGenersComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this._base._pageTitleService.setTitle('Category', this.btnTitle + ' GENRE / Category');
+    this._base._pageTitleService.setTitle('Category', this.btnTitle + ' CATEGORY');
   }
   ngOnInit(): void {
     this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
