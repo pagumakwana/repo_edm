@@ -10,6 +10,14 @@
                 <edm-error [control]="addServiceForm.controls.ServiceTitle"></edm-error>
             </div>
             <div class="form_group">
+                <div class="form_area">
+                    <input type="text" formControlName="AliasName" id="AliasName" name="AliasName"
+                        placeholder="Enter Slug" aria-describedby="AliasNameHelp" />
+                </div>
+                <edm-error [control]="addServiceForm.controls.ServiceTitle"></edm-error>
+
+            </div>
+            <div class="form_group">
                 <div class="form_area icon_form_group">
                     <select name="parentcategory" formControlName="Category">
                         <option selected value=''>Select Category</option>

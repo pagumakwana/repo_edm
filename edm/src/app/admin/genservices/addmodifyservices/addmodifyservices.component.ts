@@ -32,6 +32,7 @@ export class AddModifyServicesComponent implements OnInit {
   fileURL = environment.cdnURL;
   addServiceForm: FormGroup = this.fb.group({
     ServiceTitle: ['', [Validators.required]],
+    AliasName: ['', [Validators.required]],
     Category: ['', [Validators.required]],
     Description: ['', [Validators.required]],
     Price: ['', [Validators.required]],

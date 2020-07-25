@@ -3,7 +3,7 @@
         <div class="form_group">
             <div class="form_area">
                 <input type="text" formControlName="CategoryName" id="CategoryName" name="CategoryName"
-                    placeholder="Enter Genre Name" aria-describedby="CategoryNameHelp" />
+                    placeholder="Enter category here" aria-describedby="CategoryNameHelp" />
             </div>
             <div class="error_msg"
                 *ngIf="formCategory.controls.CategoryName.invalid && formCategory.controls.CategoryName.touched">
@@ -12,8 +12,8 @@
         </div>
         <div class="form_group">
             <div class="form_area">
-                <input type="text" formControlName="AliasName" id="AliasName" name="AliasName"
-                    placeholder="Enter Genre Slug" aria-describedby="AliasNameHelp" />
+                <input type="text" formControlName="AliasName" id="AliasName" name="AliasName" placeholder="Enter slug"
+                    aria-describedby="AliasNameHelp" />
             </div>
             <div class="error_msg"
                 *ngIf="formCategory.controls.AliasName.invalid && formCategory.controls.AliasName.touched">
@@ -23,7 +23,7 @@
         <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="ParentCategory" formControlName="Ref_Parent_ID">
-                    <option value="">Select Parent Category / Genre</option>
+                    <option value="">Select Parent Category</option>
                     <option *ngFor="let objCategory of categoryData" [value]="objCategory.Ref_Category_ID">
                         {{objCategory.CategoryName}}</option>
                 </select>
@@ -34,7 +34,7 @@
             <div class="form_area">
                 <!-- <edm-texteditor formControl></edm-texteditor> -->
                 <textarea rows="4" formControlName="CategoryDescription" id="CategoryDescription"
-                    placeholder="Enter Genre Name" aria-describedby="CategoryDescriptionHelp"
+                    placeholder="Enter description here" aria-describedby="CategoryDescriptionHelp"
                     placeholder="Category Description"></textarea>
             </div>
             <div class="error_msg"
@@ -45,7 +45,7 @@
         <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="CategoryUseBy" formControlName="CategoryUseBy">
-                    <option value="">Select Parent Category</option>
+                    <option value="">Select category type</option>
                     <option value="1">Track</option>
                     <option value="2">Beats</option>
                     <option value="3">Blog</option>
