@@ -112,7 +112,7 @@ export class AddModifyServicesComponent implements OnInit {
 
 
   getCategory() {
-    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
+    this._categoryService.categorylist('SERVICE', 0).subscribe((resData: any) => {
       this.categoryData = resData
     });
   }
@@ -230,7 +230,7 @@ export class AddModifyServicesComponent implements OnInit {
       }
       this._base._alertMessageService.success(msg[res]);
       $('#acknowledge_popup').modal('show')
-      setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin', 'services']) }, 3000);
+      setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin', 'service']) }, 3000);
     })
   }
 
@@ -256,10 +256,7 @@ export class AddModifyServicesComponent implements OnInit {
 
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
-
-
     this.fileChoosenData[fieldName].file = $event.target.files;
-
     this.addServiceForm.controls[fieldName].setValue('upload')
     this.addServiceForm.controls[fieldName].updateValueAndValidity()
     this._base._commonService.readImage($event.target).subscribe(res => {

@@ -36,7 +36,6 @@ export class GenerListComponent implements OnInit {
     ]
   }
   tableClick(dataItem: tableEvent) {
-    console.log("test", dataItem);
     if (dataItem.action.type == 'link' || (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Edit")) {
       this.modifycategory(dataItem.tableItem, 'MODIFYCATEGORY');
     } else if (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Delete") {
@@ -48,10 +47,12 @@ export class GenerListComponent implements OnInit {
 
   }
   ngOnInit(): void {
+    this._base._commonService.showLoader();
     this._base._pageTitleService.setTitle('Manage Category', 'MANAGE CATEGORY');
     this.bindCategory().then(res => {
       this.tableConfig.tableData = this.categoryData;
       this.tableObj.initializeTable()
+      this._base._commonService.hideLoader();
     });
   }
   bindCategory() {

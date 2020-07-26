@@ -58,9 +58,11 @@ export class AddModifyGenersComponent implements OnInit {
   ngOnInit(): void {
     this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
     if (this.aliasName != '0') {
+      this._base._commonService.showLoader();
       this.bindCategory('ALL', 0).then((res: any) => {
         if (res) {
           this.getCategory();
+          
         }
       })
     } else {
@@ -101,7 +103,6 @@ export class AddModifyGenersComponent implements OnInit {
     })
     if (index > -1) {
       this._categoryModel = this.categoryData[index];
-      console.log("catData", this._categoryModel);
       this.isCategoryModify = true;
       this.btnTitle = 'Modify'
       this.formCategory.controls.MetaTitle.setValue(this._categoryModel.MetaTitle);
@@ -114,6 +115,7 @@ export class AddModifyGenersComponent implements OnInit {
       this.formCategory.controls.CategoryUseBy.setValue(this._categoryModel.CategoryUseBy);
       this._categoryModel.FileUrls = Array.isArray(this._categoryModel.FileUrls) ? this._categoryModel.FileUrls : []
       this.initFilesUrl(this._categoryModel.FileUrls)
+      this._base._commonService.hideLoader();
     }
   }
 

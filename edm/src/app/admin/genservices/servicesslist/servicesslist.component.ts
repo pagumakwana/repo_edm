@@ -75,7 +75,7 @@ export class ServicesListComponent implements OnInit {
         this._serviceModel.AliasName = data.AliasName;
         debugger
         if (flag == 'MODIFYSERVICE') {
-          this._base._router.navigate(['/admin/services/' + data.AliasName]);
+          this._base._router.navigate(['/admin/service/' + data.AliasName]);
         } else if (flag == 'DELETESERVICE') {
           $('#modal-deleteconfirmation').modal('show')
         }
