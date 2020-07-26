@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
 import { environment } from '../../../../environments/environment.prod';
 import { Meta } from '@angular/platform-browser';
+import { fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class AddModifyGenersComponent implements OnInit {
   constructor(public _base: BaseServiceHelper,
     private _fbGener: FormBuilder,
     private _categoryService: CategoryService,
-    private _activatedRouter: ActivatedRoute,) { }
+    private _activatedRouter: ActivatedRoute, ) { }
 
   _categoryModel: CategoryModel = {};
   aliasName: string;
@@ -45,11 +46,9 @@ export class AddModifyGenersComponent implements OnInit {
     MetaDescription: [''],
   })
 
-  fileChoosenData = {
-    ImageUrl: {
-      file: null,
-      thumb: null,
-    }
+
+  fileChoosenData: { [key: string]: Array<fileChoosenDataModel> } = {
+    ImageUrl: []
   }
 
   ngAfterViewInit(): void {
@@ -62,7 +61,7 @@ export class AddModifyGenersComponent implements OnInit {
       this.bindCategory('ALL', 0).then((res: any) => {
         if (res) {
           this.getCategory();
-          
+
         }
       })
     } else {
@@ -123,25 +122,40 @@ export class AddModifyGenersComponent implements OnInit {
   initFilesUrl(filesUrl: Array<any>) {
     console.log("initFilesUrl")
     for (let i in filesUrl) {
-      filesUrl[i].FileIdentifier = 'ImageUrl' // Hardcode Need to remove when praggu change in SP
       if (filesUrl[i].FileIdentifier) {
-        this.fileChoosenData[filesUrl[i].FileIdentifier].thumb = this.fileURL + filesUrl[i].FilePath
+        let filesData: fileChoosenDataModel = {
+          file: null,
+          thumb: this.fileURL + filesUrl[i].FilePath,
+          Ref_File_ID: filesUrl[i].Ref_File_ID,
+          DisplayOrder: null
+        }
+        this.fileChoosenData[filesUrl[i].FileIdentifier].push(filesData)
         this.formCategory.controls[filesUrl[i].FileIdentifier].setValue('uploaded')
         this.formCategory.controls[filesUrl[i].FileIdentifier].updateValueAndValidity()
       }
     }
   }
 
+  justFilesArray(ArrayData: Array<fileChoosenDataModel>) {
+    let arrayReturn = []
+    for (let i in ArrayData) {
+      ArrayData[i].DisplayOrder = (1 + parseInt(i))
+      if (ArrayData[i].Ref_File_ID == null)
+        arrayReturn.push(ArrayData[i].file)
+    }
+    return arrayReturn
+  }
+
   setCategoryModel() {
     this._base._commonService.markFormGroupTouched(this.formCategory)
     if (this.formCategory.valid) {
-      this._base._commonService.filesUpload(this.fileChoosenData.ImageUrl.file, 'Category', this.formCategory.controls.ImageUrl.value).then((ImageUrls: Array<any>) => {
+      this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.ImageUrl), 'Category', this.formCategory.controls.ImageUrl.value).then((ImageUrls: Array<any>) => {
         this._categoryModel.Ref_Parent_ID = this.formCategory.value.Ref_Parent_ID;
         this._categoryModel.CategoryName = this.formCategory.value.CategoryName;
         this._categoryModel.AliasName = this.formCategory.value.AliasName;
         this._categoryModel.Description = this.formCategory.value.CategoryDescription;
         this._categoryModel.CategoryUseBy = this.formCategory.value.CategoryUseBy;
-        this._categoryModel.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'ImageUrl'))
+        this._categoryModel.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'ImageUrl', this.fileChoosenData['ImageUrl'], this._categoryModel.FileUrls))
         this._categoryModel.MetaTitle = this.formCategory.value.MetaTitle;
         this._categoryModel.MetaKeywords = this.formCategory.value.MetaKeywords;
         this._categoryModel.MetaDescription = this.formCategory.value.MetaDescription;
@@ -180,28 +194,41 @@ export class AddModifyGenersComponent implements OnInit {
       });
     })
   }
+
+
   fileChoosen($event, fieldName) {
-    console.log("fileChoosen", $event)
-    this.fileChoosenData[fieldName].file = $event.target.files;
+    console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
+
     this.formCategory.controls[fieldName].setValue('upload')
     this.formCategory.controls[fieldName].updateValueAndValidity()
-    this._base._commonService.readImage($event.target).subscribe(res => {
-      this.fileChoosenData[fieldName].thumb = res;
-    })
+
+    if ($event.target.files.length > 0) {
+      for (let file of $event.target.files) {
+        this._base._commonService.readImage(file).subscribe((res: any) => {
+          let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+          console.log("imageData", imgData)
+          this.fileChoosenData[fieldName].push(imgData);
+        })
+      }
+    }
   }
 
-  removeFile(fieldName) {
-    console.log("removeFile", fieldName)
-    this.fileChoosenData[fieldName].file = null
-    this.fileChoosenData[fieldName].thumb = null
-    if (this.formCategory.controls[fieldName].value == 'uploaded') {
-      let index = _.findIndex(this._categoryModel.FileUrls, (o: any) => {
-        return o.FileIdentifier == fieldName
-      })
-      if (index > -1)
-        this.removeThumbnail(this._categoryModel.FileUrls[index].Ref_File_ID)
+  getFileControlValue(fieldName) {
+    let returnKey: string | null = null
+    if (this.fileChoosenData[fieldName].length > 0) {
+      let waitingUpload = this.fileChoosenData[fieldName].filter(item => item.Ref_File_ID == null)
+      returnKey = waitingUpload.length > 0 ? 'upload' : 'uploaded'
     }
-    this.formCategory.controls[fieldName].setValue(null)
+    return returnKey
+  }
+
+  removeFile(fieldName, fileIndex) {
+    console.log("removeFile", fieldName, fileIndex)
+    if (this.fileChoosenData[fieldName][fileIndex].Ref_File_ID != null)
+      this.removeThumbnail(this.fileChoosenData[fieldName][fileIndex].Ref_File_ID)
+
+    this.fileChoosenData[fieldName].splice(fileIndex, 1)
+    this.formCategory.controls[fieldName].setValue(this.getFileControlValue(fieldName))
   }
 
   removeThumbnail(ref_image_id) {

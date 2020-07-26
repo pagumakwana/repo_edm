@@ -25,4 +25,6 @@ export class ServiceModel {
 export class fileChoosenDataModel {
     file: any;
     thumb: string;
+    Ref_File_ID: string;
+    DisplayOrder: number;
 }

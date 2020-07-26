@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -22,7 +22,7 @@ declare var $: any;
 })
 
 
-export class AddModifyServicesComponent implements OnInit {
+export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   constructor(public _base: BaseServiceHelper,
     private _activatedRouter: ActivatedRoute,
@@ -30,6 +30,8 @@ export class AddModifyServicesComponent implements OnInit {
     private _categoryService: CategoryService,
     private dragulaService: DragulaService,
     private fb: FormBuilder) { }
+
+
 
   categoryData: []
   fileURL = environment.cdnURL;
@@ -59,16 +61,12 @@ export class AddModifyServicesComponent implements OnInit {
   subs = new Subscription();
 
 
-  fileChoosenData = {
-    ServiceVideoUrl: {
-      file: null,
-      thumb: null,
-    },
-    BigImageUrl: {
-      file: [],
-      thumb: [],
-    }
+
+  fileChoosenData: { [key: string]: Array<fileChoosenDataModel> } = {
+    ServiceVideoUrl: [],
+    BigImageUrl: []
   }
+
   bannerImg: string = '';
   addService: ServiceModel
   aliasName: string;
@@ -108,6 +106,10 @@ export class AddModifyServicesComponent implements OnInit {
         console.log(item);
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe()
   }
 
 
@@ -156,7 +158,13 @@ export class AddModifyServicesComponent implements OnInit {
     console.log("initFilesUrl")
     for (let i in filesUrl) {
       if (filesUrl[i].FileIdentifier) {
-        this.fileChoosenData[filesUrl[i].FileIdentifier].thumb = this.fileURL + filesUrl[i].FilePath
+        let filesData: fileChoosenDataModel = {
+          file: null,
+          thumb: this.fileURL + filesUrl[i].FilePath,
+          Ref_File_ID: filesUrl[i].Ref_File_ID,
+          DisplayOrder: null
+        }
+        this.fileChoosenData[filesUrl[i].FileIdentifier].push(filesData)
         this.addServiceForm.controls[filesUrl[i].FileIdentifier].setValue('uploaded')
         this.addServiceForm.controls[filesUrl[i].FileIdentifier].updateValueAndValidity()
       }
@@ -189,32 +197,46 @@ export class AddModifyServicesComponent implements OnInit {
     });
   }
 
+  justFilesArray(ArrayData: Array<fileChoosenDataModel>) {
+    let arrayReturn = []
+    for (let i in ArrayData) {
+      ArrayData[i].DisplayOrder = (1 + parseInt(i))
+      if (ArrayData[i].Ref_File_ID == null)
+        arrayReturn.push(ArrayData[i].file)
+    }
+    return arrayReturn
+  }
+
+
   saveService() {
     this._base._commonService.markFormGroupTouched(this.addServiceForm)
     console.log("saveService", this.addServiceForm, this.addService)
 
     if (this.addServiceForm.valid) {
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-        // this._base._commonService.filesUpload(this.fileChoosenData.BigImageUrl, 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
-        this._base._commonService.filesUpload(this.fileChoosenData.ServiceVideoUrl.file, 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
-
-          this.addService.Ref_Category_ID = this.addServiceForm.value.Category
-          this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
-          this.addService.Description = this.addServiceForm.value.Description
-          this.addService.Price = this.addServiceForm.value.Price
-          this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-          // this.addService.FileUrls = ImageUrls
-          this.addService.Revision = this.addServiceForm.value.Revision
-          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
-          this.addService.CreatedName = FullName
-          // this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl'), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl'))
-          this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
-          this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
-          this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
-          this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
-          // this.addServices()
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+        this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+          this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.BigImageUrl), 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
+            this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.ServiceVideoUrl), 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
+              this.addService.Flag = this.isServiceModify ? 'MODIFYSERVICE' : 'ADDSERVICE';
+              this.addService.CreatedName = FullName;
+              this.addService.Ref_User_ID = Ref_User_ID;
+              this.addService.Ref_Category_ID = this.addServiceForm.value.Category
+              this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
+              this.addService.Description = this.addServiceForm.value.Description
+              this.addService.Price = this.addServiceForm.value.Price
+              this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
+              this.addService.Revision = this.addServiceForm.value.Revision
+              this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
+              this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl', this.fileChoosenData['BigImageUrl'], this.addService.FileUrls), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl', this.fileChoosenData['ServiceVideoUrl'], this.addService.FileUrls))
+              this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+              this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
+              this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
+              this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
+              console.log("saveService_Saved", this.addServiceForm, this.addService)
+              this.addServices()
+            })
+          })
         })
-        // })
       })
     }
   }
@@ -256,26 +278,37 @@ export class AddModifyServicesComponent implements OnInit {
 
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
-    this.fileChoosenData[fieldName].file = $event.target.files;
+
     this.addServiceForm.controls[fieldName].setValue('upload')
     this.addServiceForm.controls[fieldName].updateValueAndValidity()
-    this._base._commonService.readImage($event.target).subscribe(res => {
-      this.fileChoosenData[fieldName].thumb = res;
-    })
+
+    if ($event.target.files.length > 0) {
+      for (let file of $event.target.files) {
+        this._base._commonService.readImage(file).subscribe((res: any) => {
+          let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+          console.log("imageData", imgData)
+          this.fileChoosenData[fieldName].push(imgData);
+        })
+      }
+    }
   }
 
-  removeFile(fieldName) {
-    console.log("removeFile", fieldName)
-    this.fileChoosenData[fieldName].file = null
-    this.fileChoosenData[fieldName].thumb = null
-    if (this.addServiceForm.controls[fieldName].value == 'uploaded') {
-      let index = _.findIndex(this.addService.FileUrls, (o: any) => {
-        return o.FileIdentifier == fieldName
-      })
-      if (index > -1)
-        this.removeThumbnail(this.addService.FileUrls[index].Ref_File_ID)
+  getFileControlValue(fieldName) {
+    let returnKey: string | null = null
+    if (this.fileChoosenData[fieldName].length > 0) {
+      let waitingUpload = this.fileChoosenData[fieldName].filter(item => item.Ref_File_ID == null)
+      returnKey = waitingUpload.length > 0 ? 'upload' : 'uploaded'
     }
-    this.addServiceForm.controls[fieldName].setValue(null)
+    return returnKey
+  }
+
+  removeFile(fieldName, fileIndex) {
+    console.log("removeFile", fieldName, fileIndex)
+    if (this.fileChoosenData[fieldName][fileIndex].Ref_File_ID != null)
+      this.removeThumbnail(this.fileChoosenData[fieldName][fileIndex].Ref_File_ID)
+
+    this.fileChoosenData[fieldName].splice(fileIndex, 1)
+    this.addServiceForm.controls[fieldName].setValue(this.getFileControlValue(fieldName))
   }
 
   removeThumbnail(ref_image_id) {

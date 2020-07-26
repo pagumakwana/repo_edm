@@ -7,6 +7,8 @@ import { enAppSession } from '../_appModel/enAppSession';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { ApiConstant } from '../_appModel/apiconstant';
 import { Subject, Observable } from 'rxjs';
+import * as _ from "lodash";
+
 declare var $: any;
 @Injectable()
 export class CommonService {
@@ -139,7 +141,7 @@ export class CommonService {
         $('#mainloader').css('display', 'none');
     }
 
-    filesUpload(files: FileList | string, moduleName: string, type = 'upload') {
+    filesUpload(files: FileList | string | Array<any>, moduleName: string, type = 'upload') {
         return new Promise((resolve, reject) => {
             let isUpload: boolean = files && type == 'upload' ? (files.length > 0) : false
             if (isUpload) {
@@ -153,13 +155,31 @@ export class CommonService {
         })
     }
 
-    //Added Identifer in FilesUrl Array
-    createFileArray(filesArray, identiferList: string): Array<any> {
-        filesArray = Array.isArray(filesArray) ? filesArray : []
-        for (let i in filesArray) {
-            filesArray[i].FileIdentifier = identiferList
+    //Added Identifer & displayorder in FilesUrl Array
+    createFileArray(uploadedFilesArray, identiferList: string, displayOrderArray: Array<any>, filesUrl: Array<any>): Array<any> {
+        console.log("insidecreateFileArray")
+        let filesUrlFinal: Array<any> = []
+        let counter = 0
+        uploadedFilesArray = Array.isArray(uploadedFilesArray) ? uploadedFilesArray : []
+        for (let i in displayOrderArray) {
+            if (displayOrderArray[i].Ref_File_ID != null) {
+                let index = _.findIndex(filesUrl, (o: any) => {
+                    return o.Ref_File_ID == displayOrderArray[i].Ref_File_ID
+                })
+                if (index > -1) {
+                    filesUrl[index].DisplayOrder = JSON.parse(JSON.stringify(displayOrderArray[i].DisplayOrder))
+                    filesUrl[index].FileIdentifier = identiferList
+                    filesUrlFinal.push(filesUrl[index])
+                }
+            } else {
+                uploadedFilesArray[counter].DisplayOrder = JSON.parse(JSON.stringify(displayOrderArray[i].DisplayOrder))
+                uploadedFilesArray[counter].FileIdentifier = identiferList
+                filesUrlFinal.push(uploadedFilesArray[counter])
+                if (uploadedFilesArray.length > counter)
+                    counter++
+            }
         }
-        return filesArray
+        return filesUrlFinal
     }
 
     //Joins Multiple Array into One
@@ -189,10 +209,10 @@ export class CommonService {
         });
     }
 
-    readImage(inputValue: any): Observable<any> {
+    readImage(file: File): Observable<any> {
         return new Observable(observer => {
             let imageFile: any;
-            var file: File = inputValue.files[0];
+            // var file: File = inputValue.files[0];
             var myReader: FileReader = new FileReader();
             myReader.readAsDataURL(file);
             myReader.onloadend = (e) => {

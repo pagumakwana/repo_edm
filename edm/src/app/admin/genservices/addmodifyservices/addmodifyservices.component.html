@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="multipul_form_group">
-                <div class="width_100" *ngIf="!fileChoosenData.ServiceVideoUrl.thumb">
+                <div class="width_100" *ngIf="fileChoosenData.ServiceVideoUrl.length < 1">
                     <div class="form_group">
                         <label class="form_label">Upload Service Video</label>
                         <div class="form_area">
@@ -168,7 +168,7 @@
                         <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
                     </div>
                 </div>
-                <div class="width_100" *ngIf="fileChoosenData.ServiceVideoUrl.thumb">
+                <div class="width_100" *ngFor="let video of fileChoosenData.ServiceVideoUrl;let i = index;">
                     <div class="service_thumbnail_sec">
                         <label class="form_label">Upload Service Video</label>
 
@@ -177,18 +177,20 @@
                             <img src="../../../assets/images/play_video.svg" title="Play" />
                         </div> -->
                         <video height="300" controls>
-                            <source [src]="fileChoosenData.ServiceVideoUrl.thumb" type="video/mp4">
+                            <source [src]="video.thumb" type="video/mp4">
                             <!-- <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4"> -->
                             <!-- <source src="mov_bbb.ogg" type="video/ogg"> -->
                             Your browser does not support HTML video.
                         </video>
                     </div>
-                    <a class="remImage" id="delete" (click)="removeFile('ServiceVideoUrl')">
+                    <a class="remImage" id="delete" (click)="removeFile('ServiceVideoUrl',i)">
                         remove video
                         <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
                     </a>
                 </div>
             </div>
+
+
             <div class="width_40">
                 <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
 
@@ -202,11 +204,15 @@
                         </div>
                     </div> -->
                 <div class="form_group">
-                    <label class="form_label">Upload Service Cover Image</label>
-                    <div dragula="MANY_ITEMS" [(dragulaModel)]='dragItems'>
-                        <ng-container *ngFor="let thumb of dragItems">
+                    <!-- <label class="form_label">Upload Service Cover Image</label> -->
+                    <div dragula="MANY_ITEMS" [(dragulaModel)]='fileChoosenData.BigImageUrl'>
+                        <ng-container *ngFor="let img of fileChoosenData.BigImageUrl;let i = index;">
                             <div id="imgPreview" class="imgPreview">
-                                <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" />
+                                <img height="80" width="120" [src]="img.thumb" />
+                                <a class="remImage" id="delete" (click)="removeFile('BigImageUrl',i)">
+                                    <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                                </a>
+                                <!-- <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" /> -->
                             </div>
                         </ng-container>
                     </div>
@@ -239,6 +245,9 @@
             <!-- <a class="global_btn primary_btn" (click)="saveService()" data-toggle="modal" data-target="#acknowledge_popup"> -->
             <a class="global_btn primary_btn" (click)="saveService()">
                 <span>{{btnTitle}}</span>
+            </a>
+            <a class="global_btn primary_btn" routerLink='/admin/service'>
+                <span>Cancel</span>
             </a>
         </div>
 

@@ -55,23 +55,23 @@
                 <span class="input_icon dropdown_icon"></span>
             </div>
         </div>
-        <div class="form_group" *ngIf="fileChoosenData.ImageUrl.thumb">
+        <div class="form_group" *ngFor="let img of fileChoosenData.ImageUrl;let i = index">
             <label class="form_label">Upload Service Cover Image</label>
             <div id="imgPreview" class="imgPreview">
-                <img height="80" width="120" [src]="fileChoosenData.ImageUrl.thumb" />
-                <a class="remImage" id="delete" (click)="removeFile('ImageUrl')">
+                <img height="80" width="120" [src]="img.thumb" />
+                <a class="remImage" id="delete" (click)="removeFile('ImageUrl',i)">
                     <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
                 </a>
             </div>
         </div>
-        <div class="form_group" *ngIf="!fileChoosenData.ImageUrl.thumb">
+        <div class="form_group" *ngIf="fileChoosenData.ImageUrl.length < 1">
             <label class="form_label">Upload Service Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
                     <input type="file" (change)="fileChoosen($event,'ImageUrl')" class="custom-file-input"
                         id="customFile">
-                    <img [src]="fileChoosenData.ImageUrl.thumb ? fileChoosenData.ImageUrl.thumb : '../../../../assets/images/product_thumbnail.jpg'"
-                        class="image_preview" />
+                    <!-- <img [src]="fileChoosenData.ImageUrl.thumb ? fileChoosenData.ImageUrl.thumb : '../../../../assets/images/product_thumbnail.jpg'"
+                        class="image_preview" /> -->
                     <label class="custom-file-label" for="customFile">
                         Choose file
                     </label>
