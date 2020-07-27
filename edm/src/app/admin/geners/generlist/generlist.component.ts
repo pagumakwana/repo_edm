@@ -26,12 +26,12 @@ export class GenerListComponent implements OnInit {
   tableConfig: dataTableConfig = {
     tableData: [],
     tableConfig: [
-      { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "100px", width: "100px" } },
+      { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
       { identifer: "CategoryName", title: "CategoryName", type: "link" },
       { identifer: "CategoryUseByName", title: "Type", type: "text" },
       { identifer: "Description", title: "Description", type: "text" },
       { identifer: "CreatedName", title: "CreatedBy", type: "text" },
-      { identifer: "IsActive", title: "IsActive", type: "flag" },
+      // { identifer: "IsActive", title: "IsActive", type: "flag" },
       { identifer: "", title: "Action", type: "button", buttonList: [{ name: 'Edit', class: 'global_btn primary_btn', iconClass: 'delete_icon btn_icon' }, { name: 'Delete', class: 'global_btn icon_btn red_btn', iconClass: 'delete_icon btn_icon' }] }
     ]
   }

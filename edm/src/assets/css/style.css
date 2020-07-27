@@ -261,51 +261,81 @@ label.checkbox, label.radio {
     margin-right: 0;
 }
 .primary_btn {
-    background: #05C38F;
+    background: #05C38F !important;
     color: white !important;
     border: 1px solid #05C38F;
 }
 .primary_btn:hover {
-    background: #04af80;
+    background: #04af80 !important;
     border: 1px solid #05C38F;
     color: white !important;
 }
+.dataTables_paginate {
+    font-size: 13px;
+}
+.dataTables_wrapper .dataTables_paginate span .paginate_button.current {
+    background: #05c38f;
+    color: white !important;
+}
+.dataTables_wrapper .dataTables_paginate span .paginate_button.current:hover {
+    color: white !important;
+    background: #04af80 !important;
+}
+.dataTables_wrapper .dataTables_paginate span .paginate_button {
+    border-radius: 100%;
+    border: 0 !important;
+    padding: 7px 12px;
+    display: inline-table;
+}
+.dataTables_wrapper .dataTables_paginate span .paginate_button:hover, .dataTables_wrapper .dataTables_paginate span .paginate_button:active {
+    background: #f8f8f8 !important;
+    color: black !important;
+    box-shadow: none;
+}
+table.dataTable.no-footer {
+    border-bottom: 1px solid #f2f2f2 !important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover {
+    background: #f8f8f8;
+    color: black !important;
+    border-color: transparent;
+}
 .red_btn {
-    background: #FF6243;
+    background: #FF6243 !important;
     color: white !important;
     border: 1px solid #FF6243;
 }
 .red_btn:hover {
-    background: #e43c1b;
+    background: #7e7371 !important;
     border: 1px solid #e43c1b;
     color: white !important;
 }
 .grey_btn {
-    background: #E9E9E9;
+    background: #E9E9E9 !important;
     color: #04af80 !important;
     border: 1px solid #E9E9E9;
 }
 .grey_btn:hover {
-    background: #dedddd;
+    background: #dedddd !important;
     border: 1px solid #dedddd;
 }
 .dark_grey_btn {
-    background: #374047;
+    background: #374047 !important;
     color: #ffffff !important;
     border: 1px solid #374047;
 }
 .dark_grey_btn:hover {
-    background: #525F69;
+    background: #525F69 !important;
     color: #ffffff !important;
     border: 1px solid #525F69;
 }
 .secondary_btn {
-    background: #ffffff;
+    background: #ffffff !important;
     color: #6A6A72 !important;
     border: 1px solid #6A6A72;
 }
 .secondary_btn:hover {
-    background: #05C38F;
+    background: #05C38F !important;
     border: 1px solid #05C38F;
     color: white !important;
 }
@@ -746,6 +776,15 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .pause {
     background: url(../images/pause.svg) no-repeat;
 }
+.add_new_icon {
+    background: url(../images/bordered_plus.svg) no-repeat;
+}
+.right_tick {
+    background: url(../images/right_blue.svg) no-repeat;
+}
+.cancel_tick {
+    background: url(../images/delete_red.svg) no-repeat;
+}
 /* Dropdown CSS */
 .dropdown_point {
     position: relative;
@@ -885,16 +924,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     border-radius: 0 0 10px 10px !important;
     overflow: auto;
 }
-.modal-footer button {
-    margin: 0 !important;
+.modal-footer .btn {
+    margin: 0;
+    border-right: 1px solid white;
     border-radius: 0;
-    background: #05c38f;
-    font-size: 15px;
-    text-align: center;
-    border-right-color: white !important;
-}
-.modal-footer button:last-child {
-    border-right: 0;
 }
 .modal-content {
     border-radius: 10px !important;
@@ -1002,12 +1035,34 @@ appadmin-adminbody {
     color: #ACAFBB;
     font-size: 14px;
 }
+.primary_table thead th {
+    border: 0 !important;
+}
 .primary_table thead th, .primary_table tbody td {
-    padding: 15px 10px;
+    padding: 15px 20px !important;
+}
+table.dataTable thead th {
+    background-size: 16px !important;
 }
 .primary_table tbody td {
     border-bottom: 1px solid #F2F2F2;
     font-size: 14px;
+}
+.dataTables_length {
+    font-size: 13px;
+}
+.dataTables_length select {
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 5px;
+}
+.dataTables_filter {
+    font-size: 13px;
+}
+.dataTables_filter input {
+    border: 1px solid #dcdc;
+    padding: 5px;
 }
 .primary_table tbody td .comment_area {
     color: grey;
@@ -1046,6 +1101,18 @@ appadmin-adminbody {
     border-radius: 5px;
     width: auto;
     height: auto;
+}
+.tick_mark .fa-check {
+    color: #05C38F;
+}
+.tick_mark .fa-times {
+    color: #05C38F;
+}
+.tick_mark .fa-times, .tick_mark .fa-check {
+    font-size: 20px;
+}
+.dataTables_info {
+    font-size: 13px;
 }
 .play_upper_layer {
     position: relative;
@@ -1133,6 +1200,24 @@ appadmin-adminbody {
 }
 .plain_content .modal-body {
     font-size: 13px;
+}
+.add_new:hover .add_new_icon {
+    transform: scale(1.1);
+    transition: all 0.25s ease 0s;
+}
+.add_new_icon {
+    background-size: contain !important;
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+.add_new span {
+    font-size: 13px;
+}
+.add_new {
+    text-decoration: none !important;
 }
 /* Admin Side CSS */
 

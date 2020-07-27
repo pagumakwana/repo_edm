@@ -284,10 +284,9 @@
                 <form [formGroup]="addrejectreason">
                     <input type="text" name="rejectReason" formControlName="rejectReason" placeholder="Reason" [(ngModel)]="rejectReason" />
                     <edm-error [control]="addrejectreason.controls.rejectReason"></edm-error>
-
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" (click)="accept()">Reject</button>
+                    <button type="button" class="btn btn-block primary_btn" (click)="accept()">Reject</button>
                 </div>
             </div>
 

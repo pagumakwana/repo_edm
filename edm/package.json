@@ -25,6 +25,7 @@
     "crypto-js": "^4.0.0",
     "datatables.net": "^1.10.21",
     "datatables.net-dt": "^1.10.21",
+    "dragula": "^3.7.2",
     "jquery": "^3.5.1",
     "ng2-dragula": "^2.1.1",
     "ng5-slider": "^1.2.4",

@@ -1,4 +1,4 @@
-<table #dataTable [hidden]="ishide" class="table table-stripped table-hover table-bordered">
+<table #dataTable [hidden]="ishide" class="primary_table">
     <thead>
         <tr>
             <!-- <th>Sr#</th> -->
@@ -21,8 +21,13 @@
                     <!-- <a (click)="tableClick(tableItem,key)">
                         {{tableItem[key.identifer]}}
                     </a> -->
-                    <img [src]="imageBaseUrl + (key?.dataType?.type == 'array' ? getNestedObject(tableItem[key.identifer],key.dataType.path) : tableItem[key.identifer])"
-                        [style.height]="key?.size?.height" [style.width]="key?.size?.width">
+                    <div class="play_upper_layer">
+                        <img class="tbl_img" [src]="imageBaseUrl + (key?.dataType?.type == 'array' ? getNestedObject(tableItem[key.identifer],key.dataType.path) : tableItem[key.identifer])" [style.height]="key?.size?.height" [style.width]="key?.size?.width">
+                        <div class="play_audio">
+                            <span class="play" title="Play"></span>
+                            <!-- <span title="Pause" class="pause" style="display: none;"></span> -->
+                        </div>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'custom'">
                     <!-- <a [title]="config?.tableConfig[i][key.navigate]">
@@ -37,13 +42,16 @@
                     </a> -->
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'flag'">
-                    <i [ngClass]="tableItem[key.identifer] ? 'fa-check' : 'fa-times'" class="fa"></i>
+                    <div class="center_align tick_mark">
+                        <i [ngClass]="tableItem[key.identifer] ? 'right_tick' : 'cancel_tick'"></i>
+                    </div>
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'button'">
+                    <div class="table_btn">
                     <a *ngFor="let button of key?.buttonList" (click)="tableClick(tableItem,key,button)"
-                        class="{{button.class}}">
+                        class="global_btn {{button.class}}">
                         <span>{{button.name}}</span>
-                        <span *ngIf="button?.iconClass" class="{{button.iconClass}}"></span>
+                        <span *ngIf="button?.iconClass" class="delete_icon {{button.iconClass}}"></span>
                     </a>
                     <!-- <a class="global_btn primary_btn" >
                         <span>Delete</span>
@@ -53,6 +61,7 @@
                         <span>Delete</span>
                         <span class="delete_icon btn_icon"></span>
                     </a> -->
+                    </div>
                 </ng-container>
             </td>
         </tr>
