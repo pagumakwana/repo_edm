@@ -48,6 +48,15 @@
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'button'">
                     <div class="table_btn">
+                    <a title="Edit" class="small_icon_btn">
+                        <span class="edit_btn"></span>
+                    </a>
+                    <a title="Delete" class="small_icon_btn">
+                        <span class="delete_btn"></span>
+                    </a>
+                    <a title="View" class="small_icon_btn">
+                        <span class="view_btn"></span>
+                    </a>
                     <a *ngFor="let button of key?.buttonList" (click)="tableClick(tableItem,key,button)"
                         class="global_btn {{button.class}}">
                         <span>{{button.name}}</span>

@@ -698,11 +698,38 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     background: url(../images/edit.svg) no-repeat;
     background-size: 12px !important;
 }
+.edit_btn {
+    background: url(../images/edit_blue.svg) no-repeat;
+}
+.delete_btn {
+    background: url(../images/delete_red.svg) no-repeat;
+}
+.small_icon_btn > span {
+    background-size: 15px !important;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-position: center !important;
+    vertical-align: middle;
+}
+.small_icon_btn > .view_btn {
+    background-size: 20px !important;
+    width: 20px;
+    height: 15px;
+}
+.table_btn .small_icon_btn:hover {
+    opacity: 0.6;
+}
+.small_icon_btn {
+    padding: 5px;
+    vertical-align: middle;
+    display: inline-block;
+}
 .delete_icon {
     background: url(../images/delete.svg) no-repeat;
     background-size: 10px !important;
 }
-.view_icon {
+.view_icon, .view_btn {
     background: url(../images/view.svg) no-repeat;
 }
 .ellipsis_icon {
@@ -789,6 +816,13 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .cancel_tick {
     background: url(../images/delete_red.svg) no-repeat;
+}
+.tick_mark i {
+    background-size: contain;
+    width: 16px;
+    height: 13px;
+    display: inline-block;
+    background-position: center;
 }
 /* Dropdown CSS */
 .dropdown_point {
