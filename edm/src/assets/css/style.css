@@ -306,7 +306,7 @@ table.dataTable.no-footer {
     border: 1px solid #FF6243;
 }
 .red_btn:hover {
-    background: #7e7371 !important;
+    background: #e43c1b !important;
     border: 1px solid #e43c1b;
     color: white !important;
 }
@@ -351,6 +351,11 @@ table.dataTable.no-footer {
     height: 15px !important;
 }
 /* form fields */
+input::-webkit-inner-spin-button,
+input::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
 .form_group input, .form_group textarea, .form_group select, .custom-control-label::before, .custom-file-label, .custom-select {
     padding: 8px 10px;
     border: 1px solid #cccccc;
@@ -952,6 +957,11 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 /* Modal CSS */
 /* Admin Side CSS */
+.no_record {
+    width: 100%;
+    text-align: center;
+    display: inline-block;
+}
 appadmin-body {
     margin: 56px 0 0 0;
     display: block;

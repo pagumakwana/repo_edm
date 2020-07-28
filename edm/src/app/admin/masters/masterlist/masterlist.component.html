@@ -29,8 +29,8 @@
                 <td>{{usermasterdata.IsActive}}</td>
             </tr>
         </tbody>
-        <div *ngIf="data?.length == 0">
-            <div>No record found</div>
+        <div class="no_record" *ngIf="data?.length == 0">
+            No record found
         </div>
     </table>
 </div>

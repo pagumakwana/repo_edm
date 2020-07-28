@@ -13,7 +13,7 @@
             <h2>Find The Perfect Service For Your Next Hit</h2>
             <div class="search_track">
                 <img src="../../assets/images/search.svg" />
-                <input type="text" name="searchtrack" [(ngModel)]="globalSearch" (input)="getGlobalSearch()" />
+                <input placeholder='Try "Custom Track"' type="text" name="searchtrack" [(ngModel)]="globalSearch" (input)="getGlobalSearch()" />
                 <button [ngStyle]="{'opacity':globalSearch.length == 0 ? '0.5' : '1' }" class="global_btn primary_btn" [disabled]="globalSearch.length == 0 " (click)="getGlobalSearch()">
                     <span>SEARCH</span>
                     </button>
@@ -90,8 +90,8 @@
                 <p>{{data.ServiceTitle}}</p>
             </div>
         </div>
-        <div *ngIf="artistBranding?.length == 0">
-            <div>No record found</div>
+        <div class="no_record" *ngIf="artistBranding?.length == 0">
+            No record found
         </div>
         <!-- <div class="branding_sec">
                 <div class="branding_data">
