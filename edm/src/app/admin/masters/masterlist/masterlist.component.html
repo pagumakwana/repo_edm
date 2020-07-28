@@ -1,6 +1,12 @@
-<div class="button_group">
-    <a *ngIf="modulename=='master'" class="global_btn primary_btn" routerLink="/admin/config/addmodifymasters/master/0"><span>Add Master</span></a>
-    <a *ngIf="modulename=='masterdata'" class="global_btn primary_btn" routerLink="/admin/config/addmodifymasters/masterdata/0"><span>Add MasterData</span></a>
+<div class="filter_section desktop_filter_section">
+    <a class="add_new" *ngIf="modulename=='master'" routerLink="/admin/config/addmodifymasters/master/0">
+        <span class="add_new_icon"></span>
+        <span>Add Master</span>
+    </a>
+    <a class="add_new" *ngIf="modulename=='masterdata'" routerLink="/admin/config/addmodifymasters/masterdata/0">
+        <span class="add_new_icon"></span>
+        <span>Add MasterData</span>
+    </a>
 </div>
 
 <div class="primary_table">

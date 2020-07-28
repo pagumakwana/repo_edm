@@ -995,6 +995,7 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     width: 100%;
     text-align: center;
     display: inline-block;
+    font-size: 13px;
 }
 appadmin-body {
     margin: 56px 0 0 0;
@@ -1137,7 +1138,7 @@ table.dataTable thead th {
     padding: 3px 5px;
 }
 .primary_table .table_btn .global_btn:last-child {
-    margin: 0;
+    margin-right: 0;
 }
 .primary_table .tbl_img {
     max-width: 35px;
