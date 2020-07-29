@@ -110,8 +110,16 @@
                 <div class="width_50">
                     <div class="form_group">
                         <div class="form_area icon_form_group">
-                            <input type="text" formControlName="Revision" name="Revision" placeholder="Revision" />
+                            <select name="Revision" formControlName="Revision">
+                                <option selected value=''>Select Revision</option>
+                                <option *ngFor="let Revision of [1,2,3,4,5,6,7,8,9,10]" [value]="Revision">
+                                    {{Revision}}</option>
+                            </select>
                             <span class="input_icon revision_icon"></span>
+                            <!-- <span class="input_icon dropdown_icon"></span> -->
+
+                            <!-- <input type="text" formControlName="Revision" name="Revision" placeholder="Revision" />
+                            <span class="input_icon revision_icon"></span> -->
                         </div>
                         <edm-error [control]="addServiceForm.controls.Revision"></edm-error>
                     </div>
