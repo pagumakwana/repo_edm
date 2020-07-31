@@ -27,6 +27,7 @@
     "datatables.net-dt": "^1.10.21",
     "dragula": "^3.7.2",
     "jquery": "^3.5.1",
+    "ng-multiselect-dropdown": "^0.2.10",
     "ng2-dragula": "^2.1.1",
     "ng5-slider": "^1.2.4",
     "ngx-spinner": "^9.0.2",

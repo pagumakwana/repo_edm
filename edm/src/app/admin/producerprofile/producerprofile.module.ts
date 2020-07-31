@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ProducerProfileComponent } from './producerprofile.component';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
+import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
 @NgModule({
     declarations: [
         ProducerProfileComponent
@@ -20,6 +21,6 @@ import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
             }
         ]),
     ],
-    providers: []
+    providers: [ProfileUpdateService]
 })
 export class ProducerProfileModule { }

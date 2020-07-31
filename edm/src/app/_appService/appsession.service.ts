@@ -18,6 +18,22 @@ export class AppSessionService {
             this._encryptedStorage.set(enAppSession.EmailID, responseData.EmailID);
             this._encryptedStorage.set(enAppSession.ProfilePic, responseData.Profile_Photo);
             this._encryptedStorage.set(enAppSession.HasLogin, true);
+            this._encryptedStorage.set(enAppSession.AuthorityIDs, responseData.AuthorityIDs);
+            this._encryptedStorage.set(enAppSession.Bio, responseData.Bio);
+            this._encryptedStorage.set(enAppSession.CreatedBy, responseData.CreatedBy);
+            this._encryptedStorage.set(enAppSession.Gender, responseData.Gender);
+            this._encryptedStorage.set(enAppSession.GovitID, responseData.GovitID);
+            this._encryptedStorage.set(enAppSession.Password, responseData.Password);
+            this._encryptedStorage.set(enAppSession.PayPalEmailID, responseData.PayPalEmailID);
+            this._encryptedStorage.set(enAppSession.ProfilePhoto, responseData.ProfilePhoto);
+            this._encryptedStorage.set(enAppSession.Response, responseData.Response);
+            this._encryptedStorage.set(enAppSession.SocialProfileUrl, responseData.SocialProfileUrl);
+            this._encryptedStorage.set(enAppSession.StudioGears, responseData.StudioGears);
+            this._encryptedStorage.set(enAppSession.UserCode, responseData.UserCode);
+            this._encryptedStorage.set(enAppSession.UserMasterDataIDs, responseData.UserMasterDataIDs);
+
+
+
             setTimeout(() => {
                 observer.next(true);
                 observer.complete();
@@ -26,12 +42,27 @@ export class AppSessionService {
     }
 
     clearUserSession() {
+
         this._encryptedStorage.set(enAppSession.FullName, '');
         this._encryptedStorage.set(enAppSession.MobileNumber, '');
         this._encryptedStorage.set(enAppSession.EmailID, '');
         this._encryptedStorage.set(enAppSession.Ref_User_ID, 0);
         this._encryptedStorage.set(enAppSession.HasLogin, false);
         this._encryptedStorage.set(enAppSession.ProfilePic, '');
+
+        this._encryptedStorage.set(enAppSession.AuthorityIDs, '');
+        this._encryptedStorage.set(enAppSession.Bio, '');
+        this._encryptedStorage.set(enAppSession.CreatedBy, '');
+        this._encryptedStorage.set(enAppSession.Gender, '');
+        this._encryptedStorage.set(enAppSession.GovitID, '');
+        this._encryptedStorage.set(enAppSession.Password, '');
+        this._encryptedStorage.set(enAppSession.PayPalEmailID, '');
+        this._encryptedStorage.set(enAppSession.ProfilePhoto, '');
+        this._encryptedStorage.set(enAppSession.Response, '');
+        this._encryptedStorage.set(enAppSession.SocialProfileUrl, '');
+        this._encryptedStorage.set(enAppSession.StudioGears, '');
+        this._encryptedStorage.set(enAppSession.UserCode, '');
+        this._encryptedStorage.set(enAppSession.UserMasterDataIDs, '');
     }
 
 }
