@@ -56,10 +56,11 @@
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <select name="country">
-                            <option disabled selected>Select Your Country</option>
-                            <option>Options</option>
-                            <option>Options</option>
+                        <select name="country" formControlName='UserMasterDataIDs'>
+                            <option disabled selected value="">Select Your Country</option>
+                            <option *ngFor="let country of countryList" [value]="country.Ref_UserMasterData_ID">
+                                {{country?.UserMasterData}}</option>
+                            <!-- <option>Options</option> -->
                         </select>
                         <span class="input_icon dropdown_icon"></span>
                     </div>
@@ -81,12 +82,11 @@
                 </div>
                 <div class="form_group">
                     <div class="form_area">
-                        <input type="text" name="studiogears" placeholder="Enter your studio gears" />
+                        <input type="text" formControlName="StudioGears" name="studiogears" placeholder="Enter your studio gears" />
                     </div>
                     <div class="tags">
-                        <span>demo</span>
-                        <span>demo</span>
-                        <span>demo</span>
+                        <span *ngFor="let daw of dawList">{{daw?.DAW}}</span>
+
                     </div>
                 </div>
                 <div class="button_group center_align" (click)="changeStage()">
@@ -99,21 +99,24 @@
             <div *ngIf="stage.current == 2" formGroupName="step2">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="url" formControlName='SocialProfileUrl' name="facebookurl"
+                        <input type="url" formControlName='FacebookUrl' name="facebookurl"
                             placeholder="Enter Your Facebook Profile URL" />
                         <span class="input_icon facebook_blue_icon"></span>
                     </div>
                     <!-- <div class="error_msg">
                         <span>This field is Required</span>
                     </div> -->
-                    <edm-error [control]="addProfileForm?.controls?.step2?.controls?.SocialProfileUrl"></edm-error>
+                    <edm-error [control]="addProfileForm?.controls?.step2?.controls?.FacebookUrl"></edm-error>
 
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="url" name="soundcloudurl" placeholder="Enter Your SoundCloud Profile URL" />
+                        <input type="url" name="soundcloudurl" formControlName='SoundCloudUrl'
+                            placeholder="Enter Your SoundCloud Profile URL" />
                         <span class="input_icon soundcloud_icon"></span>
                     </div>
+                    <edm-error [control]="addProfileForm?.controls?.step2?.controls?.SoundCloudUrl"></edm-error>
+
                     <!-- <div class="error_msg">
                         <span>This field is Required</span>
                     </div> -->
@@ -122,9 +125,12 @@
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="url" name="spotifyurl" placeholder="Enter Your Spotify Profile URL" />
+                        <input type="url" name="spotifyurl" formControlName='SpotifyUrl'
+                            placeholder="Enter Your Spotify Profile URL" />
                         <span class="input_icon spotify_icon"></span>
                     </div>
+                    <edm-error [control]="addProfileForm?.controls?.step2?.controls?.SpotifyUrl"></edm-error>
+
                     <!-- <div class="error_msg">
                         <span>This field is Required</span>
                     </div> -->
