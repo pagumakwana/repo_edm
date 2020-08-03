@@ -1,51 +1,63 @@
-<div class="admin_page">
-    <div class="admin_heading">
-        <h4>CREATE NEW COUPON CODE</h4>
-    </div>
-    <div class="admin_body">
-        <div class="portlet_body admin_half_forms">
-            <form>
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <input type="text" name="couponname" placeholder="Enter Coupon Name" />
-                        <span class="input_icon "></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area">
-                        <textarea rows="4" placeholder="Coupon Description"></textarea>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="trackgenre">
-                            <option disabled selected>Discount Type</option>
-                            <option>Options</option>
-                            <option>Options</option>
-                        </select>
-                        <span class="input_icon dropdown_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </form>
+<div class="portlet_body admin_half_forms">
+    <form>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="tickettype">
+                    <option disabled selected>Select ticket Type</option>
+                    <option>Options</option>
+                    <option>Options</option>
+                </select>
+                <span class="input_icon dropdown_icon"></span>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
         </div>
-        <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
-            <div class="modal-md modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <img src="../../../../assets/images/success_tick.svg" alt="Coupon Submitted Successfully">
-                        <h3>Thank You</h3>
-                        <p>Your Coupon has been submitted will notify you the status of coupon approval.</p>
-                    </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <input type="text" name="subject" placeholder="Subject" />
+                <span class="input_icon "></span>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area">
+                <textarea rows="4" placeholder="Description in brief about query"></textarea>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <label class="form_label">Attach Files</label>
+            <div class="form_area">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile">
+                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
+                    <label class="custom-file-label" for="customFile">
+                        Choose file
+                    </label>
+                    <label class="custom-file-label upload_btn"></label>
                 </div>
+                <span class="file_formats">Note: File upload limit - 1GB</span>
+            </div>
+        </div>
+        <div class="button_group">
+            <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
+                <span>submit Ticket</span>
+            </a>
+        </div>
+    </form>
+</div>
+<div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="../../../../assets/images/success_tick.svg" alt="Coupon Submitted Successfully">
+                <h3>Thank You</h3>
+                <p>Your Ticket has been submitted will notify you the status of Ticket approval.</p>
             </div>
         </div>
     </div>

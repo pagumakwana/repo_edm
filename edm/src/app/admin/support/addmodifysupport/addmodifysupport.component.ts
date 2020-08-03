@@ -12,7 +12,7 @@ export class AddModifySupportComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    this._base._pageTitleService.setTitle("Ticket Support", "Ticket Support");
   }
 
  
