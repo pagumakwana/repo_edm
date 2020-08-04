@@ -96,6 +96,10 @@ const routes: Routes = [
                 path: "profileupdate",
                 loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
             },
+            {
+                path: "support",
+                loadChildren: () => import('../admin/support/support.module').then(m => m.SupportModule)
+            },
         ],
     }
 ];

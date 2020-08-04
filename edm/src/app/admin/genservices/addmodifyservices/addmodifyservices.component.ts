@@ -178,6 +178,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
         Ref_Category_ID: null,
         ServiceTitle: null,
         Description: null,
+        AliasName : null,
         Price: null,
         PriceWithProjectFiles: null,
         BigImageUrl: null,
@@ -221,6 +222,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
               this.addService.CreatedName = FullName;
               this.addService.Ref_User_ID = Ref_User_ID;
               this.addService.Ref_Category_ID = this.addServiceForm.value.Category
+              this.addService.AliasName = this.addServiceForm.value.AliasName
               this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
               this.addService.Description = this.addServiceForm.value.Description
               this.addService.Price = this.addServiceForm.value.Price
