@@ -50,7 +50,7 @@
             <div class="width_40">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="time" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }" required placeholder="Track Duration"
+                        <input type="text" (input)="validateNum()" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }" required placeholder="Track Duration"
                         />
                         <span class="input_icon duration_icon"></span>
                     </div>
@@ -244,14 +244,14 @@
             <label class="form_label">Upload Master</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="masterfile" name="masterfile" [(ngModel)]="masterfile" (change)="changeListenerfile($event, 'Masterfile')">
+                    <input type="file" class="custom-file-input" accept=".mp3" id="masterfile" name="masterfile" [(ngModel)]="masterfile" (change)="changeListenerfile($event, 'Masterfile')">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="masterfile">
                         {{masterfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Masterfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .mp3</span>
             </div>
             <div class="error_msg" *ngIf="!masterfileuploaded">
                 <span>This field is Required</span>
@@ -261,14 +261,14 @@
             <label class="form_label">Upload Master & Unmastered</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
+                    <input type="file" class="custom-file-input" accept=".war" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="unmasterfile">
                         {{unmasterfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Unmasterfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War</span>
             </div>
 
             <div class="error_msg" *ngIf="!unmasterfileuploaded">
@@ -279,14 +279,14 @@
             <label class="form_label">Upload Mixdow Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
+                    <input type="file" class="custom-file-input" accept=".war" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="mixdowfile">
                         {{mixdowfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Mixdowfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War</span>
             </div>
             <div class="error_msg" *ngIf="!mixdowfileuploaded">
                 <span>This field is Required</span>
@@ -314,14 +314,14 @@
             <label class="form_label">Upload Stems</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="stemsfile">
+                    <input type="file" class="custom-file-input" accept=".zip, .rar" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="stemsfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="stemsfile">
                         {{stemsfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Stemsfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .zip, .rar</span>
             </div>
             <div class="error_msg" *ngIf="!stemsfileuploaded">
                 <span>This field is Required</span>
@@ -331,14 +331,14 @@
             <label class="form_label">Upload MIDI</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3, .war" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="MIDIfile">
+                    <input type="file" class="custom-file-input" accept=".midi" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="MIDIfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="MIDIfile">
                         {{MIDIfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('MIDIfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War, .mp3</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .midi</span>
             </div>
 
             <div class="error_msg" *ngIf="!MIDIfileuploaded">
@@ -359,9 +359,9 @@
                 <span class="file_formats">Attchment format : .zip, .rar</span>
             </div>
 
-            <div class="error_msg" *ngIf="!projectfileuploaded">
+            <!-- <div class="error_msg" *ngIf="!projectfileuploaded">
                 <span>This field is Required</span>
-            </div>
+            </div> -->
         </div>
         <div class="form_group">
             <div class="form_area">
