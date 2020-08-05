@@ -5,6 +5,9 @@ import { CommonModule } from '@angular/common';
 import { ProducerProfileComponent } from './producerprofile.component';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
+
 @NgModule({
     declarations: [
         ProducerProfileComponent
@@ -14,6 +17,7 @@ import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileu
         FormsModule,
         ReactiveFormsModule,
         ErrorModule,
+        NgMultiSelectDropDownModule.forRoot(),
         RouterModule.forChild([
             {
                 path: '',

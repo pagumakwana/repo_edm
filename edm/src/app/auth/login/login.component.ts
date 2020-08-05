@@ -21,15 +21,16 @@ export class LoginComponent implements OnInit {
   _userModel: userModel = {};
 
   formSignIn: FormGroup = this._fb.group({
-    EmailID: ['', [Validators.required]],
+    User_Code: ['', [Validators.required]],
     Password: ['', [Validators.required]]
   })
 
   setSignInModel() {
     this._base._commonService.markFormGroupTouched(this.formSignIn);
     if (this.formSignIn.valid) {
+      debugger
       this._userModel.IsSocialLogin = false;
-      this._userModel.EmailID = this.formSignIn.value.EmailID;
+      this._userModel.User_Code = this.formSignIn.value.User_Code;
       this._userModel.Password = this.formSignIn.value.Password;
       this.signIn();
     }
