@@ -31,6 +31,7 @@ export class AppSessionService {
             this._encryptedStorage.set(enAppSession.StudioGears, responseData.StudioGears);
             this._encryptedStorage.set(enAppSession.UserCode, responseData.UserCode);
             this._encryptedStorage.set(enAppSession.UserMasterDataIDs, responseData.UserMasterDataIDs);
+            this._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(responseData.FileUrls));
 
 
 
@@ -63,6 +64,7 @@ export class AppSessionService {
         this._encryptedStorage.set(enAppSession.StudioGears, '');
         this._encryptedStorage.set(enAppSession.UserCode, '');
         this._encryptedStorage.set(enAppSession.UserMasterDataIDs, '');
+        this._encryptedStorage.set(enAppSession.FileUrls, '[]');
     }
 
 }

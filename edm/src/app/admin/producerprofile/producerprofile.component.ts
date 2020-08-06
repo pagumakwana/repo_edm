@@ -3,6 +3,7 @@ import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileUpdateModel } from 'src/app/_appModel/profileupdate/profileupdate.model';
 import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 declare var $: any;
 
@@ -24,6 +25,12 @@ export class ProducerProfileComponent implements OnInit {
     addProfile: ProfileUpdateModel;
     dawList: Array<any>
     countryList: Array<any>
+
+    dropdownSettings: IDropdownSettings = {
+        singleSelection: false,
+        idField: 'Ref_DAW_ID',
+        textField: 'DAW',
+    };
 
     addProfileForm = this.fb.group({
         step1: this.fb.group({
@@ -71,10 +78,12 @@ export class ProducerProfileComponent implements OnInit {
         }
     }
 
+
     generateProfile() {
 
         this.addProfile.FullName = this.addProfileForm.value.step1.FullName;
         this.addProfile.EmailID = this.addProfileForm.value.step3.EmailID;
+        this.addProfile.UserCode = this.addProfileForm.value.step3.EmailID;
         this.addProfile.ProfilePhoto = null;
         this.addProfile.Bio = this.addProfileForm.value.step1.Bio;
         this.addProfile.SocialProfileUrl = `${this.addProfileForm.value.step2.FacebookUrl}|${this.addProfileForm.value.step2.SoundCloudUrl}|${this.addProfileForm.value.step2.SpotifyUrl}`;
@@ -87,10 +96,16 @@ export class ProducerProfileComponent implements OnInit {
 
     saveProfile() {
         console.log("saveProfile", this.addProfileForm, this.addProfile)
-        this._profileService.SignUp(this.addProfile).subscribe((res: any) => {
+        this._profileService.SignUp(this.addProfile).subscribe((res: string) => {
             console.log("saveProfile_res", res)
-            $('#acknowledge_popup').modal('show')
-            setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin']) }, 3000);
+            this._profileService.setProfileInfo(this.addProfile)
+            let msg: { [key: string]: string } = {
+                "USERUPDATEDSUCCESS": "Profile Updated Sucessfully"
+            }
+            this._base._alertMessageService.success(msg[res])
+            this._base._router.navigate(['admin'])
+            // $('#acknowledge_popup').modal('show')
+            // setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin']) }, 3000);
 
         })
     }

@@ -82,7 +82,11 @@
                 </div>
                 <div class="form_group">
                     <div class="form_area">
-                        <input type="text" formControlName="StudioGears" name="studiogears" placeholder="Enter your studio gears" />
+                        <!-- <input type="text" formControlName="StudioGears" name="studiogears" placeholder="Enter your studio gears" /> -->
+                        <ng-multiselect-dropdown [placeholder]="'Enter your studio gears'" [data]="dawList"
+                            formControlName="StudioGears" [settings]="dropdownSettings">
+                        </ng-multiselect-dropdown>
+
                     </div>
                     <div class="tags">
                         <span *ngFor="let daw of dawList">{{daw?.DAW}}</span>
@@ -189,7 +193,7 @@
                     </div>
                 </div>
                 <div class="button_group center_align" (click)="changeStage()">
-                    <a class="global_btn primary_btn float_none" data-toggle="modal" data-target="#acknowledge_popup">
+                    <a class="global_btn primary_btn float_none">
                         <span>Save & Verify My Account</span>
                     </a>
                 </div>

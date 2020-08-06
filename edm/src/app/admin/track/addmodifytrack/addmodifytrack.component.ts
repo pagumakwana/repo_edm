@@ -124,7 +124,12 @@ export class AddModifyTrackComponent implements OnInit {
     public route: ActivatedRoute,
     private _categoryService: CategoryService) {
   }
-
+public validateNum(){
+ 
+  this.model.trackduration = this.model.trackduration.replace(/\D/g, '').replace(/(\d{2})(\d*)/, '$1:$2');
+ // if (this.model.trackduration.length == 2 && reg.test(this.model.trackduration)) this.model.trackduration = this.model.trackduration + ":"; //Add colon if string length > 2 and string is a number 
+ if (this.model.trackduration.length > 5) this.model.trackduration = this.model.trackduration.substr(0, this.model.trackduration.length - 1); //Delete the last digit if string length > 5
+}
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
@@ -251,53 +256,57 @@ export class AddModifyTrackComponent implements OnInit {
     this.audioFile = $event.target.files[0];
     console.log(this.audioFile);
     if (this.audioFile) {
-      if (fileType == 'Urtoggedfile' || fileType == 'Projectfile') {
+      if (fileType == 'Projectfile' || fileType == 'Stemsfile') {
         if (/\.(zip|rar)$/i.test(this.audioFile.name) === true) {
-          //this.commonService.showLoader()
-          if(fileType == 'Urtoggedfile'){
-            this.urtoggedfile = this.audioFile.name;
-            this.uploadurtoggedfile = $event.target.files; //new FormData();
-            //this.uploadurtoggedfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          if(fileType == 'Stemsfile'){
+            this.stemsfile = this.audioFile.name;
+            this.uploadstemsfile = $event.target.files;
           }else  if(fileType == 'Projectfile'){
             this.projectfile = this.audioFile.name;
             this.uploadprojectfile = $event.target.files; //new FormData();
            // this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
-          //this.uploadfile(fileType);
         } else {
           alert('Please select .zip or .rar file');
           this.audioFile = "";
         }
-      } else {
-        if (/\.(mp3|war)$/i.test(this.audioFile.name) === true) {
-        
+      } else if (fileType == 'Masterfile' || fileType == 'Urtoggedfile') {
+        if (/\.(mp3)$/i.test(this.audioFile.name) === true) {
           if (fileType == 'Masterfile') {
             this.masterfile = this.audioFile.name;
             this.uploadmasterfile = $event.target.files; //new FormData();
-           // this.uploadmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
-          } else if (fileType == 'Unmasterfile') {
-            this.unmasterfile = this.audioFile.name;
-            this.uploadunmasterfile = $event.target.files;// new FormData();
-           // this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
-          } else if (fileType == 'Mixdowfile') {
-            this.mixdowfile = this.audioFile.name;
-            this.uploadmixdowfile = $event.target.files; //new FormData();
-           // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
-          } else if (fileType == 'Stemsfile') {
-            this.stemsfile = this.audioFile.name;
-            this.uploadstemsfile = $event.target.files; //new FormData();
-           // this.uploadstemsfile.append('uploadFile', this.audioFile, this.audioFile.name);
-          } else if (fileType == 'MIDIfile') {
-            this.midifileurl = this.audioFile.name;
-            this.uploadmidifile = $event.target.files; //new FormData();
-          //  this.uploadmidifile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'Urtoggedfile') {
+            this.urtoggedfile = this.audioFile.name;
+            this.uploadurtoggedfile = $event.target.files; //new FormData();
           }
-         // this.uploadfile(fileType);
         } else {
-          alert('Please select .mp3 or .war file');
+          alert('Please select .mp3 file');
           this.audioFile = "";
         }
+      } else if (fileType == 'MIDIfile'){
+        if (/\.(midi)$/i.test(this.audioFile.name) === true) {
+          this.midifileurl = this.audioFile.name;
+          this.uploadmidifile = $event.target.files; //new FormData();
+        }else{
+          alert('Please select .midi file');
+          this.audioFile = "";
+        }
+      }else{
+        if (/\.(wav)$/i.test(this.audioFile.name) === true) {
+        if (fileType == 'Unmasterfile') {
+          this.unmasterfile = this.audioFile.name;
+          this.uploadunmasterfile = $event.target.files;// new FormData();
+         // this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
+        } else if (fileType == 'Mixdowfile') {
+          this.mixdowfile = this.audioFile.name;
+          this.uploadmixdowfile = $event.target.files; //new FormData();
+         // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
+        }
+      }else{
+        alert('Please select .war file');
+        this.audioFile = "";
       }
+    }
 
     }
   }
@@ -447,9 +456,9 @@ export class AddModifyTrackComponent implements OnInit {
       if (this.midifileurl == undefined) {
         this.MIDIfileuploaded = false;
       }
-      if (this.projectfileurl == undefined) {
-        this.projectfileuploaded = false;
-      }
+      //if (this.projectfileurl == undefined) {
+       // this.projectfileuploaded = false;
+     // }
     }
   }
   checkfileuploaded() {

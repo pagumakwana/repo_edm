@@ -24,6 +24,20 @@ export class ProfileUpdateService {
         return this._base._ApiService.get(`${ApiConstant.MasterManagement.UserMasterData}?UserMasterID=${UserMasterID}`);
     }
 
+    setProfileInfo(data: ProfileUpdateModel): void {
+
+        this._base._encryptedStorage.set(enAppSession.FullName, data.FullName);
+        this._base._encryptedStorage.set(enAppSession.EmailID, data.EmailID);
+        this._base._encryptedStorage.set(enAppSession.UserCode, data.UserCode);
+        this._base._encryptedStorage.set(enAppSession.ProfilePhoto, data.ProfilePhoto);
+        this._base._encryptedStorage.set(enAppSession.Bio, data.Bio);
+        this._base._encryptedStorage.set(enAppSession.SocialProfileUrl, data.SocialProfileUrl);
+        this._base._encryptedStorage.set(enAppSession.StudioGears, data.StudioGears);
+        this._base._encryptedStorage.set(enAppSession.GovitID, data.GovitID);
+        this._base._encryptedStorage.set(enAppSession.PayPalEmailID, data.PayPalEmailID);
+        this._base._encryptedStorage.set(enAppSession.UserMasterDataIDs, data.UserMasterDataIDs);
+    }
+
 
 
     //Gets stored Data during session login
@@ -44,27 +58,30 @@ export class ProfileUpdateService {
                                                             this._base._encryptedStorage.get(enAppSession.UserMasterDataIDs).then(UserMasterDataIDs => {
                                                                 this._base._encryptedStorage.get(enAppSession.CreatedBy).then(CreatedBy => {
                                                                     this._base._encryptedStorage.get(enAppSession.Response).then(Response => {
-                                                                        let profileData: ProfileUpdateModel = {
-                                                                            Ref_User_ID: Ref_User_ID,
-                                                                            UserCode: null,
-                                                                            FullName: FullName,
-                                                                            EmailID: EmailID,
-                                                                            ProfilePhoto: ProfilePic,
-                                                                            MobileNumber: MobileNumber,
-                                                                            Password: null,
-                                                                            Bio: Bio,
-                                                                            Gender: Gender,
-                                                                            SocialProfileUrl: SocialProfileUrl,
-                                                                            StudioGears: StudioGears,
-                                                                            GovitID: GovitID,
-                                                                            PayPalEmailID: PayPalEmailID,
-                                                                            AuthorityIDs: AuthorityIDs,
-                                                                            UserMasterDataIDs: UserMasterDataIDs,
-                                                                            CreatedBy: CreatedBy,
-                                                                            Response: Response
-                                                                        }
-                                                                        observer.next(profileData)
-                                                                        observer.complete();
+                                                                        this._base._encryptedStorage.get(enAppSession.FileUrls).then(FileUrls => {
+                                                                            let profileData: ProfileUpdateModel = {
+                                                                                Ref_User_ID: Ref_User_ID,
+                                                                                UserCode: null,
+                                                                                FullName: FullName,
+                                                                                EmailID: EmailID,
+                                                                                ProfilePhoto: ProfilePic,
+                                                                                MobileNumber: MobileNumber,
+                                                                                Password: null,
+                                                                                Bio: Bio,
+                                                                                FileUrls: JSON.parse(FileUrls),
+                                                                                Gender: Gender,
+                                                                                SocialProfileUrl: SocialProfileUrl,
+                                                                                StudioGears: StudioGears,
+                                                                                GovitID: GovitID,
+                                                                                PayPalEmailID: PayPalEmailID,
+                                                                                AuthorityIDs: AuthorityIDs,
+                                                                                UserMasterDataIDs: UserMasterDataIDs,
+                                                                                CreatedBy: CreatedBy,
+                                                                                Response: Response
+                                                                            }
+                                                                            observer.next(profileData)
+                                                                            observer.complete();
+                                                                        })
                                                                     })
                                                                 })
                                                             })

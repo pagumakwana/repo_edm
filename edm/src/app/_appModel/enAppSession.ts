@@ -21,4 +21,5 @@ export enum enAppSession {
     StudioGears,
     UserCode,
     UserMasterDataIDs,
+    FileUrls
 }

@@ -7,6 +7,7 @@ export class ProfileUpdateModel {
     MobileNumber: string;
     Password: string;
     Bio: string;
+    FileUrls: Array<any>;
     Gender: string;
     SocialProfileUrl: string;
     StudioGears: string;

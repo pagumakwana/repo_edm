@@ -36,6 +36,7 @@ export class SignupComponent implements OnInit {
     if (this.formSignup.valid) {
       this._userModel.FullName = this.formSignup.value.FullName;
       this._userModel.EmailID = this.formSignup.value.EmailID;
+      this._userModel.User_Code = this.formSignup.value.EmailID;
       this._userModel.Password = this.formSignup.value.Password;
       this._userModel.CreatedName = this.formSignup.value.FullName;
       this.register();

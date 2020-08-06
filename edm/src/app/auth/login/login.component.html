@@ -5,11 +5,11 @@
             <form [formGroup]="formSignIn">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" formControlName="EmailID" id="EmailID" name="EmailID"
-                            placeholder="Email ID" aria-describedby="EmailIDHelp" required />
+                        <input type="text" formControlName="User_Code" id="User_Code" name="User_Code"
+                            placeholder="Email ID" aria-describedby="User_CodeHelp" required />
                         <span class="input_icon user_icon"></span>
                     </div>
-                    <edm-error [control]="formSignIn.controls.EmailID"></edm-error>
+                    <!-- <edm-error [control]="formSignIn.controls.User_Code"></edm-error> -->
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
@@ -17,7 +17,7 @@
                             placeholder="Password" aria-describedby="PasswordHelp" required />
                         <span class="input_icon password_icon"></span>
                     </div>
-                    <edm-error [control]="formSignIn.controls.Password"></edm-error>
+                    <!-- <edm-error [control]="formSignIn.controls.Password"></edm-error> -->
                 </div>
                 <div class="button_group">
                     <a (click)="setSignInModel()" class="global_btn primary_btn">
