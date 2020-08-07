@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileUpdateModel } from 'src/app/_appModel/profileupdate/profileupdate.model';
 import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
 
 declare var $: any;
 
@@ -55,6 +56,16 @@ export class ProducerProfileComponent implements OnInit {
         current: 1,
         completed: 1,
         total: 3
+    }
+
+    stepName = {
+        ProfilePhoto: 'step1',
+        GovitID: 'step3'
+    }
+
+    fileChoosenData: { [key: string]: Array<fileChoosenDataModel> } = {
+        ProfilePhoto: [],
+        GovitID: []
     }
 
     changeDirect(stage: number) {
@@ -145,6 +156,65 @@ export class ProducerProfileComponent implements OnInit {
             this.countryList = res
         })
     }
+
+    //files start
+    justFilesArray(ArrayData: Array<fileChoosenDataModel>) {
+        let arrayReturn = []
+        for (let i in ArrayData) {
+            ArrayData[i].DisplayOrder = (1 + parseInt(i))
+            if (ArrayData[i].Ref_File_ID == null)
+                arrayReturn.push(ArrayData[i].file)
+        }
+        return arrayReturn
+    }
+
+    fileChoosen($event, fieldName) {
+        console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName]);
+
+        (this.addProfileForm.controls[this.stepName[fieldName]] as FormGroup).controls[fieldName].setValue('upload');
+        (this.addProfileForm.controls[this.stepName[fieldName]] as FormGroup).controls[fieldName].updateValueAndValidity();
+
+        if ($event.target.files.length > 0) {
+            for (let file of $event.target.files) {
+                this._base._commonService.readImage(file).subscribe((res: any) => {
+                    let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+                    console.log("imageData", imgData)
+                    this.fileChoosenData[fieldName] = [] //Empty Error
+                    this.fileChoosenData[fieldName].push(imgData);
+                })
+            }
+        }
+    }
+
+    getFileControlValue(fieldName) {
+        let returnKey: string | null = null
+        if (this.fileChoosenData[fieldName].length > 0) {
+            let waitingUpload = this.fileChoosenData[fieldName].filter(item => item.Ref_File_ID == null)
+            returnKey = waitingUpload.length > 0 ? 'upload' : 'uploaded'
+        }
+        return returnKey
+    }
+
+    removeFile(fieldName, fileIndex) {
+        console.log("removeFile", fieldName, fileIndex)
+        if (this.fileChoosenData[fieldName][fileIndex].Ref_File_ID != null)
+            this.removeThumbnail(this.fileChoosenData[fieldName][fileIndex].Ref_File_ID)
+
+        this.fileChoosenData[fieldName].splice(fileIndex, 1);
+        (this.addProfileForm.controls[this.stepName[fieldName]] as FormGroup).controls[fieldName].setValue(this.getFileControlValue(fieldName))
+    }
+
+    removeThumbnail(ref_image_id) {
+        this._base._commonService.removeFile(ref_image_id).subscribe((res: any) => {
+            if (res == 'SUCCESS') {
+                this._base._alertMessageService.success('File removed successfully!');
+            } else {
+                this._base._alertMessageService.error('Something went wrong!');
+            }
+        })
+    }
+
+    //files end
 
 
 }

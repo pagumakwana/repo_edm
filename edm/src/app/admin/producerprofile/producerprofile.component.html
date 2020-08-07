@@ -35,12 +35,30 @@
             <div *ngIf="stage.current == 1" formGroupName="step1">
                 <div class="upload_profile_pic">
                     <div class="user_photo">
-                        <img src="https://lh3.googleusercontent.com/proxy/SIV2OUn5ST7Bz05R4zFbPG5_BXHUiauiVvWeXjlkjoujjJtmWpEQdkO6Uv8DaNTseyDx3ktzhe2JSHXskYSNY1Y736VjT_A"
-                            alt="Profile Photo" />
+                        <!-- <img src="https://lh3.googleusercontent.com/proxy/SIV2OUn5ST7Bz05R4zFbPG5_BXHUiauiVvWeXjlkjoujjJtmWpEQdkO6Uv8DaNTseyDx3ktzhe2JSHXskYSNY1Y736VjT_A"
+                            alt="Profile Photo" /> -->
+                        <img [src]="fileChoosenData.ProfilePhoto[0]?.thumb" />
                     </div>
                     <label class="align_center">Upload your profile picture</label>
                     <!-- <edm-error [control]="addProfileForm.controls.step1.controls.BigImageUrl"></edm-error> -->
 
+                </div>
+                <div class="form_group">
+                    <!-- <label class="form_label">Upload Your ID GOVT Proof</label> -->
+                    <div class="form_area">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" (change)="fileChoosen($event,'ProfilePhoto')" id="exampleFormControlFile1">
+                            <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                            <label class="custom-file-label" for="customFile">
+                                Choose file
+                            </label>
+                            <!-- <label class="custom-file-label upload_btn"></label> -->
+                        </div>
+                        <span class="file_formats">Note: File upload limit - 2MB, Attchment format : jpg, jpeg,
+                            png</span>
+                        <edm-error [control]="addProfileForm?.controls?.step1?.controls?.ProfilePhoto"></edm-error>
+
+                    </div>
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
