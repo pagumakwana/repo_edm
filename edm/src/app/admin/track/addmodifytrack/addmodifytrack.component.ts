@@ -407,7 +407,7 @@ export class AddModifyTrackComponent implements OnInit {
         this.commonService.hideLoader();
       })
     }else if (fileType == 'Wavfile') {
-      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadwavefile, 'Track').then(data => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
         console.log(data[0].FilePath);
        // this.wavefileurl = data[0].FilePath;
