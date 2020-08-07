@@ -30,6 +30,7 @@ export class AddModifyTrackComponent implements OnInit {
   unmasterfileuploaded: boolean = true;
   mixdowfileuploaded: boolean = true;
   urtoggedfileuploaded: boolean = true;
+  Wavfileuploaded: boolean = true;
   stemsfileuploaded: boolean = true;
   MIDIfileuploaded: boolean = true;
   projectfileuploaded: boolean = true;
@@ -48,6 +49,9 @@ export class AddModifyTrackComponent implements OnInit {
   uploadurtoggedfile: any;
   urtoggedfile: any;
   urtoggedfileurl: any;
+  Wavfile: any;
+  uploadwavefile: any;
+  wavefileurl: any;
   finalsubmition: boolean = false;
   genrelist;
   selectedGenreName;
@@ -124,12 +128,21 @@ export class AddModifyTrackComponent implements OnInit {
     public route: ActivatedRoute,
     private _categoryService: CategoryService) {
   }
-public validateNum(){
- 
-  this.model.trackduration = this.model.trackduration.replace(/\D/g, '').replace(/(\d{2})(\d*)/, '$1:$2');
- // if (this.model.trackduration.length == 2 && reg.test(this.model.trackduration)) this.model.trackduration = this.model.trackduration + ":"; //Add colon if string length > 2 and string is a number 
- if (this.model.trackduration.length > 5) this.model.trackduration = this.model.trackduration.substr(0, this.model.trackduration.length - 1); //Delete the last digit if string length > 5
-}
+  public validateNum() {
+    this.model.trackduration = this.model.trackduration.replace(/\D/g, '').replace(/(\d{2})(\d*)/, '$1:$2');
+   // this.model.trackduration.length.substring(0,4)
+  }
+  public OnlyNumber(e) {
+    debugger;
+    e.target.value = e.target.value.replace(/[^\d/:]/g, '')
+    if (e.target.value.length > e.target.maxLength) {
+      e.target.value = e.target.value.slice(0, e.target.maxLength)
+    }
+    if (e.target.value > 2001) {
+      alert('Amount limit upto $2000')
+      e.target.value = ''
+    }
+  }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
@@ -150,6 +163,7 @@ public validateNum(){
         this.projectfile = undefined;
         this.masterfileurl = undefined
         this.unmasterfileurl = undefined
+        this.wavefileurl = undefined
         this.mixdowfileurl = undefined
         this.stemsfileurl = undefined
         this.urtoggedfileurl = undefined
@@ -177,7 +191,7 @@ public validateNum(){
 
   }
   bindCategory() {
-    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       let categoryData = []
       categoryData = Array.isArray(resData) ? resData : []
       console.log("categoryData", categoryData);
@@ -206,10 +220,11 @@ public validateNum(){
       this.masterfile = data[0].MasterFileUrl
       this.urtoggedfile = data[0].MasterFileUrl
       this.unmasterfile = data[0].UnmasteredFileUrl
+      this.wavefileurl = data[0].UnmasteredFileUrl
       this.mixdowfile = data[0].MixdowFileUrl
       this.stemsfile = data[0].StemsUrl
-      this.MIDIfile= data[0].MIDIFileUrl
-      this.midifileurl= data[0].MIDIFileUrl
+      this.MIDIfile = data[0].MIDIFileUrl
+      this.midifileurl = data[0].MIDIFileUrl
       this.projectfile = data[0].ProjectFilesUrl;
       this.masterfileurl = data[0].MasterFileUrl;
       this.urtoggedfileurl = data[0].MasterFileUrl;
@@ -230,22 +245,22 @@ public validateNum(){
   }
   changeListenerTrackImg($event): void {
     debugger;
-   
+
     this.imgFile = $event.target.files[0];
-   
+
     console.log(this.imgFile);
     var that = this;
     var reader = new FileReader();
     if (this.imgFile) {
       if (this.imgFile.type == 'image/jpeg' || this.imgFile.type == 'image/jpg' || this.imgFile.type == 'image/png') {
-       // this.formDataTrackImg = new FormData();
-      //  this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
+        // this.formDataTrackImg = new FormData();
+        //  this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
         this.formDataTrackImg = $event.target.files
         reader.readAsDataURL(this.imgFile)
         reader.onload = (_event) => {
           this.preview = reader.result;
         }
-        this.trackImg = this.imgFile.name;   
+        this.trackImg = this.imgFile.name;
       } else {
         alert('invalid formate');
       }
@@ -258,13 +273,13 @@ public validateNum(){
     if (this.audioFile) {
       if (fileType == 'Projectfile' || fileType == 'Stemsfile') {
         if (/\.(zip|rar)$/i.test(this.audioFile.name) === true) {
-          if(fileType == 'Stemsfile'){
+          if (fileType == 'Stemsfile') {
             this.stemsfile = this.audioFile.name;
             this.uploadstemsfile = $event.target.files;
-          }else  if(fileType == 'Projectfile'){
+          } else if (fileType == 'Projectfile') {
             this.projectfile = this.audioFile.name;
             this.uploadprojectfile = $event.target.files; //new FormData();
-           // this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
+            // this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
         } else {
           alert('Please select .zip or .rar file');
@@ -283,36 +298,40 @@ public validateNum(){
           alert('Please select .mp3 file');
           this.audioFile = "";
         }
-      } else if (fileType == 'MIDIfile'){
+      } else if (fileType == 'MIDIfile') {
         if (/\.(midi)$/i.test(this.audioFile.name) === true) {
           this.midifileurl = this.audioFile.name;
           this.uploadmidifile = $event.target.files; //new FormData();
-        }else{
+        } else {
           alert('Please select .midi file');
           this.audioFile = "";
         }
-      }else{
+      } else {
         if (/\.(wav)$/i.test(this.audioFile.name) === true) {
-        if (fileType == 'Unmasterfile') {
-          this.unmasterfile = this.audioFile.name;
-          this.uploadunmasterfile = $event.target.files;// new FormData();
-         // this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
-        } else if (fileType == 'Mixdowfile') {
-          this.mixdowfile = this.audioFile.name;
-          this.uploadmixdowfile = $event.target.files; //new FormData();
-         // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          if (fileType == 'Unmasterfile') {
+            this.unmasterfile = this.audioFile.name;
+            this.uploadunmasterfile = $event.target.files;// new FormData();
+            // this.uploadunmasterfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          } else if (fileType == 'Mixdowfile') {
+            this.mixdowfile = this.audioFile.name;
+            this.uploadmixdowfile = $event.target.files; //new FormData();
+            // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          }else if (fileType == 'Wavfile') {
+            this.Wavfile = this.audioFile.name;
+            this.uploadwavefile = $event.target.files; //new FormData();
+            // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
+          }
+        } else {
+          alert('Please select .war file');
+          this.audioFile = "";
         }
-      }else{
-        alert('Please select .war file');
-        this.audioFile = "";
       }
-    }
 
     }
   }
-  uploadImg(){
+  uploadImg() {
     this.commonService.showLoader()
-    this._base._commonService.filesUpload(this.formDataTrackImg, 'Track').then(res =>{
+    this._base._commonService.filesUpload(this.formDataTrackImg, 'Track').then(res => {
       console.log(res[0].FilePath);
       this.trackImg = res[0].FilePath;
       this.trackImguploaded = true;
@@ -322,7 +341,7 @@ public validateNum(){
     })
     // this.fileUploadService.uploadonServer('Track', 'Image', '', this.formDataTrackImg, '').then(trackcover => {
     //   console.log(trackcover);
-    
+
     //   this.commonService.hideLoader();
     // }, e => {
     //   this.commonService.hideLoader();
@@ -331,60 +350,70 @@ public validateNum(){
   uploadfile(fileType) {
     this.commonService.showLoader()
     if (fileType == 'Masterfile') {
-      this._base._commonService.filesUpload(this.uploadmasterfile, 'Track').then(data =>{
-     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadmasterfile, 'Track').then(data => {
+        // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
         console.log(data[0].FilePath);
         this.masterfileurl = data[0].FilePath;
         this.masterfileuploaded = true;
         this.commonService.hideLoader();
       })
     } else if (fileType == 'Unmasterfile') {
-      this._base._commonService.filesUpload(this.uploadunmasterfile, 'Track').then(data =>{
-      //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadunmasterfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadunmasterfile, 'Track').then(data => {
+        //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadunmasterfile, '').then(data => {
         console.log(data[0].FilePath);
         this.unmasterfileurl = data[0].FilePath;
         this.unmasterfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Mixdowfile') {
-      this._base._commonService.filesUpload(this.uploadmixdowfile, 'Track').then(data =>{
-     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmixdowfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadmixdowfile, 'Track').then(data => {
+        // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmixdowfile, '').then(data => {
         console.log(data);
         this.mixdowfileurl = data[0].FilePath;
         this.mixdowfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Stemsfile') {
-      this._base._commonService.filesUpload(this.uploadstemsfile, 'Track').then(data =>{
-     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadstemsfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadstemsfile, 'Track').then(data => {
+        // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadstemsfile, '').then(data => {
         console.log(data);
         this.stemsfileurl = data[0].FilePath;
         this.stemsfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'MIDIfile') {
-      this._base._commonService.filesUpload(this.uploadmidifile, 'Track').then(data =>{
-      //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmidifile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadmidifile, 'Track').then(data => {
+        //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmidifile, '').then(data => {
         console.log(data);
         this.midifileurl = data[0].FilePath;
         this.MIDIfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Projectfile') {
-      this._base._commonService.filesUpload(this.uploadprojectfile, 'Track').then(data =>{
-     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadprojectfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadprojectfile, 'Track').then(data => {
+        // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadprojectfile, '').then(data => {
         console.log(data);
         this.projectfileurl = data[0].FilePath;
         this.projectfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Urtoggedfile') {
-      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then(data =>{
-     // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
+      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then(data => {
+        // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
         console.log(data[0].FilePath);
         this.masterfileurl = data[0].FilePath;
         this.masterfileuploaded = true;
         this.urtoggedfileuploaded = true;
+        this.commonService.hideLoader();
+      })
+    }else if (fileType == 'Wavfile') {
+      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then(data => {
+        // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
+        console.log(data[0].FilePath);
+       // this.wavefileurl = data[0].FilePath;
+       // this.Wavfileuploaded = true;
+       this.unmasterfileurl = data[0].FilePath;
+       this.unmasterfileuploaded = true;
         this.commonService.hideLoader();
       })
     }
@@ -429,7 +458,7 @@ public validateNum(){
         }
         this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
           console.log(data);
-         // alert(data);
+          // alert(data);
           (<any>$('#acknowledge_popup')).modal('show');
           this.commonService.hideLoader();
           // $('#acknowledge_popup').modal('show');
@@ -457,8 +486,8 @@ public validateNum(){
         this.MIDIfileuploaded = false;
       }
       //if (this.projectfileurl == undefined) {
-       // this.projectfileuploaded = false;
-     // }
+      // this.projectfileuploaded = false;
+      // }
     }
   }
   checkfileuploaded() {
@@ -469,7 +498,7 @@ public validateNum(){
         return false
       }
     } else {
-      if (this.stemsfileurl != undefined && this.masterfileurl != undefined) {
+      if (this.stemsfileurl != undefined && this.masterfileurl != undefined && this.Wavfileuploaded != undefined) {
         return true
       } else {
         return false

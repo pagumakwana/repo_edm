@@ -6,6 +6,7 @@ import {
 } from 'ngx-swiper-wrapper';
 import { ApiConstant } from './../../_appModel/apiconstant';
 import { environment } from './../../../environments/environment.prod';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-featuredProductSlider',
@@ -15,7 +16,8 @@ import { environment } from './../../../environments/environment.prod';
 })
 export class FeaturedProductSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
-    constructor(public _base: BaseServiceHelper) { }
+    constructor(public _base: BaseServiceHelper,
+        public router: Router) { }
     public slides = [];
     public config: SwiperConfigInterface = {
         direction: 'horizontal',
@@ -62,6 +64,15 @@ export class FeaturedProductSliderComponent implements OnInit {
                 item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
               })
         })
+    }
+    redirect(id){
+        this.router.navigate(['product/details', id]).then((e) => {
+            if (e) {
+              console.log("Navigation is successful!");
+            } else {
+              console.log("Navigation has failed!");
+            }
+          });   
     }
 
 }

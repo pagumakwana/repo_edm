@@ -50,8 +50,8 @@
             <div class="width_40">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" (input)="validateNum()" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }" required placeholder="Track Duration"
-                        />
+                        <input type="text" maxlength="5" (keyup)="OnlyNumber($event)" (input)="validateNum()" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }"
+                            required placeholder="Track Duration" />
                         <span class="input_icon duration_icon"></span>
                     </div>
                     <div *ngIf="f.submitted && trackduration.invalid">
@@ -113,7 +113,8 @@
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="number" class="form-control" name="trackprice" [(ngModel)]="model.trackprice" #trackprice="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackprice.invalid }" required placeholder="{{moduleName}} Price" />
+                <input type="text" onKeyDown="if(this.value > 2000) return true;" maxlength="4" (keyup)="OnlyNumber($event)" class="form-control" name="trackprice" [(ngModel)]="model.trackprice" #trackprice="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackprice.invalid }"
+                    required placeholder="{{moduleName}} Price" />
                 <span class="input_icon price_icon"></span>
             </div>
             <div *ngIf="f.submitted && trackprice.invalid">
@@ -173,6 +174,25 @@
                 </div>
             </div>
         </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <!-- <select name="beatkey" [value]="KeyID" class="form-control" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required>
+                            <option [value]="undefined" disabled hidden>Key</option>
+                            <option *ngFor="let key of keylist" [value]="key.Ref_Key_ID" [selected]="key.Ref_Key_ID == KeyID">{{key.KeyName}}</option>
+                           
+                        </select> -->
+                <input type="text" class="form-control" name="beatkey" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required placeholder="Key" />
+                <!-- <span class="input_icon dropdown_icon"></span> -->
+            </div>
+
+            <div *ngIf="f.submitted && beatkey.invalid">
+                <div *ngIf="beatkey.errors.required">
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <div class="form_area icon_form_group">
                 <select name="trackDaw" [value]="DAWID" class="form-control" [(ngModel)]="model.trackDaw" #trackDaw="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackDaw.invalid }" required>
@@ -196,24 +216,7 @@
             </div>
 
         </div>
-        <div class="form_group" *ngIf="moduleName == 'Beat'">
-            <div class="form_area icon_form_group">
-                <select name="beatkey" [value]="KeyID" class="form-control" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required>
-                            <option [value]="undefined" disabled hidden>Key</option>
-                            <option *ngFor="let key of keylist" [value]="key.Ref_Key_ID" [selected]="key.Ref_Key_ID == KeyID">{{key.KeyName}}</option>
-                           
-                        </select>
-                <span class="input_icon dropdown_icon"></span>
-            </div>
 
-            <div *ngIf="f.submitted && beatkey.invalid">
-                <div *ngIf="beatkey.errors.required">
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="form_group" *ngIf="moduleName == 'Beat'">
             <div class="form_area icon_form_group">
                 <input type="text" class="form-control" name="tags" [(ngModel)]="model.tags" #tags="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tags.invalid }" required placeholder="Tags" />
@@ -293,20 +296,38 @@
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Beat'">
-            <label class="form_label">Urtogged Files</label>
+            <label class="form_label">Tagged File</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".zip, .rar" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="urtoggedfile">
+                    <input type="file" class="custom-file-input" accept=".mp3" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="urtoggedfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="urtoggedfile">
                         {{urtoggedfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Urtoggedfile')"></label>
                 </div>
-                <span class="file_formats">Attchment format : .zip, .rar</span>
+                <span class="file_formats">Attchment format : .mp3</span>
             </div>
 
             <div class="error_msg" *ngIf="!urtoggedfileuploaded">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group" *ngIf="moduleName == 'Beat'">
+            <label class="form_label">Wav File</label>
+            <div class="form_area">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" accept=".wav" id="Wavfile" name="Wavfile" (change)="changeListenerfile($event, 'Wavfile')" [(ngModel)]="Wavfile">
+                    <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                    <label class="custom-file-label" for="Wavfile">
+                        {{Wavfile}}
+                    </label>
+                    <label class="custom-file-label upload_btn" (click)="uploadfile('Wavfile')"></label>
+                </div>
+                <span class="file_formats">Attchment format : .wav</span>
+            </div>
+
+            <div class="error_msg" *ngIf="!Wavfileuploaded">
                 <span>This field is Required</span>
             </div>
         </div>

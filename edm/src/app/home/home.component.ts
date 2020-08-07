@@ -5,6 +5,7 @@ import { enAppSession } from '../_appModel/enAppSession';
 import { RegisterService } from '../_appService/register.service';
 import { ApiConstant } from '../_appModel/apiconstant';
 import { environment } from './../../environments/environment.prod';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,8 @@ export class HomeComponent implements OnInit {
   artistBranding = [];
   globalSearch="";
   globalSearchData
-  constructor(public _base: BaseServiceHelper) { }
+  constructor(public _base: BaseServiceHelper,
+    public router: Router) { }
   ngOnInit(): void {
     this.getArtistBranding();
   }
@@ -43,6 +45,16 @@ export class HomeComponent implements OnInit {
   }
   public redirecttopage(data){
       console.log(data.Ref_Object_ID, data.ObjectType)
+      if(data.ObjectType == 'TRACK' || data.ObjectType == 'BEAT'){
+        this.router.navigate(['product/details', data.Ref_Object_ID]).then((e) => {
+          if (e) {
+            console.log("Navigation is successful!");
+          } else {
+            console.log("Navigation has failed!");
+          }
+        }); 
+      }
+        
   }
 
 }

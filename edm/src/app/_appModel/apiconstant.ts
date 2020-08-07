@@ -41,4 +41,8 @@ export class ApiConstant {
     public static Shared = {
         GlobalSearch: "User/Shared/GlobalSearch",
     }
+    public static Track = {
+        FilterTrack: "User/Track/FilterTrack",
+        TrackAndBeatDetails: "User/Track/TrackAndBeatDetails",
+    }
 }

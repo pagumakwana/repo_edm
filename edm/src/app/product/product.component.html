@@ -9,14 +9,7 @@
                 FILTER BY GENRE
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">BIG ROMM</p>
-                <p class="filter_options selected_options">PROGRESIVE HOUSE</p>
-                <p class="filter_options">FUTURE BASS</p>
-                <p class="filter_options">ELECTRO HOUSE</p>
-                <p class="filter_options">HOUSE</p>
-                <p class="filter_options">FUTURE BOUNCE</p>
-                <p class="filter_options">TECHNO</p>
-                <p class="filter_options">PROPICAL</p>
+                <p *ngFor="let genre of genrelist" class="filter_options" [ngClass]="selectedOption(genre.CategoryName, 'Genre')" (click)="onGenreFilter(genre.CategoryName)">{{genre.CategoryName}}</p>
             </div>
         </div>
         <div class="filter_list">
@@ -24,7 +17,7 @@
                 FILTER BY PRICE
             </p>
             <div class="filter_value">
-                <!-- <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" ></ng5-slider> -->
+                <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (valueChange)="pricefilter()"></ng5-slider>
             </div>
         </div>
         <div class="filter_list">
@@ -32,8 +25,9 @@
                 FILTER BY GENRE
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">FL STUDIO</p>
-                <p class="filter_options">ABLETON</p>
+                <div class="filter_value">
+                    <p class="filter_options" *ngFor="let DAW of DAWlist" [ngClass]="selectedOption(DAW.Ref_DAW_ID, 'DAW')" (click)="onDAWFilter(DAW.Ref_DAW_ID)">{{DAW.DAW}}</p>
+                </div>
             </div>
         </div>
     </div>
@@ -44,14 +38,7 @@
                 FILTER BY GENRE
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">BIG ROMM</p>
-                <p class="filter_options selected_options">PROGRESIVE HOUSE</p>
-                <p class="filter_options">FUTURE BASS</p>
-                <p class="filter_options">ELECTRO HOUSE</p>
-                <p class="filter_options">HOUSE</p>
-                <p class="filter_options">FUTURE BOUNCE</p>
-                <p class="filter_options">TECHNO</p>
-                <p class="filter_options">PROPICAL</p>
+                <p *ngFor="let genre of genrelist" class="filter_options" [ngClass]="selectedOption(genre.CategoryName, 'Genre')" (click)="onGenreFilter(genre.CategoryName)">{{genre.CategoryName}}</p>
             </div>
         </div>
         <div class="filter_list">
@@ -59,25 +46,51 @@
                 FILTER BY PRICE
             </p>
             <div class="filter_value">
-
+                <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (valueChange)="pricefilter()"></ng5-slider>
             </div>
         </div>
         <div class="filter_list">
             <p class="filter_heading">
-                FILTER BY GENRE
+                FILTER BY DAW
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">FL STUDIO</p>
-                <p class="filter_options">ABLETON</p>
+                <p class="filter_options" *ngFor="let DAW of DAWlist" [ngClass]="selectedOption(DAW.Ref_DAW_ID, 'DAW')" (click)="onDAWFilter(DAW.Ref_DAW_ID)">{{DAW.DAW}}</p>
             </div>
         </div>
     </div>
     <div class="product_list">
-        <div class="product_box">
+        <div class="product_box" *ngFor="let product of filtersproducts">
+            <div class="slider_product">
+                <div class="product_img">
+                    <img [src]="product.ThumbnailImageUrl" class="product_thumbnail">
+                    <div class="product_upper_layer">
+                        <img src="../../../assets/images/play_video.svg" title="Play" />
+                        <p class="product_name">{{product.TrackName}}</p>
+                        <p class="product_bass">{{product.CategoryName}}</p>
+                    </div>
+                </div>
+                <div class="product_details">
+                    <div class="left_details">
+                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
+                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
+                        <img src="../../../assets/images/read_more.svg" routerLink="details/{{product.Ref_Track_ID}}" class="green_heart" title="Read More" />
+                    </div>
+                    <div class="right_details">
+                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
+                            <span>&#36;{{product.Price}}</span>
+                            <span class="add_to_cart_icon btn_icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="no_record" *ngIf="filtersproducts?.length == 0">
+            No record found
+        </div>
+        <!-- <div class="product_box">
             <div class="slider_product">
                 <div class="product_img">
                     <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                     <div class="product_upper_layer">
                         <img src="../../../assets/images/play_video.svg" title="Play" />
                         <p class="product_name">ZAPPIER</p>
@@ -86,9 +99,31 @@
                 </div>
                 <div class="product_details">
                     <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
+                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
+                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
+                    </div>
+                    <div class="right_details">
+                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
+                            <span>&#36;999</span>
+                            <span class="add_to_cart_icon btn_icon"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="product_box">
+            <div class="slider_product">
+                <div class="product_img">
+                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
+                    <div class="product_upper_layer">
+                        <img src="../../../assets/images/play_video.svg" title="Play" />
+                        <p class="product_name">ZAPPIER</p>
+                        <p class="product_bass">Future Bass</p>
+                    </div>
+                </div>
+                <div class="product_details">
+                    <div class="left_details">
+                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
                         <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
@@ -104,7 +139,6 @@
             <div class="slider_product">
                 <div class="product_img">
                     <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                     <div class="product_upper_layer">
                         <img src="../../../assets/images/play_video.svg" title="Play" />
                         <p class="product_name">ZAPPIER</p>
@@ -113,9 +147,7 @@
                 </div>
                 <div class="product_details">
                     <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
+                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
                         <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
@@ -126,195 +158,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div> -->
     </div>
 </div>
