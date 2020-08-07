@@ -110,11 +110,12 @@ export class TrackListComponent implements OnInit {
   }
   filtergenre(id) {
     let genre = this.genrelist.filter(r => r.Ref_Category_ID == id);
-    let genrename
+   // let genrename
     if(genre.length != 0){
-      genrename= genre[0].CategoryName;
+      return genre[0].CategoryName;
+    }else{
+      return '-'
     }
-    return genrename
     
   }
   onGenreChange(e) {
