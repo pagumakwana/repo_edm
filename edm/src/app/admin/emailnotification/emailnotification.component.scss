@@ -1,0 +1,55 @@
+.emailnoti_page {
+    .form_small_heading {
+        margin: 0;
+        font-size: 15px;
+        font-weight: normal;
+        display: inline-block;
+        width: calc(100% - 125px);
+        vertical-align: middle;
+    }
+    .switch_btn {
+        display: inline-block;
+        padding: 8px 15px;
+        border: 1px solid #E4E4E4;
+        border-radius: 30px;
+        vertical-align: middle;
+    }
+    .secondary_table td:nth-child(2) p {
+        font-weight: bold;
+        margin: 0;
+        font-size: 13px;
+        line-height: normal;
+        display: block;
+        width: 100%;
+    }
+    .secondary_table td:nth-child(2) span {
+        font-size: 10px;
+        line-height: normal;
+        display: block;
+        width: 100%;
+        color: #B0AFB5;
+    }
+    .secondary_table td:nth-child(1) i {
+        background-size: 18px;
+        width: 40px;
+        height: 40px;
+        display: inline-block;
+        background-color: #05C38F;
+        background-position: center;
+        border-radius: 100%;
+    }
+    .secondary_table td:nth-child(1) {
+        width: 61px;
+        border-right: 0;
+    }
+    .secondary_table td:nth-child(3) {
+        border-right: 0;
+        text-align: center;
+    }
+    .secondary_table tr:last-child td {
+        border-bottom: 0;
+    }
+    .secondary_table {
+        margin-top: 20px;
+    }
+}

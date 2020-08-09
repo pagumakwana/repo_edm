@@ -12,7 +12,7 @@ export class CoupanListComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-    this._base._pageTitleService.setTitle("Manage Coupan", "Manage Coupan");
+    this._base._pageTitleService.setTitle("ALL COUPAN CODE", "ALL COUPAN CODE");
   }
 
 
