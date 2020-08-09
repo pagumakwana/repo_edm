@@ -47,7 +47,8 @@
                     <!-- <label class="form_label">Upload Your ID GOVT Proof</label> -->
                     <div class="form_area">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" (change)="fileChoosen($event,'ProfilePhoto')" id="exampleFormControlFile1">
+                            <input type="file" class="custom-file-input" (change)="fileChoosen($event,'ProfilePhoto')"
+                                id="exampleFormControlFile1">
                             <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                             <label class="custom-file-label" for="customFile">
                                 Choose file
@@ -194,11 +195,26 @@
 
                 </div>
                 <div class="form_group">
+                    <div class="form_area">
+
+                        <div id="imgPreview" class="imgPreview">
+                            <!-- <img height="80" width="120" [src]="img.thumb" /> -->
+                            <span style="width: 120px;height: 80px;">
+                                dummy file path
+                            </span>
+                            <a class="remImage" id="delete" (click)="removeFile('GovitID','i')">
+                                <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                            </a>
+                            <!-- <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" /> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="form_group">
                     <label class="form_label">Upload Your ID GOVT Proof</label>
                     <div class="form_area">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="exampleFormControlFile1">
-                            <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
+                            <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                             <label class="custom-file-label" for="customFile">
                                 Choose file
                             </label>
