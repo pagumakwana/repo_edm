@@ -56,8 +56,8 @@ export class ProducerProfileComponent implements OnInit {
         })
     })
     stage = {
-        current: 3,
-        completed: 3,
+        current: 1,
+        completed: 1,
         total: 3
     }
 
