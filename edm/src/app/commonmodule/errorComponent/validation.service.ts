@@ -1,6 +1,5 @@
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { resolve } from 'dns';
 
 export class ValidationService {
     static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
