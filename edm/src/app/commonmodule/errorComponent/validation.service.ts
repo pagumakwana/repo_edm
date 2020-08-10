@@ -1,3 +1,7 @@
+import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { resolve } from 'dns';
+
 export class ValidationService {
     static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
         console.log("getValidatorErrorMessage", validatorName, validatorValue)
@@ -6,7 +10,10 @@ export class ValidationService {
             'invalidCreditCard': 'Is invalid credit card number',
             'invalidEmailAddress': 'Invalid email address',
             'invalidPassword': 'Invalid password. Password must be at least 6 characters long, and contain a number.',
-            'minlength': `Minimum length ${validatorValue.requiredLength}`
+            'minlength': `Minimum length ${validatorValue.requiredLength}`,
+            'invalid_File_Type': 'Invalid File Extension/type',
+            'invalid_File_Size': 'Invalid File Size',
+            'invalid_File_Resolution': 'Invalid File Resolution'
         };
 
         return config[validatorName];
@@ -38,5 +45,48 @@ export class ValidationService {
         } else {
             return { 'invalidPassword': true };
         }
+    }
+
+    static ValidateFileType(fileTypes: Array<any>) {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            let isFileType: boolean = control.value ? (typeof control.value == 'object') : false
+            let isValidFile: boolean = isFileType && fileTypes ? (fileTypes.indexOf(control.value.type) != -1) : false
+            return (!isValidFile && isFileType) ? { 'invalid_File_Type': true } : null
+        }
+    }
+    static ValidateFileSize(size: number) {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            let isFileType: boolean = control.value ? (typeof control.value == 'object') : false
+            let isValidFileSize: boolean = isFileType && size ? (size >= control.value.size) : false
+            return (!isValidFileSize && isFileType) ? { 'invalid_File_Size': true } : null
+        }
+    }
+
+    static ValidateResolution(height: number, width: number): AsyncValidatorFn {
+        return (control: AbstractControl): Promise<ValidationErrors> | null | Observable<ValidationErrors | null> => {
+            return ValidationService.getImageResolution(control).then((res: { height: number, width: number } | null) => {
+                return res ? ((res.height <= height && res.width <= width) ? null : { 'invalid_File_Resolution': true }) : null
+            })
+        }
+    }
+
+    static getImageResolution(fileInput: AbstractControl) {
+        return new Promise((resolve, reject) => {
+            let returnData: { height: number, width: number } | null = null, _url = window.URL, img: any
+            if (fileInput.value != null && (typeof fileInput.value != 'string')) {
+                img = new Image();
+                img.onloadend = function () {
+                    img.height = this.height;
+                    img.width = this.width;
+                }
+                img.src = _url.createObjectURL(fileInput.value);
+                setTimeout(() => {
+                    returnData = { height: img.height, width: img.width }
+                    resolve(returnData)
+                }, 1000);
+            } else {
+                resolve(returnData)
+            }
+        })
     }
 }
