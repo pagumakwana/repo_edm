@@ -22,11 +22,32 @@
         </div>
         <div class="filter_list">
             <p class="filter_heading">
-                FILTER BY GENRE
+                FILTER BY DAW
             </p>
             <div class="filter_value">
                 <div class="filter_value">
                     <p class="filter_options" *ngFor="let DAW of DAWlist" [ngClass]="selectedOption(DAW.Ref_DAW_ID, 'DAW')" (click)="onDAWFilter(DAW.Ref_DAW_ID)">{{DAW.DAW}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="filter_list">
+            <p class="filter_heading">
+                FILTER BY
+            </p>
+            <div class="filter_value">
+                <div class="filter_value">
+                    <label class="checkbox">
+                        <input name="productfilter" type="checkbox" checked="checked">Featured Track
+                        <span></span>
+                    </label>
+                    <label class="checkbox">
+                        <input name="productfilter" type="checkbox">100% Royalty Track
+                        <span></span>
+                    </label>
+                    <label class="checkbox">
+                        <input name="productfilter" type="checkbox">Track With Project Files
+                        <span></span>
+                    </label>
                 </div>
             </div>
         </div>

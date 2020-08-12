@@ -9,14 +9,14 @@
                 </div>
                 <edm-error [control]="addServiceForm.controls.ServiceTitle"></edm-error>
             </div>
-            <div class="form_group">
+            <!-- <div class="form_group">
                 <div class="form_area">
                     <input type="text" formControlName="AliasName" id="AliasName" name="AliasName"
                         placeholder="Enter Slug" aria-describedby="AliasNameHelp" />
                 </div>
                 <edm-error [control]="addServiceForm.controls.AliasName"></edm-error>
 
-            </div>
+            </div> -->
             <div class="form_group">
                 <div class="form_area icon_form_group">
                     <select name="parentcategory" formControlName="Category">
@@ -112,7 +112,8 @@
                         <div class="form_area icon_form_group">
                             <select name="Revision" formControlName="Revision">
                                 <option selected value=''>Select Revision</option>
-                                <option *ngFor="let Revision of ['1','2','3','4','5','6','7','8','9','10']" [value]="Revision">
+                                <option *ngFor="let Revision of ['1','2','3','4','5','6','7','8','9','10']"
+                                    [value]="Revision">
                                     {{Revision}}</option>
                             </select>
                             <span class="input_icon revision_icon"></span>

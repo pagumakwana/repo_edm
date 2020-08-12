@@ -151,8 +151,10 @@ a, a:hover {
 .checkbox span {
     border: 1px solid #bdc3d4;
     position: absolute;
-    top: 1px;
+    top: 0;
+    bottom: 0;
     left: 0;
+    margin: auto;
     height: 18px;
     width: 18px;
     border-radius: 3px;
@@ -160,8 +162,10 @@ a, a:hover {
 .radio span {
     border: 1px solid #bdc3d4;
     position: absolute;
-    top: 1px;
+    top: 0;
+    bottom: 0;
     left: 0;
+    margin: auto;
     height: 18px;
     width: 18px;
     border-radius: 100%;
@@ -493,6 +497,53 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     color: #5A5A5A;
     border: 0;
 }
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 18px;
+    margin: 0;
+}
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.switch span {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 16px;
+}
+.switch span:before {
+    position: absolute;
+    content: "";
+    width: 14px;
+    left: 2px;
+    top: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 100%;
+}
+.switch input:checked + span {
+    background-color: #05c38f;
+}
+.switch input:focus + span {
+    box-shadow: 0 0 1px #05c38f;
+}
+.switch input:checked + span:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(18px);
+}
 /* left slider */
 .left_panel {
     position: fixed;
@@ -643,8 +694,11 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .follow_icon {
     background: url(../images/follow.svg) no-repeat;
 }
-.add_to_favourites_icon {
+.add_to_favourite_icon {
     background: url(../images/blank_red_heart.svg) no-repeat;
+}
+.add_to_favourites_white_icon {
+    background: url(../images/blank_white_heart.svg) no-repeat;
 }
 .plus_icon {
     background: url(../images/plus.svg) no-repeat;
@@ -703,27 +757,6 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .delete_btn {
     background: url(../images/delete_red.svg) no-repeat;
-}
-.small_icon_btn > span {
-    background-size: 15px !important;
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-    background-position: center !important;
-    vertical-align: middle;
-}
-.small_icon_btn > .view_btn {
-    background-size: 20px !important;
-    width: 20px;
-    height: 15px;
-}
-.table_btn .small_icon_btn:hover {
-    opacity: 0.6;
-}
-.small_icon_btn {
-    padding: 5px;
-    vertical-align: middle;
-    display: inline-block;
 }
 .delete_icon {
     background: url(../images/delete.svg) no-repeat;
@@ -793,6 +826,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .revision_grey_icon {
     background: url(../images/revision_grey.svg) no-repeat;
 }
+.revision_white_icon {
+    background: url(../images/revision_white.svg) no-repeat;
+}
 .upload_icon {
     background: url(../images/upload.svg) no-repeat;
 }
@@ -816,6 +852,66 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .cancel_tick {
     background: url(../images/delete_red.svg) no-repeat;
+}
+.ng5-slider .ng5-slider-pointer:after {
+    background: url(../images/next_arrow.svg) no-repeat !important;
+}
+.ng5-slider .ng5-slider-bar {
+    background: #E9E5E4 !important;
+    height: 5px !important;
+}
+.ng5-slider .ng5-slider-pointer {
+    background: #00C58F !important;
+    width: 30px !important;
+    height: 30px !important;
+    top: -13px !important;
+    z-index: 2 !important;
+    border: 2px solid white;
+}
+.ng5-slider-bubble {
+    border: 1px solid #EFEFEF;
+}
+.ng5-slider.animate .ng5-slider-bubble {
+    font-size: 13px;
+    padding: 1px 5px;
+}
+.ng5-slider .ng5-slider-selection {
+    background: #00C58F !important;
+}
+.ng5-slider .ng5-slider-pointer-min.ng5-slider-pointer:after {
+    transform: rotate(180deg);
+}
+.ng5-slider .ng5-slider-pointer:after {
+    background-size: contain !important;
+    width: 13px !important;
+    height: 13px !important;
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    margin: auto !important;
+}
+.small_icon_btn > span {
+    background-size: 15px !important;
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-position: center !important;
+    vertical-align: middle;
+}
+.small_icon_btn > .view_btn {
+    background-size: 20px !important;
+    width: 20px;
+    height: 15px;
+}
+.table_btn .small_icon_btn:hover {
+    opacity: 0.6;
+}
+.small_icon_btn {
+    padding: 5px;
+    vertical-align: middle;
+    display: inline-block;
 }
 .tick_mark i {
     background-size: contain;
@@ -1210,6 +1306,7 @@ table.dataTable thead th {
     margin: 0 10px 0 0;
     display: inline-block;
     width: 180px;
+    vertical-align: top;
 }
 .filter_section .inline_radio {
     margin: 4px 0;
@@ -1219,6 +1316,15 @@ table.dataTable thead th {
 }
 .filter_section .form_group:last-child {
     margin-right: 0;
+}
+.filter_section .form_group .global_btn {
+    margin: 0;
+    padding: 7px 10px;
+}
+.filter_list label.checkbox, .filter_list label.radio {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 12px;
 }
 .tags span {
     background: #F1F1F1;
@@ -1263,6 +1369,14 @@ table.dataTable thead th {
 }
 .add_new {
     text-decoration: none !important;
+}
+.secondary_table {
+    width: 100%;
+}
+.secondary_table td {
+    border-bottom: 1px solid #F5F5F5;
+    border-right: 1px solid #F5F5F5;
+    padding: 10px;
 }
 /* Admin Side CSS */
 

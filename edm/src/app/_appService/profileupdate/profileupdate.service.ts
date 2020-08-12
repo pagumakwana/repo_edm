@@ -36,6 +36,7 @@ export class ProfileUpdateService {
         this._base._encryptedStorage.set(enAppSession.GovitID, data.GovitID);
         this._base._encryptedStorage.set(enAppSession.PayPalEmailID, data.PayPalEmailID);
         this._base._encryptedStorage.set(enAppSession.UserMasterDataIDs, data.UserMasterDataIDs);
+        this._base._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(data.FileUrls));
     }
 
 
@@ -68,7 +69,7 @@ export class ProfileUpdateService {
                                                                                 MobileNumber: MobileNumber,
                                                                                 Password: null,
                                                                                 Bio: Bio,
-                                                                                FileUrls: JSON.parse(FileUrls),
+                                                                                FileUrls: this._base._commonService.tryParseJSON(FileUrls) ? JSON.parse(FileUrls) : [],
                                                                                 Gender: Gender,
                                                                                 SocialProfileUrl: SocialProfileUrl,
                                                                                 StudioGears: StudioGears,
