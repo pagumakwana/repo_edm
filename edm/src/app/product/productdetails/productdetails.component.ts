@@ -6,7 +6,6 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { CommonService } from './../../_appService/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from './../../_appService/category/category.serviec';
-import { environment } from './../../../environments/environment.prod';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -56,7 +55,7 @@ export class ProductDetailsComponent implements OnInit {
       console.log(data);
       this.productDetails = data;
       this.productDetails.map(item => {
-        item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
+        item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
         item.DAW = this.getDawName(item.DAW);
       })
     })
@@ -75,7 +74,7 @@ export class ProductDetailsComponent implements OnInit {
      // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('play')) {
-      this.audio.src = environment.cdnURL + path;
+      this.audio.src = this._base._commonService.cdnURL + path;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');

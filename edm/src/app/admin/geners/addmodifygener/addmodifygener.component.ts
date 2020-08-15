@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
-import { environment } from '../../../../environments/environment.prod';
 import { Meta } from '@angular/platform-browser';
 import { fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
 
@@ -30,7 +29,7 @@ export class AddModifyGenersComponent implements OnInit {
   isCategoryModify: boolean = false;
   btnTitle: string = 'ADD'
   imgCategory: any;
-  fileURL = environment.cdnURL;
+  fileURL = this._base._commonService.cdnURL;
 
   // fileData: any;
 

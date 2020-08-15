@@ -5,7 +5,6 @@ import { ProfileUpdateModel } from 'src/app/_appModel/profileupdate/profileupdat
 import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
-import { environment } from 'src/environments/environment.prod';
 
 declare var $: any;
 
@@ -27,7 +26,7 @@ export class ProducerProfileComponent implements OnInit {
     addProfile: ProfileUpdateModel;
     dawList: Array<any>
     countryList: Array<any>
-    fileURL = environment.cdnURL;
+    fileURL = this._base._commonService.cdnURL;
 
 
     dropdownSettings: IDropdownSettings = {

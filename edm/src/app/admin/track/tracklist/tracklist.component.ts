@@ -3,7 +3,6 @@ import { BaseServiceHelper } from './../../../_appService/baseHelper.service';
 import { ApiConstant } from './../../../_appModel/apiconstant'
 import { from } from 'rxjs';
 import { Router, ActivatedRoute, Route } from '@angular/router';
-import { environment } from './../../../../environments/environment.prod';
 import { CategoryService } from './../../../_appService/category/category.serviec';
 import { enAppSession } from './../../../_appModel/enAppSession';
 import * as bootstrap from "bootstrap"
@@ -68,7 +67,7 @@ export class TrackListComponent implements OnInit {
         this.data = data.filter(a => a.Ref_Category_ID == genreid);
         this._base._commonService.hideLoader();
         this.data.filter(item => {
-          item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
+          item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
           item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
         })
         this.filteredProducts = this.data;
@@ -78,14 +77,14 @@ export class TrackListComponent implements OnInit {
         if(status != "All"){
           this.data = data.filter(a => a.TrackStatus == status.toUpperCase());
           this.data.map(item => {
-            item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
+            item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
             item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
           })
           this.filteredProducts = this.data;
         }else{
           this.data = data
           this.data.map(item => {
-            item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
+            item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
             item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
           })
           this.filteredProducts = this.data;
@@ -178,7 +177,7 @@ export class TrackListComponent implements OnInit {
      // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('play')) {
-      this.audio.src = environment.cdnURL + path;
+      this.audio.src = this._base._commonService.cdnURL + path;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');

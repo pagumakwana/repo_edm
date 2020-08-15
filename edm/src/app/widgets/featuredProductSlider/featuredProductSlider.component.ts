@@ -5,8 +5,8 @@ import {
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
 import { ApiConstant } from './../../_appModel/apiconstant';
-import { environment } from './../../../environments/environment.prod';
 import { Router } from '@angular/router';
+import { TrackService } from 'src/app/_appService/trackService';
 
 @Component({
     selector: 'app-featuredProductSlider',
@@ -17,8 +17,9 @@ import { Router } from '@angular/router';
 export class FeaturedProductSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
     constructor(public _base: BaseServiceHelper,
+        private _trackService: TrackService,
         public router: Router) { }
-    public slides = [];
+    public featuredTrack: any = [];
     public config: SwiperConfigInterface = {
         direction: 'horizontal',
         navigation: false,
@@ -57,22 +58,18 @@ export class FeaturedProductSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
-        debugger
-        this._base._ApiService.get(ApiConstant.TrackManagement.FeaturedTrack).subscribe((data: any) => {
-            this.slides = data.filter(a => a.IsTrack == 'Track');
-            this.slides.map(item => {
-                item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
-              })
+        this._trackService.getFeaturedTrack().subscribe((data: any) => {
+            this.featuredTrack = data.filter(a => a.IsTrack == 'Track');
         })
     }
-    redirect(id){
+    redirect(id) {
         this.router.navigate(['product/details', id]).then((e) => {
             if (e) {
-              console.log("Navigation is successful!");
+                console.log("Navigation is successful!");
             } else {
-              console.log("Navigation has failed!");
+                console.log("Navigation has failed!");
             }
-          });   
+        });
     }
 
 }

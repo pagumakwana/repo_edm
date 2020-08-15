@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { BaseServiceHelper } from '../_appService/baseHelper.service';
 import { ApiConstant } from '../_appModel/apiconstant';
-import { environment } from './../../environments/environment.prod';
 import { CategoryService } from './../_appService/category/category.serviec';
 import { Options, LabelType } from 'ng5-slider';
 @Component({
@@ -64,7 +63,7 @@ export class ProductComponent implements OnInit {
       this.ProductWithPricelist = this.Productlist;
       this.filtersproducts = this.ProductWithPricelist;
       this.Productlist.map(item => {
-        item.ThumbnailImageUrl = environment.cdnURL + item.ThumbnailImageUrl;
+        item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
       })
     })
   }

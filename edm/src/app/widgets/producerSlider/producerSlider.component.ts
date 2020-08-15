@@ -5,7 +5,6 @@ import {
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
 import { ApiConstant } from './../../_appModel/apiconstant';
-import { environment } from './../../../environments/environment.prod';
 @Component({
     selector: 'app-producerSlider',
     templateUrl: './producerSlider.component.html',
@@ -57,7 +56,7 @@ export class ProducerSliderComponent implements OnInit {
         this._base._ApiService.post(ApiConstant.customer.Producers+ '?StartCount=0&EndCount=5').subscribe((data: any) => {
             this.slides = data;
             this.slides.map(item => {
-                item.ProfilePhoto = environment.cdnURL + item.ProfilePhoto;
+                item.ProfilePhoto = this._base._commonService.cdnURL + item.ProfilePhoto;
               })
         })
     }

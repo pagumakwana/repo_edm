@@ -7,7 +7,6 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { formatDate } from '@angular/common';
-import { environment } from 'src/environments/environment.prod';
 import * as _ from "lodash";
 import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
@@ -34,7 +33,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
 
   categoryData: []
-  fileURL = environment.cdnURL;
+  fileURL = this._base._commonService.cdnURL;
   btnTitle: string = 'ADD'
   isServiceModify: boolean = false;
   addServiceForm: FormGroup = this.fb.group({

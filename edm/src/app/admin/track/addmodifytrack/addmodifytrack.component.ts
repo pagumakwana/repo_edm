@@ -6,7 +6,6 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { CommonService } from './../../../_appService/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from './../../../_appService/category/category.serviec';
-import { environment } from './../../../../environments/environment.prod';
 @Component({
   selector: 'appAdmin-addmodifytrack',
   templateUrl: './addmodifytrack.component.html',
@@ -216,7 +215,7 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackprice = data[0].Price
       this.model.trackImg = data[0].ThumbnailImageUrl
       this.trackImg = data[0].ThumbnailImageUrl
-      this.preview = environment.cdnURL + data[0].ThumbnailImageUrl
+      this.preview = this._base._commonService.cdnURL + data[0].ThumbnailImageUrl
       this.masterfile = data[0].MasterFileUrl
       this.urtoggedfile = data[0].MasterFileUrl
       this.unmasterfile = data[0].UnmasteredFileUrl

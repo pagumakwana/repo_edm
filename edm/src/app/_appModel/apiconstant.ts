@@ -14,7 +14,8 @@ export class ApiConstant {
         category: "Admin/MasterManagement/Category"
     }
     public static genService = {
-        Service: "Admin/ServiceManagement/Service"
+        Service: "Admin/ServiceManagement/Service",
+        servicebycatehory: "User/Service/ServiceByCategory",
     }
     public static common = {
         thumbnail: "Admin/Common/Image",
@@ -35,9 +36,7 @@ export class ApiConstant {
         UserMasterData: "Admin/MasterManagement/UserMasterData",
         CarouselList: "Admin/MasterManagement/CarouselList",
     }
-    public static Service = {
-        Service: "User/Service/ServiceByCategory",
-    }
+
     public static Shared = {
         GlobalSearch: "User/Shared/GlobalSearch",
     }
