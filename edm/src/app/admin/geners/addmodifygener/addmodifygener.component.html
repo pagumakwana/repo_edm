@@ -55,18 +55,9 @@
                 <span class="input_icon dropdown_icon"></span>
             </div>
         </div>
-        <div class="form_group" *ngFor="let img of fileChoosenData.ImageUrl;let i = index">
+        <div class="form_group">
             <label class="form_label">Upload Service Cover Image</label>
-            <div id="imgPreview" class="imgPreview">
-                <img height="80" width="120" [src]="img.thumb" />
-                <a class="remImage" id="delete" (click)="removeFile('ImageUrl',i)">
-                    <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
-                </a>
-            </div>
-        </div>
-        <div class="form_group" *ngIf="fileChoosenData.ImageUrl.length < 1">
-            <label class="form_label">Upload Service Cover Image</label>
-            <div class="form_area">
+            <div class="form_area"  *ngIf="fileChoosenData.ImageUrl.length < 1">
                 <div class="custom-file">
                     <input type="file" (change)="fileChoosen($event,'ImageUrl')" class="custom-file-input"
                         id="customFile">
@@ -78,6 +69,16 @@
                     <!-- <label class="custom-file-label upload_btn"></label> -->
                 </div>
                 <span class="file_formats">Note: File upload limit - 1GB</span>
+            </div>
+            <div class="form_area" *ngFor="let img of fileChoosenData.ImageUrl;let i = index">
+                <div class="attched_img">
+                    <div>
+                        <img [src]="img.thumb" />
+                        <a (click)="removeFile('ImageUrl',i)" title="Remove Image">
+                            <img src="../../../../assets/images/close_blue.svg">
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form_group">

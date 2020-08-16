@@ -156,51 +156,28 @@
                     <span id="MetaDescriptionHelp">This field is Required</span>
                 </div>
             </div>
-            <div class="multipul_form_group">
-                <div class="width_100" *ngIf="fileChoosenData.ServiceVideoUrl.length < 1">
-                    <div class="form_group">
-                        <label class="form_label">Upload Service Video</label>
-                        <div class="form_area">
-                            <div class="custom-file">
-                                <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')"
-                                    class="custom-file-input" id="customFile">
-                                <!-- <img [src]="fileChoosenData.ServiceVideoUrl.thumb" class="image_preview" /> -->
-                                <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                                <label class="custom-file-label" for="customFile">
-                                    Choose file
-                                </label>
-                                <!-- <label class="custom-file-label upload_btn"></label> -->
-                            </div>
-                            <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg,
-                                .png</span>
-                        </div>
-                        <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
+            <div class="form_group">
+                <label class="form_label">Upload Service Video</label>
+                <div class="form_area" *ngIf="fileChoosenData.ServiceVideoUrl.length < 1">
+                    <div class="custom-file">
+                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">
+                            Choose file
+                        </label>
                     </div>
+                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
                 </div>
-                <div class="width_100" *ngFor="let video of fileChoosenData.ServiceVideoUrl;let i = index;">
-                    <div class="service_thumbnail_sec">
-                        <label class="form_label">Upload Service Video</label>
-
-                        <!-- <img src="../../../assets/images/product_thumbnail.jpg" />
-                        <div class="service_thumbnail_hover_sec">
-                            <img src="../../../assets/images/play_video.svg" title="Play" />
-                        </div> -->
-                        <video height="300" controls>
-                            <source [src]="video.thumb" type="video/mp4">
-                            <!-- <source src="http://static.videogular.com/assets/videos/videogular.mp4" type="video/mp4"> -->
-                            <!-- <source src="mov_bbb.ogg" type="video/ogg"> -->
-                            Your browser does not support HTML video.
-                        </video>
-                    </div>
-                    <a class="remImage" id="delete" (click)="removeFile('ServiceVideoUrl',i)">
-                        remove video
-                        <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                <div class="form_area" *ngFor="let video of fileChoosenData.ServiceVideoUrl;let i = index;">
+                    <video controls>
+                        <source [src]="video.thumb" type="video/mp4">
+                        Your browser does not support HTML video.
+                    </video>
+                    <a class="remove_video" (click)="removeFile('ServiceVideoUrl',i)">
+                        Remove Video
                     </a>
                 </div>
+                <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
             </div>
-
-
-            <div class="width_40">
                 <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
 
                 <!-- <div class="form_group">
@@ -212,41 +189,37 @@
                             </a>
                         </div>
                     </div> -->
-                <div class="form_group">
-                    <!-- <label class="form_label">Upload Service Cover Image</label> -->
-                    <div dragula="MANY_ITEMS" [(dragulaModel)]='fileChoosenData.BigImageUrl'>
+
+            <div class="form_group">
+                <label class="form_label">Upload Service Cover Image</label>
+                <div class="form_area">
+                    <div class="custom-file">
+                        <input type="file" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input"
+                            multiple id="customFile">
+                        <!-- <img [src]="thumb ? thumb : '../../../../assets/images/product_thumbnail.jpg'"
+                            class="image_preview" /> -->
+                        <label class="custom-file-label" for="customFile">
+                            Choose file
+                        </label>
+                        <!-- <label class="custom-file-label upload_btn"></label> -->
+                    </div>
+                    <div class="attched_img" dragula="MANY_ITEMS" [(dragulaModel)]='fileChoosenData.BigImageUrl'>
                         <ng-container *ngFor="let img of fileChoosenData.BigImageUrl;let i = index;">
-                            <div id="imgPreview" class="imgPreview">
-                                <img height="80" width="120" [src]="img.thumb" />
-                                <a class="remImage" id="delete" (click)="removeFile('BigImageUrl',i)">
-                                    <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
+                            <div>
+                                <img [src]="img.thumb" />
+                                <a (click)="removeFile('BigImageUrl',i)" title="Remove Image">
+                                    <img src="../../../../assets/images/close_blue.svg">
                                 </a>
                                 <!-- <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" /> -->
                             </div>
                         </ng-container>
                     </div>
+                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
                 </div>
-
-                <div class="form_group">
-                    <label class="form_label">Upload Service Cover Image</label>
-                    <div class="form_area">
-                        <div class="custom-file">
-                            <input type="file" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input"
-                                multiple id="customFile">
-                            <!-- <img [src]="thumb ? thumb : '../../../../assets/images/product_thumbnail.jpg'"
-                                class="image_preview" /> -->
-                            <label class="custom-file-label" for="customFile">
-                                Choose file
-                            </label>
-                            <!-- <label class="custom-file-label upload_btn"></label> -->
-                        </div>
-                        <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
-                    </div>
-                    <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
-
-                </div>
+                <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
 
             </div>
+
             <!-- </form> -->
         </div>
 

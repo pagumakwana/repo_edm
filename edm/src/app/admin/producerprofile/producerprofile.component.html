@@ -195,21 +195,6 @@
 
                 </div>
                 <div class="form_group">
-                    <div class="form_area">
-
-                        <div id="imgPreview" class="imgPreview">
-                            <!-- <img height="80" width="120" [src]="img.thumb" /> -->
-                            <span style="width: 120px;height: 80px;">
-                                dummy file path
-                            </span>
-                            <a class="remImage" id="delete" (click)="removeFile('GovitID','i')">
-                                <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
-                            </a>
-                            <!-- <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" /> -->
-                        </div>
-                    </div>
-                </div>
-                <div class="form_group">
                     <label class="form_label">Upload Your ID GOVT Proof</label>
                     <div class="form_area">
                         <div class="custom-file">
@@ -220,10 +205,17 @@
                             </label>
                             <!-- <label class="custom-file-label upload_btn"></label> -->
                         </div>
+                        <div class="attched_img">
+                            <div>
+                                <img [src]="img.thumb" />
+                                <a (click)="removeFile('GovitID','i')" title="Remove Image">
+                                    <img src="../../../../assets/images/close_blue.svg">
+                                </a>
+                            </div>
+                        </div>
                         <span class="file_formats">Note: File upload limit - 2MB, Attchment format : jpg, jpeg,
                             png</span>
                         <edm-error [control]="addProfileForm?.controls?.step3?.controls?.GovitID"></edm-error>
-
                     </div>
                 </div>
                 <div class="button_group center_align" (click)="changeStage()">
