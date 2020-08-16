@@ -177,7 +177,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
         Ref_Category_ID: null,
         ServiceTitle: null,
         Description: null,
-        AliasName : null,
+        AliasName: null,
         Price: null,
         PriceWithProjectFiles: null,
         BigImageUrl: null,
@@ -245,15 +245,17 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
 
   addServices() {
-    this._service.addmodifyService(this.addService).subscribe((res: any) => {
+    this._service.addmodifyService(this.addService).subscribe((res: string) => {
       let msg = {
         SERVICEADDED: "Service added successfully!",
         SERVICEUPDATED: "Service updated successfully!",
-        SERVICENAMEEXISTS: "Service already exists!"
+        SERVICEEXISTS: "Service already exists!"
       }
-      this._base._alertMessageService.success(msg[res]);
-      $('#acknowledge_popup').modal('show')
-      setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin', 'service']) }, 3000);
+      let isRedirect: boolean = (res != "SERVICEEXISTS")
+      this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
+      // $('#acknowledge_popup').modal('show')
+      if (isRedirect)
+        setTimeout(() => { this._base._router.navigate(['admin', 'service']) }, 3000);
     })
   }
 

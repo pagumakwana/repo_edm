@@ -3,22 +3,18 @@
         <div class="form_group">
             <div class="form_area">
                 <input type="text" formControlName="CategoryName" id="CategoryName" name="CategoryName"
-                    placeholder="Enter category here" aria-describedby="CategoryNameHelp" />
+                    placeholder="Enter category here*" aria-describedby="CategoryNameHelp" />
             </div>
-            <div class="error_msg"
-                *ngIf="formCategory.controls.CategoryName.invalid && formCategory.controls.CategoryName.touched">
-                <span id="CategoryNameHelp">This field is Required</span>
-            </div>
+            <edm-error [control]="formCategory?.controls?.CategoryName"></edm-error>
+            
         </div>
-        <div class="form_group">
+        <div class="form_group" [hidden]='true'>
             <div class="form_area">
                 <input type="text" formControlName="AliasName" id="AliasName" name="AliasName" placeholder="Enter slug"
                     aria-describedby="AliasNameHelp" />
             </div>
-            <div class="error_msg"
-                *ngIf="formCategory.controls.AliasName.invalid && formCategory.controls.AliasName.touched">
-                <span id="AliasNameHelp">This field is Required</span>
-            </div>
+            <edm-error [control]="formCategory?.controls?.AliasName"></edm-error>
+            
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
@@ -29,6 +25,7 @@
                 </select>
                 <span class="input_icon dropdown_icon"></span>
             </div>
+            <edm-error [control]="formCategory?.controls?.Ref_Parent_ID"></edm-error>
         </div>
         <div class="form_group">
             <div class="form_area">
@@ -37,15 +34,13 @@
                     placeholder="Enter description here" aria-describedby="CategoryDescriptionHelp"
                     placeholder="Category Description"></textarea>
             </div>
-            <div class="error_msg"
-                *ngIf="formCategory.controls.CategoryDescription.invalid && formCategory.controls.CategoryDescription.touched">
-                <span id="CategoryDescriptionHelp">This field is Required</span>
-            </div>
+            <edm-error [control]="formCategory?.controls?.CategoryDescription"></edm-error>
+            
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="CategoryUseBy" formControlName="CategoryUseBy">
-                    <option value="">Select category type</option>
+                    <option value="">Select category type*</option>
                     <option value="1">Track</option>
                     <option value="2">Beats</option>
                     <option value="3">Blog</option>
@@ -54,10 +49,12 @@
                 </select>
                 <span class="input_icon dropdown_icon"></span>
             </div>
+            <edm-error [control]="formCategory?.controls?.CategoryUseBy"></edm-error>
+
         </div>
         <div class="form_group">
             <label class="form_label">Upload Service Cover Image</label>
-            <div class="form_area"  *ngIf="fileChoosenData.ImageUrl.length < 1">
+            <div class="form_area" *ngIf="fileChoosenData.ImageUrl.length < 1">
                 <div class="custom-file">
                     <input type="file" (change)="fileChoosen($event,'ImageUrl')" class="custom-file-input"
                         id="customFile">
@@ -69,6 +66,8 @@
                     <!-- <label class="custom-file-label upload_btn"></label> -->
                 </div>
                 <span class="file_formats">Note: File upload limit - 1GB</span>
+                <edm-error [control]="formCategory?.controls?.ImageUrl"></edm-error>
+
             </div>
             <div class="form_area" *ngFor="let img of fileChoosenData.ImageUrl;let i = index">
                 <div class="attched_img">

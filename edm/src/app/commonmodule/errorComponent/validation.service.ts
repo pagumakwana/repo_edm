@@ -12,7 +12,8 @@ export class ValidationService {
             'minlength': `Minimum length ${validatorValue.requiredLength}`,
             'invalid_File_Type': 'Invalid File Extension/type',
             'invalid_File_Size': 'Invalid File Size',
-            'invalid_File_Resolution': 'Invalid File Resolution'
+            'invalid_File_Resolution': 'Invalid File Resolution',
+            'invalid_white_Space': 'White Space Not Allowed'
         };
 
         return config[validatorName];
@@ -60,6 +61,15 @@ export class ValidationService {
             return (!isValidFileSize && isFileType) ? { 'invalid_File_Size': true } : null
         }
     }
+    static ValidateWhiteSpace() {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            const initalValue: string = control.value && typeof control.value == 'string' ? control.value : ""
+            let valueAFterTrim: string = initalValue.trim()
+            console.log("ValidateWhiteSpace", valueAFterTrim.length == 0)
+            return valueAFterTrim.length == 0 ? { 'invalid_white_Space': true } : null
+        }
+    }
+
 
     static ValidateResolution(height: number, width: number): AsyncValidatorFn {
         return (control: AbstractControl): Promise<ValidationErrors> | null | Observable<ValidationErrors | null> => {

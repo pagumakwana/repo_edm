@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
 import { Meta } from '@angular/platform-browser';
 import { fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
+import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
 
 
 @Component({
@@ -35,10 +36,10 @@ export class AddModifyGenersComponent implements OnInit {
 
   formCategory: FormGroup = this._fbGener.group({
     Ref_Parent_ID: [''],
-    CategoryName: ['', [Validators.required]],
+    CategoryName: ['', [Validators.required, ValidationService.ValidateWhiteSpace()]],
     AliasName: ['', [Validators.required]],
     CategoryDescription: [''],
-    CategoryUseBy: [''],
+    CategoryUseBy: ['', [Validators.required]],
     ImageUrl: [''],
     MetaTitle: [''],
     MetaKeywords: [''],
@@ -69,7 +70,7 @@ export class AddModifyGenersComponent implements OnInit {
     }
     this.formCategory.controls.CategoryName.valueChanges.subscribe((value: string) => {
       console.log("CategoryName.valueChanges", value)
-      this.formCategory.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
+      this.formCategory.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase().trim())
       this.formCategory.controls.AliasName.updateValueAndValidity()
     })
   }
@@ -170,14 +171,17 @@ export class AddModifyGenersComponent implements OnInit {
         this._categoryModel.CreatedName = FullName;
         this._categoryModel.Ref_User_ID = Ref_User_ID;
         this._categoryService.addmodifycategory(this._categoryModel).subscribe((response: any) => {
+          let isRedirect: boolean = true
           if (response == 'CATEGORYADDED') {
             this._base._alertMessageService.success("Category added successfully!");
           } else if (response == 'CATEGORYUPDATED') {
             this._base._alertMessageService.success("Category updated successfully!");
+          } else if (response == 'CATEGORYNAMEEXISTS') {
+            this._base._alertMessageService.error("Category Name Already Exist");
+            isRedirect = false
           }
-          setTimeout(() => {
-            this._base._router.navigate(['/admin/category']);
-          }, 1000);
+          if (isRedirect)
+            setTimeout(() => { this._base._router.navigate(['/admin/category']); }, 1000);
         });
       });
     });

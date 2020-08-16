@@ -44,22 +44,22 @@ export class ServicesListComponent implements OnInit {
     tableData: [],
     tableConfig: [
       { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
-      { identifer: "ServiceTitle", title: "ServiceTitle", type: "link" },
+      { identifer: "ServiceTitle", title: "Service Title", type: "link" },
       { identifer: "Price", title: "Price", type: "text" },
-      { identifer: "PriceWithProjectFiles", title: "PriceWithProjectFiles", type: "text" },
+      { identifer: "PriceWithProjectFiles", title: "Price With Project Files", type: "text" },
       { identifer: "Revision", title: "Revision", type: "text" },
-      { identifer: "CreatedName", title: "CreatedBy", type: "text" },
-      { identifer: "IsActive", title: "IsActive", type: "flag" },
-      { identifer: "", title: "Action", type: "button", buttonList: [{ name: 'Edit', class: 'global_btn primary_btn', iconClass: 'delete_icon btn_icon' }, { name: 'Delete', class: 'global_btn icon_btn red_btn', iconClass: 'delete_icon btn_icon' }] }
+      // { identifer: "CreatedName", title: "CreatedBy", type: "text" },
+      // { identifer: "IsActive", title: "IsActive", type: "flag" },
+      { identifer: "", title: "Action", type: "buttonIcons", buttonIconList: [{ title: 'Edit', class: 'small_icon_btn', iconClass: 'edit_btn' }, { title: 'Delete', class: 'small_icon_btn', iconClass: 'delete_btn' }] }
     ]
   }
 
   tableClick(dataItem: tableEvent) {
-    if (dataItem.action.type == 'link' || (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Edit")) {
+    console.log("tableClick", dataItem)
+    if (dataItem.action.type == 'link' || (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Edit")) {
       this.modifyService(dataItem.tableItem, 'MODIFYSERVICE');
-    } else if (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Delete") {
+    } else if (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Delete") {
       this.modifyService(dataItem.tableItem, 'DELETESERVICE');
-
     }
   }
 
@@ -68,6 +68,7 @@ export class ServicesListComponent implements OnInit {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
         this._serviceModel.Flag = flag;
         this._serviceModel.Ref_User_ID = Ref_User_ID;
+        this._serviceModel.Ref_Service_ID = data.Ref_Service_ID;
         this._serviceModel.Ref_Category_ID = data.Ref_Category_ID;
         this._serviceModel.ServiceTitle = data.CategoryName;
         this._serviceModel.Description = data.Description;
@@ -88,10 +89,12 @@ export class ServicesListComponent implements OnInit {
       if (response == 'SERVICEDELETED') {
         this._base._alertMessageService.success("Service deleted successfully!");
         this.serviceList.filter((res: any, index: number) => {
-          if (res.Ref_Service_ID === this._serviceModel.Ref_Service_ID) {
+          if (res.Ref_Service_ID == this._serviceModel.Ref_Service_ID) {
             this.serviceList.splice(index, 1);
           }
         });
+        this.tableConfig.tableData = this.serviceList
+        this.tableObj.initializeTable()
       }
     }, error => {
       this._base._alertMessageService.error("Something went wrong !!");
