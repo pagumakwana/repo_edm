@@ -42,7 +42,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     Category: ['', [Validators.required]],
     Description: ['', [Validators.required]],
     Price: ['', [Validators.required]],
-    PriceWithProjectFiles: ['', [Validators.required]],
+    PriceWithProjectFiles: [''],
     Revision: ['', [Validators.required]],
     DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],
