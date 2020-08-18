@@ -35,6 +35,7 @@ export class TrackListComponent implements OnInit {
     debugger;
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
+      this._base._pageTitleService.setTitle("All "+this.moduleName+"s", "All "+this.moduleName+"s");
       this._base._commonService.showLoader();
       this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
         let categoryData = []
@@ -48,7 +49,7 @@ export class TrackListComponent implements OnInit {
        
      
     })
-    this._base._pageTitleService.setTitle("All Tracks / Beats", "All Tracks / Beats");
+   
     this.addrejectreason = this.fb.group({
       rejectReason: ['', [Validators.required]]
     })

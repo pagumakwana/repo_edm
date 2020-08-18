@@ -51,7 +51,7 @@
                 <div class="form_group">
                     <div class="form_area icon_form_group">
                         <input type="text" maxlength="5" (keyup)="OnlyNumber($event)" (input)="validateNum()" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }"
-                            required placeholder="Track Duration" />
+                            required placeholder="Track Duration (MM:SS)" />
                         <span class="input_icon duration_icon"></span>
                     </div>
                     <div *ngIf="f.submitted && trackduration.invalid">
@@ -124,6 +124,11 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="pricelimit">
+                <div class="error_msg">
+                    <span>Amount limit upto $2000</span>
+                </div>
+            </div>
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group textarea_icon_form_group">
@@ -141,7 +146,7 @@
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="number" class="form-control" name="trackbmp" [(ngModel)]="model.trackbmp" #trackbmp="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackbmp.invalid }" required placeholder="{{moduleName}} BMP (beats per minnutes)" />
+                <input type="number" class="form-control" name="trackbmp" [(ngModel)]="model.trackbmp" #trackbmp="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackbmp.invalid }" required placeholder="{{moduleName}} BMP (beats per minutes)" />
                 <span class="input_icon bmp_icon"></span>
             </div>
             <div *ngIf="f.submitted && trackbmp.invalid">
@@ -210,10 +215,10 @@
                     </div>
                 </div>
             </div>
-            <div class="tags">
+            <!-- <div class="tags">
                 <span>demo</span>
                 <span>demo</span>
-            </div>
+            </div> -->
 
         </div>
 
@@ -222,11 +227,11 @@
                 <input type="text" class="form-control" name="tags" [(ngModel)]="model.tags" #tags="ngModel" [ngClass]="{ 'is-invalid': f.submitted && tags.invalid }" required placeholder="Tags" />
                 <span class="input_icon price_icon"></span>
             </div>
-            <div class="tags">
+            <!-- <div class="tags">
                 <span>demo</span>
                 <span>demo</span>
                 <span>demo</span>
-            </div>
+            </div> -->
             <div *ngIf="f.submitted && tags.invalid">
                 <div *ngIf="tags.errors.required">
                     <div class="error_msg">
@@ -264,14 +269,14 @@
             <label class="form_label">Upload Master & Unmastered</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".war" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
+                    <input type="file" class="custom-file-input" accept=".wav" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="unmasterfile">
                         {{unmasterfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Unmasterfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .Wav</span>
             </div>
 
             <div class="error_msg" *ngIf="!unmasterfileuploaded">
@@ -282,14 +287,14 @@
             <label class="form_label">Upload Mixdow Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".war" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
+                    <input type="file" class="custom-file-input" accept=".wav" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
                     <label class="custom-file-label" for="mixdowfile">
                         {{mixdowfile}}
                     </label>
                     <label class="custom-file-label upload_btn" (click)="uploadfile('Mixdowfile')"></label>
                 </div>
-                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .War</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .Wav</span>
             </div>
             <div class="error_msg" *ngIf="!mixdowfileuploaded">
                 <span>This field is Required</span>

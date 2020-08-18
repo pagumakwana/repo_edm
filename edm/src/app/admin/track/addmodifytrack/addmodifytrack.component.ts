@@ -121,6 +121,7 @@ export class AddModifyTrackComponent implements OnInit {
   stemsfile: any;
   projectfile: any;
   MIDIfile: any
+  pricelimit:boolean= false;
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
@@ -135,11 +136,16 @@ export class AddModifyTrackComponent implements OnInit {
     debugger;
     e.target.value = e.target.value.replace(/[^\d/:]/g, '')
     if (e.target.value.length > e.target.maxLength) {
+     
       e.target.value = e.target.value.slice(0, e.target.maxLength)
     }
     if (e.target.value > 2001) {
-      alert('Amount limit upto $2000')
-      e.target.value = ''
+      this.pricelimit = true;
+      //alert('Amount limit upto $2000')
+      //e.target.value = ''
+      //this.model.trackprice = undefined;
+    }else{
+      this.pricelimit = false;
     }
   }
   ngOnInit(): void {
@@ -190,7 +196,7 @@ export class AddModifyTrackComponent implements OnInit {
 
   }
   bindCategory() {
-    this._categoryService.categorylist(this.moduleName, 0).subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       let categoryData = []
       categoryData = Array.isArray(resData) ? resData : []
       console.log("categoryData", categoryData);
@@ -220,6 +226,7 @@ export class AddModifyTrackComponent implements OnInit {
       this.urtoggedfile = data[0].MasterFileUrl
       this.unmasterfile = data[0].UnmasteredFileUrl
       this.wavefileurl = data[0].UnmasteredFileUrl
+      this.Wavfile = data[0].UnmasteredFileUrl
       this.mixdowfile = data[0].MixdowFileUrl
       this.stemsfile = data[0].StemsUrl
       this.MIDIfile = data[0].MIDIFileUrl
@@ -418,8 +425,11 @@ export class AddModifyTrackComponent implements OnInit {
     }
   }
   onSubmit() {
+    debugger;
     if (this.trackImg != undefined) {
-      this.finalsubmition = true;
+      if(!this.pricelimit){
+        this.finalsubmition = true;
+      }
     } else {
       this.trackImguploaded = false;
     }
@@ -491,7 +501,7 @@ export class AddModifyTrackComponent implements OnInit {
   }
   checkfileuploaded() {
     if (this.moduleName == "Track") {
-      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfileurl != undefined && this.projectfileurl != undefined && this.midifileurl != undefined) {
+      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfileurl != undefined  && this.midifileurl != undefined) {
         return true
       } else {
         return false
