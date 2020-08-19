@@ -10,6 +10,7 @@ import { formatDate } from '@angular/common';
 import * as _ from "lodash";
 import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
+import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
 
 declare var $: any;
 
@@ -41,8 +42,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     AliasName: ['', [Validators.required]],
     Category: ['', [Validators.required]],
     Description: ['', [Validators.required]],
-    Price: ['', [Validators.required]],
-    PriceWithProjectFiles: ['', [Validators.required]],
+    Price: ['', [Validators.required, ValidationService.ValidateNumberType()]],
+    PriceWithProjectFiles: ['', [Validators.required, ValidationService.ValidateNumberType()]],
     Revision: ['', [Validators.required]],
     DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],

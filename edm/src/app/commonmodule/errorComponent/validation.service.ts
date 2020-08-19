@@ -13,7 +13,8 @@ export class ValidationService {
             'invalid_File_Type': 'Invalid File Extension/type',
             'invalid_File_Size': 'Invalid File Size',
             'invalid_File_Resolution': 'Invalid File Resolution',
-            'invalid_white_Space': 'White Space Not Allowed'
+            'invalid_white_Space': 'White Space Not Allowed',
+            'invalid_Number_Type': 'Invalid Number Field'
         };
 
         return config[validatorName];
@@ -47,6 +48,14 @@ export class ValidationService {
         }
     }
 
+    static ValidateNumberType() {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            // let regexPat: RegExp = /^-?[0-9][0-9,\.]*$/
+            return control.value.match(/^(-?[1-9]+\\d*([.]\\d+)?)$|^(-?0[.]\\d*[1-9]+)$|^0$/) ? null : { 'invalid_Number_Type': true };
+            // return control.value.match(/^-?[0-9][0-9,\.]*$/) ? null : { 'invalid_Number_Type': true };
+            // return regexPat.test(control.value) ? null : { 'invalid_Number_Type': true };
+        }
+    }
     static ValidateFileType(fileTypes: Array<any>) {
         return (control: AbstractControl): { [key: string]: any } | null => {
             let isFileType: boolean = control.value ? (typeof control.value == 'object') : false

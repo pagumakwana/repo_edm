@@ -89,7 +89,7 @@
                     <div class="form_group">
                         <div class="form_area icon_form_group">
                             <input type="text" formControlName="PriceWithProjectFiles" name="filesincluded"
-                                placeholder="Files Included" />
+                                placeholder="Enter price including files" />
                             <span class="input_icon included_icon"></span>
                         </div>
                         <edm-error [control]="addServiceForm.controls.PriceWithProjectFiles"></edm-error>
@@ -160,7 +160,8 @@
                 <label class="form_label">Upload Service Video</label>
                 <div class="form_area" *ngIf="fileChoosenData.ServiceVideoUrl.length < 1">
                     <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input" id="customFile">
+                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
+                            id="customFile">
                         <label class="custom-file-label" for="customFile">
                             Choose file
                         </label>
@@ -178,9 +179,9 @@
                 </div>
                 <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
             </div>
-                <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
+            <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
 
-                <!-- <div class="form_group">
+            <!-- <div class="form_group">
                         <label class="form_label">Upload Service Cover Image</label>
                         <div id="imgPreview" class="imgPreview">
                             <img height="80" width="120" [src]="thumb" />
