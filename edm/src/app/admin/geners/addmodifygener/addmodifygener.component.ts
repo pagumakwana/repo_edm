@@ -27,6 +27,7 @@ export class AddModifyGenersComponent implements OnInit {
   _categoryModel: CategoryModel = {};
   aliasName: string;
   public categoryData: any = [];
+  public categoryDataWOCurrent: any = [];
   isCategoryModify: boolean = false;
   btnTitle: string = 'ADD'
   imgCategory: any;
@@ -61,7 +62,6 @@ export class AddModifyGenersComponent implements OnInit {
       this.bindCategory('ALL', 0).then((res: any) => {
         if (res) {
           this.getCategory();
-
         }
       })
     } else {
@@ -102,6 +102,8 @@ export class AddModifyGenersComponent implements OnInit {
     })
     if (index > -1) {
       this._categoryModel = this.categoryData[index];
+      this.categoryDataWOCurrent = JSON.parse(JSON.stringify(this.categoryData));
+      this.categoryDataWOCurrent.splice(index, 1);
       this.isCategoryModify = true;
       this.btnTitle = 'Modify'
       this.formCategory.controls.MetaTitle.setValue(this._categoryModel.MetaTitle);
@@ -193,6 +195,7 @@ export class AddModifyGenersComponent implements OnInit {
         resData.filter((res) => {
           this.categoryData.push(res);
         });
+        this.categoryDataWOCurrent = JSON.parse(JSON.stringify(this.categoryData));
         resolve(true);
       });
     })
