@@ -14,7 +14,7 @@ export class ValidationService {
             'invalid_File_Size': 'Invalid File Size',
             'invalid_File_Resolution': 'Invalid File Resolution',
             'invalid_white_Space': 'White Space Not Allowed',
-            'invalid_Number_Type': 'Invalid Number Field'
+            'invalid_Number_Price_Type': `Invalid Price Field Max price should be less than equal to ${validatorValue.requiredPrice}`
         };
 
         return config[validatorName];
@@ -48,21 +48,26 @@ export class ValidationService {
         }
     }
 
-    static ValidateNumberType() {
+    static ValidateNumberPriceType(maxPrice: number) {
         return (control: AbstractControl): { [key: string]: any } | null => {
-            // let regexPat: RegExp = /^-?[0-9][0-9,\.]*$/
-            return control.value.match(/^(-?[1-9]+\\d*([.]\\d+)?)$|^(-?0[.]\\d*[1-9]+)$|^0$/) ? null : { 'invalid_Number_Type': true };
-            // return control.value.match(/^-?[0-9][0-9,\.]*$/) ? null : { 'invalid_Number_Type': true };
-            // return regexPat.test(control.value) ? null : { 'invalid_Number_Type': true };
+            let value: string | any = control.value ? typeof control.value == 'number' ? control.value.toString() : control.value : ''
+            let priceValid: boolean = !isNaN(value) ? parseInt(value) <= maxPrice : false
+            return value.match(/^\d+(\.\d+)?$/) && priceValid ? null : { 'invalid_Number_Price_Type': { requiredPrice: maxPrice } };
         }
     }
+
     static ValidateFileType(fileTypes: Array<any>) {
         return (control: AbstractControl): { [key: string]: any } | null => {
-            let isFileType: boolean = control.value ? (typeof control.value == 'object') : false
-            let isValidFile: boolean = isFileType && fileTypes ? (fileTypes.indexOf(control.value.type) != -1) : false
-            return (!isValidFile && isFileType) ? { 'invalid_File_Type': true } : null
+            return this.ValidateFileType_Helper(control.value, fileTypes) ? { 'invalid_File_Type': true } : null
         }
     }
+
+    static ValidateFileType_Helper(controlValue: any, fileTypes: Array<any>) {
+        let isFileType: boolean = controlValue ? (typeof controlValue == 'object') : false
+        let isValidFile: boolean = isFileType && fileTypes ? (fileTypes.indexOf(controlValue.type) != -1) : false
+        return (!isValidFile && isFileType)
+    }
+
     static ValidateFileSize(size: number) {
         return (control: AbstractControl): { [key: string]: any } | null => {
             let isFileType: boolean = control.value ? (typeof control.value == 'object') : false

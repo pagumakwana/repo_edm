@@ -42,8 +42,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     AliasName: ['', [Validators.required]],
     Category: ['', [Validators.required]],
     Description: ['', [Validators.required]],
-    Price: ['', [Validators.required, ValidationService.ValidateNumberType()]],
-    PriceWithProjectFiles: ['', [Validators.required, ValidationService.ValidateNumberType()]],
+    Price: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
+    PriceWithProjectFiles: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
     Revision: ['', [Validators.required]],
     DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],
@@ -84,6 +84,12 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     this.addServiceForm.controls.ServiceTitle.valueChanges.subscribe((value: string) => {
       this.addServiceForm.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
       this.addServiceForm.controls.AliasName.updateValueAndValidity()
+    })
+
+    this.addServiceForm.controls.Price.valueChanges.subscribe((value: string) => {
+      console.log("Price_control", this.addServiceForm.controls.Price,value)
+      // this.addServiceForm.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
+      // this.addServiceForm.controls.AliasName.updateValueAndValidity()
     })
 
     this.subs.add(this.dragulaService.dropModel('MANY_ITEMS')
