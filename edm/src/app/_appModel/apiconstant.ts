@@ -15,6 +15,7 @@ export class ApiConstant {
     }
     public static genService = {
         Service: "Admin/ServiceManagement/Service",
+        ManageService: "Admin/ServiceManagement/ManageService",
         servicebycatehory: "User/Service/ServiceByCategory",
     }
     public static common = {

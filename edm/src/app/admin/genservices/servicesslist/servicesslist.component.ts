@@ -85,8 +85,8 @@ export class ServicesListComponent implements OnInit {
   }
 
   removeService() {
-    this._service.addmodifyService(this._serviceModel).subscribe(response => {
-      if (response == 'SERVICEDELETED') {
+    this._service.ManageService(this._serviceModel.Ref_Service_ID, 'delete').subscribe((response: any) => {
+      if (response == 'SERVICEDELETE') {
         this._base._alertMessageService.success("Service deleted successfully!");
         this.serviceList.filter((res: any, index: number) => {
           if (res.Ref_Service_ID == this._serviceModel.Ref_Service_ID) {

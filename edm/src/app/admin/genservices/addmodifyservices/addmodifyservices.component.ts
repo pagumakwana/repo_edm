@@ -220,6 +220,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     console.log("saveService", this.addServiceForm, this.addService)
 
     if (this.addServiceForm.valid) {
+      this._base._commonService.showLoader();
       this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
           this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.BigImageUrl), 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
@@ -253,6 +254,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   addServices() {
     this._service.addmodifyService(this.addService).subscribe((res: string) => {
+      this._base._commonService.hideLoader();
       let msg = {
         SERVICEADDED: "Service added successfully!",
         SERVICEUPDATED: "Service updated successfully!",
