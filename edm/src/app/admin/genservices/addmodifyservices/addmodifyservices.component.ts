@@ -87,7 +87,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     })
 
     this.addServiceForm.controls.Price.valueChanges.subscribe((value: string) => {
-      console.log("Price_control", this.addServiceForm.controls.Price,value)
+      console.log("Price_control", this.addServiceForm.controls.Price, value)
       // this.addServiceForm.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
       // this.addServiceForm.controls.AliasName.updateValueAndValidity()
     })
@@ -289,16 +289,38 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
 
-    this.addServiceForm.controls[fieldName].setValue('upload')
-    this.addServiceForm.controls[fieldName].updateValueAndValidity()
+    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number } } = {
+      BigImageUrl: {
+        fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],
+        size: 3145728 // 3MB
+      },
+      ServiceVideoUrl: {
+        fileType: ['video/mp4'],
+        size: 52428800 //50MB
+      }
+    }
 
     if ($event.target.files.length > 0) {
+      let isValid: boolean = false
       for (let file of $event.target.files) {
-        this._base._commonService.readImage(file).subscribe((res: any) => {
-          let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
-          console.log("imageData", imgData)
-          this.fileChoosenData[fieldName].push(imgData);
-        })
+
+        if (ValidationService.ValidateFileType_Helper(file, fileValidationInfo[fieldName].fileType)) {
+          if (ValidationService.ValidateFileSize_Helper(file, fileValidationInfo[fieldName].size)) {
+            isValid = true
+            this.addServiceForm.controls[fieldName].setValue('upload')
+            this.addServiceForm.controls[fieldName].updateValueAndValidity()
+            this._base._commonService.readImage(file).subscribe((res: any) => {
+              let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              console.log("imageData", imgData)
+              this.fileChoosenData[fieldName].push(imgData);
+            })
+          }
+        }
+
+        if (!isValid) {
+          this._base._alertMessageService.error(`${file.name} is Invalid`)
+        }
+
       }
     }
   }

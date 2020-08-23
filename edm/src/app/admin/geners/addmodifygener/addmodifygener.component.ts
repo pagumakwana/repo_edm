@@ -205,16 +205,35 @@ export class AddModifyGenersComponent implements OnInit {
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
 
-    this.formCategory.controls[fieldName].setValue('upload')
-    this.formCategory.controls[fieldName].updateValueAndValidity()
+    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number } } = {
+      ImageUrl: {
+        fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],
+        size: 3145728 // 3MB
+      }
+    }
 
     if ($event.target.files.length > 0) {
+      let isValid: boolean = false
+
       for (let file of $event.target.files) {
-        this._base._commonService.readImage(file).subscribe((res: any) => {
-          let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
-          console.log("imageData", imgData)
-          this.fileChoosenData[fieldName].push(imgData);
-        })
+
+        if (ValidationService.ValidateFileType_Helper(file, fileValidationInfo[fieldName].fileType)) {
+          if (ValidationService.ValidateFileSize_Helper(file, fileValidationInfo[fieldName].size)) {
+            isValid = true
+
+            this.formCategory.controls[fieldName].setValue('upload')
+            this.formCategory.controls[fieldName].updateValueAndValidity()
+            this._base._commonService.readImage(file).subscribe((res: any) => {
+              let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              console.log("imageData", imgData)
+              this.fileChoosenData[fieldName].push(imgData);
+            })
+          }
+        }
+
+        if (!isValid) {
+          this._base._alertMessageService.error(`${file.name} is Invalid`)
+        }
       }
     }
   }

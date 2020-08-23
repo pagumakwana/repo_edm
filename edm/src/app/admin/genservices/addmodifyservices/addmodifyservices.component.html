@@ -167,7 +167,7 @@
                             Choose file
                         </label>
                     </div>
-                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
+                    <span class="file_formats">Note: File upload limit - 50MB, Attchment format : .mp4</span>
                 </div>
                 <div class="form_area" *ngFor="let video of fileChoosenData.ServiceVideoUrl;let i = index;">
                     <video controls>
@@ -216,7 +216,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
+                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png,
+                        .jpeg</span>
                 </div>
                 <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
 
