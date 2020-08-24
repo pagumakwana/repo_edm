@@ -30,6 +30,9 @@
             <div class="error_msg" *ngIf="!trackImguploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invlideimg">
+                <span>Please select jpg/jpeg/png formate.</span>
+            </div>
         </div>
         <div class="multipul_form_group" *ngIf="moduleName == 'Track'">
             <div class="width_60">
@@ -264,6 +267,9 @@
             <div class="error_msg" *ngIf="!masterfileuploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invalidmasterfile">
+                <span>Please select .mp3 formate.</span>
+            </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Upload Master & Unmastered</label>
@@ -282,6 +288,9 @@
             <div class="error_msg" *ngIf="!unmasterfileuploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invalidunmasterfile">
+                <span>Please select .wav formate.</span>
+            </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Upload Mixdow Files</label>
@@ -298,6 +307,9 @@
             </div>
             <div class="error_msg" *ngIf="!mixdowfileuploaded">
                 <span>This field is Required</span>
+            </div>
+            <div class="error_msg" *ngIf="invalidmixdowfile">
+                <span>Please select .wav formate.</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Beat'">
@@ -317,6 +329,9 @@
             <div class="error_msg" *ngIf="!urtoggedfileuploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invalidurtoggedfile">
+                <span>Please select .mp3 formate.</span>
+            </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Beat'">
             <label class="form_label">Wav File</label>
@@ -335,6 +350,9 @@
             <div class="error_msg" *ngIf="!Wavfileuploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invalidWavfile">
+                <span>Please select .wav formate.</span>
+            </div>
         </div>
         <div class="form_group">
             <label class="form_label">Upload Stems</label>
@@ -351,6 +369,9 @@
             </div>
             <div class="error_msg" *ngIf="!stemsfileuploaded">
                 <span>This field is Required</span>
+            </div>
+            <div class="error_msg" *ngIf="invalidstemsfile">
+                <span>Please select .zip/rar formate.</span>
             </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
@@ -370,6 +391,9 @@
             <div class="error_msg" *ngIf="!MIDIfileuploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invalidMIDIfile">
+                <span>Please select .midi formate.</span>
+            </div>
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <label class="form_label">Project Files</label>
@@ -388,6 +412,9 @@
             <!-- <div class="error_msg" *ngIf="!projectfileuploaded">
                 <span>This field is Required</span>
             </div> -->
+            <div class="error_msg" *ngIf="invalidprojectfile">
+                <span>Please select .zip/.rar formate.</span>
+            </div>
         </div>
         <div class="form_group">
             <div class="form_area">
