@@ -131,6 +131,7 @@ export class AddModifyTrackComponent implements OnInit {
   projectfile: any;
   MIDIfile: any
   pricelimit:boolean= false;
+  minuteslimit:boolean= false;
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
@@ -141,21 +142,33 @@ export class AddModifyTrackComponent implements OnInit {
     this.model.trackduration = this.model.trackduration.replace(/\D/g, '').replace(/(\d{2})(\d*)/, '$1:$2');
    // this.model.trackduration.length.substring(0,4)
   }
-  public OnlyNumber(e) {
+  public OnlyNumber(e, upto) {
     debugger;
     e.target.value = e.target.value.replace(/[^\d/:]/g, '')
     if (e.target.value.length > e.target.maxLength) {
      
       e.target.value = e.target.value.slice(0, e.target.maxLength)
     }
-    if (e.target.value > 2001) {
-      this.pricelimit = true;
-      //alert('Amount limit upto $2000')
-      //e.target.value = ''
-      //this.model.trackprice = undefined;
-    }else{
-      this.pricelimit = false;
+    if(upto == "2001"){
+      if (e.target.value > 2001) {
+        this.pricelimit = true;
+        //alert('Amount limit upto $2000')
+        //e.target.value = ''
+        //this.model.trackprice = undefined;
+      }else{
+        this.pricelimit = false;
+      }
+    }else if(upto == "301"){
+      if (e.target.value > 301) {
+        this.minuteslimit = true;
+        //alert('Amount limit upto $2000')
+        //e.target.value = ''
+        //this.model.trackprice = undefined;
+      }else{
+        this.minuteslimit = false;
+      }
     }
+    
   }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -476,7 +489,7 @@ export class AddModifyTrackComponent implements OnInit {
   onSubmit() {
     debugger;
     if (this.trackImg != undefined) {
-      if(!this.pricelimit){
+      if(!this.pricelimit && !this.minuteslimit){
         this.finalsubmition = true;
       }
     } else {

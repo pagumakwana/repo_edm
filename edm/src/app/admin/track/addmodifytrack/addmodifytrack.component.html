@@ -53,7 +53,7 @@
             <div class="width_40">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" maxlength="5" (keyup)="OnlyNumber($event)" (input)="validateNum()" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }"
+                        <input type="text" maxlength="5" (keyup)="OnlyNumber($event, '0')" (input)="validateNum()" class="form-control" name="trackduration" value="model.trackduration" [(ngModel)]="model.trackduration" #trackduration="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackduration.invalid }"
                             required placeholder="Track Duration (MM:SS)" />
                         <span class="input_icon duration_icon"></span>
                     </div>
@@ -116,7 +116,7 @@
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="text" onKeyDown="if(this.value > 2000) return true;" maxlength="4" (keyup)="OnlyNumber($event)" class="form-control" name="trackprice" [(ngModel)]="model.trackprice" #trackprice="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackprice.invalid }"
+                <input type="text" onKeyDown="if(this.value > 2000) return true;" maxlength="4" (keyup)="OnlyNumber($event, '2001')" class="form-control" name="trackprice" [(ngModel)]="model.trackprice" #trackprice="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackprice.invalid }"
                     required placeholder="{{moduleName}} Price" />
                 <span class="input_icon price_icon"></span>
             </div>
@@ -149,7 +149,8 @@
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="number" class="form-control" name="trackbmp" [(ngModel)]="model.trackbmp" #trackbmp="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackbmp.invalid }" required placeholder="{{moduleName}} BMP (beats per minutes)" />
+                <input type="text" onKeyDown="if(this.value > 300) return true;" maxlength="3" (keyup)="OnlyNumber($event, '301')" class="form-control" name="trackbmp" [(ngModel)]="model.trackbmp" #trackbmp="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackbmp.invalid }"
+                    required placeholder="{{moduleName}} BMP (beats per minutes)" />
                 <span class="input_icon bmp_icon"></span>
             </div>
             <div *ngIf="f.submitted && trackbmp.invalid">
@@ -157,6 +158,11 @@
                     <div class="error_msg">
                         <span>This field is Required</span>
                     </div>
+                </div>
+            </div>
+            <div *ngIf="minuteslimit">
+                <div class="error_msg">
+                    <span>Amount limit upto 300</span>
                 </div>
             </div>
         </div>
@@ -189,7 +195,7 @@
                             <option *ngFor="let key of keylist" [value]="key.Ref_Key_ID" [selected]="key.Ref_Key_ID == KeyID">{{key.KeyName}}</option>
                            
                         </select> -->
-                <input type="text" class="form-control" name="beatkey" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required placeholder="Key" />
+                <input type="text" pattern="[0-9a-zA-Z\s-]*" class="form-control" name="beatkey" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required placeholder="Key" />
                 <!-- <span class="input_icon dropdown_icon"></span> -->
             </div>
 
@@ -199,7 +205,17 @@
                         <span>This field is Required</span>
                     </div>
                 </div>
+                <div *ngIf="beatkey.invalid">
+                    <div class="error_msg">
+                        <span>Special characters are not allowed.</span>
+                    </div>
+                </div>
             </div>
+            <!-- <div *ngIf="beatkey.invalid">
+                    <div class="error_msg">
+                        <span>Special characters are not allowed.</span>
+                    </div>
+            </div> -->
         </div>
         <div class="form_group" *ngIf="moduleName == 'Track'">
             <div class="form_area icon_form_group">
