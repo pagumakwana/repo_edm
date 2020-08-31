@@ -71,12 +71,12 @@
             </div>
             <div class="form_group mobile_tabs">
                 <div class="form_area icon_form_group">
-                    <select>
-                        <option>BIOGRAPGY</option>
-                        <option>ALL TRACKS</option>
-                        <option>SOLD OUT TRACKS</option>
-                        <option>BEATS</option>
-                        <option>CUSTOM SERVICES</option>
+                    <select [(ngModel)]="currentTab">
+                        <option [value]="producerTab.biography">BIOGRAPGY</option>
+                        <option [value]="producerTab.all_track">ALL TRACKS</option>
+                        <option [value]="producerTab.sold_out_track">SOLD OUT TRACKS</option>
+                        <option [value]="producerTab.beats">BEATS</option>
+                        <option [value]="producerTab.customer_services">CUSTOM SERVICES</option>
                     </select>
                     <span class="input_icon dropdown_icon"></span>
                 </div>
