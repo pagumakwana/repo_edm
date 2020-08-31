@@ -9,6 +9,7 @@ import { AddModifyMasterComponent } from './addmodifymaster/addmodifymaster.comp
 import { AddModifyMasterDataComponent } from './addmodifymasterdata/addmodifymasterdata.component';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
     declarations: [
         MasterListComponent,
@@ -21,6 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ErrorModule,
         FormsModule,
         ReactiveFormsModule,
+        NgMultiSelectDropDownModule.forRoot(),
+
         RouterModule.forChild([
             {
                 path: 'masters/:module',

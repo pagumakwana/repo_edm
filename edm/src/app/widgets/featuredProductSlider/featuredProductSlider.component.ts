@@ -7,6 +7,7 @@ import {
 import { ApiConstant } from './../../_appModel/apiconstant';
 import { Router } from '@angular/router';
 import { TrackService } from 'src/app/_appService/trackService';
+import { enAppSession } from 'src/app/_appModel/enAppSession';
 
 @Component({
     selector: 'app-featuredProductSlider',
@@ -16,6 +17,10 @@ import { TrackService } from 'src/app/_appService/trackService';
 })
 export class FeaturedProductSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
+    audio = new Audio();
+  audioplay: boolean = false;
+  playpause: string = 'play'
+  playpauseImg:string = '../../../assets/images/play_video.svg'
     constructor(public _base: BaseServiceHelper,
         private _trackService: TrackService,
         public router: Router) { }
@@ -58,9 +63,11 @@ export class FeaturedProductSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
-        this._trackService.getFeaturedTrack().subscribe((data: any) => {
+        this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+        this._trackService.getFeaturedTrack(0,5,Ref_User_ID).subscribe((data: any) => {
             this.featuredTrack = data.filter(a => a.IsTrack == 'Track');
         })
+    })
     }
     redirect(id) {
         this.router.navigate(['product/details', id]).then((e) => {
@@ -70,6 +77,52 @@ export class FeaturedProductSliderComponent implements OnInit {
                 console.log("Navigation has failed!");
             }
         });
+    }
+    playaudio(path, id, data) {
+        debugger
+        if ($('.playpause_' + id).hasClass('pause')) {
+          data.filter(item => {
+            $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+            $('.playpause_' + item.Ref_Track_ID).addClass('play');
+          })
+          this.audio.pause();
+          this.audio = new Audio();
+          this.playpause = 'Play';
+          this.playpauseImg = '../../../assets/images/play_video.svg'
+         // $('.playpause_' + id).removeClass('pause');
+          //$('.playpause_' + id).addClass('play');
+        } else if ($('.playpause_' + id).hasClass('play')) {
+          this.audio.src = this._base._commonService.cdnURL + path;
+          data.filter(item => {
+            $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+            $('.playpause_' + item.Ref_Track_ID).addClass('play');
+          })
+          this.audio.pause();
+          this.audio.load();
+          this.audio.play();
+          this.playpause = 'Pause';
+          this.playpauseImg = '../../../assets/images/pause.svg'
+          $('.playpause_' + id).removeClass('play');
+          $('.playpause_' + id).addClass('pause');
+        }
+      }
+    useraction(ObjectID, ObjectType, Action){
+        this._base._commonService.showLoader()
+        this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+        let ObjUseraction = {
+            "UserID":Ref_User_ID,
+            "ObjectID": ObjectID,
+            "ObjectType": ObjectType,
+            "Action": Action
+          }
+        this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
+           console.log(data)
+           this.ngOnInit()
+           this._base._commonService.hideLoader()
+        },e =>{
+            this._base._commonService.hideLoader()
+        })
+    })
     }
 
 }

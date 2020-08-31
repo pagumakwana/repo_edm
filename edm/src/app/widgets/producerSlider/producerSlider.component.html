@@ -1,26 +1,30 @@
 <swiper class="product_slider producer_slider" [config]="config">
-    <div *ngFor="let slide of slides" class="swiper-slide">
+    <div *ngFor="let producer of producerlist" class="swiper-slide">
         <div class="slider_product">
             <div class="product_img">
-                <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
+                <img [src]="producer.ProfilePhoto" class="product_thumbnail">
                 <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                 <div class="producer_upper_layer">
                     <div class="producer_profile_photo">
-                        <img [src]="slide.ProfilePhoto" />
+                        <img [src]="producer.ProfilePhoto" />
                     </div>
                     <p class="product_name">
-                        CLOCK TYPE
+                        {{producer.FullName}}
                         <!-- <img src="" /> -->
                     </p>
                     <p class="producer_info">
-                        {{slide.Bio}}
+                        {{producer.Bio}}
                     </p>
                 </div>
             </div>
             <div class="product_details">
                 <div class="slider_buttons">
-                    <a class="global_btn icon_btn primary_btn">
+                    <a *ngIf="producer.Followed != 'Followed'" class="global_btn icon_btn primary_btn" (click)="useraction(producer.Ref_User_ID,'Producer','Follow')">
                         <span>Follow</span>
+                        <span class="follow_icon btn_icon left_btn_icon"></span>
+                    </a>
+                    <a *ngIf="producer.Followed == 'Followed'" class="global_btn icon_btn primary_btn">
+                        <span>Followed</span>
                         <span class="follow_icon btn_icon left_btn_icon"></span>
                     </a>
                     <a class="global_btn grey_btn">
@@ -30,7 +34,7 @@
             </div>
         </div>
     </div>
-    <div class="no_record" *ngIf="slides?.length == 0">
+    <div class="no_record" *ngIf="producerlist?.length == 0">
         No record found
     </div>
 </swiper>
