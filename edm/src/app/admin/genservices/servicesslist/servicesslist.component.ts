@@ -5,6 +5,7 @@ import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { DatatablesComponent } from 'src/app/commonmodule/datatables/datatables.component';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { ServiceModel } from 'src/app/_appModel/genservices/service.model';
+import { CategoryService } from 'src/app/_appService/category/category.serviec';
 declare var $: any;
 
 @Component({
@@ -16,9 +17,12 @@ declare var $: any;
 export class ServicesListComponent implements OnInit {
 
   constructor(public _base: BaseServiceHelper,
+    private _categoryService: CategoryService,
     private _service: GenService,
   ) { }
+  selectedCategory: any = 'ALL'
   serviceList = [];
+  categoryData: []
   _serviceModel: ServiceModel = {};
   @ViewChild('dataTableCom', { static: false }) tableObj: DatatablesComponent;
 
@@ -27,17 +31,35 @@ export class ServicesListComponent implements OnInit {
     this._base._commonService.showLoader();
     this._base._pageTitleService.setTitle("Manage Service", "Manage Service");
     this.getService()
+    this.getCategory()
   }
 
   getService() {
     this._service.getService('ALL', '0').subscribe((res: any) => {
-      this.serviceList = res
-      this.tableConfig.tableData = this.serviceList
-      this.tableObj.initializeTable()
+      this.serviceList = Array.isArray(res) ? res : []
+      this.loadTableData()
       setTimeout(() => {
         this._base._commonService.hideLoader();
       }, 500);
     })
+  }
+
+  loadTableData() {
+    // let tableData = JSON.parse(JSON.stringify(this.serviceList))
+    this.tableConfig.tableData = this.selectedCategory == 'ALL' ? JSON.parse(JSON.stringify(this.serviceList)) : this.serviceList.filter(item => item.Ref_Category_ID == this.selectedCategory)
+    console.log("loadTableData", this.tableConfig.tableData)
+    this.tableObj.initializeTable()
+  }
+
+  filterchange(event) {
+    console.log("filterchange", event, this.selectedCategory)
+    this.loadTableData()
+  }
+
+  getCategory() {
+    this._categoryService.categorylist('SERVICE', 0).subscribe((resData: any) => {
+      this.categoryData = resData
+    });
   }
 
   tableConfig: dataTableConfig = {
