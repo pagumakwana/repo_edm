@@ -34,26 +34,72 @@
         </div>
         <div class="form_group" *ngIf="addmodifymaster.value.IsParent == true">
             <div class="form_area icon_form_group">
-                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
+                <label class="form_label">Mandatory Masters
+                  
+                    <label>Select All   <input name="selectallusermaster" [ngModelOptions]="{standalone: true}" [(ngModel)]="AllMandatorychecked" type="checkbox"  [disabled]="AllNonMandatorychecked" (change)="selectallMandatory()">
+                        <span></span></label></label>
+                <!-- <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
                             <option [value]="undefined" disabled hidden>Select Parent Master</option>
                             <option *ngFor="let parentmaster of parentmasterlist" [value]="parentmaster.Ref_UserMaster_ID" [selected]="parentmaster.Ref_UserMaster_ID == Ref_UserMaster_ID">{{parentmaster.UserMaster}}</option>
                            
                         </select>
-                <span class="input_icon dropdown_icon"></span>
+                <span class="input_icon dropdown_icon"></span> -->
+                <!-- <ng-multiselect-dropdown name="parentmaster" formControlName="parentmaster" [placeholder]="'Select Parent Master'" [settings]="dropdownSettings" [data]="parentmasterlist" [disabled]="parentmasterlist.checked" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown> -->
+                <div *ngFor="let usermaster of masterlist; let i = index">
+                    <label class="checkbox">
+                        <input name="usermaster_A_{{i}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="usermaster.isMandatorychecked" type="checkbox"  [disabled]="usermaster.isnonMandatorychecked" (change)="selectMandatory()">{{usermaster.UserMaster}}
+                        <span></span>
+                    </label>
+                </div>
 
             </div>
-            <edm-error [control]="addmodifymaster.controls.parentmaster"></edm-error>
+            <div class="form_area icon_form_group">
+                <label class="form_label">Non-Mandatory Masters  
+                <label> Select All<input name="selectallnonusermaster" [ngModelOptions]="{standalone: true}" [(ngModel)]="AllNonMandatorychecked" type="checkbox"  [disabled]="AllMandatorychecked" (change)="selectallNonMandatory()"> <span></span></label></label>
+                <!-- <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
+                            <option [value]="undefined" disabled hidden>Select Parent Master</option>
+                            <option *ngFor="let parentmaster of parentmasterlist" [value]="parentmaster.Ref_UserMaster_ID" [selected]="parentmaster.Ref_UserMaster_ID == Ref_UserMaster_ID">{{parentmaster.UserMaster}}</option>
+                           
+                        </select>
+                <span class="input_icon dropdown_icon"></span> -->
+                <!-- <ng-multiselect-dropdown name="parentmaster" formControlName="parentmaster" [placeholder]="'Select Parent Master'" [settings]="dropdownSettings" [data]="nonparentmasterlist" [disabled]="nonparentmasterlist.checked" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                    (onSelectAll)="onSelectAll($event)">
+                </ng-multiselect-dropdown> -->
+                <div *ngFor="let nonusermaster of masterlist; let i = index">
+                    <label class="checkbox">
+                        <input [ngModelOptions]="{standalone: true}" name="usermaster_B_{{i}}" [(ngModel)]="nonusermaster.isnonMandatorychecked" type="checkbox"  [disabled]="nonusermaster.isMandatorychecked" (change)="selectNonMandatory()">{{nonusermaster.UserMaster}}
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+            <!-- <edm-error [control]="addmodifymaster.controls.parentmaster"></edm-error> -->
 
         </div>
         <div class="form_group" *ngIf="modulename=='masterdata'">
             <div class="form_area icon_form_group">
-                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster">
+                <select name="parentmaster" formControlName="parentmaster" [value]="Ref_UserMaster_ID" [(ngModel)]="parentmaster" (ngModelChange)="getparentMasterlist($event)">
                             <option [value]="undefined" disabled hidden>Select Master</option>
                             <option *ngFor="let master of masterlist" [value]="master.Ref_UserMaster_ID" [selected]="master.Ref_UserMaster_ID == Ref_UserMaster_ID">{{master.UserMaster}}</option>
                            
                         </select>
                 <span class="input_icon dropdown_icon"></span>
 
+            </div>
+            <div *ngFor="let masterlist of parentmasterlist; let i = index">
+                <label *ngIf="masterlist.userMasterData.length != 0 && masterlist.IsMandatory != true">{{masterlist.UserMaster}}</label>
+                <label *ngIf="masterlist.userMasterData.length != 0 && masterlist.IsMandatory == true">{{masterlist.UserMaster}}*</label>
+                <label class="checkbox" *ngIf="masterlist.userMasterData.length != 0">
+                    <input [ngModelOptions]="{standalone: true}" name="master_{{i}}" [(ngModel)]="masterlist.isSelected" type="checkbox" (change)="SelectAllmasterlist(i,$event)">Select All
+                    <span></span>
+                </label>
+                <div *ngFor="let masterdata of masterlist.userMasterData; let index = index">
+                    <label class="checkbox">
+                        <input [ngModelOptions]="{standalone: true}" name="masterdata_{{i}}{{index}}" [(ngModel)]="masterdata.isSelected" type="checkbox" (change)="onSelectMasterData(i)">{{masterdata.UserMasterData}}
+                        <span></span>
+                    </label>
+                </div>
             </div>
             <edm-error [control]="addmodifymaster.controls.parentmaster"></edm-error>
 

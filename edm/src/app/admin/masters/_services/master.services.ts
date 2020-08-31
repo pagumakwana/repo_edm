@@ -16,8 +16,8 @@ export class MastersServices {
     getParentMasterlist(id){
         return this._base._ApiService.get(ApiConstant.MasterManagement.ParentUserMaster + '?UserMasterID=' + id);
     }
-    getMasterDatalist(id){
-        return this._base._ApiService.get(ApiConstant.MasterManagement.UserMasterData + '?UserMasterID=' + id);
+    getMasterDatalist(usermasterid, usermasterdataid){
+        return this._base._ApiService.get(ApiConstant.MasterManagement.UserMasterData + '?UserMasterID=' + usermasterid + '&UserMasterDataID='+usermasterdataid);
     }
     addmodifyMasterData(data){
         return this._base._ApiService.post(ApiConstant.MasterManagement.UserMasterData, data);

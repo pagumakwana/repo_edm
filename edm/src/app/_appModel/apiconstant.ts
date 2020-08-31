@@ -45,4 +45,12 @@ export class ApiConstant {
         FilterTrack: "User/Track/FilterTrack",
         TrackAndBeatDetails: "User/Track/TrackAndBeatDetails",
     }
+    public static Order = {
+        UserAction: "UserOrder/UserAction",
+    }
+    public static AuthorityManagement = {
+        Module: "Admin/AuthorityManagement/Module",
+        Authority: "Admin/AuthorityManagement/Authority",
+        AuthorityDetails: "Admin/AuthorityManagement/AuthorityDetails",
+    }
 }

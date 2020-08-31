@@ -3,7 +3,7 @@
         <div class="product_thumbnail_sec">
             <img [src]="product.ThumbnailImageUrl" />
             <div class="product_thumbnail_hover_sec" [id]="product.Ref_Track_ID">
-                <img style="background:none" (click)="playaudio(product.StemsUrl, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
+                <img style="background:none" (click)="playaudio(product.MasterFileUrl, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
             </div>
         </div>
         <div class="product_details">
@@ -42,11 +42,15 @@
                 </li>
             </ul>
             <div class="button_group">
-                <a class="global_btn icon_btn secondary_btn">
+                <a *ngIf="product.Favourite != 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')">
                     <span>Add To Favourites</span>
                     <span class="add_to_favourites_icon btn_icon"></span>
                 </a>
-                <a class="global_btn icon_btn primary_btn">
+                <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn">
+                    <span>Favourite</span>
+                    <span class="add_to_favourites_icon btn_icon"></span>
+                </a>
+                <a class="global_btn icon_btn primary_btn" (click)="useraction(product.Ref_Track_ID,'Track','Add to cart')">
                     <span>Add To Cart</span>
                     <span class="add_to_cart_icon btn_icon"></span>
                 </a>

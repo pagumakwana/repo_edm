@@ -1,0 +1,28 @@
+<div class="filter_section desktop_filter_section">
+    <a class="add_new" routerLink="/admin/authority/0">
+        <span class="add_new_icon"></span>
+        <span>Add Authority</span>
+    </a>
+</div>
+
+<div class="primary_table">
+    <table style="min-width: 998px;">
+        <thead>
+            <tr>
+                <th>Authority Name</th>
+                <th>Authority Type</th>
+                <th>Is Active</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let authority of data">
+                <td><a (click)="redirectToaddmodifyauthority(authority.Ref_Authority_ID)">{{authority.AuthorityName}}</a></td>
+                <td>{{authority.AuthorityType}}</td>
+                <td>{{authority.IsActive}}</td>
+            </tr>
+        </tbody>
+        <div class="no_record" *ngIf="data?.length == 0">
+            No record found
+        </div>
+    </table>
+</div>
