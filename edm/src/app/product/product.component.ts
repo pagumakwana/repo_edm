@@ -3,6 +3,7 @@ import { BaseServiceHelper } from '../_appService/baseHelper.service';
 import { ApiConstant } from '../_appModel/apiconstant';
 import { CategoryService } from './../_appService/category/category.serviec';
 import { Options, LabelType } from 'ng5-slider';
+import { enAppSession } from '../_appModel/enAppSession';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -35,6 +36,10 @@ export class ProductComponent implements OnInit {
   public genrelist: any;
   public selectedGenre = []
   public selectedDAW=[]
+  audio = new Audio();
+  audioplay: boolean = false;
+  playpause: string = 'play'
+  playpauseImg:string = '../../../assets/images/play_video.svg'
   constructor(public _base: BaseServiceHelper,
   private _categoryService: CategoryService,) { 
     this.bindDAW()
@@ -56,7 +61,8 @@ export class ProductComponent implements OnInit {
   }
   getProductlist() {
     debugger;
-    this._base._ApiService.get(ApiConstant.Track.FilterTrack + '?StartCount=0&EndCount=0').subscribe((data: any) => {
+    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+    this._base._ApiService.get(ApiConstant.Track.FilterTrack + '?UserID='+Ref_User_ID+'&StartCount=0&EndCount=0').subscribe((data: any) => {
       this.products = data;
       this._base._commonService.hideLoader();
       this.Productlist = this.products;
@@ -66,6 +72,7 @@ export class ProductComponent implements OnInit {
         item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
       })
     })
+  })
   }
   bindDAW() {
     this._base._ApiService.get(ApiConstant.MasterManagement.DAW).subscribe((data: any) => {
@@ -157,4 +164,48 @@ export class ProductComponent implements OnInit {
     console.log(this.selectedDAW);
     console.log(this.minValue, this.maxValue)
   }
+  useraction(ObjectID, ObjectType, Action){
+    this._base._commonService.showLoader()
+    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+    let ObjUseraction = {
+        "UserID":Ref_User_ID,
+        "ObjectID": ObjectID,
+        "ObjectType": ObjectType,
+        "Action": Action
+      }
+    this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
+       console.log(data);
+       this.getProductlist();
+       this._base._commonService.hideLoader()
+    },e =>{
+      this._base._commonService.hideLoader()
+    })
+})
+}
+playaudio(path, id, data) {
+  debugger
+  if ($('.playpause_' + id).hasClass('pause')) {
+    data.filter(item => {
+      $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+      $('.playpause_' + item.Ref_Track_ID).addClass('play');
+    })
+    this.audio.pause();
+    this.audio = new Audio();
+    this.playpause = 'Play';
+    this.playpauseImg = '../../../assets/images/play_video.svg'
+  } else if ($('.playpause_' + id).hasClass('play')) {
+    this.audio.src = this._base._commonService.cdnURL + path;
+    data.filter(item => {
+      $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+      $('.playpause_' + item.Ref_Track_ID).addClass('play');
+    })
+    this.audio.pause();
+    this.audio.load();
+    this.audio.play();
+    this.playpause = 'Pause';
+    this.playpauseImg = '../../../assets/images/pause.svg'
+    $('.playpause_' + id).removeClass('play');
+    $('.playpause_' + id).addClass('pause');
+  }
+}
 }

@@ -15,6 +15,7 @@ export class ApiConstant {
     }
     public static genService = {
         Service: "Admin/ServiceManagement/Service",
+        ManageService: "Admin/ServiceManagement/ManageService",
         servicebycatehory: "User/Service/ServiceByCategory",
     }
     public static common = {
@@ -43,5 +44,13 @@ export class ApiConstant {
     public static Track = {
         FilterTrack: "User/Track/FilterTrack",
         TrackAndBeatDetails: "User/Track/TrackAndBeatDetails",
+    }
+    public static Order = {
+        UserAction: "UserOrder/UserAction",
+    }
+    public static AuthorityManagement = {
+        Module: "Admin/AuthorityManagement/Module",
+        Authority: "Admin/AuthorityManagement/Authority",
+        AuthorityDetails: "Admin/AuthorityManagement/AuthorityDetails",
     }
 }

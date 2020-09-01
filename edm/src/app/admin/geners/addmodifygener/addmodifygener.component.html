@@ -20,7 +20,7 @@
             <div class="form_area icon_form_group">
                 <select name="ParentCategory" formControlName="Ref_Parent_ID">
                     <option value="">Select Parent Category</option>
-                    <option *ngFor="let objCategory of categoryData" [value]="objCategory.Ref_Category_ID">
+                    <option *ngFor="let objCategory of categoryDataWOCurrent" [value]="objCategory.Ref_Category_ID">
                         {{objCategory.CategoryName}}</option>
                 </select>
                 <span class="input_icon dropdown_icon"></span>
@@ -65,7 +65,8 @@
                     </label>
                     <!-- <label class="custom-file-label upload_btn"></label> -->
                 </div>
-                <span class="file_formats">Note: File upload limit - 1GB</span>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png,
+                    .jpeg</span>
                 <edm-error [control]="formCategory?.controls?.ImageUrl"></edm-error>
 
             </div>

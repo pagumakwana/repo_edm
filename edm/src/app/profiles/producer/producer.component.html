@@ -12,7 +12,9 @@
         </div>
         <div class="social_section">
             <p class="tracks_list">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+                scrambled it to make a type specimen book.
             </p>
             <div class="button_group">
                 <a class="global_btn icon_btn primary_btn mini_btn">
@@ -51,30 +53,30 @@
                 </div>
             </div>
             <div class="tab_section desktop_tabs">
-                <p class="tab_list">
-                    <a>BIOGRAPHY</a>
+                <p (click)="changeTab(producerTab.biography)" class="tab_list">
+                    <a [ngClass]="{'active' : currentTab == producerTab.biography }">BIOGRAPHY</a>
                 </p>
-                <p class="tab_list">
-                    <a class="active">ALL TRACKS</a>
+                <p (click)="changeTab(producerTab.all_track)" class="tab_list">
+                    <a [ngClass]="{'active' : currentTab == producerTab.all_track }">ALL TRACKS</a>
                 </p>
-                <p class="tab_list">
-                    <a>SOLD OUT TRACKS</a>
+                <p (click)="changeTab(producerTab.sold_out_track)" class="tab_list">
+                    <a [ngClass]="{'active' : currentTab == producerTab.sold_out_track }">SOLD OUT TRACKS</a>
                 </p>
-                <p class="tab_list">
-                    <a>BEATS</a>
+                <p (click)="changeTab(producerTab.beats)" class="tab_list">
+                    <a [ngClass]="{'active' : currentTab == producerTab.beats }">BEATS</a>
                 </p>
-                <p class="tab_list">
-                    <a>CUSTOM SERVICES</a>
+                <p (click)="changeTab(producerTab.customer_services)" class="tab_list">
+                    <a [ngClass]="{'active' : currentTab == producerTab.customer_services }">CUSTOM SERVICES</a>
                 </p>
             </div>
             <div class="form_group mobile_tabs">
                 <div class="form_area icon_form_group">
-                    <select>
-                        <option>BIOGRAPGY</option>
-                        <option>ALL TRACKS</option>
-                        <option>SOLD OUT TRACKS</option>
-                        <option>BEATS</option>
-                        <option>CUSTOM SERVICES</option>
+                    <select [(ngModel)]="currentTab">
+                        <option [value]="producerTab.biography">BIOGRAPGY</option>
+                        <option [value]="producerTab.all_track">ALL TRACKS</option>
+                        <option [value]="producerTab.sold_out_track">SOLD OUT TRACKS</option>
+                        <option [value]="producerTab.beats">BEATS</option>
+                        <option [value]="producerTab.customer_services">CUSTOM SERVICES</option>
                     </select>
                     <span class="input_icon dropdown_icon"></span>
                 </div>
@@ -85,20 +87,22 @@
     <div class="tab_options">
 
         <!-- BIOGRAPHY -->
-        <div>
+        <div *ngIf="currentTab == producerTab.biography">
             <div class="biography_sec">
                 <h3>MOMOSE MUSIC</h3>
                 <div class="from_sec">
                     <span>From:</span> <span class="from_country_name">INDIA</span>
                 </div>
                 <p class="biography_disc">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
+                    and scrambled it to make a type specimen book.
                 </p>
             </div>
         </div>
 
         <!-- ALL TRACKS -->
-        <div>
+        <div *ngIf="currentTab == producerTab.all_track">
             <div class="product_box">
                 <div class="slider_product">
                     <div class="product_img">
@@ -345,7 +349,7 @@
         </div>
 
         <!-- SOLD OUT TRACKS -->
-        <div>
+        <div *ngIf="currentTab == producerTab.sold_out_track">
             <div class="product_box">
                 <div class="slider_product">
                     <div class="product_img">
@@ -601,12 +605,12 @@
         </div>
 
         <!-- BEATS -->
-        <div>
+        <div *ngIf="currentTab == producerTab.beats">
             <!-- Table design comes here -->
         </div>
 
         <!-- CUSTOM SERVICES -->
-        <div>
+        <div *ngIf="currentTab == producerTab.customer_services">
             <div class="news_sec">
                 <div class="news_data">
                     <img src="../../assets/images/blog1.jpg">
@@ -662,5 +666,5 @@
         </div>
 
     </div>
-    
+
 </div>

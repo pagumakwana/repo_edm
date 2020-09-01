@@ -1,19 +1,23 @@
 <div class="filter_section desktop_filter_section">
+    <a class="add_new" routerLink='/admin/addmodifytracks/{{moduleName}}/0' style="width: 100%;margin-bottom: 15px;">
+        <span class="add_new_icon"></span>
+        <span>Add New {{moduleName}}</span>
+    </a>
     <div class="inline_checkbox">
         <label class="checkbox">
-            <input name="tracks" [(ngModel)]="filter.Approved" type="checkbox"  (change)="onStatusChange('Approve')">Available Tracks
+            <input name="tracks" [(ngModel)]="filter.Approved" type="checkbox"  (change)="onStatusChange('Approve')">Available {{moduleName}}s
             <span></span>
         </label>
         <label class="checkbox">
-            <input name="tracks" [(ngModel)]="filter.SoldOut" type="checkbox" (change)="onStatusChange('SoldOut')">Sold Out Tracks
+            <input name="tracks" [(ngModel)]="filter.SoldOut" type="checkbox" (change)="onStatusChange('SoldOut')">Sold Out {{moduleName}}s
             <span></span>
         </label>
         <label class="checkbox error_color">
-            <input name="tracks" [(ngModel)]="filter.Rejected" type="checkbox" (change)="onStatusChange('Rejax`cted')">Rejected Tracks
+            <input name="tracks" [(ngModel)]="filter.Rejected" type="checkbox" (change)="onStatusChange('Rejax`cted')">Rejected {{moduleName}}s
             <span></span>
         </label>
         <label class="checkbox">
-            <input name="tracks" [(ngModel)]="filter.Pending" type="checkbox" (change)="onStatusChange('Pending')">Pending Tracks
+            <input name="tracks" [(ngModel)]="filter.Pending" type="checkbox" (change)="onStatusChange('Pending')">Pending {{moduleName}}s
             <span></span>
         </label>
     </div>
@@ -50,7 +54,7 @@
                 <th>GANRE</th>
                 <th>STATUS</th>
                 <th width="270px">COMMENT</th>
-                <th>TRACK APPROVAL</th>
+                <th>{{moduleName}} APPROVAL</th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +62,7 @@
                 <td>
                     <div class="play_upper_layer">
                         <img class="tbl_img" [src]="track.ThumbnailImageUrl" />
-                        <div class="play_audio" [id]="track.Ref_Track_ID" (click)="playaudio(track.StemsUrl, track.Ref_Track_ID, data)">
+                        <div class="play_audio" [id]="track.Ref_Track_ID" (click)="playaudio(track.MasterFileUrl, track.Ref_Track_ID, data)">
                             <span class="playpause_{{track.Ref_Track_ID}} play"></span>
                             <!-- <span title="Pause" class="pause" style="display: none;"></span> -->
                         </div>

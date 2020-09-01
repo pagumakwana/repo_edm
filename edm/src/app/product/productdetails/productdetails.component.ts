@@ -51,7 +51,8 @@ export class ProductDetailsComponent implements OnInit {
   }
   public getProductDetails(productId) {
     debugger
-    this._base._ApiService.get(ApiConstant.Track.TrackAndBeatDetails + '?TrackID=' + productId).subscribe((data: any) => {
+    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+    this._base._ApiService.get(ApiConstant.Track.TrackAndBeatDetails + '?UserID='+ Ref_User_ID +'&TrackID=' + productId).subscribe((data: any) => {
       console.log(data);
       this.productDetails = data;
       this.productDetails.map(item => {
@@ -59,6 +60,7 @@ export class ProductDetailsComponent implements OnInit {
         item.DAW = this.getDawName(item.DAW);
       })
     })
+  })
   }
   playaudio(path, id, data) {
     debugger
@@ -88,4 +90,17 @@ export class ProductDetailsComponent implements OnInit {
       $('.playpause_' + id).addClass('pause');
     }
   }
+  useraction(ObjectID, ObjectType, Action){
+    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+    let ObjUseraction = {
+        "UserID":Ref_User_ID,
+        "ObjectID": ObjectID,
+        "ObjectType": ObjectType,
+        "Action": Action
+      }
+    this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
+       console.log(data)
+    })
+})
+}
 }

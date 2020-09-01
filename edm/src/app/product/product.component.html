@@ -85,19 +85,20 @@
                 <div class="product_img">
                     <img [src]="product.ThumbnailImageUrl" class="product_thumbnail">
                     <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
+                        <img style="background:none" (click)="playaudio(product.PlayUrl, product.Ref_Track_ID, filtersproducts)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
                         <p class="product_name">{{product.TrackName}}</p>
                         <p class="product_bass">{{product.CategoryName}}</p>
                     </div>
                 </div>
                 <div class="product_details">
                     <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
+                        <img *ngIf="product.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')" />
+
+                        <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" />
                         <img src="../../../assets/images/read_more.svg" routerLink="details/{{product.Ref_Track_ID}}" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
+                        <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="useraction(product.Ref_Track_ID,'Track','Add to cart')">
                             <span>&#36;{{product.Price}}</span>
                             <span class="add_to_cart_icon btn_icon"></span>
                         </a>

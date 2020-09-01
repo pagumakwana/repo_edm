@@ -79,7 +79,8 @@
                 <div class="width_50">
                     <div class="form_group">
                         <div class="form_area icon_form_group">
-                            <input formControlName="Price" type="text" name="enterprice" placeholder="Enter Price" />
+                            <!-- <input formControlName="Price" type="number" name="enterprice" placeholder="Enter Price" /> -->
+                            <input formControlName="Price" type="text" placeholder="Enter Price" />
                             <span class="input_icon price_icon"></span>
                         </div>
                         <edm-error [control]="addServiceForm.controls.Price"></edm-error>
@@ -89,7 +90,7 @@
                     <div class="form_group">
                         <div class="form_area icon_form_group">
                             <input type="text" formControlName="PriceWithProjectFiles" name="filesincluded"
-                                placeholder="Files Included" />
+                                placeholder="Enter price including files" />
                             <span class="input_icon included_icon"></span>
                         </div>
                         <edm-error [control]="addServiceForm.controls.PriceWithProjectFiles"></edm-error>
@@ -160,12 +161,13 @@
                 <label class="form_label">Upload Service Video</label>
                 <div class="form_area" *ngIf="fileChoosenData.ServiceVideoUrl.length < 1">
                     <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input" id="customFile">
+                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
+                            id="customFile">
                         <label class="custom-file-label" for="customFile">
                             Choose file
                         </label>
                     </div>
-                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
+                    <span class="file_formats">Note: File upload limit - 50MB, Attchment format : .mp4</span>
                 </div>
                 <div class="form_area" *ngFor="let video of fileChoosenData.ServiceVideoUrl;let i = index;">
                     <video controls>
@@ -178,9 +180,9 @@
                 </div>
                 <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
             </div>
-                <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
+            <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
 
-                <!-- <div class="form_group">
+            <!-- <div class="form_group">
                         <label class="form_label">Upload Service Cover Image</label>
                         <div id="imgPreview" class="imgPreview">
                             <img height="80" width="120" [src]="thumb" />
@@ -214,7 +216,8 @@
                             </div>
                         </ng-container>
                     </div>
-                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png</span>
+                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png,
+                        .jpeg</span>
                 </div>
                 <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
 

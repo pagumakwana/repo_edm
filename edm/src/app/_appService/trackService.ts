@@ -8,8 +8,9 @@ export class TrackService {
     constructor(private _base: BaseServiceHelper) {
 
     }
-    getFeaturedTrack() {
-        return this._base._ApiService.get(`${ApiConstant.TrackManagement.FeaturedTrack}`);
+    getFeaturedTrack(StartCount,EndCount,userID) {
+        let params = `?UserID=${userID}&StartCount=${StartCount}&EndCount=${EndCount}`
+        return this._base._ApiService.get(`${ApiConstant.TrackManagement.FeaturedTrack + params}`);
     }
 
 }
