@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
     this.getArtistBranding();
   }
   getArtistBranding() {
-    this._genService.getServiceByCategory(0, 10, 'artist-branding').subscribe((data: any) => {
+    this._genService.getServiceByCategory(0, 10, 'ARTISTBRANDING').subscribe((data: any) => {
       this.artistBranding = data;
     })
   }

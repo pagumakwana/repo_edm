@@ -15,5 +15,4 @@ export class CoupanListComponent implements OnInit {
     this._base._pageTitleService.setTitle("ALL COUPAN CODE", "ALL COUPAN CODE");
   }
 
-
 }

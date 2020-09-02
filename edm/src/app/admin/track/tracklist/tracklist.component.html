@@ -5,19 +5,19 @@
     </a>
     <div class="inline_checkbox">
         <label class="checkbox">
-            <input name="tracks" [(ngModel)]="filter.Approved" type="checkbox"  (change)="onStatusChange('Approve')">Available {{moduleName}}s
+            <input name="tracks" [(ngModel)]="filter.Approved" type="checkbox"  (change)="onStatusChange()">Available {{moduleName}}s
             <span></span>
         </label>
         <label class="checkbox">
-            <input name="tracks" [(ngModel)]="filter.SoldOut" type="checkbox" (change)="onStatusChange('SoldOut')">Sold Out {{moduleName}}s
+            <input name="tracks" [(ngModel)]="filter.SoldOut" type="checkbox" (change)="onStatusChange()">Sold Out {{moduleName}}s
             <span></span>
         </label>
         <label class="checkbox error_color">
-            <input name="tracks" [(ngModel)]="filter.Rejected" type="checkbox" (change)="onStatusChange('Rejax`cted')">Rejected {{moduleName}}s
+            <input name="tracks" [(ngModel)]="filter.Rejected" type="checkbox" (change)="onStatusChange()">Rejected {{moduleName}}s
             <span></span>
         </label>
         <label class="checkbox">
-            <input name="tracks" [(ngModel)]="filter.Pending" type="checkbox" (change)="onStatusChange('Pending')">Pending {{moduleName}}s
+            <input name="tracks" [(ngModel)]="filter.Pending" type="checkbox" (change)="onStatusChange()">Pending {{moduleName}}s
             <span></span>
         </label>
     </div>
@@ -54,7 +54,7 @@
                 <th>GANRE</th>
                 <th>STATUS</th>
                 <th width="270px">COMMENT</th>
-                <th>{{moduleName}} APPROVAL</th>
+                <th>ACTIONS</th>
             </tr>
         </thead>
         <tbody>
@@ -85,18 +85,18 @@
                         <span>Reject</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>
-                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="global_btn icon_btn primary_btn">
-                        <span>Edit</span>
-                        <span class="edit_icon btn_icon"></span>
+                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="small_icon_btn" title="Edit">
+                        <!-- <span>Edit</span> -->
+                        <span class="edit_btn"></span>
                     </a>
-                    <a (click)="manageTrackBeat(track.Ref_Track_ID, 'Delete')" class="global_btn icon_btn red_btn">
-                        <span>Delete</span>
-                        <span class="delete_icon btn_icon"></span>
+                    <a (click)="manageTrackBeat(track.Ref_Track_ID, 'Delete')" class="small_icon_btn" title="Delete">
+                        <!-- <span>Delete</span> -->
+                        <span class="delete_btn"></span>
                     </a>
-                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="global_btn icon_btn grey_btn">
+                    <!-- <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="global_btn icon_btn grey_btn">
                         <span>View</span>
                         <span class="view_icon btn_icon"></span>
-                    </a>
+                    </a> -->
                 </td>
             </tr>
             <!-- <tr>
@@ -274,7 +274,26 @@
         </div>
     </div>
 </div>
+<div class="modal fade plain_content" id="rejectConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-sm modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Reject</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Do You want to Reject?
 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-block primary_btn" (click)="confirmReject()">Yes</button>
+                <button type="button" class="btn btn-block primary_btn" data-dismiss="modal" aria-label="Close">CANCEL</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade plain_content" id="rejectReason_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-sm modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -289,12 +308,11 @@
                     <input type="text" name="rejectReason" formControlName="rejectReason" placeholder="Reason" [(ngModel)]="rejectReason" />
                     <edm-error [control]="addrejectreason.controls.rejectReason"></edm-error>
                 </form>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-block primary_btn" (click)="accept()">Reject</button>
-                </div>
+
             </div>
-
-
+            <div class="modal-footer">
+                <button type="button" class="btn btn-block primary_btn" (click)="accept()">Reject</button>
+            </div>
         </div>
     </div>
 </div>

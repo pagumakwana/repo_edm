@@ -150,7 +150,7 @@
         <div class="form_group">
             <div class="form_area icon_form_group">
                 <input type="text" onKeyDown="if(this.value > 300) return true;" maxlength="3" (keyup)="OnlyNumber($event, '301')" class="form-control" name="trackbmp" [(ngModel)]="model.trackbmp" #trackbmp="ngModel" [ngClass]="{ 'is-invalid': f.submitted && trackbmp.invalid }"
-                    required placeholder="{{moduleName}} BMP (beats per minutes)" />
+                    required placeholder="{{moduleName}} BPM (beats per minutes)" />
                 <span class="input_icon bmp_icon"></span>
             </div>
             <div *ngIf="f.submitted && trackbmp.invalid">
@@ -162,7 +162,7 @@
             </div>
             <div *ngIf="minuteslimit">
                 <div class="error_msg">
-                    <span>Amount limit upto 300</span>
+                    <span>BPM limit upto 300</span>
                 </div>
             </div>
         </div>
