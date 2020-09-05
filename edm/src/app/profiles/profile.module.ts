@@ -24,6 +24,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
             {
                 path: 'producer',
                 component: ProducerProfileComponent
+            },
+            {
+                path: 'producer/:producerID',
+                component: ProducerProfileComponent
             }
         ]),
     ],

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { producerTab } from '../model/producer.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-producer',
@@ -9,11 +10,16 @@ import { producerTab } from '../model/producer.model';
 })
 
 export class ProducerProfileComponent implements OnInit {
-    constructor() { }
+    constructor(
+        private _activatedRouter: ActivatedRoute,
+    ) { }
 
     ngOnInit(): void {
+        this.producerID = this._activatedRouter.snapshot.paramMap.get('producerID');
+        console.log(this.producerID, "producerID")
     }
 
+    producerID: string = null
     producerTab = producerTab
     currentTab: producerTab = producerTab.biography;
 
