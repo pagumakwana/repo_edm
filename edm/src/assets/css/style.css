@@ -109,6 +109,12 @@ a, a:hover {
 .float_none {
     float: none !important;
 }
+.padding_0 {
+    padding: 0 !important;
+}
+.margin_0 {
+    margin: 0 !important;
+}
 .width_100 {
     width: 100% 
 }
@@ -278,6 +284,14 @@ label.checkbox, label.radio {
     background: #04af80 !important;
     border: 1px solid #05C38F;
     color: white !important;
+}
+.table_btn a {
+    vertical-align: middle;
+}
+.primary_btn b {
+    color: black;
+    font-size: 12px;
+    padding-left: 5px;
 }
 .dataTables_paginate {
     font-size: 13px;
@@ -699,6 +713,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .add_to_cart_icon {
     background: url(../images/add_to_cart.svg) no-repeat;
 }
+.add_to_cart_blue_icon {
+    background: url(../images/add_to_cart_blue.svg) no-repeat;
+}
 .follow_icon {
     background: url(../images/follow.svg) no-repeat;
 }
@@ -707,6 +724,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .add_to_favourites_white_icon {
     background: url(../images/blank_white_heart.svg) no-repeat;
+}
+.add_to_favourites_green_icon {
+    background: url(../images/blank_heart.svg) no-repeat;
 }
 .plus_icon {
     background: url(../images/plus.svg) no-repeat;
@@ -861,6 +881,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .cancel_tick {
     background: url(../images/delete_red.svg) no-repeat;
 }
+.readmore_icon {
+    background: url(../images/read_more.svg) no-repeat;
+}
 .ng5-slider .ng5-slider-pointer:after {
     background: url(../images/next_arrow.svg) no-repeat !important;
 }
@@ -901,7 +924,7 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
     margin: auto !important;
 }
 .small_icon_btn > span {
-    background-size: 15px !important;
+    background-size: contain !important;
     width: 15px;
     height: 15px;
     display: inline-block;
