@@ -109,6 +109,9 @@ export class ProfileUpdateService {
     TrackAndBeat(ProducersID: string, UserID: string) {
         return this._base._ApiService.get(`${ApiConstant.customer.TrackAndBeat}?ProducersID=${ProducersID}&UserID=${UserID}`);
     }
+    UserAction(data: { UserID: number, ObjectID: number, ObjectType: string, Action: string }) {
+        return this._base._ApiService.get(`${ApiConstant.Order.UserAction}`, data);
+    }
 
 
 }

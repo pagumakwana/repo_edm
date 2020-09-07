@@ -27,13 +27,16 @@ export class ProducerProfileComponent implements OnInit {
         })
     }
 
-    producerReqData: {
-        producerID: string,
-        Ref_User_ID: string
-    } = {
-            producerID: null,
-            Ref_User_ID: null
-        }
+    producerReqData: { producerID: string, Ref_User_ID: string } = {
+        producerID: null,
+        Ref_User_ID: null
+    }
+    UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
+        UserID: parseInt(this.producerReqData.Ref_User_ID),
+        ObjectID: parseInt(this.producerReqData.producerID),
+        ObjectType: "Producer",
+        Action: null
+    }
     producerTab = producerTab
     currentTab: producerTab = producerTab.biography;
 
@@ -50,6 +53,13 @@ export class ProducerProfileComponent implements OnInit {
     TrackAndBeat() {
         this._profileService.TrackAndBeat(this.producerReqData.producerID, this.producerReqData.Ref_User_ID).subscribe((res: any) => {
             console.log("TrackAndBeat", res)
+        })
+    }
+
+    UserAction(isFollow: boolean) {
+        this.UserActionData.Action = isFollow ? 'Follow' : "Unfollow"
+        this._profileService.UserAction(this.UserActionData).subscribe((res: any) => {
+            console.log("UserAction", res)
         })
     }
 
