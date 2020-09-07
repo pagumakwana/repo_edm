@@ -103,5 +103,12 @@ export class ProfileUpdateService {
         })
     }
 
+    CustomServices(ProducersID: string) {
+        return this._base._ApiService.get(`${ApiConstant.customer.CustomServices}?ProducersID=${ProducersID}`);
+    }
+    TrackAndBeat(ProducersID: string, UserID: string) {
+        return this._base._ApiService.get(`${ApiConstant.customer.TrackAndBeat}?ProducersID=${ProducersID}&UserID=${UserID}`);
+    }
+
 
 }

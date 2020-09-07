@@ -8,6 +8,8 @@ export class ApiConstant {
         requestOTP: "Admin/UserManagement/RequestOTP",
         registerGuest: "Admin/UserManagement/RegisterGuest",
         Producers: "User/Producers",
+        CustomServices: "User/CustomServices",
+        TrackAndBeat: "User/TrackAndBeat"
     }
     public static category = {
         AddModifyCategory: "Admin/MasterManagement/Category",

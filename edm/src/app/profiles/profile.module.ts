@@ -6,6 +6,7 @@ import { WidgetsModule } from '../widgets/widget.module';
 import { UserProfileComponent } from './user/user.component';
 import { ProducerProfileComponent } from './producer/producer.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProfileUpdateService } from '../_appService/profileupdate/profileupdate.service';
 @NgModule({
     declarations: [
         UserProfileComponent,
@@ -31,6 +32,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
             }
         ]),
     ],
-    providers: []
+    providers: [ProfileUpdateService]
 })
 export class ProfileModule { }
