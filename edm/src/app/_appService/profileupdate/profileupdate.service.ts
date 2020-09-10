@@ -106,11 +106,14 @@ export class ProfileUpdateService {
     CustomServices(ProducersID: string) {
         return this._base._ApiService.get(`${ApiConstant.customer.CustomServices}?ProducersID=${ProducersID}`);
     }
+    Producers(UserID: string) {
+        return this._base._ApiService.get(`${ApiConstant.customer.Producers}?UserID=${UserID}&StartCount=1&EndCount=1`);
+    }
     TrackAndBeat(ProducersID: string, UserID: string) {
         return this._base._ApiService.get(`${ApiConstant.customer.TrackAndBeat}?ProducersID=${ProducersID}&UserID=${UserID}`);
     }
     UserAction(data: { UserID: number, ObjectID: number, ObjectType: string, Action: string }) {
-        return this._base._ApiService.get(`${ApiConstant.Order.UserAction}`, data);
+        return this._base._ApiService.post(`${ApiConstant.Order.UserAction}`, data);
     }
 
 

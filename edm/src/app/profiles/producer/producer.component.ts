@@ -22,8 +22,11 @@ export class ProducerProfileComponent implements OnInit {
         console.log(this.producerReqData.producerID, "producerID")
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(userID => {
             this.producerReqData.Ref_User_ID = userID
+            this.UserActionData.UserID = parseInt(userID)
+            this.UserActionData.ObjectID = parseInt(this.producerReqData.producerID)
             this.CustomServices()
             this.TrackAndBeat()
+            this.Producers()
         })
     }
 
@@ -32,8 +35,8 @@ export class ProducerProfileComponent implements OnInit {
         Ref_User_ID: null
     }
     UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
-        UserID: parseInt(this.producerReqData.Ref_User_ID),
-        ObjectID: parseInt(this.producerReqData.producerID),
+        UserID: null,
+        ObjectID: null,
         ObjectType: "Producer",
         Action: null
     }
@@ -54,6 +57,11 @@ export class ProducerProfileComponent implements OnInit {
             console.log("CustomServices", res)
         })
     }
+    Producers() {
+        this._profileService.Producers(this.producerReqData.Ref_User_ID).subscribe((res: any) => {
+            console.log("Producers", res)
+        })
+    }
     TrackAndBeat() {
         this._profileService.TrackAndBeat(this.producerReqData.producerID, this.producerReqData.Ref_User_ID).subscribe((res: any) => {
             console.log("TrackAndBeat", res)
@@ -66,6 +74,9 @@ export class ProducerProfileComponent implements OnInit {
         this.UserActionData.Action = isFollow ? 'Follow' : "Unfollow"
         this._profileService.UserAction(this.UserActionData).subscribe((res: any) => {
             console.log("UserAction", res)
+            this.producerData.TrackAndBeat.Followed = (res == 'Follow')
+            this.producerData.TrackAndBeat.Followers = (res == 'Follow') ? this.producerData.TrackAndBeat.Followers + 1 : this.producerData.TrackAndBeat.Followers - 1
+
         })
     }
 

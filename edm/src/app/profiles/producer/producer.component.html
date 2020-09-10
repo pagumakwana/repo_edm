@@ -15,11 +15,13 @@
                 {{producerData?.TrackAndBeat?.ProducerBio}}
             </p>
             <div class="button_group">
-                <a *ngIf="!producerData?.TrackAndBeat?.Followed" class="global_btn icon_btn primary_btn mini_btn">
+                <a *ngIf="!producerData?.TrackAndBeat?.Followed" (click)="UserAction(true)"
+                    class="global_btn icon_btn primary_btn mini_btn">
                     <span>FOLLOW</span>
                     <span class="follow_icon btn_icon left_btn_icon"></span>
                 </a>
-                <a *ngIf="producerData?.TrackAndBeat?.Followed" class="global_btn icon_btn dark_grey_btn mini_btn">
+                <a *ngIf="producerData?.TrackAndBeat?.Followed" (click)="UserAction(false)"
+                    class="global_btn icon_btn dark_grey_btn mini_btn">
                     <span>FOLLOWING</span>
                     <span class="follow_icon btn_icon left_btn_icon"></span>
                 </a>
