@@ -39,6 +39,10 @@ export class ProducerProfileComponent implements OnInit {
     }
     producerTab = producerTab
     currentTab: producerTab = producerTab.biography;
+    producerData: { [key: string]: any } = {
+        CustomServices: null,
+        TrackAndBeat: null
+    }
 
     changeTab(tab: producerTab) {
         console.log(typeof tab, tab)
@@ -53,6 +57,8 @@ export class ProducerProfileComponent implements OnInit {
     TrackAndBeat() {
         this._profileService.TrackAndBeat(this.producerReqData.producerID, this.producerReqData.Ref_User_ID).subscribe((res: any) => {
             console.log("TrackAndBeat", res)
+            this.producerData.TrackAndBeat = Array.isArray(res) && res.length > 0 ? res[0] : []
+            this.producerData.TrackAndBeat.Followed = (this.producerData.TrackAndBeat.Followed != '-')
         })
     }
 
