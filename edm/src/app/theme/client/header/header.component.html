@@ -11,8 +11,18 @@
                 </a>
             </div>
             <div class="mobile_menu_list">
-                <div class="mobile_menus active_menu_list">
+                <div class="mobile_menus accordian_menu">
                     <a><span>Store</span></a>
+                </div>
+                <div class="inner_menu">
+                    <div class="mobile_menus">
+                        <a routerLink="/product">
+                            <span>Tracks</span>
+                        </a>
+                        <a routerLink="/product">
+                            <span>Beats</span>
+                        </a>
+                    </div>
                 </div>
                 <div class="mobile_menus accordian_menu">
                     <a><span>Genre</span></a>
@@ -46,8 +56,22 @@
     </div>
     <div class="project_menu">
         <div class="menu_list">
-            <div>
-                <a routerLink="/product">Store</a>
+            <div class="dropdown_point">
+                <a>Store</a>
+                <div class="dropdown_panel menu_dropdown_panel">
+                    <div class="dropdown_inner">
+                        <div class="dropdown_body">
+                            <div class="dropdown_list">
+                                <a routerLink="/product/Track">
+                                    <span>Tracks</span>
+                                </a>
+                                <a routerLink="/product/Beats">
+                                    <span>Beats</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="dropdown_point">
                 <a>Genre</a>
@@ -64,7 +88,7 @@
                 </div>
             </div>
             <div>
-                <a routerLink="/product">Custom Track</a>
+                <a routerLink="/product/CustomTrack">Custom Track</a>
             </div>
             <div>
                 <a routerLink="/service">Service</a>
