@@ -1,31 +1,30 @@
 <swiper class="product_slider" [config]="config">
-    <div *ngFor="let slide of slides" class="swiper-slide">
+    <div *ngFor="let objSlide of featuredTrack" class="swiper-slide">
         <div class="slider_product">
             <div class="product_img">
-                <img [src]="slide.ThumbnailImageUrl" class="product_thumbnail">
-                <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
+                <img [src]="this._base._commonService.cdnURL + objSlide.Thumbnail" class="product_thumbnail">
                 <div class="product_upper_layer">
-                    <img src="../../../assets/images/play_video.svg" title="Play" />
-                    <p class="product_name">{{slide.TrackName}}</p>
-                    <p class="product_bass">{{slide.CategoryName}}</p>
+                    <img style="background:none" (click)="playaudio(objSlide.PlayUrl, objSlide.Ref_Track_ID, featuredTrack)" class="playpause_{{objSlide.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
+                    <p class="product_name">{{objSlide.TrackName}}</p>
+                    <p class="product_bass">{{objSlide.CategoryName}}</p>
                 </div>
             </div>
             <div class="product_details">
                 <div class="left_details">
-                    <img src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" />
-                    <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                    <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
+                    <img *ngIf="objSlide.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(objSlide.Ref_Track_ID,'Track','Favourite')" />
+                    <img *ngIf="objSlide.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" />
+                    <img src="../../../assets/images/read_more.svg" (click)="redirect(objSlide.Ref_Track_ID)" class="green_heart" title="Read More" />
                 </div>
                 <div class="right_details">
-                    <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                        <span>&#36;{{slide.Price}}</span>
+                    <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="useraction(objSlide.Ref_Track_ID,'Track','Add to cart')">
+                        <span>&#36;{{objSlide.Price}}</span>
                         <span class="add_to_cart_icon btn_icon"></span>
                     </a>
                 </div>
             </div>
         </div>
     </div>
-    <div class="no_record" *ngIf="slides?.length == 0">
+    <div class="no_record" *ngIf="featuredTrack?.length == 0">
         No record found
     </div>
 </swiper>

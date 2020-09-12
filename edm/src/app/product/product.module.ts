@@ -5,6 +5,19 @@ import { ProductComponent } from './product.component';
 import { ProductDetailsComponent } from './productdetails/productdetails.component';
 import { CommonModule } from '@angular/common';
 import { WidgetsModule } from '../widgets/widget.module';
+import { Ng5SliderModule } from 'ng5-slider';
+import {
+    SwiperModule, SwiperConfigInterface,
+    SWIPER_CONFIG
+} from 'ngx-swiper-wrapper'
+const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
+    observer: true,
+    direction: 'horizontal',
+    threshold: 50,
+    spaceBetween: 5,
+    slidesPerView: 1,
+    centeredSlides: true
+};
 @NgModule({
     declarations: [
         ProductComponent,
@@ -13,17 +26,23 @@ import { WidgetsModule } from '../widgets/widget.module';
     imports: [        
         CommonModule,        
         WidgetsModule,
+        Ng5SliderModule,
+        SwiperModule,
         RouterModule.forChild([
             {
                 path: '',
                 component: ProductComponent
             },
             {
-                path: 'details',
+                path: 'details/:ID',
                 component: ProductDetailsComponent
             }
         ]),
     ],
-    providers: []
+    providers: [ {
+        provide: SWIPER_CONFIG,
+        useValue: DEFAULT_SWIPER_CONFIG
+    }],
+    bootstrap:    [ ProductComponent ]
 })
 export class ProductModule { }

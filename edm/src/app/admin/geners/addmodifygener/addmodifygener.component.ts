@@ -6,9 +6,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { ActivatedRoute } from '@angular/router';
 import * as _ from "lodash";
-import { environment } from '../../../../environments/environment.prod';
 import { Meta } from '@angular/platform-browser';
 import { fileChoosenDataModel } from 'src/app/_appModel/genservices/service.model';
+import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
 
 
 @Component({
@@ -27,19 +27,20 @@ export class AddModifyGenersComponent implements OnInit {
   _categoryModel: CategoryModel = {};
   aliasName: string;
   public categoryData: any = [];
+  public categoryDataWOCurrent: any = [];
   isCategoryModify: boolean = false;
   btnTitle: string = 'ADD'
   imgCategory: any;
-  fileURL = environment.cdnURL;
+  fileURL = this._base._commonService.cdnURL;
 
   // fileData: any;
 
   formCategory: FormGroup = this._fbGener.group({
     Ref_Parent_ID: [''],
-    CategoryName: ['', [Validators.required]],
+    CategoryName: ['', [Validators.required, ValidationService.ValidateWhiteSpace()]],
     AliasName: ['', [Validators.required]],
     CategoryDescription: [''],
-    CategoryUseBy: [''],
+    CategoryUseBy: ['', [Validators.required]],
     ImageUrl: [''],
     MetaTitle: [''],
     MetaKeywords: [''],
@@ -61,7 +62,6 @@ export class AddModifyGenersComponent implements OnInit {
       this.bindCategory('ALL', 0).then((res: any) => {
         if (res) {
           this.getCategory();
-
         }
       })
     } else {
@@ -70,7 +70,7 @@ export class AddModifyGenersComponent implements OnInit {
     }
     this.formCategory.controls.CategoryName.valueChanges.subscribe((value: string) => {
       console.log("CategoryName.valueChanges", value)
-      this.formCategory.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
+      this.formCategory.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase().trim())
       this.formCategory.controls.AliasName.updateValueAndValidity()
     })
   }
@@ -102,6 +102,8 @@ export class AddModifyGenersComponent implements OnInit {
     })
     if (index > -1) {
       this._categoryModel = this.categoryData[index];
+      this.categoryDataWOCurrent = JSON.parse(JSON.stringify(this.categoryData));
+      this.categoryDataWOCurrent.splice(index, 1);
       this.isCategoryModify = true;
       this.btnTitle = 'Modify'
       this.formCategory.controls.MetaTitle.setValue(this._categoryModel.MetaTitle);
@@ -171,14 +173,17 @@ export class AddModifyGenersComponent implements OnInit {
         this._categoryModel.CreatedName = FullName;
         this._categoryModel.Ref_User_ID = Ref_User_ID;
         this._categoryService.addmodifycategory(this._categoryModel).subscribe((response: any) => {
+          let isRedirect: boolean = true
           if (response == 'CATEGORYADDED') {
             this._base._alertMessageService.success("Category added successfully!");
           } else if (response == 'CATEGORYUPDATED') {
             this._base._alertMessageService.success("Category updated successfully!");
+          } else if (response == 'CATEGORYNAMEEXISTS') {
+            this._base._alertMessageService.error("Category Name Already Exist");
+            isRedirect = false
           }
-          setTimeout(() => {
-            this._base._router.navigate(['/admin/category']);
-          }, 1000);
+          if (isRedirect)
+            setTimeout(() => { this._base._router.navigate(['/admin/category']); }, 1000);
         });
       });
     });
@@ -190,6 +195,7 @@ export class AddModifyGenersComponent implements OnInit {
         resData.filter((res) => {
           this.categoryData.push(res);
         });
+        this.categoryDataWOCurrent = JSON.parse(JSON.stringify(this.categoryData));
         resolve(true);
       });
     })
@@ -199,16 +205,35 @@ export class AddModifyGenersComponent implements OnInit {
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
 
-    this.formCategory.controls[fieldName].setValue('upload')
-    this.formCategory.controls[fieldName].updateValueAndValidity()
+    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number } } = {
+      ImageUrl: {
+        fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],
+        size: 3145728 // 3MB
+      }
+    }
 
     if ($event.target.files.length > 0) {
+      let isValid: boolean = false
+
       for (let file of $event.target.files) {
-        this._base._commonService.readImage(file).subscribe((res: any) => {
-          let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
-          console.log("imageData", imgData)
-          this.fileChoosenData[fieldName].push(imgData);
-        })
+
+        if (ValidationService.ValidateFileType_Helper(file, fileValidationInfo[fieldName].fileType)) {
+          if (ValidationService.ValidateFileSize_Helper(file, fileValidationInfo[fieldName].size)) {
+            isValid = true
+
+            this.formCategory.controls[fieldName].setValue('upload')
+            this.formCategory.controls[fieldName].updateValueAndValidity()
+            this._base._commonService.readImage(file).subscribe((res: any) => {
+              let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              console.log("imageData", imgData)
+              this.fileChoosenData[fieldName].push(imgData);
+            })
+          }
+        }
+
+        if (!isValid) {
+          this._base._alertMessageService.error(`${file.name} is Invalid`)
+        }
       }
     }
   }

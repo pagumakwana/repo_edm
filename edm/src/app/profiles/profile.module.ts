@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { WidgetsModule } from '../widgets/widget.module';
 import { UserProfileComponent } from './user/user.component';
 import { ProducerProfileComponent } from './producer/producer.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProfileUpdateService } from '../_appService/profileupdate/profileupdate.service';
 @NgModule({
     declarations: [
         UserProfileComponent,
@@ -13,6 +15,8 @@ import { ProducerProfileComponent } from './producer/producer.component';
     imports: [
         CommonModule,
         WidgetsModule,
+        ReactiveFormsModule,
+        FormsModule,
         RouterModule.forChild([
             {
                 path: 'user',
@@ -21,9 +25,13 @@ import { ProducerProfileComponent } from './producer/producer.component';
             {
                 path: 'producer',
                 component: ProducerProfileComponent
+            },
+            {
+                path: 'producer/:producerID',
+                component: ProducerProfileComponent
             }
         ]),
     ],
-    providers: []
+    providers: [ProfileUpdateService]
 })
 export class ProfileModule { }

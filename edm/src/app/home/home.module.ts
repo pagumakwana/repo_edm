@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { WidgetsModule } from '../widgets/widget.module';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GenService } from '../_appService/genservice/genservice.service';
 @NgModule({
     declarations: [
         HomeComponent,
@@ -20,6 +21,6 @@ import { FormsModule } from '@angular/forms';
             }
         ]),
     ],
-    providers: []
+    providers: [GenService]
 })
 export class HomeModule { }

@@ -12,7 +12,7 @@ export class AddModifyCoupanComponent implements OnInit {
   constructor(public _base: BaseServiceHelper) { }
 
   ngOnInit(): void {
-  
+    this._base._pageTitleService.setTitle("CREATE NEW COUPON CODE", "CREATE NEW COUPON CODE");
   }
 
  

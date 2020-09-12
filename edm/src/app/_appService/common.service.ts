@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
-import { environment } from 'src/environments/environment.prod';
 import { NavigationEnd, Router } from '@angular/router';
 import { EncryptedStorage } from '../_appModel/encryptedstorage';
 import { enAppSession } from '../_appModel/enAppSession';
@@ -8,6 +7,7 @@ import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import { ApiConstant } from '../_appModel/apiconstant';
 import { Subject, Observable } from 'rxjs';
 import * as _ from "lodash";
+import configData from '../../assets/projectConfig.json'
 
 declare var $: any;
 @Injectable()
@@ -23,7 +23,7 @@ export class CommonService {
     public ipAddress: string = "";
 
     public setHasLoginSubscribe = new Subject<boolean>();
-
+    public cdnURL = configData.cdnURL;
 
     public navigation(url: any) {
         this._router.navigate([url]);
@@ -58,7 +58,7 @@ export class CommonService {
 
     /**Get Public IP Address */
     getIpAddress() {
-        return this._apiService.getExternal(environment.ipifyUrl);
+        return this._apiService.getExternal(configData.ipifyUrl);
     }
 
     platform(): string {
@@ -155,6 +155,24 @@ export class CommonService {
         })
     }
 
+    //check if String is json or not
+    tryParseJSON(jsonString): boolean {
+        try {
+            var o = JSON.parse(jsonString);
+
+            // Handle non-exception-throwing cases:
+            // Neither JSON.parse(false) or JSON.parse(1234) throw errors, hence the type-checking,
+            // but... JSON.parse(null) returns null, and typeof null === "object", 
+            // so we must check for that, too. Thankfully, null is falsey, so this suffices:
+            if (o && typeof o === "object") {
+                return true;
+            }
+        }
+        catch (e) { }
+
+        return false;
+    };
+
     //Added Identifer & displayorder in FilesUrl Array
     createFileArray(uploadedFilesArray, identiferList: string, displayOrderArray: Array<any>, filesUrl: Array<any>): Array<any> {
         console.log("insidecreateFileArray")
@@ -226,5 +244,9 @@ export class CommonService {
     }
     removeFile(ref_file_id) {
         return this._apiService.post(ApiConstant.common.removefile + "?Ref_File_ID=" + ref_file_id);
+    }
+
+    globalSearch(SearchKeyWord) {
+        return this._apiService.get(`${ApiConstant.Shared.GlobalSearch}?SearchKeyWord=${SearchKeyWord}`);
     }
 }

@@ -1,14 +1,14 @@
 <div class="product_detail_page">
-    <div class="product_detail_sec">
+    <div class="product_detail_sec" *ngFor="let product of productDetails">
         <div class="product_thumbnail_sec">
-            <img src="../../../assets/images/product_thumbnail.jpg" />
-            <div class="product_thumbnail_hover_sec">
-                <img src="../../../assets/images/play_video.svg" title="Play" />
+            <img [src]="product.ThumbnailImageUrl" />
+            <div class="product_thumbnail_hover_sec" [id]="product.Ref_Track_ID">
+                <img style="background:none" (click)="playaudio(product.MasterFileUrl, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
             </div>
         </div>
         <div class="product_details">
-            <h2 class="product_name">Summa (Kygo style)</h2>
-            <h3 class="product_tagname">Modern future bass with powerfill drop</h3>
+            <h2 class="product_name">{{product.TrackName}} ({{product.TrackType}})</h2>
+            <h3 class="product_tagname">{{product.Bio}}</h3>
             <p class="files_included_heading">
                 Files Included:
             </p>
@@ -18,35 +18,39 @@
             <ul class="product_more_details">
                 <li>
                     <p>Artist :</p>
-                    <p>Momos</p>
+                    <p>{{product.TrackName}}</p>
                 </li>
                 <li>
-                    <p>Artist :</p>
-                    <p>Momos</p>
+                    <p>BMP :</p>
+                    <p>{{product.BMP}}</p>
                 </li>
                 <li>
-                    <p>Artist :</p>
-                    <p>Momos</p>
+                    <p>Genre :</p>
+                    <p>{{product.CategoryName}}</p>
                 </li>
                 <li>
-                    <p>Artist :</p>
-                    <p>Momos</p>
+                    <p>Price :</p>
+                    <p>{{product.Price}}</p>
                 </li>
                 <li>
-                    <p>Artist :</p>
-                    <p>Momos</p>
+                    <p>Duration :</p>
+                    <p>{{product.Duration}}</p>
                 </li>
                 <li>
-                    <p>Artist :</p>
-                    <p>Momos</p>
+                    <p>DAW :</p>
+                    <p>{{product.DAW}}</p>
                 </li>
             </ul>
             <div class="button_group">
-                <a class="global_btn icon_btn secondary_btn">
+                <a *ngIf="product.Favourite != 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')">
                     <span>Add To Favourites</span>
                     <span class="add_to_favourites_icon btn_icon"></span>
                 </a>
-                <a class="global_btn icon_btn primary_btn">
+                <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn">
+                    <span>Favourite</span>
+                    <span class="add_to_favourites_icon btn_icon"></span>
+                </a>
+                <a class="global_btn icon_btn primary_btn" (click)="useraction(product.Ref_Track_ID,'Track','Add to cart')">
                     <span>Add To Cart</span>
                     <span class="add_to_cart_icon btn_icon"></span>
                 </a>

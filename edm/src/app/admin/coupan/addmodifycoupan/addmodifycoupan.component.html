@@ -1,51 +1,99 @@
-<div class="admin_page">
-    <div class="admin_heading">
-        <h4>CREATE NEW COUPON CODE</h4>
-    </div>
-    <div class="admin_body">
-        <div class="portlet_body admin_half_forms">
-            <form>
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <input type="text" name="couponname" placeholder="Enter Coupon Name" />
-                        <span class="input_icon "></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area">
-                        <textarea rows="4" placeholder="Coupon Description"></textarea>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-                <div class="form_group">
-                    <div class="form_area icon_form_group">
-                        <select name="trackgenre">
-                            <option disabled selected>Discount Type</option>
-                            <option>Options</option>
-                            <option>Options</option>
-                        </select>
-                        <span class="input_icon dropdown_icon"></span>
-                    </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
-                </div>
-            </form>
+<div class="portlet_body admin_half_forms">
+    <form>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <input type="text" name="couponname" placeholder="Enter Coupon Name" />
+                <span class="input_icon "></span>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
         </div>
-        <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
-            <div class="modal-md modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <img src="../../../../assets/images/success_tick.svg" alt="Coupon Submitted Successfully">
-                        <h3>Thank You</h3>
-                        <p>Your Coupon has been submitted will notify you the status of coupon approval.</p>
+        <div class="form_group">
+            <div class="form_area">
+                <textarea rows="4" placeholder="Coupon Description"></textarea>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="trackgenre">
+                    <option disabled selected>Discount Type</option>
+                    <option>Options</option>
+                    <option>Options</option>
+                </select>
+                <span class="input_icon dropdown_icon"></span>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="multipul_form_group">
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="date" name="expirydate" placeholder="Coupon Expiry Date" />
+                        <span class="input_icon date_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
                     </div>
                 </div>
+            </div>
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="text" name="discountamount" placeholder="Discount Amount" />
+                        <span class="input_icon price_icon"></span>
+                    </div>
+                    <div class="error_msg">
+                        <span>This field is Required</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form_group inline_form_group">
+            <label class="form_label">Is Parent</label>
+            <div class="form_area">
+                <div class="inline_radio">
+                    <label class="radio">
+                        <input name="IsParent" type="radio" checked="checked">only for new users
+                        <span></span>
+                    </label>
+                    <label class="radio">
+                        <input name="IsParent" type="radio">apply for our Best Buyers
+                        <span></span>
+                    </label>
+                    <label class="radio">
+                        <input name="IsParent" type="radio">apply All Track
+                        <span></span>
+                    </label>
+                    <label class="radio">
+                        <input name="IsParent" type="radio">apply for by minimum price 500$ Track
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+            <div class="error_msg">
+                <span>This field is Required</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
+                <span>ADD COUPON CODE</span>
+            </a>
+        </div>
+    </form>
+</div>
+<div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="../../../../assets/images/success_tick.svg" alt="Coupon Submitted Successfully">
+                <h3>Thank You</h3>
+                <p>Your Coupon has been submitted will notify you the status of coupon approval.</p>
             </div>
         </div>
     </div>

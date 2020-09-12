@@ -21,6 +21,11 @@ export class tableConfig {
         class: string,
         iconClass?: string
     }>
+    buttonIconList?: Array<{
+        title: string,
+        class: string,
+        iconClass: string
+    }>
 }
 
 export class tableEvent {

@@ -35,11 +35,11 @@ const routes: Routes = [
                 loadChildren: () => import('../gener/gener.module').then(m => m.GenerModule)
             },
             {
-                path: "product",
+                path: "product/:type",
                 loadChildren: () => import('../product/product.module').then(m => m.ProductModule)
             },
             {
-                path: "product/details",
+                path: "product/:type/details",
                 loadChildren: () => import('../product/product.module').then(m => m.ProductModule)
             },
             {
@@ -69,6 +69,10 @@ const routes: Routes = [
                 loadChildren: () => import('../admin/dashboard/dashboard.module').then(m => m.DashboardModule)
             },
             {
+                path: "emailnotification",
+                loadChildren: () => import('../admin/emailnotification/emailnotification.module').then(m => m.EmailNotificationModule)
+            },
+            {
                 path: "category",
                 loadChildren: () => import('../admin/geners/geners.module').then(m => m.GenersModule)
             },
@@ -92,7 +96,8 @@ const routes: Routes = [
             {
                 path: "config",
                 loadChildren: () => import('../admin/masters/masters.module').then(m => m.MastersModule)
-            }, {
+            }, 
+            {
                 path: "profileupdate",
                 loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
             },
@@ -100,6 +105,10 @@ const routes: Routes = [
                 path: "support",
                 loadChildren: () => import('../admin/support/support.module').then(m => m.SupportModule)
             },
+            {
+                path: "authority",
+                loadChildren: () => import('../admin/authoritymanagement/authority.module').then(m => m.AuthorityModule)
+            }, 
         ],
     }
 ];

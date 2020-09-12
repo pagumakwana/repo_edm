@@ -10,6 +10,7 @@ import {
 import { BrowserModule } from '@angular/platform-browser';
 import { FeaturedProductSliderComponent } from './featuredProductSlider/featuredProductSlider.component';
 import { ProducerSliderComponent } from './producerSlider/producerSlider.component';
+import { TrackService } from '../_appService/trackService';
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     observer: true,
@@ -41,6 +42,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         {
             provide: SWIPER_CONFIG,
             useValue: DEFAULT_SWIPER_CONFIG
-        }]
+        }, TrackService]
 })
 export class WidgetsModule { }

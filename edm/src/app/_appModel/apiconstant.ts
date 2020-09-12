@@ -8,13 +8,17 @@ export class ApiConstant {
         requestOTP: "Admin/UserManagement/RequestOTP",
         registerGuest: "Admin/UserManagement/RegisterGuest",
         Producers: "User/Producers",
+        CustomServices: "User/CustomServices",
+        TrackAndBeat: "User/TrackAndBeat"
     }
     public static category = {
         AddModifyCategory: "Admin/MasterManagement/Category",
         category: "Admin/MasterManagement/Category"
     }
     public static genService = {
-        Service: "Admin/ServiceManagement/Service"
+        Service: "Admin/ServiceManagement/Service",
+        ManageService: "Admin/ServiceManagement/ManageService",
+        servicebycatehory: "User/Service/ServiceByCategory",
     }
     public static common = {
         thumbnail: "Admin/Common/Image",
@@ -35,10 +39,20 @@ export class ApiConstant {
         UserMasterData: "Admin/MasterManagement/UserMasterData",
         CarouselList: "Admin/MasterManagement/CarouselList",
     }
-    public static Service = {
-        Service: "User/Service/ServiceByCategory",
-    }
+
     public static Shared = {
         GlobalSearch: "User/Shared/GlobalSearch",
+    }
+    public static Track = {
+        FilterTrack: "User/Track/FilterTrack",
+        TrackAndBeatDetails: "User/Track/TrackAndBeatDetails",
+    }
+    public static Order = {
+        UserAction: "UserOrder/UserAction",
+    }
+    public static AuthorityManagement = {
+        Module: "Admin/AuthorityManagement/Module",
+        Authority: "Admin/AuthorityManagement/Authority",
+        AuthorityDetails: "Admin/AuthorityManagement/AuthorityDetails",
     }
 }

@@ -10,3 +10,18 @@
 input[type="time"]::-webkit-calendar-picker-indicator {
     background: none;
 }
+
+form_group input,
+.form_group textarea,
+.form_group select,
+.custom-control-label::before,
+.custom-file-label,
+.custom-select {
+    padding: 0px 10px;
+    border: 1px solid #cccccc;
+    /* border-radius: 7px; */
+    width: 100%;
+    font-size: 13px !important;
+    resize: none;
+    margin: 0;
+}

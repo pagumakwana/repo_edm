@@ -7,10 +7,10 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { GenService } from 'src/app/_appService/genservice/genservice.service';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { formatDate } from '@angular/common';
-import { environment } from 'src/environments/environment.prod';
 import * as _ from "lodash";
 import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
+import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
 
 declare var $: any;
 
@@ -34,7 +34,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
 
   categoryData: []
-  fileURL = environment.cdnURL;
+  fileURL = this._base._commonService.cdnURL;
   btnTitle: string = 'ADD'
   isServiceModify: boolean = false;
   addServiceForm: FormGroup = this.fb.group({
@@ -42,8 +42,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     AliasName: ['', [Validators.required]],
     Category: ['', [Validators.required]],
     Description: ['', [Validators.required]],
-    Price: ['', [Validators.required]],
-    PriceWithProjectFiles: ['', [Validators.required]],
+    Price: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
+    PriceWithProjectFiles: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
     Revision: ['', [Validators.required]],
     DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],
@@ -84,6 +84,12 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     this.addServiceForm.controls.ServiceTitle.valueChanges.subscribe((value: string) => {
       this.addServiceForm.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
       this.addServiceForm.controls.AliasName.updateValueAndValidity()
+    })
+
+    this.addServiceForm.controls.Price.valueChanges.subscribe((value: string) => {
+      console.log("Price_control", this.addServiceForm.controls.Price, value)
+      // this.addServiceForm.controls.AliasName.setValue(value.replace(/ /g, '-').toLowerCase())
+      // this.addServiceForm.controls.AliasName.updateValueAndValidity()
     })
 
     this.subs.add(this.dragulaService.dropModel('MANY_ITEMS')
@@ -178,7 +184,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
         Ref_Category_ID: null,
         ServiceTitle: null,
         Description: null,
-        AliasName : null,
+        AliasName: null,
         Price: null,
         PriceWithProjectFiles: null,
         BigImageUrl: null,
@@ -214,6 +220,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     console.log("saveService", this.addServiceForm, this.addService)
 
     if (this.addServiceForm.valid) {
+      this._base._commonService.showLoader();
       this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
           this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.BigImageUrl), 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
@@ -246,15 +253,18 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
 
   addServices() {
-    this._service.addmodifyService(this.addService).subscribe((res: any) => {
+    this._service.addmodifyService(this.addService).subscribe((res: string) => {
+      this._base._commonService.hideLoader();
       let msg = {
         SERVICEADDED: "Service added successfully!",
         SERVICEUPDATED: "Service updated successfully!",
-        SERVICENAMEEXISTS: "Service already exists!"
+        SERVICEEXISTS: "Service already exists!"
       }
-      this._base._alertMessageService.success(msg[res]);
-      $('#acknowledge_popup').modal('show')
-      setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin', 'service']) }, 3000);
+      let isRedirect: boolean = (res != "SERVICEEXISTS")
+      this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
+      // $('#acknowledge_popup').modal('show')
+      if (isRedirect)
+        setTimeout(() => { this._base._router.navigate(['admin', 'service']) }, 3000);
     })
   }
 
@@ -281,16 +291,38 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
 
-    this.addServiceForm.controls[fieldName].setValue('upload')
-    this.addServiceForm.controls[fieldName].updateValueAndValidity()
+    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number } } = {
+      BigImageUrl: {
+        fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],
+        size: 3145728 // 3MB
+      },
+      ServiceVideoUrl: {
+        fileType: ['video/mp4'],
+        size: 52428800 //50MB
+      }
+    }
 
     if ($event.target.files.length > 0) {
+      let isValid: boolean = false
       for (let file of $event.target.files) {
-        this._base._commonService.readImage(file).subscribe((res: any) => {
-          let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
-          console.log("imageData", imgData)
-          this.fileChoosenData[fieldName].push(imgData);
-        })
+
+        if (ValidationService.ValidateFileType_Helper(file, fileValidationInfo[fieldName].fileType)) {
+          if (ValidationService.ValidateFileSize_Helper(file, fileValidationInfo[fieldName].size)) {
+            isValid = true
+            this.addServiceForm.controls[fieldName].setValue('upload')
+            this.addServiceForm.controls[fieldName].updateValueAndValidity()
+            this._base._commonService.readImage(file).subscribe((res: any) => {
+              let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              console.log("imageData", imgData)
+              this.fileChoosenData[fieldName].push(imgData);
+            })
+          }
+        }
+
+        if (!isValid) {
+          this._base._alertMessageService.error(`${file.name} is Invalid`)
+        }
+
       }
     }
   }

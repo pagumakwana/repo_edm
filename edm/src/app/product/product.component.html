@@ -1,4 +1,14 @@
 <div class="product_page">
+    <swiper class="genre_slider" [config]="config">
+        <div class="swiper-slide" *ngFor="let genre of genrelist">
+            <div class="slider_genre">
+                <div class="genre_img" (click)="onGenreFilter(genre.CategoryName)">
+                    <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath" class="genre_thumbnail">
+                    <h4>{{genre.CategoryName}}</h4>
+                </div>
+            </div>
+        </div>
+    </swiper>
     <div class="filter_btn" (click)="filtersDisplay()">
         <img src="../../assets/images/filter.svg" />
         <span>Filter</span>
@@ -9,14 +19,7 @@
                 FILTER BY GENRE
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">BIG ROMM</p>
-                <p class="filter_options selected_options">PROGRESIVE HOUSE</p>
-                <p class="filter_options">FUTURE BASS</p>
-                <p class="filter_options">ELECTRO HOUSE</p>
-                <p class="filter_options">HOUSE</p>
-                <p class="filter_options">FUTURE BOUNCE</p>
-                <p class="filter_options">TECHNO</p>
-                <p class="filter_options">PROPICAL</p>
+                <p *ngFor="let genre of genrelist" class="filter_options" [ngClass]="selectedOption(genre.CategoryName, 'Genre')" (click)="onGenreFilter(genre.CategoryName)">{{genre.CategoryName}}</p>
             </div>
         </div>
         <div class="filter_list">
@@ -24,16 +27,48 @@
                 FILTER BY PRICE
             </p>
             <div class="filter_value">
-                <!-- <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" ></ng5-slider> -->
+                <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (valueChange)="pricefilter()"></ng5-slider>
             </div>
         </div>
-        <div class="filter_list">
+        <div class="filter_list" *ngIf="storetype == 'Track' || storetype == 'CustomTrack'">
             <p class="filter_heading">
-                FILTER BY GENRE
+                FILTER BY DAW
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">FL STUDIO</p>
-                <p class="filter_options">ABLETON</p>
+                <div class="filter_value">
+                    <p class="filter_options" *ngFor="let DAW of DAWlist" [ngClass]="selectedOption(DAW.Ref_DAW_ID, 'DAW')" (click)="onDAWFilter(DAW.Ref_DAW_ID)">{{DAW.DAW}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="filter_list" *ngIf="storetype == 'Beats'">
+            <p class="filter_heading">
+                FILTER BY MOOD
+            </p>
+            <div class="filter_value">
+                <div class="filter_value">
+                    <p class="filter_options" *ngFor="let MOOD of moodlist" [ngClass]="selectedOption(MOOD.Ref_Mood_ID, 'MOOD')" (click)="onMOODFilter(MOOD.Ref_Mood_ID)">{{MOOD.MoodName}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="filter_list" *ngIf="storetype == 'Track' || storetype == 'CustomTrack'">
+            <p class="filter_heading">
+                FILTER BY
+            </p>
+            <div class="filter_value">
+                <div class="filter_value">
+                    <label class="checkbox">
+                        <input name="productfilter" type="checkbox" checked="checked">Featured Track
+                        <span></span>
+                    </label>
+                    <label class="checkbox">
+                        <input name="productfilter" type="checkbox">100% Royalty Track
+                        <span></span>
+                    </label>
+                    <label class="checkbox">
+                        <input name="productfilter" type="checkbox">Track With Project Files
+                        <span></span>
+                    </label>
+                </div>
             </div>
         </div>
     </div>
@@ -44,14 +79,7 @@
                 FILTER BY GENRE
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">BIG ROMM</p>
-                <p class="filter_options selected_options">PROGRESIVE HOUSE</p>
-                <p class="filter_options">FUTURE BASS</p>
-                <p class="filter_options">ELECTRO HOUSE</p>
-                <p class="filter_options">HOUSE</p>
-                <p class="filter_options">FUTURE BOUNCE</p>
-                <p class="filter_options">TECHNO</p>
-                <p class="filter_options">PROPICAL</p>
+                <p *ngFor="let genre of genrelist" class="filter_options" [ngClass]="selectedOption(genre.CategoryName, 'Genre')" (click)="onGenreFilter(genre.CategoryName)">{{genre.CategoryName}}</p>
             </div>
         </div>
         <div class="filter_list">
@@ -59,262 +87,249 @@
                 FILTER BY PRICE
             </p>
             <div class="filter_value">
-
+                <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" (valueChange)="pricefilter()"></ng5-slider>
             </div>
         </div>
         <div class="filter_list">
             <p class="filter_heading">
-                FILTER BY GENRE
+                FILTER BY DAW
             </p>
             <div class="filter_value">
-                <p class="filter_options selected_options">FL STUDIO</p>
-                <p class="filter_options">ABLETON</p>
+                <p class="filter_options" *ngFor="let DAW of DAWlist" [ngClass]="selectedOption(DAW.Ref_DAW_ID, 'DAW')" (click)="onDAWFilter(DAW.Ref_DAW_ID)">{{DAW.DAW}}</p>
             </div>
         </div>
     </div>
-    <div class="product_list">
-        <div class="product_box">
+    <div class="product_list" *ngIf="storetype == 'Track' || storetype == 'CustomTrack'">
+        <div class="product_box" *ngFor="let product of filtersproducts">
             <div class="slider_product">
                 <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
+                    <img [src]="product.ThumbnailImageUrl" class="product_thumbnail">
                     <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
+                        <img style="background:none" (click)="playaudio(product.PlayUrl, product.Ref_Track_ID, filtersproducts)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
+                        <p class="product_name">{{product.TrackName}}</p>
+                        <p class="product_bass">{{product.CategoryName}}</p>
                     </div>
                 </div>
                 <div class="product_details">
                     <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
+                        <img *ngIf="product.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')" />
+
+                        <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" />
+                        <img src="../../../assets/images/read_more.svg" routerLink="details/{{product.Ref_Track_ID}}" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
+                        <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="useraction(product.Ref_Track_ID,'Track','Add to cart')">
+                            <span>&#36;{{product.Price}}</span>
                             <span class="add_to_cart_icon btn_icon"></span>
                         </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="no_record" *ngIf="filtersproducts?.length == 0">
+            No record found
         </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
+    </div>
+    <div class="product_list" *ngIf="storetype == 'Beats'">
+        <!-- Beat Shop Table -->
+        <div class="primary_table">
+            <table style="min-width: 900px;">
+                <thead>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let product of filtersproducts">
+                        <td>
+                            <div class="play_upper_layer">
+                                <img class="tbl_img" [src]="product.ThumbnailImageUrl" />
+                                <div class="play_audio" [id]="product.Ref_Track_ID" (click)="playaudio(product.PlayUrl, product.Ref_Track_ID, filtersproducts)">
+                                    <span class="playpause_{{product.Ref_Track_ID}} play"></span>
+                                    <!-- <span title="Pause" class="pause" style="display: none;"></span> -->
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <b>{{product.TrackName}}</b><br>
+                            <b><small>by <a href="#"><u>momose</u></a></small></b>
+                        </td>
+                        <td>
+                            <b><u><a>
+                                {{product.CategoryName}}
+                            </a></u></b>
+                        </td>
+                        <td>
+                            <b>{{product.BMP}}</b>BPM
+                        </td>
+                        <td>
+                            <b>30k</b>Plays
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a *ngIf="product.Favourite != 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Favourite')">
+                                    <span class="add_to_favourites_green_icon"></span>
+                                </a>
+                                <a *ngIf="product.Favourite == 'Favourite'" title="Like" class="small_icon_btn">
+                                    <span class="add_to_favourites_green_icon"></span>
+                                </a>
+                                <a title="Read More" class="small_icon_btn" routerLink="details/{{product.Ref_Track_ID}}">
+                                    <span class="readmore_icon"></span>
+                                </a>
+                                <a title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Track','Add to cart')">
+                                    <span class="add_to_cart_blue_icon"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a class="global_btn primary_btn margin_0">
+                                    <span>$ {{product.Price}} <b>BUY NOW</b></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="no_record" *ngIf="filtersproducts?.length == 0">
+                        No record found
+                    </tr>
+                    <!-- <tr>
+                        <td>
+                            <div class="play_upper_layer">
+                                <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                                <div class="play_audio">
+                                    <span title="Play" class="play"></span>
+                                    <span title="Pause" class="pause" style="display: none;"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <b>Extreme Adventure</b><br>
+                            <b><small>by <a href="#"><u>momose</u></a></small></b>
+                        </td>
+                        <td>
+                            <b><u><a>
+                                Hiphop
+                            </a></u></b>
+                        </td>
+                        <td>
+                            <b>140</b>BPM
+                        </td>
+                        <td>
+                            <b>30k</b>Plays
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a title="Like" class="small_icon_btn">
+                                    <span class="add_to_favourites_green_icon"></span>
+                                </a>
+                                <a title="Add to playlist" class="small_icon_btn">
+                                    <span class="readmore_icon"></span>
+                                </a>
+                                <a title="Like" class="small_icon_btn">
+                                    <span class="add_to_cart_blue_icon"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a class="global_btn primary_btn margin_0">
+                                    <span>$ 500 <b>BUY NOW</b></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="play_upper_layer">
+                                <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                                <div class="play_audio">
+                                    <span title="Play" class="play"></span>
+                                    <span title="Pause" class="pause" style="display: none;"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <b>Extreme Adventure</b><br>
+                            <b><small>by <a href="#"><u>momose</u></a></small></b>
+                        </td>
+                        <td>
+                            <b><u><a>
+                                Hiphop
+                            </a></u></b>
+                        </td>
+                        <td>
+                            <b>140</b>BPM
+                        </td>
+                        <td>
+                            <b>30k</b>Plays
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a title="Like" class="small_icon_btn">
+                                    <span class="add_to_favourites_green_icon"></span>
+                                </a>
+                                <a title="Add to playlist" class="small_icon_btn">
+                                    <span class="readmore_icon"></span>
+                                </a>
+                                <a title="Like" class="small_icon_btn">
+                                    <span class="add_to_cart_blue_icon"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a class="global_btn primary_btn margin_0">
+                                    <span>$ 500 <b>BUY NOW</b></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="play_upper_layer">
+                                <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                                <div class="play_audio">
+                                    <span title="Play" class="play"></span>
+                                    <span title="Pause" class="pause" style="display: none;"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <b>Extreme Adventure</b><br>
+                            <b><small>by <a href="#"><u>momose</u></a></small></b>
+                        </td>
+                        <td>
+                            <b><u><a>
+                                Hiphop
+                            </a></u></b>
+                        </td>
+                        <td>
+                            <b>140</b>BPM
+                        </td>
+                        <td>
+                            <b>30k</b>Plays
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a title="Like" class="small_icon_btn">
+                                    <span class="add_to_favourites_green_icon"></span>
+                                </a>
+                                <a title="Add to playlist" class="small_icon_btn">
+                                    <span class="readmore_icon"></span>
+                                </a>
+                                <a title="Like" class="small_icon_btn">
+                                    <span class="add_to_cart_blue_icon"></span>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a class="global_btn primary_btn margin_0">
+                                    <span>$ 500 <b>BUY NOW</b></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
         </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product_box">
-            <div class="slider_product">
-                <div class="product_img">
-                    <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
-                    <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
-                    <div class="product_upper_layer">
-                        <img src="../../../assets/images/play_video.svg" title="Play" />
-                        <p class="product_name">ZAPPIER</p>
-                        <p class="product_bass">Future Bass</p>
-                    </div>
-                </div>
-                <div class="product_details">
-                    <div class="left_details">
-                        <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
-                            title="Add to Favorites" />
-                        <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
-                        <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
-                    </div>
-                    <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart">
-                            <span>&#36;999</span>
-                            <span class="add_to_cart_icon btn_icon"></span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Beat Shop Table -->
     </div>
 </div>

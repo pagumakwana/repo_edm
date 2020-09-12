@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class MasterListComponent implements OnInit {
   data: any;
   modulename;
+ 
   constructor(public _base: BaseServiceHelper,
     private _mastersServices: MastersServices,
     public route: ActivatedRoute,
@@ -26,7 +27,7 @@ export class MasterListComponent implements OnInit {
           this.data = data
         })
       }else{
-        this._mastersServices.getMasterDatalist(0).subscribe(data =>{
+        this._mastersServices.getMasterDatalist(0, 0).subscribe(data =>{
           this.data = data
           this._base._commonService.hideLoader();
         })
@@ -34,6 +35,7 @@ export class MasterListComponent implements OnInit {
     });
    
   }
+ 
   redirectToaddmodifymaster(id){
     if (this.modulename == "master") {
       this.router.navigate(['/admin/config/addmodifymasters/master', id]).then((e) => {

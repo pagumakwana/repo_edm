@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from "../../environments/environment.prod";
-
+import configData from '../../assets/projectConfig.json';
 const httpOptions = {
     headers: new HttpHeaders({
         'Content-Type': 'application/json'
@@ -11,7 +10,7 @@ const httpOptions = {
     providedIn: 'root'  // <- ADD THIS
 })
 export class ApiService {
-    apiURL: any = environment.apiBaseURL;
+    apiURL: any = configData.apiBaseURL;
 
     constructor(private http: HttpClient) { }
 

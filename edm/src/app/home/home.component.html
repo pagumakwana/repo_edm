@@ -13,15 +13,18 @@
             <h2>Find The Perfect Service For Your Next Hit</h2>
             <div class="search_track">
                 <img src="../../assets/images/search.svg" />
-                <input placeholder='Try "Custom Track"' type="text" name="searchtrack" [(ngModel)]="globalSearch" (input)="getGlobalSearch()" />
-                <button [ngStyle]="{'opacity':globalSearch.length == 0 ? '0.5' : '1' }" class="global_btn primary_btn" [disabled]="globalSearch.length == 0 " (click)="getGlobalSearch()">
+                <input placeholder='Try "Custom Track"' type="text" name="searchtrack" [(ngModel)]="globalSearch"
+                    (input)="getGlobalSearch()" />
+                <button [ngStyle]="{'opacity':globalSearch.length == 0 ? '0.5' : '1' }" class="global_btn primary_btn"
+                    [disabled]="globalSearch.length == 0 " (click)="getGlobalSearch()">
                     <span>SEARCH</span>
-                    </button>
+                </button>
 
             </div>
             <div class="global_search" *ngIf="globalSearchData?.length > 0 && globalSearch.length > 0">
                 <div *ngFor="let global of globalSearchData" class="global_search_text">
-                    <label (click)="redirecttopage(global)"> <img class="global_search_img" [src]="global.ThumbnailImageUrl" /> {{global.Title}}</label>
+                    <label (click)="redirecttopage(global)"> <img class="global_search_img"
+                            [src]="this._base._commonService.cdnURL + global.Thumbnail" /> {{global.Title}}</label>
                 </div>
 
             </div>
@@ -86,7 +89,7 @@
     <div class="hp_block_section">
         <div class="branding_sec" *ngFor="let data of artistBranding">
             <div class="branding_data">
-                <img [src]="data.ThumbnailImageUrl">
+                <img [src]="this._base._commonService.cdnURL + data.Thumbnail">
                 <p>{{data.ServiceTitle}}</p>
             </div>
         </div>

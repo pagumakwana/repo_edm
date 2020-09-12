@@ -36,6 +36,7 @@ export class ProfileUpdateService {
         this._base._encryptedStorage.set(enAppSession.GovitID, data.GovitID);
         this._base._encryptedStorage.set(enAppSession.PayPalEmailID, data.PayPalEmailID);
         this._base._encryptedStorage.set(enAppSession.UserMasterDataIDs, data.UserMasterDataIDs);
+        this._base._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(data.FileUrls));
     }
 
 
@@ -68,7 +69,7 @@ export class ProfileUpdateService {
                                                                                 MobileNumber: MobileNumber,
                                                                                 Password: null,
                                                                                 Bio: Bio,
-                                                                                FileUrls: JSON.parse(FileUrls),
+                                                                                FileUrls: this._base._commonService.tryParseJSON(FileUrls) ? JSON.parse(FileUrls) : [],
                                                                                 Gender: Gender,
                                                                                 SocialProfileUrl: SocialProfileUrl,
                                                                                 StudioGears: StudioGears,
@@ -100,6 +101,19 @@ export class ProfileUpdateService {
 
 
         })
+    }
+
+    CustomServices(ProducersID: string) {
+        return this._base._ApiService.get(`${ApiConstant.customer.CustomServices}?ProducersID=${ProducersID}`);
+    }
+    Producers(UserID: string) {
+        return this._base._ApiService.get(`${ApiConstant.customer.Producers}?UserID=${UserID}&StartCount=1&EndCount=1`);
+    }
+    TrackAndBeat(ProducersID: string, UserID: string) {
+        return this._base._ApiService.get(`${ApiConstant.customer.TrackAndBeat}?ProducersID=${ProducersID}&UserID=${UserID}`);
+    }
+    UserAction(data: { UserID: number, ObjectID: number, ObjectType: string, Action: string }) {
+        return this._base._ApiService.post(`${ApiConstant.Order.UserAction}`, data);
     }
 
 

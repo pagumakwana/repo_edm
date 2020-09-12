@@ -1,0 +1,10 @@
+{
+    "apiBaseURL": "https://edmapi.webdroids.in/api",
+    "ipifyUrl": "https://api.ipify.org/?format=json",
+    "cdnURL": "https://edmapi.webdroids.in/",
+    "client_id": "2",
+    "clientname": "EDM",
+    "project_id": "2",
+    "projectname": "EDM Ghost Production Website",
+    "maintenancemode": "false"
+}

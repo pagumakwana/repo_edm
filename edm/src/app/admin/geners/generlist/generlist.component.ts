@@ -27,18 +27,18 @@ export class GenerListComponent implements OnInit {
     tableData: [],
     tableConfig: [
       { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
-      { identifer: "CategoryName", title: "CategoryName", type: "link" },
+      { identifer: "CategoryName", title: "Category Name", type: "link" },
       { identifer: "CategoryUseByName", title: "Type", type: "text" },
       { identifer: "Description", title: "Description", type: "text" },
-      { identifer: "CreatedName", title: "CreatedBy", type: "text" },
+      // { identifer: "CreatedName", title: "Created By", type: "text" },
       // { identifer: "IsActive", title: "IsActive", type: "flag" },
-      { identifer: "", title: "Action", type: "button", buttonList: [{ name: 'Edit', class: 'global_btn primary_btn', iconClass: 'delete_icon btn_icon' }, { name: 'Delete', class: 'global_btn icon_btn red_btn', iconClass: 'delete_icon btn_icon' }] }
+      { identifer: "", title: "Action", type: "buttonIcons", buttonIconList: [{ title: 'Edit', class: 'small_icon_btn', iconClass: 'edit_btn' }, { title: 'Delete', class: 'small_icon_btn', iconClass: 'delete_btn' }] }
     ]
   }
   tableClick(dataItem: tableEvent) {
-    if (dataItem.action.type == 'link' || (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Edit")) {
+    if (dataItem.action.type == 'link' || (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Edit")) {
       this.modifycategory(dataItem.tableItem, 'MODIFYCATEGORY');
-    } else if (dataItem.action.type == 'button' && dataItem.actionInfo.name == "Delete") {
+    } else if (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Delete") {
       this.modifycategory(dataItem.tableItem, 'DELETECATEGORY');
 
     }
@@ -57,7 +57,7 @@ export class GenerListComponent implements OnInit {
   }
   bindCategory() {
     return new Promise((resolve, reject) => {
-      let track = { 1: 'Track', 2: 'Beats', 3: 'Blog', 4: 'Service', 5: 'News'}
+      let track = { 1: 'Track', 2: 'Beats', 3: 'Blog', 4: 'Service', 5: 'News' }
       this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
         this.categoryData = []
         this.categoryData = Array.isArray(resData) ? resData : [];

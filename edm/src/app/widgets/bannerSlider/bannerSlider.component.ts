@@ -5,7 +5,6 @@ import {
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
 import { ApiConstant } from './../../_appModel/apiconstant';
-import { environment } from './../../../environments/environment.prod';
 
 @Component({
     selector: 'app-bannerSlider',
@@ -40,7 +39,7 @@ export class BannerSliderComponent implements OnInit {
         this._base._ApiService.get(ApiConstant.MasterManagement.CarouselList + '?CarouselID=0').subscribe((data: any) => {
             this.slides = data;
             this.slides.map(item => {
-                item.ImageUrl = environment.cdnURL + item.ImageUrl;
+                item.ImageUrl = this._base._commonService.cdnURL + item.ImageUrl;
               })
         })
     }

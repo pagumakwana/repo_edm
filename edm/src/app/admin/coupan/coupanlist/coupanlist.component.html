@@ -1,0 +1,48 @@
+<div class="filter_section desktop_filter_section">
+    <form>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <select name="filterbydiscounttype" class="grey_dropdown">
+                    <option disabled selected>Filter By Discount Type</option>
+                    <option value="0">ALL</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
+                    <option value="4">Service</option>
+                    <option value="5">News</option>
+                </select>
+                <span class="input_icon down_icon"></span>
+            </div>
+        </div>
+        <div class="form_group">
+            <a class="global_btn icon_btn red_btn" data-toggle="modal" data-target="#acknowledge_popup">
+                <span>Delete Selected</span>
+                <span class="delete_icon btn_icon"></span>
+            </a>
+        </div>
+    </form>
+</div>
+<div>
+    <!-- data table code add here -->
+</div>
+
+<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Once you delete data can not be rollback. Do you still want to continue?</p>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-block primary_btn" data-dismiss="modal">Cancel</a>
+                <a class="btn btn-block primary_btn" data-dismiss="modal">Yes</a>
+            </div>
+        </div>
+    </div>
+</div>

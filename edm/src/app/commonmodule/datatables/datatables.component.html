@@ -22,7 +22,9 @@
                         {{tableItem[key.identifer]}}
                     </a> -->
                     <div class="play_upper_layer">
-                        <img class="tbl_img" [src]="imageBaseUrl + (key?.dataType?.type == 'array' ? getNestedObject(tableItem[key.identifer],key.dataType.path) : tableItem[key.identifer])" [style.height]="key?.size?.height" [style.width]="key?.size?.width">
+                        <img class="tbl_img"
+                            [src]="imageBaseUrl + (key?.dataType?.type == 'array' ? getNestedObject(tableItem[key.identifer],key.dataType.path) : tableItem[key.identifer])"
+                            [style.height]="key?.size?.height" [style.width]="key?.size?.width">
                         <div class="play_audio">
                             <span class="play" title="Play"></span>
                             <!-- <span title="Pause" class="pause" style="display: none;"></span> -->
@@ -48,28 +50,32 @@
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'button'">
                     <div class="table_btn">
-                    <a title="Edit" class="small_icon_btn">
-                        <span class="edit_btn"></span>
-                    </a>
-                    <a title="Delete" class="small_icon_btn">
-                        <span class="delete_btn"></span>
-                    </a>
-                    <a title="View" class="small_icon_btn">
-                        <span class="view_btn"></span>
-                    </a>
-                    <a *ngFor="let button of key?.buttonList" (click)="tableClick(tableItem,key,button)"
-                        class="global_btn {{button.class}}">
-                        <span>{{button.name}}</span>
-                        <span *ngIf="button?.iconClass" class="delete_icon {{button.iconClass}}"></span>
-                    </a>
-                    <!-- <a class="global_btn primary_btn" >
-                        <span>Delete</span>
-                        <span class="delete_icon btn_icon"></span>
-                    </a>
-                    <a class="global_btn primary_btn" >
-                        <span>Delete</span>
-                        <span class="delete_icon btn_icon"></span>
-                    </a> -->
+                        <a *ngFor="let button of key?.buttonList" (click)="tableClick(tableItem,key,button)"
+                            class="global_btn {{button.class}}">
+                            <span>{{button.name}}</span>
+                            <span *ngIf="button?.iconClass" class="delete_icon {{button.iconClass}}"></span>
+                        </a>
+                        <!-- <a class="global_btn primary_btn">
+                            <span>Delete</span>
+                            <span class="delete_icon btn_icon"></span>
+                        </a> -->
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="key?.type == 'buttonIcons'">
+                    <div class="table_btn">
+                        <a *ngFor="let buttonIcon of key?.buttonIconList" [title]="buttonIcon.title"
+                            (click)="tableClick(tableItem,key,buttonIcon)" class="{{buttonIcon.class}}">
+                            <span class="{{buttonIcon.iconClass}}"></span>
+                        </a>
+                        <!-- <a title="Edit" class="small_icon_btn">
+                            <span class="edit_btn"></span>
+                        </a>
+                        <a title="Delete" class="small_icon_btn">
+                            <span class="delete_btn"></span>
+                        </a>
+                        <a title="View" class="small_icon_btn">
+                            <span class="view_btn"></span>
+                        </a> -->
                     </div>
                 </ng-container>
             </td>

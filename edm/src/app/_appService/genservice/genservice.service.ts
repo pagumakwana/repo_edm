@@ -16,4 +16,12 @@ export class GenService {
         let params = `?Flag=${flag}&Ref_Service_ID=${ref_service_id}&AliasName=${AliasName}`
         return this._base._ApiService.get(ApiConstant.genService.Service + params);
     }
+    ManageService(ServiceIDs, Action) {
+        let params = `?ServiceIDs=${ServiceIDs}&Action=${Action}`
+        return this._base._ApiService.get(ApiConstant.genService.ManageService + params);
+    }
+    getServiceByCategory(StartCount, EndCount, AliasName = null) {
+        let params = `?StartCount=${StartCount}&EndCount=${EndCount}&AliasName=${AliasName}`
+        return this._base._ApiService.get(ApiConstant.genService.servicebycatehory + params);
+    }
 }

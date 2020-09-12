@@ -5,7 +5,7 @@ import {
     SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
 import { ApiConstant } from './../../_appModel/apiconstant';
-import { environment } from './../../../environments/environment.prod';
+import { enAppSession } from 'src/app/_appModel/enAppSession';
 @Component({
     selector: 'app-producerSlider',
     templateUrl: './producerSlider.component.html',
@@ -15,7 +15,7 @@ import { environment } from './../../../environments/environment.prod';
 export class ProducerSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
     constructor(public _base: BaseServiceHelper) { }
-    public slides = []; 
+    public producerlist = [];
     public config: SwiperConfigInterface = {
         direction: 'horizontal',
         navigation: false,
@@ -54,12 +54,37 @@ export class ProducerSliderComponent implements OnInit {
         hideOnClick: false
     };
     ngOnInit(): void {
-        this._base._ApiService.post(ApiConstant.customer.Producers+ '?StartCount=0&EndCount=5').subscribe((data: any) => {
-            this.slides = data;
-            this.slides.map(item => {
-                item.ProfilePhoto = environment.cdnURL + item.ProfilePhoto;
-              })
+        this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+            this._base._ApiService.post(ApiConstant.customer.Producers + '?UserID=' + Ref_User_ID + '&StartCount=0&EndCount=5').subscribe((data: any) => {
+                this.producerlist = data;
+                this.producerlist.map(item => {
+                    item.ProfilePhoto = this._base._commonService.cdnURL + item.ProfilePhoto;
+                })
+            })
         })
+    }
+    useraction(ObjectID, ObjectType, Action) {
+        this._base._commonService.showLoader()
+        this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+            let ObjUseraction = {
+                "UserID": Ref_User_ID,
+                "ObjectID": ObjectID,
+                "ObjectType": ObjectType,
+                "Action": Action
+            }
+            this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
+                console.log(data)
+                this.ngOnInit();
+                this._base._commonService.hideLoader()
+            }, e => {
+                this._base._commonService.hideLoader()
+            })
+        })
+    }
+
+    navigateToProducer(producerObj) {
+        console.log("navigateToProducer", producerObj)
+        this._base._router.navigate(['profile', 'producer', producerObj.Ref_User_ID])
     }
 
 }
