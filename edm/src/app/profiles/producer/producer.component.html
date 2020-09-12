@@ -5,23 +5,23 @@
             <img src="../../../assets/images/producer_profile.jpg">
         </div>
         <div class="right_producer_profile">
-            <h3>MOMOSE MUSIC</h3>
+            <h3>{{producerData?.TrackAndBeat?.ProducerName}}</h3>
             <div class="producer_from">
                 <span>From:</span> <span class="country_name">INDIA</span>
             </div>
         </div>
         <div class="social_section">
             <p class="tracks_list">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                scrambled it to make a type specimen book.
+                {{producerData?.TrackAndBeat?.ProducerBio}}
             </p>
             <div class="button_group">
-                <a class="global_btn icon_btn primary_btn mini_btn">
+                <a *ngIf="!producerData?.TrackAndBeat?.Followed" (click)="UserAction(true)"
+                    class="global_btn icon_btn primary_btn mini_btn">
                     <span>FOLLOW</span>
                     <span class="follow_icon btn_icon left_btn_icon"></span>
                 </a>
-                <a class="global_btn icon_btn dark_grey_btn mini_btn">
+                <a *ngIf="producerData?.TrackAndBeat?.Followed" (click)="UserAction(false)"
+                    class="global_btn icon_btn dark_grey_btn mini_btn">
                     <span>FOLLOWING</span>
                     <span class="follow_icon btn_icon left_btn_icon"></span>
                 </a>
@@ -29,7 +29,7 @@
             <div class="social_details">
                 <div class="left_following_list">
                     <div class="following_list_box">
-                        <p class="count_list">1.2k</p>
+                        <p class="count_list">{{producerData?.TrackAndBeat?.Followers}}</p>
                         <p class="count_title">Followers</p>
                     </div>
                     <div class="following_list_box">
@@ -89,14 +89,12 @@
         <!-- BIOGRAPHY -->
         <div *ngIf="currentTab == producerTab.biography">
             <div class="biography_sec">
-                <h3>MOMOSE MUSIC</h3>
+                <h3>{{producerData?.TrackAndBeat?.ProducerName}}</h3>
                 <div class="from_sec">
                     <span>From:</span> <span class="from_country_name">INDIA</span>
                 </div>
                 <p class="biography_disc">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type
-                    and scrambled it to make a type specimen book.
+                    {{producerData?.TrackAndBeat?.ProducerBio}}
                 </p>
             </div>
         </div>
@@ -627,8 +625,8 @@
                             </td>
                             <td>
                                 <b><u><a>
-                                    Hiphop
-                                </a></u></b>
+                                            Hiphop
+                                        </a></u></b>
                             </td>
                             <td>
                                 <b>140</b>BPM
@@ -673,8 +671,8 @@
                             </td>
                             <td>
                                 <b><u><a>
-                                    Hiphop
-                                </a></u></b>
+                                            Hiphop
+                                        </a></u></b>
                             </td>
                             <td>
                                 <b>140</b>BPM
@@ -719,8 +717,8 @@
                             </td>
                             <td>
                                 <b><u><a>
-                                    Hiphop
-                                </a></u></b>
+                                            Hiphop
+                                        </a></u></b>
                             </td>
                             <td>
                                 <b>140</b>BPM
@@ -765,8 +763,8 @@
                             </td>
                             <td>
                                 <b><u><a>
-                                    Hiphop
-                                </a></u></b>
+                                            Hiphop
+                                        </a></u></b>
                             </td>
                             <td>
                                 <b>140</b>BPM
