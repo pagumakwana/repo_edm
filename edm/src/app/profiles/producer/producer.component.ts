@@ -44,7 +44,12 @@ export class ProducerProfileComponent implements OnInit {
     currentTab: producerTab = producerTab.biography;
     producerData: { [key: string]: any } = {
         CustomServices: null,
-        TrackAndBeat: null
+        TrackAndBeat: {
+            data: null,
+            tracks: [],
+            soldOutTracks: [],
+            beats: []
+        }
     }
 
     changeTab(tab: producerTab) {
@@ -63,10 +68,18 @@ export class ProducerProfileComponent implements OnInit {
         })
     }
     TrackAndBeat() {
+        this._base._commonService.showLoader();
         this._profileService.TrackAndBeat(this.producerReqData.producerID, this.producerReqData.Ref_User_ID).subscribe((res: any) => {
-            console.log("TrackAndBeat", res)
-            this.producerData.TrackAndBeat = Array.isArray(res) && res.length > 0 ? res[0] : []
-            this.producerData.TrackAndBeat.Followed = (this.producerData.TrackAndBeat.Followed != '-')
+            // let TrackAndBeat = Array.isArray(res) && res.length > 0 ? res[0] : []
+            this.producerData.TrackAndBeat.data = Array.isArray(res) && res.length > 0 ? res[0] : []
+            this.producerData.TrackAndBeat.data.Followed = (this.producerData.TrackAndBeat.Followed != '-')
+            if (Array.isArray(this.producerData.TrackAndBeat.data.TrackAndBeat)) {
+                this.producerData.TrackAndBeat.tracks = this.producerData.TrackAndBeat.data.TrackAndBeat.filter(item => item.IsTrack == 'Track')
+                this.producerData.TrackAndBeat.soldOutTracks = this.producerData.TrackAndBeat.tracks.filter(item => item.SoldOut != '-')
+                this.producerData.TrackAndBeat.beats = this.producerData.TrackAndBeat.data.TrackAndBeat.filter(item => item.IsTrack == 'Beat')
+            }
+            console.log("TrackAndBeat", res, this.producerData.TrackAndBeat)
+            this._base._commonService.hideLoader();
         })
     }
 

@@ -1,7 +1,7 @@
 {
-    "apiBaseURL": "https://edmapi.webdroids.in/api",
-    "ipifyUrl": "https://api.ipify.org/?format=json",
-    "cdnURL": "https://edmapi.webdroids.in/",
+    "apiBaseURL": "http://edmapi.webdroids.in/api",
+    "ipifyUrl": "http://api.ipify.org/?format=json",
+    "cdnURL": "http://edmapi.webdroids.in/",
     "client_id": "2",
     "clientname": "EDM",
     "project_id": "2",
