@@ -223,7 +223,7 @@ export class TrackListComponent implements OnInit {
         }
       this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
         if(data == "Approve"){
-          this._base._alertMessageService.success(this.moduleName+ "approved successfully!");
+          this._base._alertMessageService.success(this.moduleName+ " Approved successfully!");
           this.getAllTracks("0", 'All');
          }else{
           console.log(data)
@@ -272,7 +272,7 @@ public confirmReject(){
         }
       this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
        if(data == "Rejected"){
-        this._base._alertMessageService.success(this.moduleName+ "rejected successfully!");
+        this._base._alertMessageService.success(this.moduleName+ " Rejected successfully!");
         this.getAllTracks("0", 'All');
        }else{
         console.log(data)
