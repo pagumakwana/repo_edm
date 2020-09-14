@@ -170,6 +170,11 @@ export class AddModifyTrackComponent implements OnInit {
     }
     
   }
+  public OnlyNumberText(e) {
+    debugger;
+    e.target.value = e.target.value.replace(/[^a-zA-Z0-9 -]/g, '')
+    
+  }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
@@ -488,6 +493,7 @@ export class AddModifyTrackComponent implements OnInit {
   }
   onSubmit() {
     debugger;
+    console.log(this.model.beatkey)
     if (this.trackImg != undefined) {
       if(!this.pricelimit && !this.minuteslimit){
         this.finalsubmition = true;
@@ -499,7 +505,8 @@ export class AddModifyTrackComponent implements OnInit {
   finaltrackSubmit() {
     if (this.checkfileuploaded()) {
       this.commonService.showLoader()
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+      debugger;
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         let ObjTrackDetails = {
           "Ref_Track_ID": this.trackId,
           "Ref_Category_ID": this.model.trackgenre,
@@ -525,7 +532,7 @@ export class AddModifyTrackComponent implements OnInit {
           "MIDIFileUrl": this.midifileurl == undefined ? '' : this.midifileurl,
           "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
           "IsActive": true,
-          "CreatedBy": FullName
+          "CreatedBy": Ref_User_ID
         }
         this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
           console.log(data);

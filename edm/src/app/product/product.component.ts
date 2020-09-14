@@ -85,10 +85,10 @@ export class ProductComponent implements OnInit {
     { "Ref_User_ID": 0, "Ref_Mood_ID": 39, "Ref_Parent_ID": 0, "MoodName": "Soulful", "AliasName": "Soulful", "CategoryUseBy": "", "Description": "For Beat upload", "ThumbnailImageUrl": "", "IsActive": true }
   ]
   minValue: number = 0;
-  maxValue: number = 100;
+  maxValue: number = 2000;
   options: Options = {
     floor: 0,
-    ceil: 100,
+    ceil: 2000,
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
@@ -144,10 +144,11 @@ export class ProductComponent implements OnInit {
     debugger;
     this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
       this._base._ApiService.get(ApiConstant.Track.FilterTrack + '?UserID=' + Ref_User_ID + '&StartCount=0&EndCount=0').subscribe((data: any) => {
-        if (this.storetype == "Track") {
-          this.products = data.filter(res => res.IsTrack == "Track");
-        } else {
+        if (this.storetype == "Beats") {
           this.products = data.filter(res => res.IsTrack == "Beat");
+        } else {
+         
+          this.products = data.filter(res => res.IsTrack == "Track");
         }
         this._base._commonService.hideLoader();
         this.Productlist = this.products;
@@ -306,7 +307,8 @@ export class ProductComponent implements OnInit {
       this.audio = new Audio();
       this.playpause = 'Play';
       this.playpauseImg = '../../../assets/images/play_video.svg'
-    } else if ($('.playpause_' + id).hasClass('play')) {
+    } else
+     if ($('.playpause_' + id).hasClass('play')) {
       this.audio.src = this._base._commonService.cdnURL + path;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
@@ -319,6 +321,13 @@ export class ProductComponent implements OnInit {
       this.playpauseImg = '../../../assets/images/pause.svg'
       $('.playpause_' + id).removeClass('play');
       $('.playpause_' + id).addClass('pause');
+    }
+  }
+  setImg(id){
+    if ($('.playpause_' + id).hasClass('play')) {
+      return '../../../assets/images/play_video.svg'
+    }else{
+      return '../../../assets/images/pause.svg'
     }
   }
 }

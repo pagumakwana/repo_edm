@@ -139,7 +139,7 @@ export class TrackListComponent implements OnInit {
       this.filteredProducts = this.data.filter(x => 
         (x.TrackStatus == 'Approve' && this.filter.Approved)
         || (x.TrackStatus == 'SoldOut' && this.filter.SoldOut)
-        || (x.TrackStatus == 'REJACTED' && this.filter.Rejected)
+        || (x.TrackStatus == 'Rejected' && this.filter.Rejected)
         || (x.TrackStatus == 'Pending' && this.filter.Pending)
      );
      console.log( this.filteredProducts)
@@ -214,12 +214,12 @@ export class TrackListComponent implements OnInit {
   public manageTrackBeat(id, action){
     this._base._commonService.showLoader();
     if(action == 'Approve'){
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
        let ObjApproveAndRejact =  {
           "TrackIDs": id,
           "Action": action,
           "Reason": "",
-          "ActionBy": FullName
+          "ActionBy": Ref_User_ID
         }
       this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
         if(data == "Approve"){
@@ -263,15 +263,15 @@ public confirmReject(){
     if (this.addrejectreason.valid) {
       (<any>$('#rejectReason_popup')).modal('hide');
       this._base._commonService.showLoader();
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
        let ObjApproveAndRejact =  {
           "TrackIDs": this.rejectTrackId,
-          "Action": 'Rejact',
+          "Action": 'Rejected',
           "Reason": this.rejectReason,
-          "ActionBy": FullName
+          "ActionBy": Ref_User_ID
         }
       this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
-       if(data == "REJACTED"){
+       if(data == "Rejected"){
         this._base._alertMessageService.success(this.moduleName+ "rejected successfully!");
         this.getAllTracks("0", 'All');
        }else{

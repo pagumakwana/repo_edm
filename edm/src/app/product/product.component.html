@@ -1,9 +1,9 @@
 <div class="product_page">
     <swiper class="genre_slider" [config]="config">
         <div class="swiper-slide" *ngFor="let genre of genrelist">
-            <div class="slider_genre">
-                <div class="genre_img" (click)="onGenreFilter(genre.CategoryName)">
-                    <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath" class="genre_thumbnail">
+            <div class="slider_product">
+                <div class="product_img" (click)="onGenreFilter(genre.CategoryName)">
+                    <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath" class="product_thumbnail">
                     <h4>{{genre.CategoryName}}</h4>
                 </div>
             </div>
@@ -105,7 +105,7 @@
                 <div class="product_img">
                     <img [src]="product.ThumbnailImageUrl" class="product_thumbnail">
                     <div class="product_upper_layer">
-                        <img style="background:none" (click)="playaudio(product.PlayUrl, product.Ref_Track_ID, filtersproducts)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
+                        <img style="background:none" (click)="playaudio(product.PlayUrl, product.Ref_Track_ID, filtersproducts)" class="playpause_{{product.Ref_Track_ID}} play" [src]="setImg(product.Ref_Track_ID)" />
                         <p class="product_name">{{product.TrackName}}</p>
                         <p class="product_bass">{{product.CategoryName}}</p>
                     </div>

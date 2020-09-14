@@ -65,7 +65,12 @@ export class FeaturedProductSliderComponent implements OnInit {
     ngOnInit(): void {
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
             this._trackService.getFeaturedTrack(0, 5, Ref_User_ID).subscribe((data: any) => {
-                this.featuredTrack = data.filter(a => a.IsTrack == 'Track');
+                if(this._base._commonService.FeatureProducts == "Beats"){
+                    this.featuredTrack = data.filter(a => a.IsTrack == 'Beat');
+                }else{
+                    this.featuredTrack = data.filter(a => a.IsTrack == 'Track');
+                }
+                
             })
         })
     }

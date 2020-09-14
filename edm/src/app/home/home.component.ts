@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
     public router: Router) { }
   ngOnInit(): void {
     this.getArtistBranding();
+    this._base._commonService.FeatureProducts = 'Track'
   }
   getArtistBranding() {
     this._genService.getServiceByCategory(0, 10, 'ARTISTBRANDING').subscribe((data: any) => {

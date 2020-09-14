@@ -24,7 +24,7 @@ export class CommonService {
 
     public setHasLoginSubscribe = new Subject<boolean>();
     public cdnURL = configData.cdnURL;
-
+    public FeatureProducts = "Track"
     public navigation(url: any) {
         this._router.navigate([url]);
     }

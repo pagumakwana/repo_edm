@@ -55,7 +55,7 @@ export class ProducerSliderComponent implements OnInit {
     };
     ngOnInit(): void {
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
-            this._base._ApiService.post(ApiConstant.customer.Producers + '?UserID=' + Ref_User_ID + '&StartCount=0&EndCount=5').subscribe((data: any) => {
+            this._base._ApiService.get(ApiConstant.customer.Producers + '?UserID=' + Ref_User_ID + '&StartCount=0&EndCount=5').subscribe((data: any) => {
                 this.producerlist = data;
                 this.producerlist.map(item => {
                     item.ProfilePhoto = this._base._commonService.cdnURL + item.ProfilePhoto;

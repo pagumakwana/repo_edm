@@ -195,7 +195,7 @@
                             <option *ngFor="let key of keylist" [value]="key.Ref_Key_ID" [selected]="key.Ref_Key_ID == KeyID">{{key.KeyName}}</option>
                            
                         </select> -->
-                <input type="text" pattern="[0-9a-zA-Z\s-]*" class="form-control" name="beatkey" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required placeholder="Key" />
+                <input type="text" class="form-control" name="beatkey" [(ngModel)]="model.beatkey" #beatkey="ngModel" [ngClass]="{ 'is-invalid': f.submitted && beatkey.invalid }" required placeholder="Key" (keyup)="OnlyNumberText($event)" />
                 <!-- <span class="input_icon dropdown_icon"></span> -->
             </div>
 

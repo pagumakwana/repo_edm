@@ -3,7 +3,7 @@
         <div class="product_thumbnail_sec">
             <img [src]="product.ThumbnailImageUrl" />
             <div class="product_thumbnail_hover_sec" [id]="product.Ref_Track_ID">
-                <img style="background:none" (click)="playaudio(product.MasterFileUrl, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
+                <img style="background:none" (click)="playaudio(product.MasterFileUrl, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" />
             </div>
         </div>
         <div class="product_details">
@@ -12,8 +12,11 @@
             <p class="files_included_heading">
                 Files Included:
             </p>
-            <p class="included_files">
+            <p class="included_files" *ngIf="storetype == 'Track'  || storetype == 'CustomTrack'">
                 All Steams (.wav) | All MIDI Files | Mastered & Mixdown Version | 100% rights with contract
+            </p>
+            <p class="included_files" *ngIf="storetype == 'Beats'">
+                All Steams (.wav) | 100% rights with contract
             </p>
             <ul class="product_more_details">
                 <li>
@@ -32,13 +35,21 @@
                     <p>Price :</p>
                     <p>{{product.Price}}</p>
                 </li>
-                <li>
+                <li *ngIf="storetype == 'Track'  || storetype == 'CustomTrack'">
                     <p>Duration :</p>
                     <p>{{product.Duration}}</p>
                 </li>
-                <li>
+                <li *ngIf="storetype == 'Track'  || storetype == 'CustomTrack'">
                     <p>DAW :</p>
-                    <p>{{product.DAW}}</p>
+                    <p>{{product.DAWName}}</p>
+                </li>
+                <li *ngIf="storetype == 'Beats'">
+                    <p>MOOD :</p>
+                    <p>{{product.MoodName}}</p>
+                </li>
+                <li *ngIf="storetype == 'Beats'">
+                    <p>Key :</p>
+                    <p>{{product.Key}}</p>
                 </li>
             </ul>
             <div class="button_group">
@@ -48,7 +59,7 @@
                 </a>
                 <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn">
                     <span>Favourite</span>
-                    <span class="add_to_favourites_icon btn_icon"></span>
+                    <span class="add_to_favourites_fill_icon"></span>
                 </a>
                 <a class="global_btn icon_btn primary_btn" (click)="useraction(product.Ref_Track_ID,'Track','Add to cart')">
                     <span>Add To Cart</span>
@@ -59,8 +70,11 @@
     </div>
 
     <div class="featuredProduct_sections">
-        <h2 class="global_heading">
+        <h2 class="global_heading" *ngIf="storetype == 'Track'  || storetype == 'CustomTrack'">
             Related Track
+        </h2>
+        <h2 class="global_heading" *ngIf="storetype == 'Beats'">
+            Related Beats
         </h2>
         <div class="global_slider">
             <app-featuredProductSlider></app-featuredProductSlider>

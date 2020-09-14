@@ -74,7 +74,7 @@
                 <td>{{track.TrackStatus}}</td>
                 <td>
                     <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
-                    <a *ngIf="track.TrackStatus == 'REJACTED'" class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
+                    <a *ngIf="track.TrackStatus == 'Rejected'" class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
                 </td>
                 <td class="table_btn">
                     <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Approve')" class="global_btn icon_btn primary_btn">
