@@ -29,6 +29,7 @@ export class TrackListComponent implements OnInit {
   popoverMessage = 'Popover description';
   confirmClicked = false;
   cancelClicked = false;
+  rejectedReasonTxt
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private route: ActivatedRoute,
@@ -39,28 +40,34 @@ export class TrackListComponent implements OnInit {
     debugger;
     this.route.params.subscribe(params => {
       this.moduleName = params['module'];
-      this._base._pageTitleService.setTitle("All "+this.moduleName+"s", "All "+this.moduleName+"s");
+      this._base._pageTitleService.setTitle("All " + this.moduleName + "s", "All " + this.moduleName + "s");
       this._base._commonService.showLoader();
-      this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
+      let genretype="All"
+      if(this.moduleName == "Beat"){
+        genretype = "Beats"
+      }else if(this.moduleName == "Track"){
+        genretype = "Track"
+      }
+      this._categoryService.categorylist(genretype, 0).subscribe((resData: any) => {
         let categoryData = []
         categoryData = Array.isArray(resData) ? resData : []
         console.log("categoryData", categoryData);
         this.genrelist = categoryData;
         this.getAllTracks("0", 'All');
-      },e =>{
+      }, e => {
         this._base._commonService.hideLoader();
       });
-       
-     
+
+
     })
-   
+
     this.addrejectreason = this.fb.group({
       rejectReason: ['', [Validators.required]]
     })
 
   }
   public getAllTracks(genreid, status) {
- 
+
     this._base._ApiService.get(ApiConstant.TrackManagement.Track + '?TrackID=0').subscribe((data: any) => {
       if (this.moduleName == "Track") {
         data = data.filter(res => res.IsTrack == true);
@@ -78,14 +85,14 @@ export class TrackListComponent implements OnInit {
         this.filteredProducts = this.data;
       } else {
         this._base._commonService.hideLoader();
-        if(status != "All"){
+        if (status != "All") {
           this.data = data.filter(a => a.TrackStatus == status.toUpperCase());
           this.data.map(item => {
             item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
             item.Ref_Category_ID = this.filtergenre(item.Ref_Category_ID);
           })
           this.filteredProducts = this.data;
-        }else{
+        } else {
           this.data = data
           this.data.map(item => {
             item.ThumbnailImageUrl = this._base._commonService.cdnURL + item.ThumbnailImageUrl;
@@ -97,12 +104,12 @@ export class TrackListComponent implements OnInit {
         this.onStatusChange()
       }
 
-    },e=>{
+    }, e => {
       this._base._commonService.hideLoader();
     })
   }
   bindCategory() {
-    this._categoryService.categorylist('ALL',0).subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       let categoryData = []
       categoryData = Array.isArray(resData) ? resData : []
       console.log("categoryData", categoryData);
@@ -111,17 +118,17 @@ export class TrackListComponent implements OnInit {
   }
   filtergenre(id) {
     let genre = this.genrelist.filter(r => r.Ref_Category_ID == id);
-   // let genrename
-    if(genre.length != 0){
+    // let genrename
+    if (genre.length != 0) {
       return genre[0].CategoryName;
-    }else{
+    } else {
       return '-'
     }
-    
+
   }
   onGenreChange(e) {
     if (e == "0") {
-      this.getAllTracks("0",'All');
+      this.getAllTracks("0", 'All');
     } else {
       this.getAllTracks(e, 'All');
     }
@@ -132,20 +139,20 @@ export class TrackListComponent implements OnInit {
     for (var item in this.filteredProducts) {
     }
   }
-  onStatusChange(){
-    if(!this.filter.Approved && !this.filter.SoldOut && !this.filter.Rejected && !this.filter.Pending){
+  onStatusChange() {
+    if (!this.filter.Approved && !this.filter.SoldOut && !this.filter.Rejected && !this.filter.Pending) {
       this.filteredProducts = this.data
-    }else{
-      this.filteredProducts = this.data.filter(x => 
+    } else {
+      this.filteredProducts = this.data.filter(x =>
         (x.TrackStatus == 'Approve' && this.filter.Approved)
         || (x.TrackStatus == 'SoldOut' && this.filter.SoldOut)
         || (x.TrackStatus == 'Rejected' && this.filter.Rejected)
         || (x.TrackStatus == 'Pending' && this.filter.Pending)
-     );
-     console.log( this.filteredProducts)
+      );
+      console.log(this.filteredProducts)
     }
-   
-   
+
+
   }
   GetSortOrder(prop, e) {
     return function (a, b) {
@@ -176,7 +183,7 @@ export class TrackListComponent implements OnInit {
       })
       this.audio.pause();
       this.audio = new Audio();
-     // $('.playpause_' + id).removeClass('pause');
+      // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('play')) {
       this.audio.src = this._base._commonService.cdnURL + path;
@@ -190,6 +197,10 @@ export class TrackListComponent implements OnInit {
       $('.playpause_' + id).removeClass('play');
       $('.playpause_' + id).addClass('pause');
     }
+  }
+  public showreason(reason){
+    this.rejectedReasonTxt = reason;
+    (<any>$('#readmore_popup')).modal('show');
   }
   public redirectToaddmodifytrack(trackId) {
     debugger;
@@ -211,78 +222,78 @@ export class TrackListComponent implements OnInit {
       });
     }
   }
-  public manageTrackBeat(id, action){
+  public manageTrackBeat(id, action) {
     this._base._commonService.showLoader();
-    if(action == 'Approve'){
+    if (action == 'Approve') {
       this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
-       let ObjApproveAndRejact =  {
+        let ObjApproveAndRejact = {
           "TrackIDs": id,
           "Action": action,
           "Reason": "",
           "ActionBy": Ref_User_ID
         }
-      this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
-        if(data == "Approve"){
-          this._base._alertMessageService.success(this.moduleName+ " Approved successfully!");
-          this.getAllTracks("0", 'All');
-         }else{
-          console.log(data)
+        this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
+          if (data == "Approve") {
+            this._base._alertMessageService.success(this.moduleName + " Approved successfully!");
+            this.getAllTracks("0", 'All');
+          } else {
+            console.log(data)
+            this._base._commonService.hideLoader();
+          }
+        }, e => {
+          console.log(e)
           this._base._commonService.hideLoader();
-         }
-      },e=>{
-        console.log(e)
-        this._base._commonService.hideLoader();
+        })
       })
-    })
-    }else if(action == 'Reject'){
+    } else if (action == 'Reject') {
       (<any>$('#rejectConfirmation')).modal('show');
-      
-       this.rejectTrackId = id;
-    }else{
-      this._base._ApiService.get(ApiConstant.TrackManagement.ManageTrack + '?TrackIDs='+ id + '&Action='+ action).subscribe((data: any) => {
-        if(data == "TRACKDELETE"){
-          this._base._alertMessageService.success(this.moduleName+ " deleted successfully!");
+
+      this.rejectTrackId = id;
+    } else {
+      this._base._ApiService.get(ApiConstant.TrackManagement.ManageTrack + '?TrackIDs=' + id + '&Action=' + action).subscribe((data: any) => {
+        if (data == "TRACKDELETE") {
+          this._base._alertMessageService.success(this.moduleName + " deleted successfully!");
           this.getAllTracks("0", 'All');
-        }else{
+        } else {
           console.log(data)
           this._base._commonService.hideLoader();
         }
-      },e=>{
+      }, e => {
         console.log(e)
         this._base._commonService.hideLoader();
       })
     }
-   
+
   }
-public confirmReject(){
-  (<any>$('#rejectConfirmation')).modal('hide');
-  (<any>$('#rejectReason_popup')).modal('show');
-}
-  public accept(){
+  public confirmReject() {
+    (<any>$('#rejectConfirmation')).modal('hide');
+    (<any>$('#rejectReason_popup')).modal('show');
+  }
+  public accept() {
     this._base._commonService.markFormGroupTouched(this.addrejectreason);
     if (this.addrejectreason.valid) {
       (<any>$('#rejectReason_popup')).modal('hide');
       this._base._commonService.showLoader();
       this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
-       let ObjApproveAndRejact =  {
+        let ObjApproveAndRejact = {
           "TrackIDs": this.rejectTrackId,
           "Action": 'Rejected',
           "Reason": this.rejectReason,
           "ActionBy": Ref_User_ID
         }
-      this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
-       if(data == "Rejected"){
-        this._base._alertMessageService.success(this.moduleName+ " Rejected successfully!");
-        this.getAllTracks("0", 'All');
-       }else{
-        console.log(data)
-        this._base._commonService.hideLoader();
-       }
-      },e=>{
-        console.log(e)
-        this._base._commonService.hideLoader();
+        this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
+          if (data == "Rejected") {
+            this._base._alertMessageService.success(this.moduleName + " Rejected successfully!");
+            this.getAllTracks("0", 'All');
+          } else {
+            console.log(data)
+            this._base._commonService.hideLoader();
+          }
+        }, e => {
+          console.log(e)
+          this._base._commonService.hideLoader();
+        })
       })
-    })
     }
   }
 

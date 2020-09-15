@@ -4,7 +4,7 @@
             <div class="product_img">
                 <img [src]="this._base._commonService.cdnURL + objSlide.Thumbnail" class="product_thumbnail">
                 <div class="product_upper_layer">
-                    <img style="background:none" (click)="playaudio(objSlide.PlayUrl, objSlide.Ref_Track_ID, featuredTrack)" class="playpause_{{objSlide.Ref_Track_ID}} play" [src]="playpauseImg" [title]="playpause" />
+                    <img style="background:none" (click)="playaudio(objSlide.PlayUrl, objSlide.Ref_Track_ID, featuredTrack)" class="playpause_{{objSlide.Ref_Track_ID}} play" [src]="setImg(objSlide.Ref_Track_ID)" />
                     <p class="product_name">{{objSlide.TrackName}}</p>
                     <p class="product_bass">{{objSlide.CategoryName}}</p>
                 </div>

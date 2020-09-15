@@ -22,11 +22,13 @@ export class MasterListComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.modulename = params['module'];
       if(this.modulename == 'master'){
+        this._base._pageTitleService.setTitle("All Masters", "All Masters");
         this._mastersServices.getMasterlist(0).subscribe(data =>{
           this._base._commonService.hideLoader();
           this.data = data
         })
       }else{
+        this._base._pageTitleService.setTitle("All MasterData", "All MasterData");
         this._mastersServices.getMasterDatalist(0, 0).subscribe(data =>{
           this.data = data
           this._base._commonService.hideLoader();

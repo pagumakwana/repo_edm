@@ -24,6 +24,8 @@ export class AddModifyMasterComponent implements OnInit {
   AllNonMandatorychecked: boolean = false
   AllMandatorychecked: boolean = false
   AllMasterdataselect: boolean = false
+  MandatoryMasterIDs
+  NonMandatoryMasterIDs
   public addmodifymaster: FormGroup;
   mandatorymasters: any[]
   nonmandatorymasters: any[]
@@ -46,6 +48,7 @@ export class AddModifyMasterComponent implements OnInit {
         })
         this.getMasterlist();
         if (this.usermasterID != 0) {
+          this._base._pageTitleService.setTitle("Modify Master", "Modify Master");
           this._mastersServices.getMasterlist(this.usermasterID).subscribe(data => {
             this._base._commonService.hideLoader();
             this.addmodifymaster.value.masterName = data[0].UserMaster
@@ -58,15 +61,20 @@ export class AddModifyMasterComponent implements OnInit {
             this.IsParent = data[0].MandatoryMasterIDs == "0" || data[0].MandatoryMasterIDs == "" ? false : true;
             //this.parentmaster = data[0].MandatoryMasterIDs
             this.IsMandatory = data[0].IsMandatory
-            this.Ref_UserMaster_ID == data[0].ParentIDs
+            this.Ref_UserMaster_ID = data[0].ParentIDs
+            this.MandatoryMasterIDs = data[0].MandatoryMasterIDs
+            this.NonMandatoryMasterIDs = data[0].NonMandatoryMasterIDs
           })
         } else {
+          this._base._pageTitleService.setTitle("Add Master", "Add Master");
           this._base._commonService.hideLoader();
           this.addmodifymaster.value.masterName = undefined
           this.addmodifymaster.value.Description = undefined
           this.addmodifymaster.value.IsParent = undefined
           this.addmodifymaster.value.parentmaster = undefined
           this.addmodifymaster.value.IsMandatory = undefined
+          this.MandatoryMasterIDs = ""
+          this.NonMandatoryMasterIDs = ""
         }
       } else {
         this.addmodifymaster = this.fb.group({
@@ -78,6 +86,7 @@ export class AddModifyMasterComponent implements OnInit {
         })
         this.getMasterlist();
         if (this.usermasterID != 0) {
+          this._base._pageTitleService.setTitle("Modify MasterData", "Modify MasterData");
           this._mastersServices.getMasterDatalist(0, this.usermasterID).subscribe(data => {
             this._base._commonService.hideLoader();
             this.addmodifymaster.value.masterName = data[0].UserMasterData
@@ -86,15 +95,20 @@ export class AddModifyMasterComponent implements OnInit {
             this.masterName = data[0].UserMasterData
             this.Description = data[0].Description
             this.parentmaster = data[0].Ref_UserMaster_ID
-            this.Ref_UserMaster_ID == data[0].Ref_UserMaster_ID
+            this.Ref_UserMaster_ID = data[0].Ref_UserMaster_ID
+            this.MandatoryMasterIDs = data[0].MandatoryMasterIDs
+            this.NonMandatoryMasterIDs = data[0].NonMandatoryMasterIDs
           })
         } else {
+          this._base._pageTitleService.setTitle("Add MasterData", "Add MasterData");
           this._base._commonService.hideLoader();
           this.addmodifymaster.value.masterName = undefined
           this.addmodifymaster.value.Description = undefined
           this.addmodifymaster.value.IsParent = undefined
           this.addmodifymaster.value.parentmaster = undefined
           this.addmodifymaster.value.IsMandatory = undefined
+          this.MandatoryMasterIDs = ""
+          this.NonMandatoryMasterIDs = ""
         }
       }
     });
@@ -133,6 +147,23 @@ export class AddModifyMasterComponent implements OnInit {
         item.isMandatorychecked = false
         item.isnonMandatorychecked = false
       })
+      let MandatoryMasterIDs = this.MandatoryMasterIDs.split(',')
+      MandatoryMasterIDs.filter(a => {
+        this.masterlist.map(item => {
+          if (a == item.Ref_UserMaster_ID) {
+            item.isMandatorychecked = true
+          }
+        })
+      })
+      let NonMandatoryMasterIDs = this.NonMandatoryMasterIDs.split(',')
+      NonMandatoryMasterIDs.filter(a => {
+        this.masterlist.map(item => {
+          if (a == item.Ref_UserMaster_ID) {
+            item.isnonMandatorychecked = true
+          }
+        })
+      })
+      // for(let i = 0; i)
       // this.selectedItems = [];
       // this.dropdownSettings = {
       //   singleSelection: false,
@@ -170,6 +201,8 @@ export class AddModifyMasterComponent implements OnInit {
   }
   getparentMasterlist(id) {
     debugger
+    if (id == undefined)
+      return false
     this.mandatorymasters = []
     this.nonmandatorymasters = []
     this._mastersServices.getParentMasterlist(id).subscribe((res: any) => {
@@ -186,18 +219,46 @@ export class AddModifyMasterComponent implements OnInit {
             isSelected: false
           })
         }
-        item.isSelected = false
-        if (item.userMasterData.length != 0) {
-          item.userMasterData.map(abc => {
-            if (this.usermasterID == abc.Ref_UserMasterData_ID) {
-              abc.isSelected = true
-            } else {
-              abc.isSelected = false
-            }
-          })
-        }
+        // item.isSelected = false
+        // if (item.userMasterData.length != 0) {
+        //   item.userMasterData.map(abc => {
+        //     if (this.usermasterID == abc.Ref_UserMasterData_ID) {
+        //       abc.isSelected = true
+        //     } else {
+        //       abc.isSelected = false
+        //     }
+        //   })
+        // }
+
       })
+      let MandatoryMasterIDs = this.MandatoryMasterIDs.split(',')
+      MandatoryMasterIDs.filter(a => {
+        this.parentmasterlist.filter(item => {
+          if (item.userMasterData.length != 0) {
+            item.userMasterData.map(abc => {
+              if (a == abc.Ref_UserMasterData_ID) {
+                abc.isSelected = true
+              }
+            })
+          }
+        })
+      })
+      let NonMandatoryMasterIDs = this.NonMandatoryMasterIDs.split(',')
+      NonMandatoryMasterIDs.filter(a => {
+        this.parentmasterlist.filter(item => {
+          if (item.userMasterData.length != 0) {
+            item.userMasterData.map(abc => {
+              if (a == abc.Ref_UserMasterData_ID) {
+                abc.isSelected = true
+              }
+            })
+          }
+        })
+      })
+      console.log(this.parentmasterlist)
     })
+
+    
   }
   SelectAllmasterlist(i, e) {
     this.parentmasterlist[i].userMasterData.filter(masterdata => {
@@ -221,7 +282,7 @@ export class AddModifyMasterComponent implements OnInit {
     console.log(this.addmodifymaster.value.IsMandatory)
     if (this.addmodifymaster.valid) {
       this._base._commonService.showLoader();
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         let MandatoryMasterIDs = ""
         let NonMandatoryMasterIDs = ""
         if (this.modulename == 'master') {
@@ -242,11 +303,17 @@ export class AddModifyMasterComponent implements OnInit {
             "NonMandatoryMasterIDs": this.addmodifymaster.value.IsParent == true ? NonMandatoryMasterIDs : 0,
             "IsMandatory": this.addmodifymaster.value.IsMandatory,
             "IsActive": true,
-            "AddedBy": FullName
+            "AddedBy": Ref_User_ID
           }
           this._mastersServices.addmodifyMaster(ObjUserMaster).subscribe(res => {
             console.log(res);
-            alert(res);
+            if (res == "USERMASTERUPDATED") {
+              this._base._alertMessageService.success("Master Updated successfully!");
+            }
+            if (res == "USERMASTERADDED") {
+              this._base._alertMessageService.success("Master Added successfully!");
+            }
+           // alert(res);
             if (this.usermasterID == 0) {
               this.addmodifymaster.reset();
             }
@@ -307,19 +374,24 @@ export class AddModifyMasterComponent implements OnInit {
             "UserMasterData": this.addmodifymaster.value.masterName,
             "UserMaster": "",
             "Description": this.addmodifymaster.value.Description,
-            "MandatoryMasterIDs": selectedMandatoryMasterIds,
-            "NonMandatoryMasterIDs": selectedNonMandatoryMasterIds,
-            "MandatoryMasterDataIDs": selectedMandatoryMasterdataIds,
-            "NonMandatoryMasterDataIDs": selectedNonMandatoryMasterdataIds,
+            "MandatoryMasterIDs": selectedMandatoryMasterdataIds,
+            "NonMandatoryMasterIDs": selectedNonMandatoryMasterdataIds,
+            // "MandatoryMasterDataIDs": selectedMandatoryMasterdataIds,
+            // "NonMandatoryMasterDataIDs": selectedNonMandatoryMasterdataIds,
             "IsActive": true,
-            "AddedBy": FullName
+            "AddedBy": Ref_User_ID
           }
           this._mastersServices.addmodifyMasterData(ObjUserMasterData).subscribe(res => {
             console.log(res);
             if (this.usermasterID == 0) {
               this.addmodifymaster.reset();
             }
-            alert(res);
+            if (res == "USERMASTERDATAUPDATED") {
+              this._base._alertMessageService.success("MasterData Updated successfully!");
+            }
+            if (res == "USERMASTERDATAADDED") {
+              this._base._alertMessageService.success("MasterData Added successfully!");
+            }
             this._base._commonService.hideLoader();
           }, e => {
             this._base._commonService.hideLoader();

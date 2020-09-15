@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit {
   public redirecttopage(data) {
     console.log(data.Ref_Object_ID, data.ObjectType)
     if (data.ObjectType == 'TRACK' || data.ObjectType == 'BEAT') {
-      this.router.navigate(['product/details', data.Ref_Object_ID]).then((e) => {
+      this.router.navigate(['product/' + this._base._commonService.FeatureProducts + '/details', data.Ref_Object_ID]).then((e) => {
         if (e) {
           console.log("Navigation is successful!");
         } else {

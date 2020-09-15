@@ -72,7 +72,11 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.storetype = params['type'];
+      if( params['type'] == "CustomTrack"){
+        this.storetype = "Track";
+      }else{
+        this.storetype = params['type'];
+      }
       this.productId = params['ID'];
       this._base._commonService.FeatureProducts = this.storetype
       debugger;
