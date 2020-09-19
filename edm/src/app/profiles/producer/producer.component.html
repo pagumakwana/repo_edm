@@ -15,12 +15,14 @@
                 {{producerData?.TrackAndBeat?.data?.ProducerBio}}
             </p>
             <div class="button_group">
-                <a *ngIf="!producerData?.TrackAndBeat?.data?.Followed" (click)="UserAction(true)"
+                <a *ngIf="!producerData?.TrackAndBeat?.data?.Followed"
+                    (click)="UserAction('follow',true,producerData.TrackAndBeat)"
                     class="global_btn icon_btn primary_btn mini_btn">
                     <span>FOLLOW</span>
                     <span class="follow_icon btn_icon left_btn_icon"></span>
                 </a>
-                <a *ngIf="producerData?.TrackAndBeat?.data?.Followed" (click)="UserAction(false)"
+                <a *ngIf="producerData?.TrackAndBeat?.data?.Followed"
+                    (click)="UserAction('follow',false,producerData.TrackAndBeat)"
                     class="global_btn icon_btn dark_grey_btn mini_btn">
                     <span>FOLLOWING</span>
                     <span class="follow_icon btn_icon left_btn_icon"></span>
@@ -33,11 +35,13 @@
                         <p class="count_title">Followers</p>
                     </div>
                     <div class="following_list_box">
-                        <p class="count_list">52</p>
+                        <p class="count_list">-</p>
+                        <!-- <p class="count_list">52</p> -->
                         <p class="count_title">Plays</p>
                     </div>
                     <div class="following_list_box">
-                        <p class="count_list">20</p>
+                        <p class="count_list">-</p>
+                        <!-- <p class="count_list">20</p> -->
                         <p class="count_title">Tracks</p>
                     </div>
                 </div>
@@ -86,9 +90,8 @@
 
     <div class="tab_options">
 
-        <!-- NO RECORD FOUND -->
-        <div class="no_record">No Record Found</div>
-        
+
+
         <!-- BIOGRAPHY -->
         <div *ngIf="currentTab == producerTab.biography">
             <div class="biography_sec">
@@ -100,6 +103,8 @@
                     {{producerData?.TrackAndBeat?.data?.ProducerBio}}
                 </p>
             </div>
+            <!-- NO RECORD FOUND -->
+            <div class="no_record">No Record Found</div>
         </div>
 
         <!-- ALL TRACKS -->
@@ -107,7 +112,8 @@
             <div class="product_box" *ngFor="let track of producerData?.TrackAndBeat?.tracks">
                 <div class="slider_product">
                     <div class="product_img">
-                        <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
+                        <img [src]="config?.cdnURL + track?.ThumbnailImageUrl" class="product_thumbnail">
+                        <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                         <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                         <div class="product_upper_layer">
                             <img src="../../../assets/images/play_video.svg" title="Play" />
@@ -117,7 +123,8 @@
                     </div>
                     <div class="product_details">
                         <div class="left_details">
-                            <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
+                            <img src="../../../assets/images/{{track.Favourite == '-' ? 'blank_heart' : 'fill_heart'}}.svg"
+                                (click)="UserAction('favorite',track.Favourite == '-',track)" class="blank_heart"
                                 title="Add to Favorites" />
                             <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
                             <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
@@ -131,6 +138,9 @@
                     </div>
                 </div>
             </div>
+            <!-- NO RECORD FOUND -->
+            <div class="no_record" *ngIf="producerData?.TrackAndBeat?.tracks?.length < 1">No Record Found</div>
+
             <ng-container *ngIf="false">
                 <div class="product_box">
                     <div class="slider_product">
@@ -356,7 +366,8 @@
             <div class="product_box" *ngFor="let track of producerData?.TrackAndBeat?.soldOutTracks">
                 <div class="slider_product">
                     <div class="product_img">
-                        <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail">
+                        <img [src]="config?.cdnURL + track?.ThumbnailImageUrl" class="product_thumbnail">
+                        <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                         <!-- <img src=" ../../../../../assets/images/product_thumbnail.jpg" class="product_thumbnail"> -->
                         <div class="product_upper_layer">
                             <img src="../../../assets/images/play_video.svg" title="Play" />
@@ -367,7 +378,8 @@
                     </div>
                     <div class="product_details">
                         <div class="left_details">
-                            <img src="../../../assets/images/blank_heart.svg" class="blank_heart"
+                            <img src="../../../assets/images/{{track.Favourite == '-' ? 'blank_heart' : 'fill_heart'}}.svg"
+                                (click)="UserAction('favorite',track.Favourite == '-',track)" class="blank_heart"
                                 title="Add to Favorites" />
                             <!-- <img src="../../../assets/images/fill_heart.svg" class="blank_heart"/> -->
                             <img src="../../../assets/images/read_more.svg" class="green_heart" title="Read More" />
@@ -381,6 +393,9 @@
                     </div>
                 </div>
             </div>
+            <!-- NO RECORD FOUND -->
+            <div class="no_record" *ngIf="producerData?.TrackAndBeat?.soldOutTracks?.length < 1">No Record Found</div>
+
             <ng-container *ngIf="false">
                 <div class="product_box">
                     <div class="slider_product">
@@ -619,7 +634,8 @@
                         <tr *ngFor="let beats of producerData?.TrackAndBeat?.beats">
                             <td>
                                 <div class="play_upper_layer">
-                                    <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
+                                    <img class="tbl_img" [src]="config?.cdnURL + beats?.ThumbnailImageUrl" />
+                                    <!-- <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" /> -->
                                     <div class="play_audio">
                                         <span title="Play" class="play"></span>
                                         <span title="Pause" class="pause" style="display: none;"></span>
@@ -628,7 +644,8 @@
                             </td>
                             <td>
                                 <b>{{beats?.TrackName}}</b><br>
-                                <b><small>by <a href="#"><u>{{producerData?.TrackAndBeat?.data?.ProducerName}}</u></a></small></b>
+                                <b><small>by <a
+                                            href="#"><u>{{producerData?.TrackAndBeat?.data?.ProducerName}}</u></a></small></b>
                             </td>
                             <td>
                                 <b><u><a>
@@ -805,16 +822,19 @@
                     </tbody>
                 </table>
             </div>
+            <!-- NO RECORD FOUND -->
+            <div class="no_record" *ngIf="producerData?.TrackAndBeat?.beats?.length < 1">No Record Found</div>
+
         </div>
 
         <!-- CUSTOM SERVICES -->
         <div *ngIf="currentTab == producerTab.customer_services">
-            <div class="news_sec">
+            <div class="news_sec" *ngFor="let service of producerData.CustomServices">
                 <div class="news_data">
-                    <img src="../../assets/images/blog1.jpg">
+                    <img [src]="config?.cdnURL + service?.ThumbnailImageUrl">
                     <div class="news_content">
-                        <h2>Dummy Short Heading</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                        <h2>{{service?.ServiceTitle}}</h2>
+                        <p>{{service?.Description}}</p>
                         <a class="global_btn icon_btn primary_btn">
                             <span>Read More</span>
                             <span class="double_right_icon btn_icon"></span>
@@ -822,45 +842,51 @@
                     </div>
                 </div>
             </div>
-            <div class="news_sec">
-                <div class="news_data">
-                    <img src="../../assets/images/blog2.jpg">
-                    <div class="news_content">
-                        <h2>Dummy Short Heading</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        <a class="global_btn icon_btn primary_btn">
-                            <span>Read More</span>
-                            <span class="double_right_icon btn_icon"></span>
-                        </a>
+            <ng-container *ngIf="false">
+
+                <div class="news_sec">
+                    <div class="news_data">
+                        <img src="../../assets/images/blog2.jpg">
+                        <div class="news_content">
+                            <h2>Dummy Short Heading</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Read More</span>
+                                <span class="double_right_icon btn_icon"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="news_sec">
-                <div class="news_data">
-                    <img src="../../assets/images/blog3.jpg">
-                    <div class="news_content">
-                        <h2>Dummy Short Heading</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        <a class="global_btn icon_btn primary_btn">
-                            <span>Read More</span>
-                            <span class="double_right_icon btn_icon"></span>
-                        </a>
+                <div class="news_sec">
+                    <div class="news_data">
+                        <img src="../../assets/images/blog3.jpg">
+                        <div class="news_content">
+                            <h2>Dummy Short Heading</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Read More</span>
+                                <span class="double_right_icon btn_icon"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="news_sec">
-                <div class="news_data">
-                    <img src="../../assets/images/blog3.jpg">
-                    <div class="news_content">
-                        <h2>Dummy Short Heading</h2>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                        <a class="global_btn icon_btn primary_btn">
-                            <span>Read More</span>
-                            <span class="double_right_icon btn_icon"></span>
-                        </a>
+                <div class="news_sec">
+                    <div class="news_data">
+                        <img src="../../assets/images/blog3.jpg">
+                        <div class="news_content">
+                            <h2>Dummy Short Heading</h2>
+                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                            <a class="global_btn icon_btn primary_btn">
+                                <span>Read More</span>
+                                <span class="double_right_icon btn_icon"></span>
+                            </a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </ng-container>
+            <!-- NO RECORD FOUND -->
+            <div class="no_record" *ngIf="producerData?.CustomServices?.length < 1">No Record Found</div>
+
         </div>
 
     </div>
