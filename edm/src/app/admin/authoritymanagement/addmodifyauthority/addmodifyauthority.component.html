@@ -19,13 +19,16 @@
             <label>Authority Type</label>
             <div class="inline_checkbox">
                 <label class="checkbox">
-                    <input [ngModelOptions]="{standalone: true}" name="IsUser" [(ngModel)]="IsUser" type="checkbox">User
+                    <input [ngModelOptions]="{standalone: true}" name="IsUser" [(ngModel)]="IsUser" type="checkbox" (change)="getmodule()">User
                     <span></span>
                 </label>
                 <label class="checkbox">
                     <input  [ngModelOptions]="{standalone: true}" name="IsAdmin" [(ngModel)]="IsAdmin" type="checkbox" (change)="getmodule()">Admin
                     <span></span>
                 </label>
+            </div>
+            <div class="error_msg" *ngIf="IsAuthorityTypeChecked">
+                <span>Please select atleast one Type</span>
             </div>
         </div>
         <div class="form_group inline_form_group">
@@ -39,50 +42,27 @@
         </div>
         <div class="form_group" *ngIf="IsuserMaster">
             <div class="form_area icon_form_group">
-                <!-- <select name="masterdataID" formControlName="masterdataID" [value]="masterdataID" [(ngModel)]="masterdataID">
-                            <option [value]="undefined" disabled hidden>Select MasterData</option>
-                            <option *ngFor="let parentmaster of masterdatalist" [value]="parentmaster.Ref_UserMasterData_ID" [selected]="parentmaster.Ref_UserMasterData_ID == masterdataID">{{parentmaster.UserMasterData}}</option>
-
-                        </select>
-                <span class="input_icon dropdown_icon"></span> -->
                 <div *ngFor="let usermaster of masterlist; let i = index">
                     <label class="checkbox">
-                        <input name="usermaster_A_{{i}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="usermaster.isMasterchecked" type="checkbox" [value]="usermaster.Ref_UserMaster_ID" (change)="selectMaster($event)">{{usermaster.UserMaster}}
+                        <input name="usermaster_A_{{i}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="usermaster.isMasterchecked" type="checkbox" [checked]="usermaster.isMasterchecked" [disabled]="usermaster.isMasterdisabled" [value]="usermaster.Ref_UserMaster_ID" (change)="selectMaster(i, $event.target.checked,usermaster.Ref_UserMaster_ID, usermaster.UserMaster,0)">{{usermaster.UserMaster}}
                         <span></span>
                     </label>
-                    <div *ngIf="usermaster.isMasterchecked">
-                        <label>{{usermaster.UserMaster}}</label>
-                        <label class="checkbox">
-                            <input [ngModelOptions]="{standalone: true}" name="master" [(ngModel)]="AllMasterDatachecked" type="checkbox" (change)="selectallMasterData()">Select All
-                            <span></span>
+                </div>
+                <div class="master_ID">
+                    <div *ngFor="let masterdata of masterdatas|async;trackBy:itemtrackby; let index = index">
+                        <label *ngIf="masterdata.MasterData.length != 0">
+                            <b>{{masterdata.UserMaster}} </b>
                         </label>
-                        <div *ngFor="let masterdata of masterdatalist; let index = index">
+                        <div *ngFor="let data of masterdata.MasterData; let a = index">
                             <label class="checkbox">
-                                <input [ngModelOptions]="{standalone: true}" name="masterdata_{{index}}" [(ngModel)]="masterdata.isMasterDatachecked" type="checkbox" (change)="onSelectMasterData()">{{masterdata.UserMasterData}}
+                                <input name="data_A_{{a}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="data.isSelected" type="checkbox"  [value]="data.Ref_UserMasterData_ID" (change)="onSelectMasterData()">{{data.UserMasterData}}
                                 <span></span>
                             </label>
                         </div>
-                        <!-- <div *ngFor="let masterlist of parentmasterlist; let i = index">
-                            <label *ngIf="masterlist.userMasterData.length != 0 && masterlist.IsMandatory != true">{{masterlist.UserMaster}}</label>
-                            <label *ngIf="masterlist.userMasterData.length != 0 && masterlist.IsMandatory == true">{{masterlist.UserMaster}}*</label>
-                            <label class="checkbox" *ngIf="masterlist.userMasterData.length != 0">
-                                <input [ngModelOptions]="{standalone: true}" name="master_{{i}}" [(ngModel)]="masterlist.isSelected" type="checkbox" (change)="SelectAllmasterlist(i,$event)">Select All
-                                <span></span>
-                            </label>
-                            <div *ngFor="let masterdata of masterlist.userMasterData; let index = index">
-                                <label class="checkbox">
-                                    <input [ngModelOptions]="{standalone: true}" name="masterdata_{{i}}{{index}}" [(ngModel)]="masterdata.isSelected" type="checkbox" (change)="onSelectMasterData(i)">{{masterdata.UserMasterData}}
-                                    <span></span>
-                                </label>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
-
-
-
             </div>
-            <edm-error [control]="addmodifyauthority.controls.masterdataID"></edm-error>
+            <!-- <edm-error [control]="addmodifyauthority.controls.masterdataID"></edm-error> -->
 
         </div>
         <div class="form_group" *ngIf="IsAdmin">
@@ -96,26 +76,26 @@
                 <span class="input_icon dropdown_icon"></span> -->
                 <div *ngFor="let module of modulelist; let index = index">
                     <label class="checkbox">
-                        <input [ngModelOptions]="{standalone: true}" name="module_{{index}}" [(ngModel)]="module.isModulechecked" type="checkbox" (change)="onSelectModule()">{{module.ModuleName}}
+                        <input formControlName="ModuleID" name="module_{{index}}" [(ngModel)]="module.isModulechecked" type="checkbox" (change)="onSelectModule()">{{module.ModuleName}}
                         <span></span>
                     </label>
                     <div class="form_group inline_form_group" *ngIf="module.isModulechecked">
                         <label class="form_label">Module Permission</label>
                         <div class="inline_checkbox">
                             <label class="checkbox">
-                                <input [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="permissions.IsView" type="checkbox">View
+                                <input [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="module.ModuleAccess.View" type="checkbox">View
                                 <span></span>
                             </label>
                             <label class="checkbox">
-                                <input  [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="permissions.IsEdit" type="checkbox">Edit
+                                <input  [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="module.ModuleAccess.Edit" type="checkbox">Edit
                                 <span></span>
                             </label>
                             <label class="checkbox">
-                                <input [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="permissions.IsDelete" type="checkbox">Delete
+                                <input [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="module.ModuleAccess.Delete" type="checkbox">Delete
                                 <span></span>
                             </label>
                             <label class="checkbox">
-                                <input [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="permissions.IsApproval" type="checkbox">Approval
+                                <input [ngModelOptions]="{standalone: true}" name="modulepermissions_{{index}}" [(ngModel)]="module.ModuleAccess.Approval" type="checkbox">Approval
                                 <span></span>
                             </label>
                         </div>
@@ -123,7 +103,10 @@
                 </div>
 
             </div>
-            <edm-error [control]="addmodifyauthority.controls.ModuleID"></edm-error>
+            <!-- <edm-error [control]="addmodifyauthority.controls.ModuleID"></edm-error> -->
+            <div class="error_msg" *ngIf="IsModuleChecked">
+                <span>Please select atleast one Type</span>
+            </div>
 
         </div>
 

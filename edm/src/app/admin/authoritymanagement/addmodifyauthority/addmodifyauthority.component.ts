@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthorityServices } from './../_services/authority.services';
 import { ActivatedRoute } from '@angular/router';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'appAdmin-addmodifyauthority',
@@ -19,12 +20,16 @@ export class AddModifyAuthorityComponent implements OnInit {
   masterdataID: null
   ModuleID
   masterdatalist: any = []
+  masterdataHold: any = []
+  masterdatas = of()
   parentmasterlist
   modulelist: any;
-  IsUser:boolean = false;
-  IsAdmin:boolean = false;
-  IsuserMaster:boolean =false
-  AllMasterDatachecked:boolean=false;
+  IsAuthorityTypeChecked: boolean = false
+  IsModuleChecked: boolean = false
+  IsUser: boolean = false;
+  IsAdmin: boolean = false;
+  IsuserMaster: boolean = false
+  AllMasterDatachecked: boolean = false;
   masterlist
   permissions = { IsView: false, IsEdit: false, IsDelete: false, IsApproval: false };
   public addmodifyauthority: FormGroup;
@@ -33,7 +38,7 @@ export class AddModifyAuthorityComponent implements OnInit {
   constructor(public _base: BaseServiceHelper,
     private fb: FormBuilder,
     private _authorityServices: AuthorityServices,
-    public route: ActivatedRoute,) {
+    public route: ActivatedRoute, ) {
 
   }
 
@@ -41,188 +46,326 @@ export class AddModifyAuthorityComponent implements OnInit {
     this._base._commonService.showLoader();
     this.route.params.subscribe(params => {
       this.authorityID = params['id']
-        this.addmodifyauthority = this.fb.group({
-          AuthorityName: ['', [Validators.required]],
-          Description: ['', [Validators.required]],
-          masterdataID: ['', [Validators.required]],
-          ModuleID: ['', []]
-        })
-       // this.getMasterdata();
-        //this.getmodule()
-        if (this.authorityID != 0) {
-          this._base._pageTitleService.setTitle("Modify Authority", "Modify Authority");
-          this._authorityServices.getAuthorityDetails(this.authorityID).subscribe(data => {
-            this._base._commonService.hideLoader();
-            this.addmodifyauthority.value.AuthorityName = data[0].AuthorityName
-            this.AuthorityName = data[0].AuthorityName
-            this.Description = data[0].Description
-            this.addmodifyauthority.value.Description = data[0].Description
-            this.masterdataID = data[0].MasterDataIDs
-            this.ModuleID = data[0].ModuleAccess[0].Ref_Module_ID
-            this.permissions.IsApproval = data[0].ModuleAccess[0].Approval
-            this.permissions.IsDelete = data[0].ModuleAccess[0].Delete
-            this.permissions.IsEdit = data[0].ModuleAccess[0].Edit
-            this.permissions.IsView = data[0].ModuleAccess[0].View
-            
-          })
-        } else {
-          this._base._pageTitleService.setTitle("Add Authority", "Add Authority");
+      this.addmodifyauthority = this.fb.group({
+        AuthorityName: ['', [Validators.required]],
+        Description: ['', [Validators.required]],
+        ModuleID: ['', []]
+      })
+      if (this.authorityID != 0) {
+        this._base._pageTitleService.setTitle("Modify Authority", "Modify Authority");
+        this._authorityServices.getAuthorityDetails(this.authorityID).subscribe(data => {
+          debugger;
           this._base._commonService.hideLoader();
-          this.addmodifyauthority.value.AuthorityName = undefined
-          this.addmodifyauthority.value.Description = undefined
-          this.addmodifyauthority.value.masterdataID = undefined
-          this.addmodifyauthority.value.ModuleID = undefined
-          this.ModuleID = undefined
-        }
+          this.addmodifyauthority.value.AuthorityName = data[0].AuthorityName
+          this.AuthorityName = data[0].AuthorityName
+          this.Description = data[0].Description
+          this.addmodifyauthority.value.Description = data[0].Description
+          this.masterdataID = data[0].MasterDataIDs
+          this.ModuleID = data[0].ModuleAccess
+          this.getMasterlist()
+          this.bindAuthorityType(data[0].AuthorityType)
+          this.bindMasterData(data[0].MasterDataIDs)
+        })
+      } else {
+        this._base._pageTitleService.setTitle("Add Authority", "Add Authority");
+        this._base._commonService.hideLoader();
+        this.addmodifyauthority.value.AuthorityName = undefined
+        this.addmodifyauthority.value.Description = undefined
+        this.addmodifyauthority.value.masterdataID = undefined
+        this.addmodifyauthority.value.ModuleID = undefined
+        this.ModuleID = undefined
+      }
 
     });
   }
-  getmodule() {
-    this._authorityServices.getModule().subscribe(res => {
-      this.modulelist = res;
-      this.modulelist.map(item =>{
-        item.isModulechecked = false
-      })
+  bindAuthorityType(AuthorityType) {
+    let Atype = AuthorityType.split(',')
+    Atype.filter(a => {
+      if (a == "Admin") {
+        this.IsAdmin = true
+        this.getmodule()
+      }
+      if (a == "User") {
+        this.IsUser = true
+      }
     })
+
   }
-  getparentMasterlist(id) {
-    debugger
-    this.mandatorymasters = []
-    this.nonmandatorymasters = []
-    this._authorityServices.getParentMasterlist(id).subscribe((res: any) => {
-      this.parentmasterlist = res;
-      this.parentmasterlist.filter(item => {
-        if (item.IsMandatory == true) {
-          this.mandatorymasters.push({
-            ref_UsermasterId: item.Ref_UserMaster_ID,
-            isSelected: false
+  bindMasterData(MasterDataIDs) {
+    let MasterData = MasterDataIDs.split(',')
+    if (MasterData[0] == "") {
+      this.IsuserMaster = false
+    } else {
+      this.IsuserMaster = true
+      console.log(MasterData)
+      MasterData = MasterData.filter(b => b != "")
+      let Sequence = []
+      let MasterID = []
+      let UserMaster = []
+      for (let i = 0; i < MasterData.length; i++) {
+        this._authorityServices.getMasterData(0, MasterData[i]).subscribe((data: any) => {
+          this.masterlist.map(ab => {
+            if (ab.Ref_UserMaster_ID == data[0].Ref_UserMaster_ID) {
+              ab.isMasterchecked = true
+              Sequence.push(ab.Sequence)
+              MasterID.push(ab.Ref_UserMaster_ID)
+              UserMaster.push(ab.UserMaster)
+              if (i === MasterData.length - 1) {
+                this.selectMaster(Sequence, ab.isMasterchecked, MasterID, UserMaster, MasterData)
+              }
+
+            }
+          })
+        })
+      }
+    }
+  }
+  getmodule() {
+    if (this.IsAdmin || this.IsUser) {
+      this.IsAuthorityTypeChecked = false
+    } else {
+      this.IsAuthorityTypeChecked = false
+    }
+    if (this.IsAdmin) {
+      this._authorityServices.getModule().subscribe(res => {
+        this.modulelist = res;
+        if (this.ModuleID != undefined) {
+          this.modulelist.map(item => {
+            item.isModulechecked = false
+            item.ModuleAccess =
+            {
+              "Ref_Module_ID": item.Ref_Module_ID,
+              "View": false,
+              "Edit": false,
+              "Delete": false,
+              "Approval": false
+            }
+            this.ModuleID.filter(y => {
+              if (item.Ref_Module_ID == y.Ref_Module_ID) {
+                item.isModulechecked = true
+                item.ModuleAccess = y.ModuleAccess
+              } else {
+
+              }
+            })
           })
         } else {
-          this.nonmandatorymasters.push({
-            ref_UsermasterId: item.Ref_UserMaster_ID,
-            isSelected: false
-          })
-        }
-        item.isSelected = false
-        if (item.userMasterData.length != 0) {
-          item.userMasterData.map(abc => {
-            if (this.authorityID == abc.Ref_UserMasterData_ID) {
-              abc.isSelected = true
-            } else {
-              abc.isSelected = false
+          this.modulelist.map(item => {
+            item.isModulechecked = false
+            item.ModuleAccess =
+            {
+              "Ref_Module_ID": item.Ref_Module_ID,
+              "View": false,
+              "Edit": false,
+              "Delete": false,
+              "Approval": false
             }
           })
         }
+        console.log(this.modulelist)
       })
-    })
+    }
+
   }
+  // getparentMasterlist(id) {
+  //   debugger
+  //   this.mandatorymasters = []
+  //   this.nonmandatorymasters = []
+  //   this._authorityServices.getParentMasterlist(id).subscribe((res: any) => {
+  //     this.parentmasterlist = res;
+  //     this.parentmasterlist.filter(item => {
+  //       if (item.IsMandatory == true) {
+  //         this.mandatorymasters.push({
+  //           ref_UsermasterId: item.Ref_UserMaster_ID,
+  //           isSelected: false
+  //         })
+  //       } else {
+  //         this.nonmandatorymasters.push({
+  //           ref_UsermasterId: item.Ref_UserMaster_ID,
+  //           isSelected: false
+  //         })
+  //       }
+  //       item.isSelected = false
+  //       if (item.userMasterData.length != 0) {
+  //         item.userMasterData.map(abc => {
+  //           if (this.authorityID == abc.Ref_UserMasterData_ID) {
+  //             abc.isSelected = true
+  //           } else {
+  //             abc.isSelected = false
+  //           }
+  //         })
+  //       }
+  //     })
+  //   })
+  // }
   SelectAllmasterlist(i, e) {
     this.parentmasterlist[i].userMasterData.filter(masterdata => {
       masterdata.isSelected = e.target.checked
     })
     console.log(this.parentmasterlist)
   }
-  // onSelectMasterData(index) {
-  //   if (this.parentmasterlist[index].userMasterData.filter(masterdata => (masterdata.isSelected == true)).length == this.parentmasterlist[index].userMasterData.length)
-  //     this.parentmasterlist[index].isSelected = true
-  //   else
-  //     this.parentmasterlist[index].isSelected = false
-  // }
-  getMasterdata(id) {
-    this._authorityServices.getMasterData(id,0).subscribe(res => {
-      this.masterdatalist = res;
-      this.masterdatalist.map(item =>{
-        item.isMasterDatachecked = false
-      })
-      console.log(this.masterdatalist)
-    })
-  }//9307528321
   getMasterlist() {
     this._authorityServices.getMasterlist(0).subscribe(res => {
       this.masterlist = res;
-      this.masterlist.map(item =>{
+      let i = 1;
+      this.masterlist.map(item => {
         item.isMasterchecked = false
+        item.isMasterdisabled = false
+        item.Sequence = i++
       })
       console.log(this.masterlist)
     })
   }
-  // selectallMas(){
-  //   this.masterlist.filter(r =>{
-  //    r.isMandatorychecked = this.AllMandatorychecked
-  //  })
-// }
- selectallMasterData(){
-  this.masterlist.filter(r =>{
-     r.isMasterDatachecked = this.AllMasterDatachecked
-   })
- }
- selectMaster(e){
-  console.log(e.target.value)
-  this.masterdatalist = []
-  this.getparentMasterlist(e.target.value)
-  this.getMasterdata(e.target.value)
-}
-onSelectMasterData(){
-  // console.log(e)
-   if(this.masterdatalist.filter( master => (master.isMasterDatachecked == true)).length == this.masterdatalist.length)
-   this.AllMasterDatachecked = true
-   else
-   this.AllMasterDatachecked = false
-  // this.getMasterdata()
- }
- onSelectModule(){
-   
- }
+  selectMaster(index, checked, Ref_UserMaster_ID, UserMaster, masterDataID) {
+    if (checked) {
+      if (masterDataID != 0) {
+        for (let i = 0; i < Ref_UserMaster_ID.length; i++) {
+          this._authorityServices.getMasterData(Ref_UserMaster_ID[i], 0).subscribe((data: any) => {
+            data.map(ab => {
+              ab.isSelected = false
+              masterDataID.filter(x => {
+                if (x == ab.Ref_UserMasterData_ID) {
+                  ab.isSelected = true
+                }
+              })
+
+            })
+            let obj = {
+              masterIDchecked: checked,
+              isSelected: false,
+              sequence: index[i],
+              Ref_UserMaster_ID: Ref_UserMaster_ID[i],
+              UserMaster: UserMaster[i],
+              MasterData: data
+            }
+            this.masterdatalist = this.masterdatalist.filter(abv => abv.Ref_UserMaster_ID != Ref_UserMaster_ID[i])
+            this.masterdatalist.push(obj)
+            this.masterdatalist = this.masterdatalist.sort((a, b) => a.sequence - b.sequence)
+            this.masterdatas = of(this.masterdatalist)
+            console.log(this.masterdatalist)
+          })
+
+        }
+      } else {
+        this._authorityServices.getMasterData(Ref_UserMaster_ID, 0).subscribe((res: any) => {
+          res.map(ab => {
+            ab.isSelected = false
+            if (masterDataID == ab.Ref_UserMasterData_ID) {
+              ab.isSelected = true
+            }
+          })
+          let obj = {
+            masterIDchecked: checked,
+            isSelected: false,
+            sequence: index,
+            Ref_UserMaster_ID: Ref_UserMaster_ID,
+            UserMaster: UserMaster,
+            MasterData: res
+          }
+          this.masterdatalist = this.masterdatalist.filter(abv => abv.Ref_UserMaster_ID != Ref_UserMaster_ID)
+          this.masterdatalist.push(obj)
+          this.masterdatalist = this.masterdatalist.sort((a, b) => a.sequence - b.sequence)
+          this.masterdatas = of(this.masterdatalist)
+          console.log(this.masterdatalist)
+        })
+      }
+
+    } else {
+      this.masterdatalist = this.masterdatalist.filter(abv => abv.Ref_UserMaster_ID != Ref_UserMaster_ID)
+      this.masterdatas = of(this.masterdatalist)
+      console.log(this.masterdatalist)
+    }
+
+    // this.masterdatalist = []
+    // this.getparentMasterlist(Ref_UserMaster_ID)
+    // this.getMasterdata(e.target.value)
+  }
+  onSelectMasterData() {
+    if (this.masterdatalist.filter(master => (master.isMasterDatachecked == true)).length == this.masterdatalist.length)
+      this.AllMasterDatachecked = true
+    else
+      this.AllMasterDatachecked = false
+  }
+  itemtrackby(index: number, item) {
+    return item.Ref_UserMaster_ID
+  }
+  onSelectModule() {
+    let data = this.modulelist.filter(item => item.isModulechecked == true)
+    if (data.length == 0) {
+      this.IsModuleChecked = true
+    } else {
+      this.IsModuleChecked = false
+    }
+
+  }
   addmodifyauthoritysubmit() {
     debugger;
-    console.log(this.permissions)
     this._base._commonService.markFormGroupTouched(this.addmodifyauthority);
-    console.log(this.addmodifyauthority.value.AuthorityName)
-    console.log(this.addmodifyauthority.value.Description)
-    console.log(this.addmodifyauthority.value.masterdataID)
+    if (this.IsAdmin || this.IsUser) {
+      let data = this.modulelist.filter(item => item.isModulechecked == true)
+      if (this.IsAdmin && data.length != 0) {
+        this.submitdata()
+      } else if (this.IsUser) {
+        this.submitdata()
+      } else {
+        this.IsModuleChecked = true
+      }
+
+    } else {
+      this.IsAuthorityTypeChecked = true
+    }
+  }
+
+  submitdata() {
     if (this.addmodifyauthority.valid) {
+      this.IsAuthorityTypeChecked = false
+      this.IsModuleChecked = false
       this._base._commonService.showLoader();
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         let AuthorityType = "";
-        if(this.IsAdmin == true){
+        if (this.IsAdmin == true) {
           AuthorityType += (AuthorityType == "" ? "" : ",") + "Admin";
         }
-        if(this.IsUser == true){
+        if (this.IsUser == true) {
           AuthorityType += (AuthorityType == "" ? "" : ",") + "User";
         }
-          let ObjUserMaster = {
-            "Ref_Authority_ID": this.authorityID,
-            "AuthorityName": this.addmodifyauthority.value.AuthorityName,
-            "AuthorityType": AuthorityType,
-            "Description": this.addmodifyauthority.value.Description,
-            "MasterDataIDs":this.addmodifyauthority.value.masterdataID,
-            "CreatedBy": FullName,
-            "ModuleAccess": [
-              {
-                "Ref_Module_ID": this.ModuleID,
-                "View": this.permissions.IsView,
-                "Edit": this.permissions.IsEdit,
-                "Delete": this.permissions.IsDelete,
-                "Approval": this.permissions.IsApproval
-              }
-            ]
-          }
-          this._authorityServices.addmodifyauthority(ObjUserMaster).subscribe(res => {
-            console.log(res);
-            alert(res);
-            if (this.authorityID == 0) {
-              this.addmodifyauthority.reset();
+        let selectedMandatoryMasterdataIds = ""
+        this.masterdatalist.filter(item => {
+          item.MasterData.filter(abc => {
+            if (abc.isSelected) {
+              selectedMandatoryMasterdataIds += (selectedMandatoryMasterdataIds == "" ? "" : ",") + abc.Ref_UserMasterData_ID;
             }
-            this._base._commonService.hideLoader();
-          }, e => {
-            this._base._commonService.hideLoader();
           })
+        })
+        let ModuleAccess = [];
+        this.modulelist.filter(mod => {
+          if (mod.isModulechecked) {
+            ModuleAccess.push(mod.ModuleAccess)
+          }
+        })
+        let ObjUserMaster = {
+          "Ref_Authority_ID": this.authorityID,
+          "AuthorityName": this.addmodifyauthority.value.AuthorityName,
+          "AuthorityType": AuthorityType,
+          "Description": this.addmodifyauthority.value.Description,
+          "MasterDataIDs": selectedMandatoryMasterdataIds,
+          "CreatedBy": Ref_User_ID,
+          "ModuleAccess": ModuleAccess
+        }
+        console.log(ObjUserMaster)
+        this._authorityServices.addmodifyauthority(ObjUserMaster).subscribe(res => {
+          console.log(res);
+          alert(res);
+          if (this.authorityID == 0) {
+            this.addmodifyauthority.reset();
+          }
+          this._base._commonService.hideLoader();
+        }, e => {
+          this._base._commonService.hideLoader();
+        })
 
       })
 
     }
-
   }
-
- 
 }
