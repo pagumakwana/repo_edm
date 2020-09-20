@@ -76,7 +76,7 @@
                 <span class="input_icon dropdown_icon"></span> -->
                 <div *ngFor="let module of modulelist; let index = index">
                     <label class="checkbox">
-                        <input formControlName="ModuleID" name="module_{{index}}" [(ngModel)]="module.isModulechecked" type="checkbox" (change)="onSelectModule()">{{module.ModuleName}}
+                        <input name="module_{{index}}" [ngModelOptions]="{standalone: true}" [(ngModel)]="module.isModulechecked" type="checkbox" (change)="onSelectModule()">{{module.ModuleName}}
                         <span></span>
                     </label>
                     <div class="form_group inline_form_group" *ngIf="module.isModulechecked">

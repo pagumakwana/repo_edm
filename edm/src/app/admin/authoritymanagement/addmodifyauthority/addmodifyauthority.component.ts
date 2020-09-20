@@ -20,7 +20,6 @@ export class AddModifyAuthorityComponent implements OnInit {
   masterdataID: null
   ModuleID
   masterdatalist: any = []
-  masterdataHold: any = []
   masterdatas = of()
   parentmasterlist
   modulelist: any;
@@ -31,10 +30,7 @@ export class AddModifyAuthorityComponent implements OnInit {
   IsuserMaster: boolean = false
   AllMasterDatachecked: boolean = false;
   masterlist
-  permissions = { IsView: false, IsEdit: false, IsDelete: false, IsApproval: false };
   public addmodifyauthority: FormGroup;
-  mandatorymasters = []
-  nonmandatorymasters = []
   constructor(public _base: BaseServiceHelper,
     private fb: FormBuilder,
     private _authorityServices: AuthorityServices,
@@ -55,7 +51,7 @@ export class AddModifyAuthorityComponent implements OnInit {
         this._base._pageTitleService.setTitle("Modify Authority", "Modify Authority");
         this._authorityServices.getAuthorityDetails(this.authorityID).subscribe(data => {
           debugger;
-          this._base._commonService.hideLoader();
+         // this._base._commonService.hideLoader();
           this.addmodifyauthority.value.AuthorityName = data[0].AuthorityName
           this.AuthorityName = data[0].AuthorityName
           this.Description = data[0].Description
@@ -143,9 +139,7 @@ export class AddModifyAuthorityComponent implements OnInit {
             this.ModuleID.filter(y => {
               if (item.Ref_Module_ID == y.Ref_Module_ID) {
                 item.isModulechecked = true
-                item.ModuleAccess = y.ModuleAccess
-              } else {
-
+                item.ModuleAccess = y
               }
             })
           })
@@ -205,6 +199,7 @@ export class AddModifyAuthorityComponent implements OnInit {
     console.log(this.parentmasterlist)
   }
   getMasterlist() {
+    this.masterdatalist = []
     this._authorityServices.getMasterlist(0).subscribe(res => {
       this.masterlist = res;
       let i = 1;
@@ -243,6 +238,7 @@ export class AddModifyAuthorityComponent implements OnInit {
             this.masterdatalist = this.masterdatalist.sort((a, b) => a.sequence - b.sequence)
             this.masterdatas = of(this.masterdatalist)
             console.log(this.masterdatalist)
+            this._base._commonService.hideLoader();
           })
 
         }
@@ -358,6 +354,11 @@ export class AddModifyAuthorityComponent implements OnInit {
           alert(res);
           if (this.authorityID == 0) {
             this.addmodifyauthority.reset();
+            this.IsAdmin = false
+            this.IsUser= false
+            this.IsuserMaster  = false
+            this.masterlist = []
+            this.masterdatalist = []
           }
           this._base._commonService.hideLoader();
         }, e => {

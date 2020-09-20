@@ -3,7 +3,7 @@
         <img src="../../assets/images/filter.svg" />
         <span>Filter</span>
     </div>
-    <swiper class="genre_slider" [config]="config">
+    <swiper class="genre_slider" [config]="config" *ngIf="genrelist?.length != 0">
         <div class="swiper-slide" *ngFor="let genre of genrelist" (click)="onGenreFilter(genre.CategoryName)">
             <div class="genre_slider_sec">
                 <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath">
