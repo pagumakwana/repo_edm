@@ -57,6 +57,10 @@ const routes: Routes = [
             {
                 path: "profile",
                 loadChildren: () => import('../profiles/profile.module').then(m => m.ProfileModule)
+            },
+            {
+                path: "cart",
+                loadChildren: () => import('../cartscreen/cartscreen.module').then(m => m.CartScreenModule)
             }
         ],
     },
