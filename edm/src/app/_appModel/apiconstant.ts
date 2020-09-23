@@ -9,7 +9,10 @@ export class ApiConstant {
         registerGuest: "Admin/UserManagement/RegisterGuest",
         Producers: "User/Producers",
         CustomServices: "User/CustomServices",
-        TrackAndBeat: "User/TrackAndBeat"
+        TrackAndBeat: "User/TrackAndBeat",
+        ServiceList: "User/Service/List",
+        CustomServiceDetails: "User/Service/CustomServiceDetails",
+        AvailableProducers:"User/AvailableProducers",
     }
     public static category = {
         AddModifyCategory: "Admin/MasterManagement/Category",

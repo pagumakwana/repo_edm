@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Helpers } from '../_appModel/helpers';
 import { BaseServiceHelper } from '../_appService/baseHelper.service';
-import { ApiConstant } from '../_appModel/apiconstant';
 import { Router } from '@angular/router';
 import { GenService } from '../_appService/genservice/genservice.service';
 

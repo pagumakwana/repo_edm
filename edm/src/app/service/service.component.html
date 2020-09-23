@@ -3,24 +3,24 @@
 </h2>
 <div class="service_page">
     <div class="services_section">
-        <div class="news_sec">
+        <div class="news_sec" *ngFor="let service of Servicelist">
             <div class="news_data">
-                <img src="../../assets/images/blog1.jpg">
+                <img [src]="service.Thumbnail">
                 <div class="news_content">
-                    <h2>Dummy Short Heading</h2>
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-                    <a class="global_btn icon_btn primary_btn">
+                    <h2>{{service.ServiceTitle}}</h2>
+                    <p>{{service.Description}}</p>
+                    <a class="global_btn icon_btn primary_btn" routerLink="details/{{service.Ref_Service_ID}}">
                         <span>Read More</span>
                         <span class="double_right_icon btn_icon"></span>
                     </a>
-                    <a class="global_btn icon_btn secondary_btn">
+                    <a class="global_btn icon_btn secondary_btn" routerLink="availableProducer/{{service.Ref_Service_ID}}">
                         <span>Available Producers</span>
                         <span class="black_user_icon btn_icon"></span>
                     </a>
                 </div>
             </div>
         </div>
-        <div class="news_sec">
+        <!-- <div class="news_sec">
             <div class="news_data">
                 <img src="../../assets/images/blog2.jpg">
                 <div class="news_content">
@@ -53,6 +53,6 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
