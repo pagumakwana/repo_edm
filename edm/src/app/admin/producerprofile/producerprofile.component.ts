@@ -28,11 +28,35 @@ export class ProducerProfileComponent implements OnInit {
     countryList: Array<any>
     fileURL = this._base._commonService.cdnURL;
 
+    config = {
+        displayKey: "UserMasterData",
+        search: true,
+        height: 'auto',
+        placeholder: 'Select Your Country',
+        // customComparator: ()=>{},
+        limitTo: 0,
+        moreText: 'more',
+        noResultsFound: 'No results found!',
+        searchPlaceholder: 'Search here',
+        searchOnKey: 'UserMasterData',
+        clearOnSelection: true,
+        inputDirection: 'ltr',
+    }
 
     dropdownSettings: IDropdownSettings = {
         singleSelection: false,
         idField: 'Ref_DAW_ID',
         textField: 'DAW',
+    };
+
+    countryDDSettings: IDropdownSettings = {
+        singleSelection: true,
+        idField: 'Ref_UserMasterData_ID',
+        textField: 'UserMasterData',
+        allowSearchFilter: true,
+        clearSearchFilter: true,
+        searchPlaceholderText: 'Search here',
+        noDataAvailablePlaceholderText: 'No results found!'
     };
 
     addProfileForm = this.fb.group({

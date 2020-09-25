@@ -12,21 +12,23 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   encapsulation: ViewEncapsulation.None,
 })
 export class SignupComponent implements OnInit {
+
   constructor(
     private _base: BaseServiceHelper,
     private fb: FormBuilder,
     public _registerService: RegisterService) { }
-  _userModel: userModel = {};
 
+  _userModel: userModel = {};
   formSignup: FormGroup = this.fb.group({
     FullName: ['', [Validators.required]],
     EmailID: ['', [Validators.required]],
     Password: ['', [Validators.required]]
   })
-
+  showPassword: boolean = false;
 
   ngOnInit(): void {
   }
+
   signIn() {
     this._base._commonService.navigation('login');
   }
@@ -36,21 +38,26 @@ export class SignupComponent implements OnInit {
     if (this.formSignup.valid) {
       this._userModel.FullName = this.formSignup.value.FullName;
       this._userModel.EmailID = this.formSignup.value.EmailID;
-      this._userModel.User_Code = this.formSignup.value.EmailID;
+      this._userModel.UserCode = this.formSignup.value.EmailID;
       this._userModel.Password = this.formSignup.value.Password;
       this._userModel.CreatedName = this.formSignup.value.FullName;
       this.register();
     }
   }
+
   register() {
     this._registerService.registerCustomer(this._userModel).subscribe((response: any) => {
       if (response == 'USERADDEDSUCCESS') {
+        this._base._alertMessageService.success("Registration Successful.");
+        this._userModel.User_Code = this._userModel.UserCode;
         this._registerService.loginCustomer(this._userModel).subscribe(res => {
-          if (res[0].ResponseMessage == 'USERSIGNINSUCCESS') {
+          if (res[0].Response == 'USERSIGNINSUCCESS') {
             let responseData = res[0];
             this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
-              if (res)
+              if (res) {
+                this._base._commonService.setHasLoginSubscribe.next(true);
                 this._base._router.navigate(['/']);
+              }
             });
             // this._communicationModel = {
             //   Recipients: responseData.Email,
@@ -61,16 +68,28 @@ export class SignupComponent implements OnInit {
             // })
           }
         });
-      } else if (response == 'USERALREADYEXISTS') {
+      }
+      else if (response == 'USERALREADYEXISTS') {
+        this._base._alertMessageService.error("User already exists with same Email ID.");
+        this.formSignup.reset();
       }
     });
   }
+
   numberOnly(event) {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
       return false;
     }
     return true;
+  }
 
+  show_Password() {
+    if(this.showPassword == false){
+      this.showPassword = true;
+    }
+    else{
+      this.showPassword = false;
+    }
   }
 }

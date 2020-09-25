@@ -6,7 +6,7 @@ import { ProducerProfileComponent } from './producerprofile.component';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 @NgModule({
     declarations: [
@@ -17,6 +17,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
         FormsModule,
         ReactiveFormsModule,
         ErrorModule,
+        SelectDropDownModule,
         NgMultiSelectDropDownModule.forRoot(),
         RouterModule.forChild([
             {

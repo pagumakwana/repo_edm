@@ -34,16 +34,16 @@
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="password" formControlName="Password" id="Password" name="Password"
+                        <input [type]="showPassword == false ? 'password' : 'text'" formControlName="Password" id="Password" name="Password"
                             placeholder="Enter your password" aria-describedby="PasswordHelp" required />
-                        <span class="input_icon password_icon"></span>
+                        <span class="input_icon password_icon" (click)="show_Password()"></span>
                     </div>
                     <edm-error [control]="formSignup.controls.Password"></edm-error>
                 </div>
                 <div class="save_pwd_sec">
                     <p class="remember_me">
                         <label class="checkbox">
-                            <input name="remember" type="checkbox" checked disabled>I agree to receive email
+                            <input name="remember" type="checkbox" checked>I agree to receive email
                             <span></span>
                         </label>
                     </p>

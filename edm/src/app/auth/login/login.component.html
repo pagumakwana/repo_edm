@@ -13,9 +13,9 @@
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="password" formControlName="Password" id="Password" name="Password"
+                        <input type="showPassword == false ? 'password' : 'text'" formControlName="Password" id="Password" name="Password"
                             placeholder="Password" aria-describedby="PasswordHelp" required />
-                        <span class="input_icon password_icon"></span>
+                        <span class="input_icon password_icon" (click)="show_Password()"></span>
                     </div>
                     <!-- <edm-error [control]="formSignIn.controls.Password"></edm-error> -->
                 </div>

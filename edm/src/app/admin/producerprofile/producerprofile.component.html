@@ -73,21 +73,29 @@
                     <edm-error [control]="addProfileForm?.controls?.step1?.controls?.FullName"></edm-error>
 
                 </div>
-                <div class="form_group">
+                <!-- <div class="form_group">
                     <div class="form_area icon_form_group">
                         <select name="country" formControlName='UserMasterDataIDs'>
                             <option disabled selected value="">Select Your Country</option>
                             <option *ngFor="let country of countryList" [value]="country.Ref_UserMasterData_ID">
                                 {{country?.UserMasterData}}</option>
-                            <!-- <option>Options</option> -->
                         </select>
                         <span class="input_icon dropdown_icon"></span>
-                    </div>
+                    </div> -->
                     <!-- <div class="error_msg">
                         <span>This field is Required</span>
                     </div> -->
                     <!-- <edm-error [control]="addProfileForm.controls.step1.controls.BigImageUrl"></edm-error> -->
-
+                <!-- </div> -->
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <!-- <ngx-select-dropdown [multiple]="false" [config]="config" [options]="countryList">
+                        </ngx-select-dropdown> -->
+                        <ng-multiselect-dropdown [placeholder]="'Select Your Country'" [data]="countryList"
+                            formControlName="UserMasterDataIDs" [settings]="countryDDSettings">
+                        </ng-multiselect-dropdown>
+                        <!-- <span class="input_icon dropdown_icon"></span> -->
+                    </div>
                 </div>
                 <div class="form_group">
                     <div class="form_area">
@@ -107,10 +115,9 @@
                         </ng-multiselect-dropdown>
 
                     </div>
-                    <div class="tags">
+                    <!-- <div class="tags">
                         <span *ngFor="let daw of dawList">{{daw?.DAW}}</span>
-
-                    </div>
+                    </div> -->
                 </div>
                 <div class="button_group center_align" (click)="changeStage()">
                     <a class="global_btn primary_btn float_none">

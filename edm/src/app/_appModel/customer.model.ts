@@ -4,16 +4,17 @@ export interface userModel {
     Mobile?: any,
     Password?: any,
     RePassword?: any,
-    Profile_Photo?: any;
+    Profile_Photo?: any,
     UserMasterDataIDs?: any,
-    User_Code?: any,
+    UserCode?: any,
     Gender?: any,
     Bio?: any,
     DateOfBirth?: any,
     Website?: any,
     Ref_User_Id?: any,
-    CreatedName?: any
-    IsSocialLogin?: any
+    CreatedName?: any,
+    IsSocialLogin?: any,
+    User_Code?: any
 }
 export interface requestOTP {
     Ref_OTP_ID?: any,

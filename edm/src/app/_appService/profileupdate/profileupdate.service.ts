@@ -21,7 +21,7 @@ export class ProfileUpdateService {
     }
 
     UserMasterData(UserMasterID: string) {
-        return this._base._ApiService.get(`${ApiConstant.MasterManagement.UserMasterData}?UserMasterID=${UserMasterID}`);
+        return this._base._ApiService.get(`${ApiConstant.MasterManagement.UserMasterData}?UserMasterID=${UserMasterID}&UserMasterDataID=0`);
     }
 
     setProfileInfo(data: ProfileUpdateModel): void {

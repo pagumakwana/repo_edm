@@ -24,11 +24,11 @@ export class LoginComponent implements OnInit {
     User_Code: ['', [Validators.required]],
     Password: ['', [Validators.required]]
   })
+  showPassword: boolean = false;
 
   setSignInModel() {
     this._base._commonService.markFormGroupTouched(this.formSignIn);
     if (this.formSignIn.valid) {
-      debugger
       this._userModel.IsSocialLogin = false;
       this._userModel.User_Code = this.formSignIn.value.User_Code;
       this._userModel.Password = this.formSignIn.value.Password;
@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
         let responseData = resData[0];
         this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
           if (res) {
-            this._base._commonService.setHasLoginSubscribe.next(true)
+            this._base._commonService.setHasLoginSubscribe.next(true);
             this._base._router.navigate(['/']);
           }
         });
@@ -112,5 +112,14 @@ export class LoginComponent implements OnInit {
 
   forgotPassword() {
     this._base._router.navigate(['forgotpassword']);
+  }
+  
+  show_Password() {
+    if(this.showPassword == false){
+      this.showPassword = true;
+    }
+    else{
+      this.showPassword = false;
+    }
   }
 }
