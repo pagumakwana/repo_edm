@@ -74,14 +74,14 @@
                 <td>{{track.TrackStatus}}</td>
                 <td>
                     <span class="comment_area" style="width: 250px;">{{track.Bio}}</span>
-                    <a *ngIf="track.TrackStatus == 'Rejected'" class="read_more" data-toggle="modal" data-target="#readmore_popup"> READ MORE</a>
+                    <a *ngIf="track.TrackStatus == 'Rejected'" class="read_more" (click)="showreason(track.Reason)"> READ MORE</a>
                 </td>
                 <td class="table_btn">
                     <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Approve')" class="global_btn icon_btn primary_btn">
                         <span>Approve</span>
                         <span class="right_icon btn_icon"></span>
                     </a>
-                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Reject')" class="global_btn icon_btn red_btn">
+                    <a *ngIf="track.TrackStatus == ''" (click)="manageTrackBeat(track.Ref_Track_ID, 'Reject')" class="global_btn icon_btn red_btn">
                         <span>Reject</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>
@@ -261,15 +261,13 @@
     <div class="modal-sm modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Comment</h4>
+                <h4 class="modal-title">Reason</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
-                survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-                desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {{rejectedReasonTxt}}
             </div>
         </div>
     </div>

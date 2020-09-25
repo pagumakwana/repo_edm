@@ -58,7 +58,7 @@ export class ProducerSliderComponent implements OnInit {
             this._base._ApiService.get(ApiConstant.customer.Producers + '?UserID=' + Ref_User_ID + '&StartCount=0&EndCount=5').subscribe((data: any) => {
                 this.producerlist = data;
                 this.producerlist.map(item => {
-                    item.ProfilePhoto = this._base._commonService.cdnURL + item.ProfilePhoto;
+                    item.ProfilePhoto = item.ProfilePhoto == undefined || item.ProfilePhoto == null|| item.ProfilePhoto == "" || item.ProfilePhoto == "-"? '../../../assets/images/producer_profile.jpg' : this._base._commonService.cdnURL + item.ProfilePhoto;
                 })
             })
         })

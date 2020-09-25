@@ -2,7 +2,7 @@
     <div class="portlet_body admin_half_forms">
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="text" name="masterName" formControlName="masterName" [(ngModel)]="masterName" placeholder="Master Name" />
+                <input type="text" name="masterName" formControlName="masterName" [(ngModel)]="masterName" [placeholder]="modulename=='master'?'Master Name':'MasterData Name'" />
                 <span class="input_icon "></span>
             </div>
             <edm-error [control]="addmodifymaster.controls.masterName"></edm-error>

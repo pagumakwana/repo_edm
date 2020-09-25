@@ -3,10 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ServiceDetailsComponent } from './servicedetails/servicedetails.component';
 import { ServiceComponent } from './service.component';
+import { AccordionComponent } from './../commonmodule/accordion/accordion.component';
+import { AccordionGroupComponent } from './../commonmodule/accordion/accordion-group.component';
+import {AvailableProducerComponent} from './availableproducer/availableproducer.component'
 @NgModule({
     declarations: [
         ServiceComponent,
-        ServiceDetailsComponent
+        ServiceDetailsComponent,
+        AvailableProducerComponent,
+        AccordionGroupComponent , AccordionComponent
     ],
     imports: [
         CommonModule,
@@ -16,8 +21,12 @@ import { ServiceComponent } from './service.component';
                 component: ServiceComponent
             },
             {
-                path: 'details',
+                path: 'details/:ServiceId',
                 component: ServiceDetailsComponent
+            },
+            {
+                path: 'availableProducer/:ServiceId',
+                component: AvailableProducerComponent
             }
         ]),
     ],

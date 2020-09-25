@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ProfileUpdateService } from 'src/app/_appService/profileupdate/profileupdate.service';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
+import configData from '../../../assets/projectConfig.json'
+
 
 @Component({
     selector: 'app-producer',
@@ -29,7 +31,7 @@ export class ProducerProfileComponent implements OnInit {
             this.Producers()
         })
     }
-
+    config = configData
     producerReqData: { producerID: string, Ref_User_ID: string } = {
         producerID: null,
         Ref_User_ID: null
@@ -43,7 +45,7 @@ export class ProducerProfileComponent implements OnInit {
     producerTab = producerTab
     currentTab: producerTab = producerTab.biography;
     producerData: { [key: string]: any } = {
-        CustomServices: null,
+        CustomServices: [],
         TrackAndBeat: {
             data: null,
             tracks: [],
@@ -60,6 +62,7 @@ export class ProducerProfileComponent implements OnInit {
     CustomServices() {
         this._profileService.CustomServices(this.producerReqData.producerID ? this.producerReqData.producerID : '0').subscribe((res: any) => {
             console.log("CustomServices", res)
+            this.producerData.CustomServices = res
         })
     }
     Producers() {
@@ -83,13 +86,20 @@ export class ProducerProfileComponent implements OnInit {
         })
     }
 
-    UserAction(isFollow: boolean) {
-        this.UserActionData.Action = isFollow ? 'Follow' : "Unfollow"
+    UserAction(ActionType: string, actionSet: boolean, actionObj: any) {
+        if (ActionType == 'follow')
+            this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
+        if (ActionType == 'favorite')
+            this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
         this._profileService.UserAction(this.UserActionData).subscribe((res: any) => {
-            console.log("UserAction", res)
-            this.producerData.TrackAndBeat.Followed = (res == 'Follow')
-            this.producerData.TrackAndBeat.Followers = (res == 'Follow') ? this.producerData.TrackAndBeat.Followers + 1 : this.producerData.TrackAndBeat.Followers - 1
+            console.log("UserAction", res, actionObj)
 
+            if (ActionType == 'follow') {
+                actionObj.Followed = (res == 'Follow')
+                actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
+            } else if (ActionType == 'favorite') {
+                actionObj = (res == 'Favourite')
+            }
         })
     }
 

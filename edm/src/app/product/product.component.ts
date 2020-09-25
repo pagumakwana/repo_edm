@@ -20,7 +20,7 @@ export class ProductComponent implements OnInit {
   @ViewChild(SwiperComponent) componentRef: SwiperComponent;
   public config: SwiperConfigInterface = {
     direction: 'horizontal',
-    navigation: true,
+    navigation: false,
     pagination: false,
     autoplay: false,
     centeredSlides: false,
@@ -38,8 +38,8 @@ export class ProductComponent implements OnInit {
         spaceBetween: 20,
       },
       1201: {
-        slidesPerView: 5,
-        spaceBetween: 50,
+        slidesPerView: 4.4,
+        spaceBetween: 40,
       },
     }
   };

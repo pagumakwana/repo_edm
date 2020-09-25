@@ -65,17 +65,17 @@ export class FeaturedProductSliderComponent implements OnInit {
     ngOnInit(): void {
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
             this._trackService.getFeaturedTrack(0, 5, Ref_User_ID).subscribe((data: any) => {
-                if(this._base._commonService.FeatureProducts == "Beats"){
+                if (this._base._commonService.FeatureProducts == "Beats") {
                     this.featuredTrack = data.filter(a => a.IsTrack == 'Beat');
-                }else{
+                } else {
                     this.featuredTrack = data.filter(a => a.IsTrack == 'Track');
                 }
-                
+
             })
         })
     }
     redirect(id) {
-        this.router.navigate(['product/details', id]).then((e) => {
+        this.router.navigate(['product/' + this._base._commonService.FeatureProducts + '/details', id]).then((e) => {
             if (e) {
                 console.log("Navigation is successful!");
             } else {
@@ -111,6 +111,13 @@ export class FeaturedProductSliderComponent implements OnInit {
             $('.playpause_' + id).addClass('pause');
         }
     }
+    setImg(id){
+        if ($('.playpause_' + id).hasClass('play')) {
+          return '../../../assets/images/play_video.svg'
+        }else{
+          return '../../../assets/images/pause.svg'
+        }
+      }
     useraction(ObjectID, ObjectType, Action) {
         this._base._commonService.showLoader()
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {

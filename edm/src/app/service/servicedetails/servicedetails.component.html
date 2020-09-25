@@ -1,8 +1,8 @@
-<h2 class="simple_heading">
-    CUSTOM TRACK SERVICES
-</h2>
-<div class="servicedetails_page">
-    <div class="servicesdetails_section">
+<div class="servicedetails_page" *ngFor="let service of ServiceDetails">
+    <h2 class="simple_heading">
+        {{service.ServiceTitle}}
+    </h2>
+    <!-- <div class="servicesdetails_section">
         <div class="left_user_profile">
             <img src="../../../assets/images/producer_profile.jpg">
         </div>
@@ -10,10 +10,10 @@
             <h3>MOMOSE MUSIC</h3>
             <p>I will create Ghost Produced track as per your Requirement</p>
         </div>
-    </div>
+    </div> -->
     <div class="what_get_section servicesdetails_section">
         <div class="left_listing_img">
-            <img src="../../../assets/images/product_thumbnail.jpg">
+            <img [src]="service.Thumbnail">
         </div>
         <div class="right_listings">
             <h3 class="services_heading">What you will get:</h3>
@@ -44,33 +44,30 @@
                 </li>
             </ul>
             <a class="global_btn primary_btn">
-                <span>GET STARTED FOR &#36;999</span>
+                <span>GET STARTED FOR &#36;{{service.Price}}</span>
             </a>
         </div>
     </div>
     <div class="servicesdetails_section description_section">
         <h3 class="services_heading">Description</h3>
         <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+            {{service.Description}}
         </p>
     </div>
     <div class="servicesdetails_section description_section">
         <h3 class="services_heading">FAQ'S</h3>
-        <div class="accordian">
+        <!-- <div class="accordian" *ngFor="let FAQ of service.FAQList">
             <h3 class="services_heading">
                 <span class="plus_icon"></span>
-                <span>What is Lorem Ipsum ?</span>
+                <span> {{FAQ.Questions}}</span>
             </h3>
             <p>
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                {{FAQ.Answer}}
             </p>
-        </div>
-        <div class="accordian">
-            <h3 class="services_heading">
-                <span class="plus_icon"></span>
-                <span>What is Lorem Ipsum ?</span>
-            </h3>
-        </div>
-    </div>
+        </div> -->
+        <accordion>
+            <group [title]="FAQ.Questions" *ngFor="let FAQ of service.FAQList">{{FAQ.Answer}}</group>
+            <group title="First Group">this is the content</group>
+        </accordion>
 
-</div>
+    </div>

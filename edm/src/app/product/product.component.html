@@ -1,18 +1,18 @@
 <div class="product_page">
-    <swiper class="genre_slider" [config]="config">
-        <div class="swiper-slide" *ngFor="let genre of genrelist">
-            <div class="slider_product">
-                <div class="product_img" (click)="onGenreFilter(genre.CategoryName)">
-                    <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath" class="product_thumbnail">
-                    <h4>{{genre.CategoryName}}</h4>
-                </div>
-            </div>
-        </div>
-    </swiper>
     <div class="filter_btn" (click)="filtersDisplay()">
         <img src="../../assets/images/filter.svg" />
         <span>Filter</span>
     </div>
+    <swiper class="genre_slider" [config]="config" *ngIf="genrelist?.length != 0">
+        <div class="swiper-slide" *ngFor="let genre of genrelist" (click)="onGenreFilter(genre.CategoryName)">
+            <div class="genre_slider_sec">
+                <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath">
+                <p>
+                    {{genre.CategoryName}}
+                </p>
+            </div>
+        </div>
+    </swiper>
     <div class="filters desktop_filter">
         <div class="filter_list">
             <p class="filter_heading">
