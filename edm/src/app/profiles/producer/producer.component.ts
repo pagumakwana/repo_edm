@@ -25,7 +25,7 @@ export class ProducerProfileComponent implements OnInit {
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(userID => {
             this.producerReqData.Ref_User_ID = userID
             this.UserActionData.UserID = parseInt(userID)
-            this.UserActionData.ObjectID = parseInt(this.producerReqData.producerID)
+            // this.UserActionData.ObjectID = parseInt(this.producerReqData.producerID)
             this.CustomServices()
             this.TrackAndBeat()
             this.Producers()
@@ -85,21 +85,45 @@ export class ProducerProfileComponent implements OnInit {
             this._base._commonService.hideLoader();
         })
     }
+    UserActionNotificationAlert(ObjectData, requestData, responseData) {
+        console.log("UserActionNotificationAlert", ObjectData, requestData, responseData)
+        let msg = {
+            Follow: `${requestData.ObjectType} followed successfully`,
+            Unfollow: `${requestData.ObjectType} unfollow successfully`,
+            Favourite: `${requestData.ObjectType} added`,
+            Unfavourite: `${requestData.ObjectType} removed`,
+            error: `Something Went Wrong`,
+        }
+        this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
+        if (requestData.Action == responseData) {
+            if (requestData.ObjectType == 'Producer') {
+                ObjectData.Followed = (responseData == 'Follow')
+                ObjectData.Followers = (responseData == 'Follow') ? ObjectData.Followers + 1 : ObjectData.Followers - 1
+            } else if (requestData.ObjectType == 'track') {
+                ObjectData.Favourite = (responseData == 'Favourite')
+            }
+        }
+    }
 
-    UserAction(ActionType: string, actionSet: boolean, actionObj: any) {
-        if (ActionType == 'follow')
-            this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
-        if (ActionType == 'favorite')
-            this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
+    // UserAction(ActionType: string, actionSet: boolean, actionObj: any) {
+    UserAction(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+        this.UserActionData.Action = Action
+        this.UserActionData.ObjectID = parseInt(ObjectID)
+        this.UserActionData.ObjectType = ObjectType
+
+        // if (ActionType == 'follow')
+        //     this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
+        // if (ActionType == 'favorite')
+        //     this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
         this._profileService.UserAction(this.UserActionData).subscribe((res: any) => {
             console.log("UserAction", res, actionObj)
-
-            if (ActionType == 'follow') {
-                actionObj.Followed = (res == 'Follow')
-                actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
-            } else if (ActionType == 'favorite') {
-                actionObj = (res == 'Favourite')
-            }
+            this.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+            // if (ActionType == 'follow') {
+            //     actionObj.Followed = (res == 'Follow')
+            //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
+            // } else if (ActionType == 'favorite') {
+            //     actionObj = (res == 'Favourite')
+            // }
         })
     }
 
