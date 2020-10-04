@@ -243,6 +243,12 @@ label.checkbox, label.radio {
     -webkit-box-shadow: 0 1px 4px 0px rgba(0, 0, 0, 0.19);
     text-decoration: none;
 }
+.global_btn:hover {
+    text-decoration: none;
+}
+.full_btn {
+    width: 100%;
+}
 .global_circle_btn {
     padding: 8px 20px;
     font-size: 13px;
@@ -798,6 +804,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .bio_icon {
     background: url(../images/bio.svg) no-repeat;
+}
+.bio_black_icon {
+    background: url(../images/bio_black.svg) no-repeat;
+    background-size: 15px 15px !important;
 }
 .producer_icon, .menu_producer_icon>a:before {
     background: url(../images/producer.svg) no-repeat;

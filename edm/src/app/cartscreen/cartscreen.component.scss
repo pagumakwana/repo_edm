@@ -1,0 +1,82 @@
+.cart_page {
+    padding: 15px;
+    .cart_items {
+        width: calc(100% - 380px);
+        display: inline-block;
+        vertical-align: top;
+    }
+    .cart_total {
+        width: 380px;
+        display: inline-block;
+        vertical-align: top;
+        padding: 15px;
+    }
+    .primary_table tbody td:last-child {
+        width: 320px;
+    }
+    .total_count_list {
+        background: white;
+        border: 1px solid #e4e4e4;
+        border-radius: 15px;
+        padding: 20px 15px;
+        box-shadow: 0 0 15px 1px #eaeaea;
+    }
+    .coupon_section .global_btn {
+        margin: 0;
+    }
+    .coupon_section .form_area {
+        width: calc(100% - 80px);
+        display: inline-block;
+        padding-right: 15px;
+    }
+    .total_count_list ul, .total_count_list ul li {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        font-size: 14px;
+    }
+    .total_count_list ul li {
+        display: inline-block;
+        width: 50%;
+        padding: 9px 0;
+    }
+    .total_count_list ul li:last-child {
+        text-align: right;
+    }
+    .total_count_list ul li:first-child {
+        font-weight: bold;
+    }
+    .total {
+        margin: 5px 0 15px 0 !important;
+        border-bottom: 0 !important;
+    }
+    .total_count_list ul {
+        border-bottom: 1px solid #efefef;
+    }
+    .payment_options img {
+        height: 51px;
+        width: auto;
+    }
+    .payment_options a {
+        display: inline-block;
+        border-radius: 5px;
+        width: 25%;
+        text-align: center;
+        vertical-align: top;
+    }
+}
+
+/* ********** Responsive ********** */
+
+@media screen and (max-width: 1100px) {
+    .cart_page {
+        .cart_items {
+            width: 100%;
+        }
+        .cart_total {
+            max-width: 400px;
+            width: auto;
+            padding: 15px 0;
+        }
+    }
+}
