@@ -13,7 +13,12 @@
     </div> -->
     <div class="what_get_section servicesdetails_section">
         <div class="left_listing_img">
-            <img [src]="service.Thumbnail">
+            <video id="videoTag" width="400px" height="425.6px" preload="none" [poster]='service.FileManager[0].FilePath' data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
+            <source [src]="service.FileManager[1].FilePath" type='video/mp4' />
+            <!-- <source src="https://vjs.zencdn.net/v/oceans.webm" type='video/webm' /> -->
+        </video>
+            <!-- <img [src]="service.Thumbnail"> -->
+            <button (click)="playPause()">{{playPauseText}}</button>
         </div>
         <div class="right_listings">
             <h3 class="services_heading">What you will get:</h3>
@@ -67,7 +72,7 @@
         </div> -->
         <accordion>
             <group [title]="FAQ.Questions" *ngFor="let FAQ of service.FAQList">{{FAQ.Answer}}</group>
-            <group title="First Group">this is the content</group>
+            <!-- <group title="First Group">this is the content</group> -->
         </accordion>
 
     </div>
