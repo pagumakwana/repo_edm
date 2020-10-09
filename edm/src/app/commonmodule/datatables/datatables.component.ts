@@ -37,7 +37,7 @@ export class DatatablesComponent implements OnInit {
 
   getNestedObject(data: Array<any> | object, path: Array<string>) {
     path.forEach(function (key) {
-      data = data[key] ? data[key] : '';
+      data = data && data[key] ? data[key] : '';
     });
     return data;
   }
