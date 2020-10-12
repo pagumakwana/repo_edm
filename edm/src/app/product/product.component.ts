@@ -125,7 +125,7 @@ export class ProductComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.storetype = params['type'];
       this._base._commonService.showLoader();
-      this._categoryService.categorylist(this.storetype, 0).subscribe((resData: any) => {
+      this._categoryService.categorylist(this.storetype == 'CustomTrack' ? 'Track' : this.storetype, 0).subscribe((resData: any) => {
         let categoryData = []
         categoryData = Array.isArray(resData) ? resData : []
         console.log("categoryData", categoryData);
@@ -160,6 +160,11 @@ export class ProductComponent implements OnInit {
       })
     })
   }
+  public filterfile(FileManager, fileType){
+    let file = FileManager.filter(item => item.FileIdentifier == fileType)
+      if(file.length != 0)
+      return this._base._commonService.cdnURL + file[0].FilePath
+    }
   bindDAW() {
     this._base._ApiService.get(ApiConstant.MasterManagement.DAW).subscribe((data: any) => {
       this.DAWlist = data;

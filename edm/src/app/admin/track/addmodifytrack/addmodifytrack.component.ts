@@ -415,6 +415,7 @@ export class AddModifyTrackComponent implements OnInit {
     this.commonService.showLoader()
     this._base._commonService.filesUpload(this.formDataTrackImg, 'Track').then((res: any) => {
       console.log(res);
+      this.commonService.hideLoader();
       let file = {
         FileManagerID: "",
           ModuleID : "",
@@ -430,7 +431,6 @@ export class AddModifyTrackComponent implements OnInit {
       this.fileManager.push(file)
       this.trackImg = res[0].FilePath;
       this.trackImguploaded = true;
-      this.commonService.hideLoader();
     }, e => {
       this.commonService.hideLoader();
     })

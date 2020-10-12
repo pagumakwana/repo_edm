@@ -121,6 +121,10 @@ export class ProductDetailsComponent implements OnInit {
       })
     })
   }
+  public filterfile(FileManager, fileType){
+    let file = FileManager.filter(item => item.FileIdentifier == fileType)
+      return this._base._commonService.cdnURL + file[0].FilePath
+    }
   playaudio(path, id, data) {
     debugger
     if ($('.playpause_' + id).hasClass('pause')) {
@@ -135,7 +139,8 @@ export class ProductDetailsComponent implements OnInit {
       // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('play')) {
-      this.audio.src = this._base._commonService.cdnURL + path;
+      let  file = path.filter(item => item.FileIdentifier == "MasterFile")
+      this.audio.src = this._base._commonService.cdnURL  + file[0].FilePath;;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');
@@ -150,6 +155,7 @@ export class ProductDetailsComponent implements OnInit {
     }
   }
   useraction(ObjectID, ObjectType, Action) {
+    this._base._commonService.showLoader();
     this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
       let ObjUseraction = {
         "UserID": Ref_User_ID,
@@ -159,6 +165,10 @@ export class ProductDetailsComponent implements OnInit {
       }
       this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
         console.log(data)
+        this.getProductDetails(ObjectID);
+        this._base._commonService.hideLoader();
+      },e =>{
+        this._base._commonService.hideLoader();
       })
     })
   }

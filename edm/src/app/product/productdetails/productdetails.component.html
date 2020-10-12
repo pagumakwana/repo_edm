@@ -1,9 +1,9 @@
 <div class="product_detail_page">
     <div class="product_detail_sec" *ngFor="let product of productDetails">
         <div class="product_thumbnail_sec">
-            <img [src]="product.ThumbnailImageUrl" />
+            <img [src]="filterfile(product.FileManager, 'Thumbnail')" />
             <div class="product_thumbnail_hover_sec" [id]="product.Ref_Track_ID">
-                <img style="background:none" (click)="playaudio(product.MasterFileUrl, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" />
+                <img style="background:none" (click)="playaudio(product.FileManager, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" />
             </div>
         </div>
         <div class="product_details">

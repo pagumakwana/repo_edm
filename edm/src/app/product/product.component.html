@@ -6,7 +6,7 @@
     <swiper class="genre_slider" [config]="config" *ngIf="genrelist?.length != 0">
         <div class="swiper-slide" *ngFor="let genre of genrelist" (click)="onGenreFilter(genre.CategoryName)">
             <div class="genre_slider_sec">
-                <img [src]="this._base._commonService.cdnURL + genre.FileUrls[0].FilePath">
+                <img [src]="filterfile(genre.FileManager, 'Image')">
                 <p>
                     {{genre.CategoryName}}
                 </p>
