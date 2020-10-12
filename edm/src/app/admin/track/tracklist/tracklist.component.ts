@@ -108,6 +108,10 @@ export class TrackListComponent implements OnInit {
       this._base._commonService.hideLoader();
     })
   }
+  public filterfile(FileManager, fileType){
+  let file = FileManager.filter(item => item.FileIdentifier == fileType)
+    return this._base._commonService.cdnURL + file[0].FilePath
+  }
   bindCategory() {
     this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       let categoryData = []
@@ -147,7 +151,7 @@ export class TrackListComponent implements OnInit {
         (x.TrackStatus == 'Approve' && this.filter.Approved)
         || (x.TrackStatus == 'SoldOut' && this.filter.SoldOut)
         || (x.TrackStatus == 'Rejected' && this.filter.Rejected)
-        || (x.TrackStatus == 'Pending' && this.filter.Pending)
+        || (x.TrackStatus == '-' && this.filter.Pending)
       );
       console.log(this.filteredProducts)
     }
@@ -186,7 +190,10 @@ export class TrackListComponent implements OnInit {
       // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('play')) {
-      this.audio.src = this._base._commonService.cdnURL + path;
+     
+        let  file = path.filter(item => item.FileIdentifier == "MasterFile")
+    
+      this.audio.src = this._base._commonService.cdnURL + file[0].FilePath;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');
@@ -196,6 +203,7 @@ export class TrackListComponent implements OnInit {
       this.audio.play();
       $('.playpause_' + id).removeClass('play');
       $('.playpause_' + id).addClass('pause');
+      
     }
   }
   public showreason(reason){

@@ -61,8 +61,8 @@
             <tr *ngFor="let track of filteredProducts">
                 <td>
                     <div class="play_upper_layer">
-                        <img class="tbl_img" [src]="track.ThumbnailImageUrl" />
-                        <div class="play_audio" [id]="track.Ref_Track_ID" (click)="playaudio(track.MasterFileUrl, track.Ref_Track_ID, data)">
+                        <img *ngIf="track.FileManager.length != 0" class="tbl_img" [src]="filterfile(track.FileManager, 'Thumbnail')" />
+                        <div *ngIf="track.FileManager.length != 0" class="play_audio" [id]="track.Ref_Track_ID" (click)="playaudio(track.FileManager, track.Ref_Track_ID, data)">
                             <span class="playpause_{{track.Ref_Track_ID}} play"></span>
                             <!-- <span title="Pause" class="pause" style="display: none;"></span> -->
                         </div>
@@ -81,7 +81,7 @@
                         <span>Approve</span>
                         <span class="right_icon btn_icon"></span>
                     </a>
-                    <a *ngIf="track.TrackStatus == ''" (click)="manageTrackBeat(track.Ref_Track_ID, 'Reject')" class="global_btn icon_btn red_btn">
+                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Reject')" class="global_btn icon_btn red_btn">
                         <span>Reject</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>

@@ -33,15 +33,15 @@ export class AddModifyTrackComponent implements OnInit {
   stemsfileuploaded: boolean = true;
   MIDIfileuploaded: boolean = true;
   projectfileuploaded: boolean = true;
-  invlideimg:boolean = false;
-  invalidmasterfile:boolean = false;
-  invalidunmasterfile:boolean = false;
-  invalidmixdowfile:boolean = false;
-  invalidurtoggedfile:boolean = false;
-  invalidWavfile:boolean = false;
-  invalidstemsfile:boolean = false;
-  invalidMIDIfile:boolean = false;
-  invalidprojectfile:boolean = false;
+  invlideimg: boolean = false;
+  invalidmasterfile: boolean = false;
+  invalidunmasterfile: boolean = false;
+  invalidmixdowfile: boolean = false;
+  invalidurtoggedfile: boolean = false;
+  invalidWavfile: boolean = false;
+  invalidstemsfile: boolean = false;
+  invalidMIDIfile: boolean = false;
+  invalidprojectfile: boolean = false;
   uploadmasterfile: any;
   uploadunmasterfile: any;
   uploadmixdowfile: any;
@@ -130,8 +130,10 @@ export class AddModifyTrackComponent implements OnInit {
   stemsfile: any;
   projectfile: any;
   MIDIfile: any
-  pricelimit:boolean= false;
-  minuteslimit:boolean= false;
+  pricelimit: boolean = false;
+  minuteslimit: boolean = false;
+  fileManager: any = [];
+  TrackStatus
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
@@ -140,40 +142,40 @@ export class AddModifyTrackComponent implements OnInit {
   }
   public validateNum() {
     this.model.trackduration = this.model.trackduration.replace(/\D/g, '').replace(/(\d{2})(\d*)/, '$1:$2');
-   // this.model.trackduration.length.substring(0,4)
+    // this.model.trackduration.length.substring(0,4)
   }
   public OnlyNumber(e, upto) {
     debugger;
     e.target.value = e.target.value.replace(/[^\d/:]/g, '')
     if (e.target.value.length > e.target.maxLength) {
-     
+
       e.target.value = e.target.value.slice(0, e.target.maxLength)
     }
-    if(upto == "2001"){
+    if (upto == "2001") {
       if (e.target.value > 2001) {
         this.pricelimit = true;
         //alert('Amount limit upto $2000')
         //e.target.value = ''
         //this.model.trackprice = undefined;
-      }else{
+      } else {
         this.pricelimit = false;
       }
-    }else if(upto == "301"){
+    } else if (upto == "301") {
       if (e.target.value > 301) {
         this.minuteslimit = true;
         //alert('Amount limit upto $2000')
         //e.target.value = ''
         //this.model.trackprice = undefined;
-      }else{
+      } else {
         this.minuteslimit = false;
       }
     }
-    
+
   }
   public OnlyNumberText(e) {
     debugger;
     e.target.value = e.target.value.replace(/[^a-zA-Z0-9 -]/g, '')
-    
+
   }
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -183,6 +185,7 @@ export class AddModifyTrackComponent implements OnInit {
         this._base._pageTitleService.setTitle("Modify " + this.moduleName, "Modify " + this.moduleName);
         this.getTrackDetails(this.trackId);
       } else {
+        this.fileManager = [];
         this._base._pageTitleService.setTitle("Add " + this.moduleName, "Add " + this.moduleName);
         this.model = {};
         this.trackImg = undefined;
@@ -207,16 +210,16 @@ export class AddModifyTrackComponent implements OnInit {
         this.KeyID = 0;
         this.DAWID = 0;
       }
-      if(this.moduleName == "Track"){
+      if (this.moduleName == "Track") {
         this.bindCategory('Track')
-      }else{
+      } else {
         this.bindCategory('Beats')
       }
       this.bindDAW();
     });
     console.log(this.trackId);
-    
-   
+
+
   }
   onGenreChange(e) {
     debugger;
@@ -252,25 +255,26 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackbmp = data[0].BMP
       this.model.trackvocals = data[0].IsVocals
       this.model.trackprice = data[0].Price
-      this.model.trackImg = data[0].ThumbnailImageUrl
-      this.trackImg = data[0].ThumbnailImageUrl
-      this.preview = this._base._commonService.cdnURL + data[0].ThumbnailImageUrl
-      this.masterfile = data[0].MasterFileUrl
-      this.urtoggedfile = data[0].MasterFileUrl
-      this.unmasterfile = data[0].UnmasteredFileUrl
-      this.wavefileurl = data[0].UnmasteredFileUrl
-      this.Wavfile = data[0].UnmasteredFileUrl
-      this.mixdowfile = data[0].MixdowFileUrl
-      this.stemsfile = data[0].StemsUrl
-      this.MIDIfile = data[0].MIDIFileUrl
-      this.midifileurl = data[0].MIDIFileUrl
-      this.projectfile = data[0].ProjectFilesUrl;
-      this.masterfileurl = data[0].MasterFileUrl;
-      this.urtoggedfileurl = data[0].MasterFileUrl;
-      this.unmasterfileurl = data[0].UnmasteredFileUrl
-      this.mixdowfileurl = data[0].MixdowFileUrl;
-      this.stemsfileurl = data[0].StemsUrl;
-      this.projectfileurl = data[0].ProjectFilesUrl;
+      this.fileManager = data[0].FileManager
+      this.model.trackImg = this.filterfile( data[0].FileManager, 'Thumbnail')
+      this.trackImg = this.filterfile( data[0].FileManager, 'Thumbnail')
+      this.preview = this._base._commonService.cdnURL + this.filterfile( data[0].FileManager, 'Thumbnail')
+      this.masterfile = this.filterfile( data[0].FileManager, 'MasterFile')
+      this.urtoggedfile = this.filterfile( data[0].FileManager, 'MasterFile')
+      this.unmasterfile = this.filterfile( data[0].FileManager, 'UnmasterFile')
+      this.wavefileurl = this.filterfile( data[0].FileManager, 'WavFile')
+      this.Wavfile = this.filterfile( data[0].FileManager, 'WavFile')
+      this.mixdowfile = this.filterfile( data[0].FileManager, 'MixdowFile')
+      this.stemsfile = this.filterfile( data[0].FileManager, 'StemsFile')
+      this.MIDIfile = this.filterfile( data[0].FileManager, 'MIDIFile')
+      this.midifileurl = this.filterfile( data[0].FileManager, 'MIDIFile')
+      this.projectfile = this.filterfile( data[0].FileManager, 'ProjectFile')
+      this.masterfileurl =this.filterfile( data[0].FileManager, 'MasterFile')
+      this.urtoggedfileurl = this.filterfile( data[0].FileManager, 'MasterFile')
+      this.unmasterfileurl = this.filterfile( data[0].FileManager, 'UnmasterFile')
+      this.mixdowfileurl = this.filterfile( data[0].FileManager, 'MixdowFile')
+      this.stemsfileurl = this.filterfile( data[0].FileManager, 'StemsFile')
+      this.projectfileurl = this.filterfile( data[0].FileManager, 'ProjectFile')
       this.Category_ID = data[0].Ref_Category_ID;
       this.MoodID = data[0].Mood;
       this.KeyID = data[0].Key;
@@ -282,6 +286,11 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.tags = data[0].Tag;
     })
   }
+  public filterfile(FileManager, fileType){
+    let file = FileManager.filter(item => item.FileIdentifier == fileType)
+    if(file.length != 0)
+      return  file[0].FilePath
+    }
   changeListenerTrackImg($event): void {
     debugger;
 
@@ -291,19 +300,19 @@ export class AddModifyTrackComponent implements OnInit {
     //var that = this;
     var reader = new FileReader();
     //if (this.imgFile) {
-      if ($event.target.files[0].type == 'image/jpeg' || $event.target.files[0].type == 'image/jpg' || $event.target.files[0].type == 'image/png') {
-        // this.formDataTrackImg = new FormData();
-        //  this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
-        this.invlideimg = false;
-        this.formDataTrackImg = $event.target.files
-        reader.readAsDataURL($event.target.files[0])
-        reader.onload = (_event) => {
-          this.preview = reader.result;
-        }
-        this.trackImg = $event.target.files[0].name;
-      } else {
-        this.invlideimg = true;
+    if ($event.target.files[0].type == 'image/jpeg' || $event.target.files[0].type == 'image/jpg' || $event.target.files[0].type == 'image/png') {
+      // this.formDataTrackImg = new FormData();
+      //  this.formDataTrackImg.append('uploadFile', this.imgFile, this.imgFile.name);
+      this.invlideimg = false;
+      this.formDataTrackImg = $event.target.files
+      reader.readAsDataURL($event.target.files[0])
+      reader.onload = (_event) => {
+        this.preview = reader.result;
       }
+      this.trackImg = $event.target.files[0].name;
+    } else {
+      this.invlideimg = true;
+    }
     //}
   }
   changeListenerfile($event, fileType): void {
@@ -324,10 +333,10 @@ export class AddModifyTrackComponent implements OnInit {
             // this.uploadprojectfile.append('uploadFile', this.audioFile, this.audioFile.name);
           }
         } else {
-          if (fileType == 'Stemsfile'){
+          if (fileType == 'Stemsfile') {
             this.invalidstemsfile = true
             this.stemsfile = "";
-          }else if (fileType == 'Projectfile'){
+          } else if (fileType == 'Projectfile') {
             this.invalidprojectfile = true
             this.projectfile = "";
           }
@@ -345,11 +354,11 @@ export class AddModifyTrackComponent implements OnInit {
             this.uploadurtoggedfile = $event.target.files; //new FormData();
           }
         } else {
-        //  alert('Please select .mp3 file');
-          if (fileType == 'Masterfile'){
+          //  alert('Please select .mp3 file');
+          if (fileType == 'Masterfile') {
             this.invalidmasterfile = true
             this.masterfile = "";
-          }else if (fileType == 'Urtoggedfile'){
+          } else if (fileType == 'Urtoggedfile') {
             this.invalidurtoggedfile = true
             this.urtoggedfile = "";
           }
@@ -361,7 +370,7 @@ export class AddModifyTrackComponent implements OnInit {
           this.midifileurl = this.audioFile.name;
           this.uploadmidifile = $event.target.files; //new FormData();
         } else {
-         // alert('Please select .midi file');
+          // alert('Please select .midi file');
           this.midifileurl = "";
           this.invalidMIDIfile = true
           this.audioFile = "";
@@ -378,7 +387,7 @@ export class AddModifyTrackComponent implements OnInit {
             this.mixdowfile = this.audioFile.name;
             this.uploadmixdowfile = $event.target.files; //new FormData();
             // this.uploadmixdowfile.append('uploadFile', this.audioFile, this.audioFile.name);
-          }else if (fileType == 'Wavfile') {
+          } else if (fileType == 'Wavfile') {
             this.invalidWavfile = false
             this.Wavfile = this.audioFile.name;
             this.uploadwavefile = $event.target.files; //new FormData();
@@ -388,10 +397,10 @@ export class AddModifyTrackComponent implements OnInit {
           if (fileType == 'Unmasterfile') {
             this.invalidunmasterfile = true;
             this.unmasterfile = "";
-          }   else if (fileType == 'Mixdowfile') {
+          } else if (fileType == 'Mixdowfile') {
             this.invalidmixdowfile = true
             this.mixdowfile = "";
-          }else if (fileType == 'Wavfile') {
+          } else if (fileType == 'Wavfile') {
             this.invalidWavfile = true
             this.Wavfile = "";
           }
@@ -404,8 +413,21 @@ export class AddModifyTrackComponent implements OnInit {
   }
   uploadImg() {
     this.commonService.showLoader()
-    this._base._commonService.filesUpload(this.formDataTrackImg, 'Track').then(res => {
-      console.log(res[0].FilePath);
+    this._base._commonService.filesUpload(this.formDataTrackImg, 'Track').then((res: any) => {
+      console.log(res);
+      let file = {
+        FileManagerID: "",
+          ModuleID : "",
+          ModuleType :res[0].ModuleName,
+          FileName : res[0].FileName,
+          FilePath : res[0].FilePath,
+          FileType : res[0].FileType,
+          FileExtension : res[0].FileExtension,
+          FileSize : res[0].FileSize,
+          FileIdentifier : "Thumbnail",
+          Sequence : 0
+      }
+      this.fileManager.push(file)
       this.trackImg = res[0].FilePath;
       this.trackImguploaded = true;
       this.commonService.hideLoader();
@@ -423,70 +445,175 @@ export class AddModifyTrackComponent implements OnInit {
   uploadfile(fileType) {
     this.commonService.showLoader()
     if (fileType == 'Masterfile') {
-      this._base._commonService.filesUpload(this.uploadmasterfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadmasterfile, 'Track').then((data: any) => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "MasterFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         console.log(data[0].FilePath);
         this.masterfileurl = data[0].FilePath;
         this.masterfileuploaded = true;
         this.commonService.hideLoader();
       })
     } else if (fileType == 'Unmasterfile') {
-      this._base._commonService.filesUpload(this.uploadunmasterfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadunmasterfile, 'Track').then((data: any) => {
         //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadunmasterfile, '').then(data => {
         console.log(data[0].FilePath);
+
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "UnmasterFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         this.unmasterfileurl = data[0].FilePath;
         this.unmasterfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Mixdowfile') {
-      this._base._commonService.filesUpload(this.uploadmixdowfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadmixdowfile, 'Track').then((data: any) => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmixdowfile, '').then(data => {
         console.log(data);
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "MixdowFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         this.mixdowfileurl = data[0].FilePath;
         this.mixdowfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Stemsfile') {
-      this._base._commonService.filesUpload(this.uploadstemsfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadstemsfile, 'Track').then((data: any) => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadstemsfile, '').then(data => {
         console.log(data);
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "StemsFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         this.stemsfileurl = data[0].FilePath;
         this.stemsfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'MIDIfile') {
-      this._base._commonService.filesUpload(this.uploadmidifile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadmidifile, 'Track').then((data: any) => {
         //this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmidifile, '').then(data => {
         console.log(data);
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "MIDIFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         this.midifileurl = data[0].FilePath;
         this.MIDIfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Projectfile') {
-      this._base._commonService.filesUpload(this.uploadprojectfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadprojectfile, 'Track').then((data: any) => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadprojectfile, '').then(data => {
         console.log(data);
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "ProjectFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         this.projectfileurl = data[0].FilePath;
         this.projectfileuploaded = true;
         this.commonService.hideLoader()
       })
     } else if (fileType == 'Urtoggedfile') {
-      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then(data => {
+      this._base._commonService.filesUpload(this.uploadurtoggedfile, 'Track').then((data: any) => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
         console.log(data[0].FilePath);
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "MasterFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
         this.masterfileurl = data[0].FilePath;
         this.masterfileuploaded = true;
         this.urtoggedfileuploaded = true;
         this.commonService.hideLoader();
       })
-    }else if (fileType == 'Wavfile') {
-      this._base._commonService.filesUpload(this.uploadwavefile, 'Track').then(data => {
+    } else if (fileType == 'Wavfile') {
+      this._base._commonService.filesUpload(this.uploadwavefile, 'Track').then((data: any) => {
         // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadurtoggedfile, '').then(data => {
         console.log(data[0].FilePath);
-       // this.wavefileurl = data[0].FilePath;
-       // this.Wavfileuploaded = true;
-       this.unmasterfileurl = data[0].FilePath;
-       this.unmasterfileuploaded = true;
+        let file = {
+          FileManagerID: "",
+            ModuleID : "",
+            ModuleType :data[0].ModuleName,
+            FileName : data[0].FileName,
+            FilePath : data[0].FilePath,
+            FileType : data[0].FileType,
+            FileExtension : data[0].FileExtension,
+            FileSize : data[0].FileSize,
+            FileIdentifier : "WavFile",
+            Sequence : 0
+        }
+        this.fileManager.push(file)
+        // this.wavefileurl = data[0].FilePath;
+        // this.Wavfileuploaded = true;
+        this.unmasterfileurl = data[0].FilePath;
+        this.unmasterfileuploaded = true;
         this.commonService.hideLoader();
       })
     }
@@ -495,7 +622,7 @@ export class AddModifyTrackComponent implements OnInit {
     debugger;
     console.log(this.model.beatkey)
     if (this.trackImg != undefined) {
-      if(!this.pricelimit && !this.minuteslimit){
+      if (!this.pricelimit && !this.minuteslimit) {
         this.finalsubmition = true;
       }
     } else {
@@ -523,14 +650,17 @@ export class AddModifyTrackComponent implements OnInit {
           "IsTrack": this.moduleName == 'Track' ? true : false,
           "Price": this.model.trackprice,
           "PriceWithProjectFiles": 0,
-          "BigImageUrl": this.trackImg,
-          "ThumbnailImageUrl": this.trackImg,
-          "MasterFileUrl": this.masterfileurl == undefined ? '' : this.masterfileurl,
-          "UnmasteredFileUrl": this.unmasterfileurl == undefined ? '' : this.unmasterfileurl,
-          "MixdowFileUrl": this.mixdowfileurl == undefined ? '' : this.mixdowfileurl,
-          "StemsUrl": this.stemsfileurl == undefined ? '' : this.stemsfileurl,
-          "MIDIFileUrl": this.midifileurl == undefined ? '' : this.midifileurl,
-          "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
+          "TrackStatus": "",
+          "Reason": "",
+          "FileManager": this.fileManager,
+          // "BigImageUrl": this.trackImg,
+          // "ThumbnailImageUrl": this.trackImg,
+          // "MasterFileUrl": this.masterfileurl == undefined ? '' : this.masterfileurl,
+          // "UnmasteredFileUrl": this.unmasterfileurl == undefined ? '' : this.unmasterfileurl,
+          // "MixdowFileUrl": this.mixdowfileurl == undefined ? '' : this.mixdowfileurl,
+          // "StemsUrl": this.stemsfileurl == undefined ? '' : this.stemsfileurl,
+          // "MIDIFileUrl": this.midifileurl == undefined ? '' : this.midifileurl,
+          // "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
           "IsActive": true,
           "CreatedBy": Ref_User_ID
         }
@@ -570,13 +700,13 @@ export class AddModifyTrackComponent implements OnInit {
   }
   checkfileuploaded() {
     if (this.moduleName == "Track") {
-      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfileurl != undefined  && this.midifileurl != undefined) {
+      if (this.masterfileurl != undefined && this.unmasterfileurl != undefined && this.mixdowfileurl != undefined && this.stemsfileurl != undefined && this.midifileurl != undefined) {
         return true
       } else {
         return false
       }
     } else {
-      if (this.stemsfileurl != undefined && this.masterfileurl != undefined && this.Wavfileuploaded != undefined) {
+      if (this.stemsfileurl != undefined && this.urtoggedfile != undefined && this.Wavfileuploaded != undefined) {
         return true
       } else {
         return false
