@@ -228,7 +228,7 @@ export class CommonService {
 
     SaveModuleFile(filesData, Data: SaveModuleFileModel) {
         let params = `?FileManagerID=${Data.FileManagerID}&ModuleID=${Data.ModuleID}&ModuleType=${Data.ModuleType}&FileIdentifier=${Data.FileIdentifier}&Sequence=${Data.Sequence}`
-        return this._apiService.postFile(ApiConstant.common.SaveModuleFile + params, filesData);
+        return this._apiService.postFile(ApiConstant.common.SaveModuleFile + params, [filesData]);
     }
 
     getImageDimension(fileInput): Observable<any> {
