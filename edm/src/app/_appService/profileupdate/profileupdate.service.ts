@@ -60,28 +60,31 @@ export class ProfileUpdateService {
                                                                 this._base._encryptedStorage.get(enAppSession.CreatedBy).then(CreatedBy => {
                                                                     this._base._encryptedStorage.get(enAppSession.Response).then(Response => {
                                                                         this._base._encryptedStorage.get(enAppSession.FileUrls).then(FileUrls => {
-                                                                            let profileData: ProfileUpdateModel = {
-                                                                                Ref_User_ID: Ref_User_ID,
-                                                                                UserCode: null,
-                                                                                FullName: FullName,
-                                                                                EmailID: EmailID,
-                                                                                ProfilePhoto: ProfilePic,
-                                                                                MobileNumber: MobileNumber,
-                                                                                Password: null,
-                                                                                Bio: Bio,
-                                                                                FileUrls: this._base._commonService.tryParseJSON(FileUrls) ? JSON.parse(FileUrls) : [],
-                                                                                Gender: Gender,
-                                                                                SocialProfileUrl: SocialProfileUrl,
-                                                                                StudioGears: StudioGears,
-                                                                                GovitID: GovitID,
-                                                                                PayPalEmailID: PayPalEmailID,
-                                                                                AuthorityIDs: AuthorityIDs,
-                                                                                UserMasterDataIDs: UserMasterDataIDs,
-                                                                                CreatedBy: CreatedBy,
-                                                                                Response: Response
-                                                                            }
-                                                                            observer.next(profileData)
-                                                                            observer.complete();
+                                                                            this._base._encryptedStorage.get(enAppSession.FileManager).then(FileManager => {
+                                                                                let profileData: ProfileUpdateModel = {
+                                                                                    Ref_User_ID: Ref_User_ID,
+                                                                                    UserCode: null,
+                                                                                    FullName: FullName,
+                                                                                    EmailID: EmailID,
+                                                                                    ProfilePhoto: ProfilePic,
+                                                                                    MobileNumber: MobileNumber,
+                                                                                    Password: null,
+                                                                                    Bio: Bio,
+                                                                                    FileUrls: this._base._commonService.tryParseJSON(FileUrls) ? JSON.parse(FileUrls) : [],
+                                                                                    FileManager: this._base._commonService.tryParseJSON(FileManager) ? JSON.parse(FileManager) : [],
+                                                                                    Gender: Gender,
+                                                                                    SocialProfileUrl: SocialProfileUrl,
+                                                                                    StudioGears: StudioGears,
+                                                                                    GovitID: GovitID,
+                                                                                    PayPalEmailID: PayPalEmailID,
+                                                                                    AuthorityIDs: AuthorityIDs,
+                                                                                    UserMasterDataIDs: UserMasterDataIDs,
+                                                                                    CreatedBy: CreatedBy,
+                                                                                    Response: Response
+                                                                                }
+                                                                                observer.next(profileData)
+                                                                                observer.complete();
+                                                                            })
                                                                         })
                                                                     })
                                                                 })
