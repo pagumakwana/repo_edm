@@ -43,6 +43,14 @@ export class HomeComponent implements OnInit {
           console.log("Navigation has failed!");
         }
       });
+    }else if(data.ObjectType == 'SERVICE'){
+      this.router.navigate(['service/details', data.Ref_Object_ID]).then((e) => {
+        if (e) {
+          console.log("Navigation is successful!");
+        } else {
+          console.log("Navigation has failed!");
+        }
+      });
     }
   }
 
