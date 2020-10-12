@@ -7,6 +7,7 @@ export class CategoryModel {
     Description?: string;
     CategoryUseBy?: string;
     FileUrls?: any;
+    FileManager?: any;
     Ref_User_ID?: number;
     CreatedName?: string;
     MetaTitle?: string;

@@ -11,6 +11,7 @@ import * as _ from "lodash";
 import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
 import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
+import { SaveModuleFileModel } from 'src/app/_appModel/common.model';
 
 declare var $: any;
 
@@ -33,7 +34,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
 
 
-  categoryData: []
+  categoryData: Array<any> = []
   fileURL = this._base._commonService.cdnURL;
   btnTitle: string = 'ADD'
   isServiceModify: boolean = false;
@@ -48,7 +49,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],
     ServiceVideoUrl: ['', [Validators.required]],
-    BigImageUrl: ['', [Validators.required]],
+    thumbnail: ['', [Validators.required]],
     // ThumbnailImageUrl: ['', [Validators.required]],
     // IsActive: ['', [Validators.required]],
     FAQDetails: this.fb.array([]),
@@ -64,7 +65,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   fileChoosenData: { [key: string]: Array<fileChoosenDataModel> } = {
     ServiceVideoUrl: [],
-    BigImageUrl: []
+    thumbnail: []
   }
 
   bannerImg: string = '';
@@ -74,6 +75,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._base._pageTitleService.setTitle("Manage Service", this.btnTitle + " Service");
     this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
+    console.log("service")
     this.getCategory()
     if (this.aliasName != '0') {
       this.bindService('SERVICEDETAILS', 0, this.aliasName);
@@ -143,8 +145,9 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
           this.addServiceForm.controls.MetaTitle.setValue(this.addService.MetaTitle);
           this.addServiceForm.controls.MetaKeywords.setValue(this.addService.MetaKeywords);
           this.addServiceForm.controls.MetaDescription.setValue(this.addService.MetaDescription);
-          this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
-          this.initFilesUrl(this.addService.FileUrls)
+          // this.addService.FileUrls = Array.isArray(this.addService.FileUrls) ? this.addService.FileUrls : []
+          this.addService.FileManager = Array.isArray(this.addService.FileManager) ? this.addService.FileManager : []
+          this.initFilesUrl(this.addService.FileManager)
           if (Array.isArray(this.addService.FAQDetails)) {
             if (this.addService.FAQDetails.length > 0)
               this.addService.FAQDetails.filter((item, index) => { this.addFaq(index, true, item.Questions, item.Answer) })
@@ -160,19 +163,24 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   }
 
   //setting up files during modify
-  initFilesUrl(filesUrl: Array<any>) {
-    console.log("initFilesUrl")
-    for (let i in filesUrl) {
-      if (filesUrl[i].FileIdentifier) {
+  initFilesUrl(FileManager: Array<any>) {
+    console.log("initFileManager")
+    for (let i in FileManager) {
+      FileManager[i].FileIdentifier = FileManager[i].FileIdentifier == 'BigImage' ? 'thumbnail' : FileManager[i].FileIdentifier
+      FileManager[i].FileIdentifier = FileManager[i].FileIdentifier == 'ServiceVideo' ? 'ServiceVideoUrl' : FileManager[i].FileIdentifier
+      if (FileManager[i].FileIdentifier) {
         let filesData: fileChoosenDataModel = {
           file: null,
-          thumb: this.fileURL + filesUrl[i].FilePath,
-          Ref_File_ID: filesUrl[i].Ref_File_ID,
-          DisplayOrder: null
+          thumb: this.fileURL + FileManager[i].FilePath,
+          FileManagerID: FileManager[i].FileManagerID,
+          Sequence: FileManager[i].Sequence,
+          ModuleID: this.addService.Ref_Service_ID,
+          FileIdentifier: FileManager[i].FileIdentifier,
+          ModuleType: 'service'
         }
-        this.fileChoosenData[filesUrl[i].FileIdentifier].push(filesData)
-        this.addServiceForm.controls[filesUrl[i].FileIdentifier].setValue('uploaded')
-        this.addServiceForm.controls[filesUrl[i].FileIdentifier].updateValueAndValidity()
+        this.fileChoosenData[FileManager[i].FileIdentifier].push(filesData)
+        this.addServiceForm.controls[FileManager[i].FileIdentifier].setValue('uploaded')
+        this.addServiceForm.controls[FileManager[i].FileIdentifier].updateValueAndValidity()
       }
     }
   }
@@ -187,8 +195,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
         AliasName: null,
         Price: null,
         PriceWithProjectFiles: null,
-        BigImageUrl: null,
-        ThumbnailImageUrl: null,
+        thumbnail: null,
+        // ThumbnailImageUrl: null,
         ServiceVideoUrl: null,
         ProjectFilesUrl: null,
         Revision: null,
@@ -201,71 +209,124 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
         MetaDescription: ''
       }
       this.addFaq(0, true)
+      console.log("addServiceForm", this.addServiceForm, this.FaqListArray)
     });
   }
 
-  justFilesArray(ArrayData: Array<fileChoosenDataModel>) {
-    let arrayReturn = []
-    for (let i in ArrayData) {
-      ArrayData[i].DisplayOrder = (1 + parseInt(i))
-      if (ArrayData[i].Ref_File_ID == null)
-        arrayReturn.push(ArrayData[i].file)
+  // justFilesArray(ArrayData: Array<fileChoosenDataModel>) {
+  //   let arrayReturn = []
+  //   for (let i in ArrayData) {
+  //     ArrayData[i].Sequence = (1 + parseInt(i))
+  //     if (ArrayData[i].FileManagerID == null)
+  //       arrayReturn.push(ArrayData[i].file)
+  //   }
+  //   return arrayReturn
+  // }
+
+  getFilesInfo(FileIdentifier: string): SaveModuleFileModel {
+
+    let arrayReturn: any = []
+    for (let i in this.fileChoosenData[FileIdentifier]) {
+      this.fileChoosenData[FileIdentifier][i].Sequence = (1 + parseInt(i))
+      if (this.fileChoosenData[FileIdentifier][i].FileManagerID == 0) {
+        let filesData: SaveModuleFileModel = {
+          FileManagerID: this.fileChoosenData[FileIdentifier][i].FileManagerID,
+          ModuleID: this.fileChoosenData[FileIdentifier][i].ModuleID,
+          ModuleType: this.fileChoosenData[FileIdentifier][i].ModuleType,
+          FileIdentifier: this.fileChoosenData[FileIdentifier][i].FileIdentifier,
+          Sequence: this.fileChoosenData[FileIdentifier][i].Sequence,
+          files: this.fileChoosenData[FileIdentifier][i].file,
+        }
+        arrayReturn.push(filesData)
+      }
     }
     return arrayReturn
   }
 
+  saveModuleFile_multi_helper(arrayData: Array<SaveModuleFileModel>, counter: number, resolveData: Array<any>) {
+    this._base._commonService.saveModuleFile(arrayData[counter - 1].files, arrayData[counter - 1], this.addServiceForm.controls[arrayData[counter - 1].FileIdentifier].value).then((uploadResponse: Array<any>) => {
+      // resolve(uploadResponse)
+      resolveData.push(uploadResponse)
+      if (counter > 1) {
+        counter--
+        this.saveModuleFile_multi_helper(arrayData, counter, resolveData)
+      } else {
+        this.addService.FileManager = resolveData
+        this.addServices()
+      }
+    })
+  }
+
+
+  saveModuleFile_helper() {
+    let fileData: Array<SaveModuleFileModel> = this._base._commonService.joinArray(this.getFilesInfo('thumbnail'), this.getFilesInfo('ServiceVideoUrl'))
+    console.log("saveModuleFile_helper", fileData, this.fileChoosenData['thumbnail'])
+    if (fileData.length > 0)
+      this.saveModuleFile_multi_helper(fileData, fileData.length, [])
+    else {
+      this.addServices()
+    }
+
+    // this._base._commonService.saveModuleFile(this.justFilesArray(this.fileChoosenData.thumbnail), this.getFilesInfo('Service'), this.addServiceForm.controls.thumbnail.value).then((uploadResponse: Array<any>) => {
+    //   resolve(uploadResponse)
+    // })
+  }
 
   saveService() {
     this._base._commonService.markFormGroupTouched(this.addServiceForm)
     console.log("saveService", this.addServiceForm, this.addService)
 
     if (this.addServiceForm.valid) {
+
       this._base._commonService.showLoader();
       this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-          this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.BigImageUrl), 'Service', this.addServiceForm.controls.BigImageUrl.value).then((ImageUrls: Array<any>) => {
-            this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.ServiceVideoUrl), 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
-              this.addService.Flag = this.isServiceModify ? 'MODIFYSERVICE' : 'ADDSERVICE';
-              this.addService.CreatedName = FullName;
-              this.addService.Ref_User_ID = Ref_User_ID;
-              this.addService.Ref_Category_ID = this.addServiceForm.value.Category
-              this.addService.AliasName = this.addServiceForm.value.AliasName
-              this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
-              this.addService.Description = this.addServiceForm.value.Description
-              this.addService.Price = this.addServiceForm.value.Price
-              this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
-              this.addService.Revision = this.addServiceForm.value.Revision
-              this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
-              this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'BigImageUrl', this.fileChoosenData['BigImageUrl'], this.addService.FileUrls), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl', this.fileChoosenData['ServiceVideoUrl'], this.addService.FileUrls))
-              this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
-              this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
-              this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
-              this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
-              console.log("saveService_Saved", this.addServiceForm, this.addService)
-              this.addServices()
-            })
-          })
+          // this._base._commonService.saveModuleFile(this.justFilesArray(this.fileChoosenData.ServiceVideoUrl), 'ServiceVideo', this.addServiceForm.controls.ServiceVideoUrl.value).then((serviceUrl: Array<any>) => {
+          this.addService.Flag = this.isServiceModify ? 'MODIFYSERVICE' : 'ADDSERVICE';
+          this.addService.CreatedName = FullName;
+          this.addService.Ref_User_ID = Ref_User_ID;
+          this.addService.Ref_Category_ID = this.addServiceForm.value.Category
+          this.addService.AliasName = this.addServiceForm.value.AliasName
+          this.addService.ServiceTitle = this.addServiceForm.value.ServiceTitle
+          this.addService.Description = this.addServiceForm.value.Description
+          this.addService.Price = this.addServiceForm.value.Price
+          this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
+          this.addService.Revision = this.addServiceForm.value.Revision
+          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
+          this.addService.FileManager = []
+          // this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'thumbnail', this.fileChoosenData['thumbnail'], this.addService.FileUrls), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl', this.fileChoosenData['ServiceVideoUrl'], this.addService.FileUrls))
+          this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
+          this.addService.MetaTitle = this.addServiceForm.value.MetaTitle;
+          this.addService.MetaKeywords = this.addServiceForm.value.MetaKeywords;
+          this.addService.MetaDescription = this.addServiceForm.value.MetaDescription;
+          console.log("saveService_Saved", this.addServiceForm, this.addService)
+          this.saveModuleFile_helper()
+
+          // this.addServices()
+          // })
         })
       })
+      // })
     }
   }
 
 
 
   addServices() {
-    this._service.addmodifyService(this.addService).subscribe((res: string) => {
-      this._base._commonService.hideLoader();
-      let msg = {
-        SERVICEADDED: "Service added successfully!",
-        SERVICEUPDATED: "Service updated successfully!",
-        SERVICEEXISTS: "Service already exists!"
-      }
-      let isRedirect: boolean = (res != "SERVICEEXISTS")
-      this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
-      // $('#acknowledge_popup').modal('show')
-      if (isRedirect)
-        setTimeout(() => { this._base._router.navigate(['admin', 'service']) }, 3000);
-    })
+    console.log("addServices", this.addService)
+    // this._service.addmodifyService(this.addService).subscribe((res: string) => {
+    //   this._base._commonService.hideLoader();
+    //   let msg = {
+    //     SERVICEADDED: "Service added successfully!",
+    //     SERVICEUPDATED: "Service updated successfully!",
+    //     SERVICEEXISTS: "Service already exists!"
+    //   }
+    //   let isRedirect: boolean = (res != "SERVICEEXISTS")
+    //   this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
+    //   // $('#acknowledge_popup').modal('show')
+    //   if (isRedirect)
+    //     setTimeout(() => { this._base._router.navigate(['admin', 'service']) }, 3000);
+    // })
   }
 
 
@@ -291,14 +352,16 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
 
-    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number } } = {
-      BigImageUrl: {
+    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number, FileIdentifier: string } } = {
+      thumbnail: {
         fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],
-        size: 3145728 // 3MB
+        size: 3145728, // 3MB
+        FileIdentifier: 'thumbnail'
       },
       ServiceVideoUrl: {
         fileType: ['video/mp4'],
-        size: 52428800 //50MB
+        size: 52428800, //50MB
+        FileIdentifier: 'ServiceVideo'
       }
     }
 
@@ -312,7 +375,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
             this.addServiceForm.controls[fieldName].setValue('upload')
             this.addServiceForm.controls[fieldName].updateValueAndValidity()
             this._base._commonService.readImage(file).subscribe((res: any) => {
-              let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              let imgData: fileChoosenDataModel = { file: file, thumb: res, FileManagerID: 0, Sequence: null, ModuleType: "service", FileIdentifier: fileValidationInfo[fieldName].FileIdentifier, ModuleID: this.addService.Ref_Service_ID }
               console.log("imageData", imgData)
               this.fileChoosenData[fieldName].push(imgData);
             })
@@ -330,7 +393,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   getFileControlValue(fieldName) {
     let returnKey: string | null = null
     if (this.fileChoosenData[fieldName].length > 0) {
-      let waitingUpload = this.fileChoosenData[fieldName].filter(item => item.Ref_File_ID == null)
+      let waitingUpload = this.fileChoosenData[fieldName].filter(item => item.FileManagerID == null)
       returnKey = waitingUpload.length > 0 ? 'upload' : 'uploaded'
     }
     return returnKey
@@ -338,8 +401,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   removeFile(fieldName, fileIndex) {
     console.log("removeFile", fieldName, fileIndex)
-    if (this.fileChoosenData[fieldName][fileIndex].Ref_File_ID != null)
-      this.removeThumbnail(this.fileChoosenData[fieldName][fileIndex].Ref_File_ID)
+    if (this.fileChoosenData[fieldName][fileIndex].FileManagerID != null)
+      this.removeThumbnail(this.fileChoosenData[fieldName][fileIndex].FileManagerID)
 
     this.fileChoosenData[fieldName].splice(fileIndex, 1)
     this.addServiceForm.controls[fieldName].setValue(this.getFileControlValue(fieldName))
