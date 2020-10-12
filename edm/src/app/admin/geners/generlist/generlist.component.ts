@@ -26,7 +26,7 @@ export class GenerListComponent implements OnInit {
   tableConfig: dataTableConfig = {
     tableData: [],
     tableConfig: [
-      { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
+      { identifer: "FileManager", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
       { identifer: "CategoryName", title: "Category Name", type: "link" },
       { identifer: "CategoryUseByName", title: "Type", type: "text" },
       { identifer: "Description", title: "Description", type: "text" },

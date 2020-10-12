@@ -37,7 +37,7 @@
                 <edm-error [control]="addServiceForm.controls.Description"></edm-error>
             </div>
             <div formArray='FAQDetails'>
-                <ng-container [formGroup]='faq' *ngFor="let faq of FaqListArray.controls;let i =index">
+                <ng-container [formGroup]='faq' *ngFor="let faq of FaqListArray?.controls;let i =index">
                     <div class="form_group">
                         <label class="form_label">Add FAQ's</label>
                         <div class="form_area icon_form_group">
@@ -45,14 +45,14 @@
                                 placeholder="Add Question" />
                             <span class="input_icon question_icon"></span>
                         </div>
-                        <edm-error [control]="faq.controls.Questions"></edm-error>
+                        <edm-error [control]="faq?.controls?.Questions"></edm-error>
                     </div>
                     <div class="form_group">
                         <div class="form_area icon_form_group textarea_icon_form_group">
                             <textarea rows="3" formControlName="Answer" placeholder="Add Answer"></textarea>
                             <span class="input_icon answer_icon"></span>
                         </div>
-                        <edm-error [control]="faq.controls.Answer"></edm-error>
+                        <edm-error [control]="faq?.controls?.Answer"></edm-error>
                     </div>
                     <div class="button_group">
                         <!-- <a class="global_btn icon_btn primary_btn" (click)="switchControl()">
@@ -180,13 +180,13 @@
                 </div>
                 <edm-error [control]="addServiceForm.controls.ServiceVideoUrl"></edm-error>
             </div>
-            <!-- <ng-container *ngFor="let thumb of fileChoosenData.BigImageUrl.thumb"> -->
+            <!-- <ng-container *ngFor="let thumb of fileChoosenData.thumbnail.thumb"> -->
 
             <!-- <div class="form_group">
                         <label class="form_label">Upload Service Cover Image</label>
                         <div id="imgPreview" class="imgPreview">
                             <img height="80" width="120" [src]="thumb" />
-                            <a class="remImage" id="delete" (click)="removeFile('BigImageUrl')">
+                            <a class="remImage" id="delete" (click)="removeFile('thumbnail')">
                                 <img src="https://image.flaticon.com/icons/svg/261/261935.svg">
                             </a>
                         </div>
@@ -196,7 +196,7 @@
                 <label class="form_label">Upload Service Cover Image</label>
                 <div class="form_area">
                     <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'BigImageUrl')" class="custom-file-input"
+                        <input type="file" (change)="fileChoosen($event,'thumbnail')" class="custom-file-input"
                             multiple id="customFile">
                         <!-- <img [src]="thumb ? thumb : '../../../../assets/images/product_thumbnail.jpg'"
                             class="image_preview" /> -->
@@ -205,11 +205,11 @@
                         </label>
                         <!-- <label class="custom-file-label upload_btn"></label> -->
                     </div>
-                    <div class="attched_img" dragula="MANY_ITEMS" [(dragulaModel)]='fileChoosenData.BigImageUrl'>
-                        <ng-container *ngFor="let img of fileChoosenData.BigImageUrl;let i = index;">
+                    <div class="attched_img" dragula="MANY_ITEMS" [(dragulaModel)]='fileChoosenData.thumbnail'>
+                        <ng-container *ngFor="let img of fileChoosenData.thumbnail;let i = index;">
                             <div>
                                 <img [src]="img.thumb" />
-                                <a (click)="removeFile('BigImageUrl',i)" title="Remove Image">
+                                <a (click)="removeFile('thumbnail',i)" title="Remove Image">
                                     <img src="../../../../assets/images/close_blue.svg">
                                 </a>
                                 <!-- <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" /> -->
@@ -219,7 +219,7 @@
                     <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png,
                         .jpeg</span>
                 </div>
-                <edm-error [control]="addServiceForm.controls.BigImageUrl"></edm-error>
+                <edm-error [control]="addServiceForm.controls.thumbnail"></edm-error>
 
             </div>
 

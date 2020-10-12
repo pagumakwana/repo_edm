@@ -65,7 +65,7 @@ export class ServicesListComponent implements OnInit {
   tableConfig: dataTableConfig = {
     tableData: [],
     tableConfig: [
-      { identifer: "FileUrls", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
+      { identifer: "FileManager", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
       { identifer: "ServiceTitle", title: "Service Title", type: "link" },
       { identifer: "Price", title: "Price", type: "text" },
       { identifer: "PriceWithProjectFiles", title: "Price With Project Files", type: "text" },

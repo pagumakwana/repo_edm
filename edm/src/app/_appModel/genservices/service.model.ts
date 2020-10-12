@@ -8,6 +8,7 @@ export class ServiceModel {
     Price?: number;
     PriceWithProjectFiles?: number;
     BigImageUrl?: string;
+    thumbnail?: string;
     ThumbnailImageUrl?: string;
     ServiceVideoUrl?: string;
     ProjectFilesUrl?: string;
@@ -16,6 +17,7 @@ export class ServiceModel {
     Ref_User_ID?: number;
     CreatedName?: string;
     FileUrls?: Array<any>;
+    FileManager?: Array<any>;
     FAQDetails?: Array<{ Questions: string, Answer: string }>;
     MetaTitle?: string;
     MetaKeywords?: string;
@@ -25,6 +27,9 @@ export class ServiceModel {
 export class fileChoosenDataModel {
     file: any;
     thumb: string;
-    Ref_File_ID: string;
-    DisplayOrder: number;
+    FileManagerID: number;
+    ModuleID: number;
+    ModuleType: string;
+    FileIdentifier: string;
+    Sequence: number;
 }

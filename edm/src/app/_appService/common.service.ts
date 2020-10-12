@@ -8,6 +8,7 @@ import { ApiConstant } from '../_appModel/apiconstant';
 import { Subject, Observable } from 'rxjs';
 import * as _ from "lodash";
 import configData from '../../assets/projectConfig.json'
+import { SaveModuleFileModel } from '../_appModel/common.model';
 
 declare var $: any;
 @Injectable()
@@ -155,6 +156,22 @@ export class CommonService {
         })
     }
 
+    saveModuleFile(files: FileList | string | Array<any>, Data: SaveModuleFileModel, type = 'upload') {
+        return new Promise((resolve, reject) => {
+            // let isUpload: boolean = files && type == 'upload' ? (files.length > 0) : false
+            let isUpload: boolean = (files && type == 'upload')
+            console.log("saveModuleFile", files, Data, type)
+            if (isUpload) {
+                this.SaveModuleFile(files, Data).subscribe(url => {
+                    resolve(url)
+                })
+            } else {
+                // resolve(JSON.parse(JSON.stringify(this.sampleRes)))
+                resolve([])
+            }
+        })
+    }
+
     //check if String is json or not
     tryParseJSON(jsonString): boolean {
         try {
@@ -207,6 +224,11 @@ export class CommonService {
 
     uploadFile(filesData, ModuleName) {
         return this._apiService.postFile(ApiConstant.common.uploadFileData + "?ModuleName=" + ModuleName, filesData);
+    }
+
+    SaveModuleFile(filesData, Data: SaveModuleFileModel) {
+        let params = `?FileManagerID=${Data.FileManagerID}&ModuleID=${Data.ModuleID}&ModuleType=${Data.ModuleType}&FileIdentifier=${Data.FileIdentifier}&Sequence=${Data.Sequence}`
+        return this._apiService.postFile(ApiConstant.common.SaveModuleFile + params, [filesData]);
     }
 
     getImageDimension(fileInput): Observable<any> {

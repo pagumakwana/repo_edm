@@ -89,7 +89,7 @@ export class ProducerProfileComponent implements OnInit {
         GovitID: 'step3'
     }
 
-    fileChoosenData: { [key: string]: Array<fileChoosenDataModel> } = {
+    fileChoosenData: { [key: string]: Array<fileChoosenDataModel | any> } = {
         ProfilePhoto: [],
         GovitID: []
     }
@@ -194,7 +194,7 @@ export class ProducerProfileComponent implements OnInit {
         console.log("initFilesUrl")
         for (let i in filesUrl) {
             if (filesUrl[i].FileIdentifier) {
-                let filesData: fileChoosenDataModel = {
+                let filesData: fileChoosenDataModel | any = {
                     file: null,
                     thumb: this.fileURL + filesUrl[i].FilePath,
                     Ref_File_ID: filesUrl[i].Ref_File_ID,
@@ -212,7 +212,7 @@ export class ProducerProfileComponent implements OnInit {
 
 
     //files start
-    justFilesArray(ArrayData: Array<fileChoosenDataModel>) {
+    justFilesArray(ArrayData: Array<fileChoosenDataModel | any>) {
         let arrayReturn = []
         for (let i in ArrayData) {
             ArrayData[i].DisplayOrder = (1 + parseInt(i))
@@ -231,7 +231,7 @@ export class ProducerProfileComponent implements OnInit {
         if ($event.target.files.length > 0) {
             for (let file of $event.target.files) {
                 this._base._commonService.readImage(file).subscribe((res: any) => {
-                    let imgData: fileChoosenDataModel = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+                    let imgData: fileChoosenDataModel | any = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
                     console.log("imageData", imgData)
                     this.fileChoosenData[fieldName] = [] //Empty Error
                     this.fileChoosenData[fieldName].push(imgData);

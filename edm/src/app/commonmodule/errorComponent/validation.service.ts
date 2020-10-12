@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 export class ValidationService {
     static getValidatorErrorMessage(validatorName: string, validatorValue?: any) {
-        console.log("getValidatorErrorMessage", validatorName, validatorValue)
+        // console.log("getValidatorErrorMessage", validatorName, validatorValue)
         let config = {
             'required': 'Field is Required',
             'invalidCreditCard': 'Is invalid credit card number',
@@ -75,7 +75,7 @@ export class ValidationService {
     }
 
     static ValidateFileSize_Helper(controlValue: any, size: number) {
-        debugger
+        // debugger
         let isFileType: boolean = controlValue ? (typeof controlValue == 'object') : false
         let isValidFileSize: boolean = isFileType && size ? (size >= controlValue.size) : false
         return (isValidFileSize && isFileType)
