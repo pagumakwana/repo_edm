@@ -8,6 +8,7 @@ export class ProfileUpdateModel {
     Password: string;
     Bio: string;
     FileUrls: Array<any>;
+    FileManager: Array<any>;
     Gender: string;
     SocialProfileUrl: string;
     StudioGears: string;
