@@ -314,19 +314,19 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   addServices() {
     console.log("addServices", this.addService)
-    // this._service.addmodifyService(this.addService).subscribe((res: string) => {
-    //   this._base._commonService.hideLoader();
-    //   let msg = {
-    //     SERVICEADDED: "Service added successfully!",
-    //     SERVICEUPDATED: "Service updated successfully!",
-    //     SERVICEEXISTS: "Service already exists!"
-    //   }
-    //   let isRedirect: boolean = (res != "SERVICEEXISTS")
-    //   this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
-    //   // $('#acknowledge_popup').modal('show')
-    //   if (isRedirect)
-    //     setTimeout(() => { this._base._router.navigate(['admin', 'service']) }, 3000);
-    // })
+    this._service.addmodifyService(this.addService).subscribe((res: string) => {
+      this._base._commonService.hideLoader();
+      let msg = {
+        SERVICEADDED: "Service added successfully!",
+        SERVICEUPDATED: "Service updated successfully!",
+        SERVICEEXISTS: "Service already exists!"
+      }
+      let isRedirect: boolean = (res != "SERVICEEXISTS")
+      this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
+      // $('#acknowledge_popup').modal('show')
+      if (isRedirect)
+        setTimeout(() => { this._base._router.navigate(['admin', 'service']) }, 3000);
+    })
   }
 
 
@@ -361,7 +361,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
       ServiceVideoUrl: {
         fileType: ['video/mp4'],
         size: 52428800, //50MB
-        FileIdentifier: 'ServiceVideo'
+        FileIdentifier: 'ServiceVideoUrl'
       }
     }
 

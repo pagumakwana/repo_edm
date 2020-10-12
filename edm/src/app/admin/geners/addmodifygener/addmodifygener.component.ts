@@ -38,6 +38,7 @@ export class AddModifyGenersComponent implements OnInit {
 
   formCategory: FormGroup = this._fbGener.group({
     Ref_Parent_ID: [''],
+    Ref_Category_ID: [''],
     CategoryName: ['', [Validators.required, ValidationService.ValidateWhiteSpace()]],
     AliasName: ['', [Validators.required]],
     CategoryDescription: [''],
@@ -82,6 +83,7 @@ export class AddModifyGenersComponent implements OnInit {
         this._categoryModel = {
           Flag: '',
           Ref_Parent_ID: 0,
+          Ref_Category_ID: 0,
           CategoryName: '',
           AliasName: '',
           Description: '',
@@ -111,6 +113,7 @@ export class AddModifyGenersComponent implements OnInit {
       this.formCategory.controls.MetaKeywords.setValue(this._categoryModel.MetaKeywords);
       this.formCategory.controls.MetaDescription.setValue(this._categoryModel.MetaDescription);
       this.formCategory.controls.Ref_Parent_ID.setValue(this._categoryModel.Ref_Parent_ID);
+      this.formCategory.controls.Ref_Category_ID.setValue(this._categoryModel.Ref_Category_ID);
       this.formCategory.controls.CategoryName.setValue(this._categoryModel.CategoryName);
       this.formCategory.controls.AliasName.setValue(this._categoryModel.AliasName);
       this.formCategory.controls.CategoryDescription.setValue(this._categoryModel.Description);
@@ -188,7 +191,7 @@ export class AddModifyGenersComponent implements OnInit {
   }
 
   saveModuleFile_helper() {
-    let fileData: Array<SaveModuleFileModel> = this._base._commonService.joinArray(this.getFilesInfo('thumbnail'), this.getFilesInfo('ServiceVideoUrl'))
+    let fileData: Array<SaveModuleFileModel> = this._base._commonService.joinArray(this.getFilesInfo('thumbnail'))
     console.log("saveModuleFile_helper", fileData, this.fileChoosenData['thumbnail'])
     if (fileData.length > 0)
       this.saveModuleFile_multi_helper(fileData, fileData.length, [])
@@ -206,6 +209,7 @@ export class AddModifyGenersComponent implements OnInit {
     if (this.formCategory.valid) {
       // this._base._commonService.filesUpload(this.justFilesArray(this.fileChoosenData.ImageUrl), 'Category', this.formCategory.controls.ImageUrl.value).then((ImageUrls: Array<any>) => {
       this._categoryModel.Ref_Parent_ID = this.formCategory.value.Ref_Parent_ID;
+      this._categoryModel.Ref_Category_ID = this.formCategory.value.Ref_Category_ID;
       this._categoryModel.CategoryName = this.formCategory.value.CategoryName;
       this._categoryModel.AliasName = this.formCategory.value.AliasName;
       this._categoryModel.Description = this.formCategory.value.CategoryDescription;
@@ -259,10 +263,11 @@ export class AddModifyGenersComponent implements OnInit {
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
 
-    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number } } = {
+    let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number, FileIdentifier: string } } = {
       thumbnail: {
         fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],
-        size: 3145728 // 3MB
+        size: 3145728, // 3MB
+        FileIdentifier: 'thumbnail'
       }
     }
 
@@ -278,7 +283,9 @@ export class AddModifyGenersComponent implements OnInit {
             this.formCategory.controls[fieldName].setValue('upload')
             this.formCategory.controls[fieldName].updateValueAndValidity()
             this._base._commonService.readImage(file).subscribe((res: any) => {
-              let imgData: fileChoosenDataModel | any = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              // let imgData: fileChoosenDataModel | any = { file: file, thumb: res, Ref_File_ID: null, DisplayOrder: null }
+              let imgData: fileChoosenDataModel = { file: file, thumb: res, FileManagerID: 0, Sequence: null, ModuleType: "category", FileIdentifier: fileValidationInfo[fieldName].FileIdentifier, ModuleID: this._categoryModel.Ref_Category_ID }
+
               console.log("imageData", imgData)
               this.fileChoosenData[fieldName].push(imgData);
             })
