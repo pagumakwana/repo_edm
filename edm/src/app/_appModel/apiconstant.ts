@@ -42,6 +42,8 @@ export class ApiConstant {
         ParentUserMaster: "Admin/MasterManagement/ParentUserMaster",
         UserMasterData: "Admin/MasterManagement/UserMasterData",
         CarouselList: "Admin/MasterManagement/CarouselList",
+        Carousel: "Admin/MasterManagement/Carousel",
+        ManageCarousel: "Admin/MasterManagement/ManageCarousel",
     }
 
     public static Shared = {

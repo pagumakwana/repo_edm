@@ -112,7 +112,11 @@ const routes: Routes = [
             {
                 path: "authority",
                 loadChildren: () => import('../admin/authoritymanagement/authority.module').then(m => m.AuthorityModule)
-            }, 
+            },
+            {
+                path: "banner",
+                loadChildren: () => import('../admin/bannermanagement/banner.module').then(m => m.BannerManagementModule)
+            }
         ],
     }
 ];

@@ -1,0 +1,42 @@
+<div class="filter_section desktop_filter_section">
+    <a class="add_new" routerLink='/admin/banner/0' style="width: 100%;margin-bottom: 15px;">
+        <span class="add_new_icon"></span>
+        <span>Add New Banner</span>
+    </a>
+</div>
+<div class="primary_table">
+    <table style="min-width: 998px;">
+        <thead>
+            <tr>
+                <th>IMAGE</th>
+                <th>Title</th>
+                <th>Descripation</th>
+                <th>IsActive</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let banner of data">
+                <td>
+                    <div class="play_upper_layer">
+                        <img *ngIf="banner.FileManager.length != 0" class="tbl_img" [src]="filterfile(banner.FileManager, 'Image')" />
+                    </div>
+                </td>
+                <td>{{banner.BannerTitle}}</td>
+                <td>{{banner.Descripation}}</td>
+                <td>{{banner.IsActive}}</td>
+                <td class="table_btn">
+                    <a (click)="redirectToaddmodifybanner(banner.Ref_Banner_ID)" class="small_icon_btn" title="Edit">
+                        <span class="edit_btn"></span>
+                    </a>
+                    <a (click)="manageBanner(banner.Ref_Banner_ID, 'Delete')" class="small_icon_btn" title="Delete">
+                        <span class="delete_btn"></span>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+        <div class="no_record" *ngIf="data?.length == 0">
+            No record found
+        </div>
+    </table>
+</div>

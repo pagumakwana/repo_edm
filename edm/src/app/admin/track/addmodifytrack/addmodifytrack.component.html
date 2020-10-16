@@ -18,16 +18,17 @@
             <label class="form_label">Upload {{moduleName}} Cover Image</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept="image/*" id="customFile" [(ngModel)]="trackImg" (change)="changeListenerTrackImg($event)">
+                    <input [ngModelOptions]="{standalone: true}" [disabled]="trackImguploaded" type="file" class="custom-file-input" accept="image/*" id="customFile" [(ngModel)]="trackImg" (change)="changeListenerTrackImg($event)">
                     <img *ngIf="preview" [src]="preview" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
+                    <label *ngIf="preview == undefined" class="custom-file-label" for="customFile">
                         {{trackImg}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadImg()"></label>
+                    <label *ngIf="!trackImguploaded && preview" class="custom-file-label upload_btn" (click)="uploadImg()"> {{trackImg}}</label>
+                    <label *ngIf="preview" class="custom-file-label remove_btn" (click)="RemoveImg(trackImg, 'Thumbnail')"> {{trackImg}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
             </div>
-            <div class="error_msg" *ngIf="!trackImguploaded">
+            <div class="error_msg" *ngIf="trackImgNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invlideimg">
@@ -271,16 +272,17 @@
             <label class="form_label">Upload Master</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3" id="masterfile" name="masterfile" [(ngModel)]="masterfile" (change)="changeListenerfile($event, 'Masterfile')">
+                    <input type="file" [disabled]="masterfileuploaded" class="custom-file-input" accept=".mp3" id="masterfile" name="masterfile" [(ngModel)]="masterfile" (change)="changeListenerfile($event, 'Masterfile')">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="masterfile">
+                    <label *ngIf="masterfile == undefined" class="custom-file-label" for="masterfile">
                         {{masterfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Masterfile')"></label>
+                    <label *ngIf="!masterfileuploaded && masterfile" class="custom-file-label upload_btn" (click)="uploadfile('Masterfile')">{{masterfile}}</label>
+                    <label *ngIf="masterfile" class="custom-file-label remove_btn" (click)="RemoveImg(masterfile, 'Masterfile')"> {{masterfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .mp3</span>
             </div>
-            <div class="error_msg" *ngIf="!masterfileuploaded">
+            <div class="error_msg" *ngIf="masterfileNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidmasterfile">
@@ -291,17 +293,18 @@
             <label class="form_label">Upload Master & Unmastered</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".wav" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
+                    <input type="file" [disabled]="unmasterfileuploaded" class="custom-file-input" accept=".wav" id="unmasterfile" name="unmasterfile" [(ngModel)]="unmasterfile" (change)="changeListenerfile($event, 'Unmasterfile')">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="unmasterfile">
+                    <label class="custom-file-label" for="unmasterfile" *ngIf="unmasterfile == undefined">
                         {{unmasterfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Unmasterfile')"></label>
+                    <label *ngIf="!unmasterfileuploaded && unmasterfile" class="custom-file-label upload_btn" (click)="uploadfile('Unmasterfile')">{{unmasterfile}}</label>
+                    <label *ngIf="unmasterfile" class="custom-file-label remove_btn" (click)="RemoveImg(unmasterfile, 'Unmasterfile')"> {{unmasterfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .Wav</span>
             </div>
 
-            <div class="error_msg" *ngIf="!unmasterfileuploaded">
+            <div class="error_msg" *ngIf="unmasterfileNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidunmasterfile">
@@ -312,16 +315,17 @@
             <label class="form_label">Upload Mixdow Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".wav" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
+                    <input [disabled]="mixdowfileuploaded" type="file" class="custom-file-input" accept=".wav" id="mixdowfile" name="mixdowfile" (change)="changeListenerfile($event, 'Mixdowfile')" [(ngModel)]="mixdowfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="mixdowfile">
+                    <label class="custom-file-label" for="mixdowfile" *ngIf="mixdowfile == undefined">
                         {{mixdowfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Mixdowfile')"></label>
+                    <label *ngIf="!mixdowfileuploaded && mixdowfile" class="custom-file-label upload_btn" (click)="uploadfile('Mixdowfile')"> {{mixdowfile}}</label>
+                    <label *ngIf="mixdowfile" class="custom-file-label remove_btn" (click)="RemoveImg(mixdowfile, 'Mixdowfile')"> {{mixdowfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .Wav</span>
             </div>
-            <div class="error_msg" *ngIf="!mixdowfileuploaded">
+            <div class="error_msg" *ngIf="mixdowfileNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidmixdowfile">
@@ -332,17 +336,18 @@
             <label class="form_label">Tagged File</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".mp3" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="urtoggedfile">
+                    <input [disabled]="urtoggedfileuploaded" type="file" class="custom-file-input" accept=".mp3" id="urtoggedfile" name="urtoggedfile" (change)="changeListenerfile($event, 'Urtoggedfile')" [(ngModel)]="urtoggedfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="urtoggedfile">
+                    <label *ngIf="urtoggedfile == undefined" class="custom-file-label" for="urtoggedfile">
                         {{urtoggedfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Urtoggedfile')"></label>
+                    <label *ngIf="!urtoggedfileuploaded && urtoggedfile" class="custom-file-label upload_btn" (click)="uploadfile('Urtoggedfile')">{{urtoggedfile}}</label>
+                    <label *ngIf="urtoggedfile" class="custom-file-label remove_btn" (click)="RemoveImg(urtoggedfile, 'Urtoggedfile')"> {{urtoggedfile}}</label>
                 </div>
                 <span class="file_formats">Attchment format : .mp3</span>
             </div>
 
-            <div class="error_msg" *ngIf="!urtoggedfileuploaded">
+            <div class="error_msg" *ngIf="urtoggedfileNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidurtoggedfile">
@@ -353,17 +358,18 @@
             <label class="form_label">Wav File</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".wav" id="Wavfile" name="Wavfile" (change)="changeListenerfile($event, 'Wavfile')" [(ngModel)]="Wavfile">
+                    <input [disabled]="Wavfileuploaded" type="file" class="custom-file-input" accept=".wav" id="Wavfile" name="Wavfile" (change)="changeListenerfile($event, 'Wavfile')" [(ngModel)]="Wavfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="Wavfile">
+                    <label *ngIf="Wavfile == undefined" class="custom-file-label" for="Wavfile">
                         {{Wavfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Wavfile')"></label>
+                    <label *ngIf="!Wavfileuploaded && Wavfile" class="custom-file-label upload_btn" (click)="uploadfile('Wavfile')">{{Wavfile}}</label>
+                    <label *ngIf="Wavfile" class="custom-file-label remove_btn" (click)="RemoveImg(Wavfile, 'Wavfile')"> {{Wavfile}}</label>
                 </div>
                 <span class="file_formats">Attchment format : .wav</span>
             </div>
 
-            <div class="error_msg" *ngIf="!Wavfileuploaded">
+            <div class="error_msg" *ngIf="WavfileupNotloaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidWavfile">
@@ -374,16 +380,17 @@
             <label class="form_label">Upload Stems</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".zip, .rar" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="stemsfile">
+                    <input [disabled]="stemsfileuploaded" type="file" class="custom-file-input" accept=".zip, .rar" id="stemsfile" name="stemsfile" (change)="changeListenerfile($event, 'Stemsfile')" [(ngModel)]="stemsfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="stemsfile">
+                    <label *ngIf="stemsfile == undefined" class="custom-file-label" for="stemsfile">
                         {{stemsfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Stemsfile')"></label>
+                    <label *ngIf="!stemsfileuploaded && stemsfile" class="custom-file-label upload_btn" (click)="uploadfile('Stemsfile')">{{stemsfile}}</label>
+                    <label *ngIf="stemsfile" class="custom-file-label remove_btn" (click)="RemoveImg(stemsfile, 'Stemsfile')"> {{stemsfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .zip, .rar</span>
             </div>
-            <div class="error_msg" *ngIf="!stemsfileuploaded">
+            <div class="error_msg" *ngIf="stemsfileNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidstemsfile">
@@ -394,17 +401,18 @@
             <label class="form_label">Upload MIDI</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".midi" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="MIDIfile">
+                    <input [disabled]="MIDIfileuploaded" type="file" class="custom-file-input" accept=".midi" id="MIDIfile" name="MIDIfile" (change)="changeListenerfile($event, 'MIDIfile')" [(ngModel)]="MIDIfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="MIDIfile">
+                    <label *ngIf="MIDIfile == undefined" class="custom-file-label" for="MIDIfile">
                         {{MIDIfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('MIDIfile')"></label>
+                    <label *ngIf="!MIDIfileuploaded && MIDIfile" class="custom-file-label upload_btn" (click)="uploadfile('MIDIfile')">{{MIDIfile}}</label>
+                    <label *ngIf="MIDIfile" class="custom-file-label remove_btn" (click)="RemoveImg(MIDIfile, 'MIDIfile')"> {{MIDIfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .midi</span>
             </div>
 
-            <div class="error_msg" *ngIf="!MIDIfileuploaded">
+            <div class="error_msg" *ngIf="MIDIfileNotuploaded">
                 <span>This field is Required</span>
             </div>
             <div class="error_msg" *ngIf="invalidMIDIfile">
@@ -415,12 +423,13 @@
             <label class="form_label">Project Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" accept=".zip, .rar" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="projectfile">
+                    <input [disabled]="projectfileuploaded" type="file" class="custom-file-input" accept=".zip, .rar" id="projectfile" name="projectfile" (change)="changeListenerfile($event, 'Projectfile')" [(ngModel)]="projectfile">
                     <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
-                    <label class="custom-file-label" for="projectfile">
+                    <label *ngIf="projectfile == undefined" class="custom-file-label" for="projectfile">
                         {{projectfile}}
                     </label>
-                    <label class="custom-file-label upload_btn" (click)="uploadfile('Projectfile')"></label>
+                    <label *ngIf="!projectfileuploaded && projectfile" class="custom-file-label upload_btn" (click)="uploadfile('Projectfile')">{{projectfile}}</label>
+                    <label *ngIf="projectfile" class="custom-file-label remove_btn" (click)="RemoveImg(projectfile, 'Projectfile')"> {{projectfile}}</label>
                 </div>
                 <span class="file_formats">Attchment format : .zip, .rar</span>
             </div>

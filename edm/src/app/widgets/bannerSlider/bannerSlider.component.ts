@@ -15,7 +15,7 @@ import { ApiConstant } from './../../_appModel/apiconstant';
 export class BannerSliderComponent implements OnInit {
     @ViewChild(SwiperComponent) componentRef: SwiperComponent;
     constructor(public _base: BaseServiceHelper,) { }
-    public slides = [];
+    public data = [];
     public config: SwiperConfigInterface = {
         direction: 'horizontal',
         slidesPerView: 1,
@@ -37,11 +37,11 @@ export class BannerSliderComponent implements OnInit {
     };
     ngOnInit(): void {
         this._base._ApiService.get(ApiConstant.MasterManagement.CarouselList + '?CarouselID=0').subscribe((data: any) => {
-            this.slides = data;
-            this.slides.map(item => {
-                item.ImageUrl = this._base._commonService.cdnURL + item.ImageUrl;
-              })
+            this.data = data;
         })
     }
-
+    public filterfile(FileManager, fileType) {
+        let file = FileManager.filter(item => item.FileIdentifier == fileType)
+        return this._base._commonService.cdnURL + file[0].FilePath
+      }
 }

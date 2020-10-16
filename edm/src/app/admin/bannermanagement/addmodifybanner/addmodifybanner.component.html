@@ -1,0 +1,61 @@
+<form [formGroup]="addmodifybanner">
+    <div class="portlet_body admin_half_forms">
+        <div class="form_group">
+            <label class="form_label">Upload Banner Image</label>
+            <div class="form_area">
+                <div class="custom-file">
+                    <input [disabled]="preview" [ngModelOptions]="{standalone: true}" type="file" class="custom-file-input" accept="image/*" id="customFile" [(ngModel)]="bannerImg" (change)="changeListenerBannerImg($event)">
+                    <img *ngIf="preview" [src]="preview" class="image_preview" />
+                    <label *ngIf="preview == undefined" class="custom-file-label" for="customFile">
+                        {{bannerImg}}
+                    </label>
+                    <label *ngIf="preview" class="custom-file-label upload_btn" (click)="RemoveImg(bannerImg)"> {{bannerImg}}</label>
+                </div>
+                <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
+            </div>
+            <div class="error_msg" *ngIf="!bannerImguploaded">
+                <span>This field is Required</span>
+            </div>
+            <div class="error_msg" *ngIf="invlideimg">
+                <span>Please select jpg/jpeg/png formate.</span>
+            </div>
+        </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <input type="text" name="BannerTitle" formControlName="BannerTitle" [(ngModel)]="BannerTitle" placeholder="Banner Title" />
+                <span class="input_icon "></span>
+            </div>
+            <edm-error [control]="addmodifybanner.controls.BannerTitle"></edm-error>
+        </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <input type="text" name="BannerPageName" formControlName="BannerPageName" [(ngModel)]="BannerPageName" placeholder="Banner PageName" />
+                <span class="input_icon "></span>
+            </div>
+            <edm-error [control]="addmodifybanner.controls.BannerPageName"></edm-error>
+        </div>
+        <div class="form_group">
+            <div class="form_area icon_form_group textarea_icon_form_group">
+                <textarea rows="4" name="BannerDescription" placeholder="Describe" formControlName="BannerDescription" [(ngModel)]="BannerDescription"></textarea>
+                <span class="input_icon bio_icon"></span>
+            </div>
+            <span class="file_formats right_align">Max 1200 caractors</span>
+            <edm-error [control]="addmodifybanner.controls.BannerDescription"></edm-error>
+        </div>
+        <div class="form_group inline_form_group">
+            <div class="inline_checkbox">
+                <label class="checkbox">
+                    <input [ngModelOptions]="{standalone: true}" [(ngModel)]="IsActive" type="checkbox">IsActive
+                    <span></span>
+                </label>
+            </div>
+        </div>
+        <div class="button_group">
+            <a class="global_btn primary_btn" (click)="addmodifybannersubmit()">
+                <span>Add</span>
+            </a>
+        </div>
+    </div>
+
+
+</form>

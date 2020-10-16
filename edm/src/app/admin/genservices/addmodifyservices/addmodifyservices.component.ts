@@ -351,7 +351,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   fileChoosen($event, fieldName) {
     console.log("fileChoosen", $event, typeof this.fileChoosenData[fieldName])
-
+    debugger
     let fileValidationInfo: { [key: string]: { fileType: Array<string>, size: number, FileIdentifier: string } } = {
       thumbnail: {
         fileType: ['image/svg', 'image/jpeg', 'image/jpg', 'image/png'],

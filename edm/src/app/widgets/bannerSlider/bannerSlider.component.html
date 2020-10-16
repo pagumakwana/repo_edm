@@ -1,7 +1,7 @@
 <swiper class="swiper-container" [config]="config">
-    <div *ngFor="let slide of slides" class="swiper-slide">
+    <div *ngFor="let banner of data" class="swiper-slide">
         <div>
-            <img [src]="slide.ImageUrl" style="width: 100%;">
+            <img [src]="filterfile(banner.FileManager, 'Image')" style="width: 100%;">
         </div>
     </div>
 </swiper>

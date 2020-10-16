@@ -26,17 +26,9 @@ form_group input,
     margin: 0;
 }
 
-.form_group .remove_btn::after {
+.form_group .upload_btn::after {
     left: 0px;
     content: "Remove" !important;
-    background: #e6e6e6;
-    color: #5A5A5A;
-    border: 0;
-}
-
-.form_group .upload_btn::after {
-    left: 70px;
-    content: "Upload" !important;
     background: #e6e6e6;
     color: #5A5A5A;
     border: 0;
