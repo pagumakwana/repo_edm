@@ -9,7 +9,7 @@
                     <label *ngIf="preview == undefined" class="custom-file-label" for="customFile">
                         {{bannerImg}}
                     </label>
-                    <label *ngIf="preview" class="custom-file-label upload_btn" (click)="RemoveImg(bannerImg)"> {{bannerImg}}</label>
+                    <label *ngIf="preview" class="custom-file-label remove_btn" (click)="RemoveImg(bannerImg)"> {{bannerImg}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
             </div>
@@ -52,7 +52,7 @@
         </div>
         <div class="button_group">
             <a class="global_btn primary_btn" (click)="addmodifybannersubmit()">
-                <span>Add</span>
+                <span>Submit</span>
             </a>
         </div>
     </div>

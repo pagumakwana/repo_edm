@@ -26,10 +26,10 @@ form_group input,
     margin: 0;
 }
 
-.form_group .upload_btn::after {
+.form_group .remove_btn::after {
     left: 0px;
     content: "Remove" !important;
-    background: #e6e6e6;
-    color: #5A5A5A;
+    background: #05c38f;
+    color: #fff;
     border: 0;
 }

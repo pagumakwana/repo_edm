@@ -22,7 +22,7 @@ export class AddModifyAuthorityComponent implements OnInit {
   masterdatalist: any = []
   masterdatas = of()
   parentmasterlist
-  modulelist: any;
+  modulelist: any = [];
   IsAuthorityTypeChecked: boolean = false
   IsModuleChecked: boolean = false
   IsUser: boolean = false;
@@ -61,6 +61,7 @@ export class AddModifyAuthorityComponent implements OnInit {
           this.getMasterlist()
           this.bindAuthorityType(data[0].AuthorityType)
           this.bindMasterData(data[0].MasterDataIDs)
+          this._base._commonService.hideLoader();
         })
       } else {
         this._base._pageTitleService.setTitle("Add Authority", "Add Authority");
@@ -123,43 +124,46 @@ export class AddModifyAuthorityComponent implements OnInit {
       this.IsAuthorityTypeChecked = false
     }
     if (this.IsAdmin) {
-      this._authorityServices.getModule().subscribe(res => {
-        this.modulelist = res;
-        if (this.ModuleID != undefined) {
-          this.modulelist.map(item => {
-            item.isModulechecked = false
-            item.ModuleAccess =
-            {
-              "Ref_Module_ID": item.Ref_Module_ID,
-              "View": false,
-              "Edit": false,
-              "Delete": false,
-              "Approval": false
-            }
-            this.ModuleID.filter(y => {
-              if (item.Ref_Module_ID == y.Ref_Module_ID) {
-                item.isModulechecked = true
-                item.ModuleAccess = y
-              }
-            })
-          })
-        } else {
-          this.modulelist.map(item => {
-            item.isModulechecked = false
-            item.ModuleAccess =
-            {
-              "Ref_Module_ID": item.Ref_Module_ID,
-              "View": false,
-              "Edit": false,
-              "Delete": false,
-              "Approval": false
-            }
-          })
-        }
-        console.log(this.modulelist)
-      })
+      this.getModulelist()
     }
 
+  }
+  getModulelist(){
+    this._authorityServices.getModule().subscribe(res => {
+      this.modulelist = res;
+      if (this.ModuleID != undefined) {
+        this.modulelist.map(item => {
+          item.isModulechecked = false
+          item.ModuleAccess =
+          {
+            "Ref_Module_ID": item.Ref_Module_ID,
+            "View": false,
+            "Edit": false,
+            "Delete": false,
+            "Approval": false
+          }
+          this.ModuleID.filter(y => {
+            if (item.Ref_Module_ID == y.Ref_Module_ID) {
+              item.isModulechecked = true
+              item.ModuleAccess = y
+            }
+          })
+        })
+      } else {
+        this.modulelist.map(item => {
+          item.isModulechecked = false
+          item.ModuleAccess =
+          {
+            "Ref_Module_ID": item.Ref_Module_ID,
+            "View": false,
+            "Edit": false,
+            "Delete": false,
+            "Approval": false
+          }
+        })
+      }
+      console.log(this.modulelist)
+    })
   }
   // getparentMasterlist(id) {
   //   debugger
@@ -351,14 +355,17 @@ export class AddModifyAuthorityComponent implements OnInit {
         console.log(ObjUserMaster)
         this._authorityServices.addmodifyauthority(ObjUserMaster).subscribe(res => {
           console.log(res);
-          alert(res);
-          if (this.authorityID == 0) {
+          if (res == "AUTHORITYADDED") {
+            this._base._alertMessageService.success("Authority Added successfully!");
             this.addmodifyauthority.reset();
             this.IsAdmin = false
             this.IsUser= false
             this.IsuserMaster  = false
             this.masterlist = []
             this.masterdatalist = []
+          }
+          if (res == "AUTHORITYUPDATED") {
+            this._base._alertMessageService.success("Authority Modify successfully!");
           }
           this._base._commonService.hideLoader();
         }, e => {
