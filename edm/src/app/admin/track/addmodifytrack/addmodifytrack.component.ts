@@ -538,7 +538,7 @@ export class AddModifyTrackComponent implements OnInit {
       Sequence: 0,
       files: this.formDataTrackImg,
     }
-    this._base._commonService.SaveModuleFile(this.formDataTrackImg, filesData).subscribe((res: any) => {
+    this._base._commonService.SaveModuleFile(this.formDataTrackImg, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
       if (res.type === HttpEventType.Response) {
         this.commonService.hideLoader();
         let result = res.body
@@ -567,7 +567,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmasterfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadmasterfile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadmasterfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           console.log('Upload complete');
           this.commonService.hideLoader();
@@ -594,7 +594,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadunmasterfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadunmasterfile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadunmasterfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           this.commonService.hideLoader();
           let result = res.body
@@ -621,7 +621,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmixdowfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadmixdowfile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadmixdowfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
           this.fileManager.push(result)
@@ -647,7 +647,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmixdowfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadstemsfile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadstemsfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
           this.fileManager.push(result)
@@ -673,7 +673,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmixdowfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadmidifile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadmidifile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
           this.fileManager.push(result)
@@ -699,7 +699,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmixdowfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadprojectfile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadprojectfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
           this.fileManager.push(result)
@@ -725,7 +725,7 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmixdowfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadurtoggedfile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadurtoggedfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
           this.fileManager.push(result)
@@ -753,19 +753,23 @@ export class AddModifyTrackComponent implements OnInit {
         Sequence: 0,
         files: this.uploadmixdowfile,
       }
-      this._base._commonService.SaveModuleFile(this.uploadwavefile, filesData).subscribe((res: any) => {
+      this._base._commonService.SaveModuleFile(this.uploadwavefile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
           this.fileManager.push(result)
           this.unmasterfileurl = result[0].FilePath;
+          this.wavefileurl = result[0].FilePath;
           this.unmasterfileuploaded = true;
-        this.unmasterfileNotuploaded = false
+          this.unmasterfileuploaded = true;
+          this.unmasterfileNotuploaded = false
+          this.Wavfileuploaded = true;
+          this.WavfileupNotloaded = false
           this.commonService.hideLoader()
-          document.getElementById(fileType).innerHTML = "";
+          document.getElementById('WavfileEF').innerHTML = "";
       }
       if (res.type === HttpEventType.UploadProgress) {
           const percentDone = Math.round(100 * res.loaded / res.total);
-          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+          document.getElementById('WavfileEF').innerHTML = 'Uploading ' + percentDone + '%';
       }
       })
     }
@@ -835,6 +839,12 @@ export class AddModifyTrackComponent implements OnInit {
       }
       if (this.midifileurl == undefined) {
         this.MIDIfileNotuploaded = true;
+      }
+      if (this.urtoggedfile == undefined) {
+        this.urtoggedfileNotuploaded = true;
+      }
+      if (this.wavefileurl == undefined) {
+        this.WavfileupNotloaded = true;
       }
       //if (this.projectfileurl == undefined) {
       // this.projectfileuploaded = false;
