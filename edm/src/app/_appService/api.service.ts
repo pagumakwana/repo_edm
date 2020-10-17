@@ -27,7 +27,7 @@ export class ApiService {
             let file: File = bodyFile[i];
             formData.append('UploadFile_' + i, file, file.name)
         }
-        return this.http.post(this.apiURL + '/' + endpoint, formData);
+        return this.http.post(this.apiURL + '/' + endpoint, formData,{ reportProgress: true, observe: 'events' });
     }
 
     getExternal(endpoint: string, reqOpts?: any) {

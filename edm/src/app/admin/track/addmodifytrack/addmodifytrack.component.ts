@@ -539,11 +539,19 @@ export class AddModifyTrackComponent implements OnInit {
       files: this.formDataTrackImg,
     }
     this._base._commonService.SaveModuleFile(this.formDataTrackImg, filesData).subscribe((res: any) => {
-      this.commonService.hideLoader();
-      this.fileManager.push(res)
-      this.trackImg = res[0].FilePath;
-      this.trackImguploaded = true;
-      this.trackImgNotuploaded = false
+      if (res.type === HttpEventType.Response) {
+        this.commonService.hideLoader();
+        let result = res.body
+        this.fileManager.push(result)
+        this.trackImg = result[0].FilePath;
+        this.trackImguploaded = true;
+        this.trackImgNotuploaded = false
+        document.getElementById("Thumbnail").innerHTML = "";
+    }
+    if (res.type === HttpEventType.UploadProgress) {
+        const percentDone = Math.round(100 * res.loaded / res.total);
+        document.getElementById("Thumbnail").innerHTML = 'Uploading ' + percentDone + '%';
+    }
     }, e => {
       this.commonService.hideLoader();
     })
@@ -560,46 +568,23 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmasterfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadmasterfile, filesData).subscribe((res: any) => {
-        //   if (res.type === HttpEventType.Response) {
-        //     console.log('Upload complete');
-        //     console.log(res);
-        //     this.commonService.hideLoader();
-        //     this.fileManager.push(res)
-        //     this.masterfileurl = res[0].FilePath;
-        //     this.masterfileuploaded = true;
-        // }
-        // if (res.type === HttpEventType.UploadProgress) {
-        //     const percentDone = Math.round(100 * res.loaded / res.total);
-        //     console.log('Progress ' + percentDone + '%');
-        // }
-        this.commonService.hideLoader();
-        this.fileManager.push(res)
-        this.masterfileurl = res[0].FilePath;
-        this.masterfileuploaded = true;
-        this.masterfileNotuploaded = false
+        if (res.type === HttpEventType.Response) {
+          console.log('Upload complete');
+          this.commonService.hideLoader();
+          let result = res.body
+          this.fileManager.push(result)
+          this.masterfileurl = result[0].FilePath;
+          this.masterfileuploaded = true;
+          this.masterfileNotuploaded = false
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      } 
       }, e => {
         this.commonService.hideLoader();
       })
-      // this._base._commonService.filesUpload(this.uploadmasterfile, 'Track').then((data: any) => {
-      //   // this.fileUploadService.uploadonServer('Track', 'File', '', this.uploadmasterfile, '').then(data => {
-      //   let file = {
-      //     FileManagerID: "",
-      //       ModuleID : "",
-      //       ModuleType :data[0].ModuleName,
-      //       FileName : data[0].FileName,
-      //       FilePath : data[0].FilePath,
-      //       FileType : data[0].FileType,
-      //       FileExtension : data[0].FileExtension,
-      //       FileSize : data[0].FileSize,
-      //       FileIdentifier : "MasterFile",
-      //       Sequence : 0
-      //   }
-      //   this.fileManager.push(file)
-      //   console.log(data[0].FilePath);
-      //   this.masterfileurl = data[0].FilePath;
-      //   this.masterfileuploaded = true;
-      //   this.commonService.hideLoader();
-      // })
     } else if (fileType == 'Unmasterfile') {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
@@ -610,11 +595,20 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadunmasterfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadunmasterfile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        this.unmasterfileurl = res[0].FilePath;
-        this.unmasterfileuploaded = true;
-        this.unmasterfileNotuploaded = false
-        this.commonService.hideLoader()
+        if (res.type === HttpEventType.Response) {
+          this.commonService.hideLoader();
+          let result = res.body
+          this.fileManager.push(result)
+          this.unmasterfileurl = result[0].FilePath;
+          this.unmasterfileuploaded = true;
+          this.unmasterfileNotuploaded = false
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       }, e => {
         this.commonService.hideLoader();
       })
@@ -628,11 +622,19 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmixdowfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadmixdowfile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        this.mixdowfileurl = res[0].FilePath;
-        this.mixdowfileuploaded = true;
-        this.mixdowfileNotuploaded = false
-        this.commonService.hideLoader()
+        if (res.type === HttpEventType.Response) {
+          let result = res.body
+          this.fileManager.push(result)
+          this.mixdowfileurl = result[0].FilePath;
+          this.mixdowfileuploaded = true;
+          this.mixdowfileNotuploaded = false
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       }, e => {
         this.commonService.hideLoader();
       })
@@ -646,11 +648,19 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmixdowfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadstemsfile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        this.stemsfileurl = res[0].FilePath;
-        this.stemsfileuploaded = true;
-        this.stemsfileNotuploaded = false
-        this.commonService.hideLoader()
+        if (res.type === HttpEventType.Response) {
+          let result = res.body
+          this.fileManager.push(result)
+          this.stemsfileurl = result[0].FilePath;
+          this.stemsfileuploaded = true;
+          this.stemsfileNotuploaded = false
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       }, e => {
         this.commonService.hideLoader();
       })
@@ -664,11 +674,19 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmixdowfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadmidifile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        this.midifileurl = res[0].FilePath;
-        this.MIDIfileuploaded = true;
-        this.MIDIfileNotuploaded = false
-        this.commonService.hideLoader()
+        if (res.type === HttpEventType.Response) {
+          let result = res.body
+          this.fileManager.push(result)
+          this.midifileurl = result[0].FilePath;
+          this.MIDIfileuploaded = true;
+          this.MIDIfileNotuploaded = false
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       }, e => {
         this.commonService.hideLoader();
       })
@@ -682,11 +700,19 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmixdowfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadprojectfile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        this.projectfileurl = res[0].FilePath;
-        this.projectfileuploaded = true;
-        this.projectfileNotuploaded = false
-        this.commonService.hideLoader()
+        if (res.type === HttpEventType.Response) {
+          let result = res.body
+          this.fileManager.push(result)
+          this.projectfileurl = result[0].FilePath;
+          this.projectfileuploaded = true;
+          this.projectfileNotuploaded = false
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       }, e => {
         this.commonService.hideLoader();
       })
@@ -700,13 +726,21 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmixdowfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadurtoggedfile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        this.masterfileurl = res[0].FilePath;
-        this.masterfileuploaded = true;
+        if (res.type === HttpEventType.Response) {
+          let result = res.body
+          this.fileManager.push(result)
+          this.masterfileurl = result[0].FilePath;
+          this.masterfileuploaded = true;
         this.urtoggedfileuploaded = true;
         this.masterfileNotuploaded = false
         this.urtoggedfileNotuploaded = false
-        this.commonService.hideLoader();
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       }, e => {
         this.commonService.hideLoader();
       })
@@ -720,13 +754,19 @@ export class AddModifyTrackComponent implements OnInit {
         files: this.uploadmixdowfile,
       }
       this._base._commonService.SaveModuleFile(this.uploadwavefile, filesData).subscribe((res: any) => {
-        this.fileManager.push(res)
-        // this.wavefileurl = data[0].FilePath;
-        // this.Wavfileuploaded = true;
-        this.unmasterfileurl = res[0].FilePath;
-        this.unmasterfileuploaded = true;
+        if (res.type === HttpEventType.Response) {
+          let result = res.body
+          this.fileManager.push(result)
+          this.unmasterfileurl = result[0].FilePath;
+          this.unmasterfileuploaded = true;
         this.unmasterfileNotuploaded = false
-        this.commonService.hideLoader();
+          this.commonService.hideLoader()
+          document.getElementById(fileType).innerHTML = "";
+      }
+      if (res.type === HttpEventType.UploadProgress) {
+          const percentDone = Math.round(100 * res.loaded / res.total);
+          document.getElementById(fileType).innerHTML = 'Uploading ' + percentDone + '%';
+      }
       })
     }
   }
@@ -766,45 +806,35 @@ export class AddModifyTrackComponent implements OnInit {
           "TrackStatus": "",
           "Reason": "",
           "FileManager": this.fileManager,
-          // "BigImageUrl": this.trackImg,
-          // "ThumbnailImageUrl": this.trackImg,
-          // "MasterFileUrl": this.masterfileurl == undefined ? '' : this.masterfileurl,
-          // "UnmasteredFileUrl": this.unmasterfileurl == undefined ? '' : this.unmasterfileurl,
-          // "MixdowFileUrl": this.mixdowfileurl == undefined ? '' : this.mixdowfileurl,
-          // "StemsUrl": this.stemsfileurl == undefined ? '' : this.stemsfileurl,
-          // "MIDIFileUrl": this.midifileurl == undefined ? '' : this.midifileurl,
-          // "ProjectFilesUrl": this.projectfileurl == undefined ? '' : this.projectfileurl,
           "IsActive": true,
           "CreatedBy": Ref_User_ID
         }
         this._base._ApiService.post(ApiConstant.TrackManagement.Track, ObjTrackDetails).subscribe(data => {
           console.log(data);
-          // alert(data);
           (<any>$('#acknowledge_popup')).modal('show');
           this.commonService.hideLoader();
-          // $('#acknowledge_popup').modal('show');
         }, e => {
           this.commonService.hideLoader();
         })
       })
     } else {
       if (this.masterfileurl == undefined) {
-        this.masterfileuploaded = false;
+        this.masterfileNotuploaded = true;
       }
       if (this.unmasterfileurl == undefined) {
-        this.unmasterfileuploaded = false;
+        this.unmasterfileNotuploaded = true;
       }
       if (this.mixdowfileurl == undefined) {
-        this.mixdowfileuploaded = false;
+        this.mixdowfileNotuploaded = true;
       }
       if (this.stemsfileurl == undefined) {
-        this.stemsfileuploaded = false;
+        this.stemsfileNotuploaded = true;
       }
       if (this.urtoggedfileurl == undefined) {
-        this.urtoggedfileuploaded = false;
+        this.unmasterfileNotuploaded = true;
       }
       if (this.midifileurl == undefined) {
-        this.MIDIfileuploaded = false;
+        this.MIDIfileNotuploaded = true;
       }
       //if (this.projectfileurl == undefined) {
       // this.projectfileuploaded = false;

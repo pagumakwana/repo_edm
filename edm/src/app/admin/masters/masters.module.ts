@@ -4,18 +4,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MastersServices } from './_services/master.services'
 import { MasterListComponent } from './masterlist/masterlist.component';
-import { MasterDataListComponent } from './masterdatalist/masterdatalist.component';
 import { AddModifyMasterComponent } from './addmodifymaster/addmodifymaster.component';
-import { AddModifyMasterDataComponent } from './addmodifymasterdata/addmodifymasterdata.component';
 import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
     declarations: [
         MasterListComponent,
-        MasterDataListComponent,
         AddModifyMasterComponent,
-        AddModifyMasterDataComponent
     ],
     imports: [
         CommonModule,
