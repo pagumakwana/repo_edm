@@ -12,7 +12,7 @@ export class ApiConstant {
         TrackAndBeat: "User/TrackAndBeat",
         ServiceList: "User/Service/List",
         CustomServiceDetails: "User/Service/CustomServiceDetails",
-        AvailableProducers:"User/AvailableProducers",
+        AvailableProducers: "User/AvailableProducers",
     }
     public static category = {
         AddModifyCategory: "Admin/MasterManagement/Category",
@@ -55,6 +55,7 @@ export class ApiConstant {
     }
     public static Order = {
         UserAction: "UserOrder/UserAction",
+        Order: "UserOrder/Order"
     }
     public static AuthorityManagement = {
         Module: "Admin/AuthorityManagement/Module",

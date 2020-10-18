@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartScreenComponent } from './cartscreen.component';
+import { CartService } from '../_appService/cart/cart.service';
 @NgModule({
     declarations: [
         CartScreenComponent,
@@ -17,6 +18,6 @@ import { CartScreenComponent } from './cartscreen.component';
             }
         ]),
     ],
-    providers: []
+    providers: [CartService]
 })
 export class CartScreenModule { }
