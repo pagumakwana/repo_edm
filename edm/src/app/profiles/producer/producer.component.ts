@@ -78,7 +78,7 @@ export class ProducerProfileComponent implements OnInit {
             this.producerData.TrackAndBeat.data.Followed = (this.producerData.TrackAndBeat.Followed != '-')
             if (Array.isArray(this.producerData.TrackAndBeat.data.TrackAndBeat)) {
                 this.producerData.TrackAndBeat.tracks = this.producerData.TrackAndBeat.data.TrackAndBeat.filter(item => item.IsTrack == 'Track')
-                this.producerData.TrackAndBeat.soldOutTracks = this.producerData.TrackAndBeat.tracks.filter(item => item.SoldOut != '-')
+                this.producerData.TrackAndBeat.soldOutTracks = this.producerData.TrackAndBeat.tracks.filter(item => item.SoldOut == 'IN_CART') // SOLD_OUT IN_CART ADD_TO_CART
                 this.producerData.TrackAndBeat.beats = this.producerData.TrackAndBeat.data.TrackAndBeat.filter(item => item.IsTrack == 'Beat')
             }
             console.log("TrackAndBeat", res, this.producerData.TrackAndBeat)
