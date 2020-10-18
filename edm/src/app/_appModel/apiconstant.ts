@@ -18,6 +18,10 @@ export class ApiConstant {
         AddModifyCategory: "Admin/MasterManagement/Category",
         category: "Admin/MasterManagement/Category"
     }
+    public static CouponCode = {
+        CouponCode: "Admin/MasterManagement/CouponCode",
+        ManageCouponCode: "Admin/MasterManagement/ManageCouponCode"
+    }
     public static genService = {
         Service: "Admin/ServiceManagement/Service",
         ManageService: "Admin/ServiceManagement/ManageService",

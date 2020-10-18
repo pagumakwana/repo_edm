@@ -92,9 +92,10 @@ export class ProducerProfileComponent implements OnInit {
             Unfollow: `${requestData.ObjectType} unfollow successfully`,
             Favourite: `${requestData.ObjectType} added`,
             Unfavourite: `${requestData.ObjectType} removed`,
-            error: `Something Went Wrong`,
+            // error: `Something Went Wrong`,
         }
-        this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
+        // this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
+        this._base._alertMessageService['success'](msg[responseData])
         if (requestData.Action == responseData) {
             if (requestData.ObjectType == 'Producer') {
                 ObjectData.Followed = (responseData == 'Follow')
