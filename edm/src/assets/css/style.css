@@ -876,10 +876,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .user_profile_img, .user_photo {
     background: url(../images/user_profile.svg) no-repeat;
 }
-.play {
+.play_audio, .play_video {
     background: url(../images/play.svg) no-repeat;
 }
-.pause {
+.pause_audio, .pause_video {
     background: url(../images/pause.svg) no-repeat;
 }
 .add_new_icon {
@@ -1317,7 +1317,7 @@ table.dataTable thead th {
     background: #00000036;
     display: none;
 }
-.play, .pause {
+.play_audio, .pause_audio {
     background-size: contain;
     width: 15px;
     height: 15px;

@@ -124,7 +124,7 @@
     -o-transition: -o-transform .3s ease-in-out,width .3s ease-in-out;
     transition: transform .3s ease-in-out,width .3s ease-in-out;
 }
-.project_logo {
+.admin_project_logo {
     margin: 0;
     padding: 12px;
     position: fixed;
@@ -136,11 +136,11 @@
     top: 0;
     z-index: 1;
 }
-.project_logo img {
+.admin_project_logo img {
     height: 31px;
     width: auto;
 }
-.menu_list > a:before {
+.admin_menu_list > a:before {
     content: "";
     margin: auto;
     left: 0;
@@ -166,11 +166,11 @@
     background-position: center;
     position: absolute;
 }
-.menu_list a {
+.admin_menu_list a {
     margin: 0;
     color: #212529 !important;
 }
-.menu_list {
+.admin_menu_list {
     margin: 3px 0;
     background: #F5F5F5;
     position: relative;
@@ -182,7 +182,7 @@
     display: inline-block;
     width: 100%;
 }
-.menu_list:hover {
+.admin_menu_list:hover {
     border-color: #05C38F;
     box-shadow: -1px 2px 6px rgba(0, 0, 0, 0.11);
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
@@ -192,7 +192,7 @@
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     background: #ececec;
 }
-.menu_list a span {
+.admin_menu_list a span {
     transition: all .3s linear;
     -webkit-transition: .3s linear;
     -moz-transition: .3s linear;
@@ -202,7 +202,7 @@
 .mobile_search, .mobile_search_section {
     display: none;
 }
-.inner_menu .menu_list {
+.inner_menu .admin_menu_list {
     margin: 0px !important;
     box-shadow: none !important;
 }
@@ -290,7 +290,7 @@
         .admin_menu {
             width: 50px !important;
         }
-        .menu_list a span {
+        .admin_menu_list a span {
             font-size: 0px;
             transition: none;
             -webkit-transition: none;
@@ -306,19 +306,19 @@
             -ms-transition: none;
             -o-transition: none;
         }
-        .menu_list a:after {
+        .admin_menu_list a:after {
             font-size: 0px;
         }
-        .menu_list a:before {
+        .admin_menu_list a:before {
             width: 46px !important;
         }
-        .menu_list {
+        .admin_menu_list {
             padding: 13px;
         }
-        .project_logo {
+        .admin_project_logo {
             width: 50px;
         }
-        .project_logo img {
+        .admin_project_logo img {
             visibility: hidden;
         }
         .admin_header {
