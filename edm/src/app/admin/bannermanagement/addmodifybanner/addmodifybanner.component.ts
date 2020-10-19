@@ -17,6 +17,7 @@ export class AddModifyBannerComponent implements OnInit {
   bannerImg
   bannerdata
   invlideimg: boolean = false
+  invalidBannerSize:boolean = false
   bannerImguploaded: boolean = true
   formDataBannerImg
   preview
@@ -105,25 +106,38 @@ export class AddModifyBannerComponent implements OnInit {
     debugger;
     var reader = new FileReader();
     if ($event.target.files[0].type == 'image/jpeg' || $event.target.files[0].type == 'image/jpg' || $event.target.files[0].type == 'image/png') {
-      this.invlideimg = false;
-      this.formDataBannerImg = $event.target.files[0]
-      reader.readAsDataURL($event.target.files[0])
-      reader.onload = (_event) => {
-        this.preview = reader.result;
-      }
-      this.bannerImg = $event.target.files[0].name;
-      this.filesData = {
-        FileManagerID: 0,
-        ModuleID: 0,
-        ModuleType: 'Banner',
-        FileIdentifier: "Image",
-        Sequence: 0,
-        files: this.formDataBannerImg,
-      }
+        this.invlideimg = false;
+        this.formDataBannerImg = $event.target.files[0]
+        reader.readAsDataURL($event.target.files[0])
+        reader.onload = (_event) => {
+          var image = new Image();
+          image.src = reader.result as string;
+          image.onload = () => {
+              var height = image.height;
+              var width = image.width;
+              if (height == 627 && width == 1115) {
+                this.preview = reader.result;
+                this.invalidBannerSize = false;
+                this.bannerImg = $event.target.files[0].name;
+                this.filesData = {
+                  FileManagerID: 0,
+                  ModuleID: 0,
+                  ModuleType: 'Banner',
+                  FileIdentifier: "Image",
+                  Sequence: 0,
+                  files: this.formDataBannerImg,
+                }
+              }else{
+                this.invalidBannerSize = true;
+                this.bannerImg = undefined
+              }
+          };
+        }
+      
     } else {
       this.invlideimg = true;
+      this.bannerImg = undefined
     }
-    //}
   }
   addmodifybannersubmit() {
     this._base._commonService.markFormGroupTouched(this.addmodifybanner);

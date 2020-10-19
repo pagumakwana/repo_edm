@@ -16,6 +16,9 @@
             <div class="error_msg" *ngIf="!bannerImguploaded">
                 <span>This field is Required</span>
             </div>
+            <div class="error_msg" *ngIf="invalidBannerSize">
+                <span>At least you can upload a 1115*627 Banner size.</span>
+            </div>
             <div class="error_msg" *ngIf="invlideimg">
                 <span>Please select jpg/jpeg/png formate.</span>
             </div>
