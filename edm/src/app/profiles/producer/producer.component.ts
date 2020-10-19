@@ -78,7 +78,7 @@ export class ProducerProfileComponent implements OnInit {
             this.producerData.TrackAndBeat.data.Followed = (this.producerData.TrackAndBeat.Followed != '-')
             if (Array.isArray(this.producerData.TrackAndBeat.data.TrackAndBeat)) {
                 this.producerData.TrackAndBeat.tracks = this.producerData.TrackAndBeat.data.TrackAndBeat.filter(item => item.IsTrack == 'Track')
-                this.producerData.TrackAndBeat.soldOutTracks = this.producerData.TrackAndBeat.tracks.filter(item => item.SoldOut != '-')
+                this.producerData.TrackAndBeat.soldOutTracks = this.producerData.TrackAndBeat.tracks.filter(item => item.SoldOut == 'IN_CART') // SOLD_OUT IN_CART ADD_TO_CART
                 this.producerData.TrackAndBeat.beats = this.producerData.TrackAndBeat.data.TrackAndBeat.filter(item => item.IsTrack == 'Beat')
             }
             console.log("TrackAndBeat", res, this.producerData.TrackAndBeat)
@@ -92,9 +92,10 @@ export class ProducerProfileComponent implements OnInit {
             Unfollow: `${requestData.ObjectType} unfollow successfully`,
             Favourite: `${requestData.ObjectType} added`,
             Unfavourite: `${requestData.ObjectType} removed`,
-            error: `Something Went Wrong`,
+            // error: `Something Went Wrong`,
         }
-        this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
+        // this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
+        this._base._alertMessageService['success'](msg[responseData])
         if (requestData.Action == responseData) {
             if (requestData.ObjectType == 'Producer') {
                 ObjectData.Followed = (responseData == 'Follow')
