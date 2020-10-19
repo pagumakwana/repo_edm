@@ -26,8 +26,8 @@
                             [src]="imageBaseUrl + (key?.dataType?.type == 'array' ? getNestedObject(tableItem[key.identifer],key.dataType.path) : tableItem[key.identifer])"
                             [style.height]="key?.size?.height" [style.width]="key?.size?.width">
                         <div class="play_audio">
-                            <span class="play" title="Play"></span>
-                            <!-- <span title="Pause" class="pause" style="display: none;"></span> -->
+                            <span class="play_audio" title="Play"></span>
+                            <!-- <span title="Pause" class="pause_audio" style="display: none;"></span> -->
                         </div>
                     </div>
                 </ng-container>

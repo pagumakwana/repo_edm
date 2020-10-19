@@ -230,9 +230,9 @@ export class CommonService {
         return this._apiService.postFile(ApiConstant.common.uploadFileData + "?ModuleName=" + ModuleName, filesData);
     }
 
-    SaveModuleFile(filesData, Data: SaveModuleFileModel) {
+    SaveModuleFile(filesData, Data: SaveModuleFileModel,  options?:any) {
         let params = `?FileManagerID=${Data.FileManagerID}&ModuleID=${Data.ModuleID}&ModuleType=${Data.ModuleType}&FileIdentifier=${Data.FileIdentifier}&Sequence=${Data.Sequence}`
-        return this._apiService.postFile(ApiConstant.common.SaveModuleFile + params, [filesData]);
+        return this._apiService.postFile(ApiConstant.common.SaveModuleFile + params, [filesData], options);
     }
 
     getImageDimension(fileInput): Observable<any> {

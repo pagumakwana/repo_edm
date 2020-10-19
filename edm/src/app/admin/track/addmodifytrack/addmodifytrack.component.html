@@ -24,6 +24,7 @@
                         {{trackImg}}
                     </label>
                     <label *ngIf="!trackImguploaded && preview" class="custom-file-label upload_btn" (click)="uploadImg()"> {{trackImg}}</label>
+                    <label id="Thumbnail"></label>
                     <label *ngIf="preview" class="custom-file-label remove_btn" (click)="RemoveImg(trackImg, 'Thumbnail')"> {{trackImg}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : jpg, jpeg, png</span>
@@ -278,6 +279,7 @@
                         {{masterfile}}
                     </label>
                     <label *ngIf="!masterfileuploaded && masterfile" class="custom-file-label upload_btn" (click)="uploadfile('Masterfile')">{{masterfile}}</label>
+                    <label id="Masterfile"></label>
                     <label *ngIf="masterfile" class="custom-file-label remove_btn" (click)="RemoveImg(masterfile, 'Masterfile')"> {{masterfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .mp3</span>
@@ -299,6 +301,7 @@
                         {{unmasterfile}}
                     </label>
                     <label *ngIf="!unmasterfileuploaded && unmasterfile" class="custom-file-label upload_btn" (click)="uploadfile('Unmasterfile')">{{unmasterfile}}</label>
+                    <label id="Unmasterfile"></label>
                     <label *ngIf="unmasterfile" class="custom-file-label remove_btn" (click)="RemoveImg(unmasterfile, 'Unmasterfile')"> {{unmasterfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .Wav</span>
@@ -321,6 +324,7 @@
                         {{mixdowfile}}
                     </label>
                     <label *ngIf="!mixdowfileuploaded && mixdowfile" class="custom-file-label upload_btn" (click)="uploadfile('Mixdowfile')"> {{mixdowfile}}</label>
+                    <label id="Mixdowfile"></label>
                     <label *ngIf="mixdowfile" class="custom-file-label remove_btn" (click)="RemoveImg(mixdowfile, 'Mixdowfile')"> {{mixdowfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .Wav</span>
@@ -342,6 +346,7 @@
                         {{urtoggedfile}}
                     </label>
                     <label *ngIf="!urtoggedfileuploaded && urtoggedfile" class="custom-file-label upload_btn" (click)="uploadfile('Urtoggedfile')">{{urtoggedfile}}</label>
+                    <label id="Urtoggedfile"></label>
                     <label *ngIf="urtoggedfile" class="custom-file-label remove_btn" (click)="RemoveImg(urtoggedfile, 'Urtoggedfile')"> {{urtoggedfile}}</label>
                 </div>
                 <span class="file_formats">Attchment format : .mp3</span>
@@ -364,6 +369,7 @@
                         {{Wavfile}}
                     </label>
                     <label *ngIf="!Wavfileuploaded && Wavfile" class="custom-file-label upload_btn" (click)="uploadfile('Wavfile')">{{Wavfile}}</label>
+                    <label id="WavfileEF"></label>
                     <label *ngIf="Wavfile" class="custom-file-label remove_btn" (click)="RemoveImg(Wavfile, 'Wavfile')"> {{Wavfile}}</label>
                 </div>
                 <span class="file_formats">Attchment format : .wav</span>
@@ -386,6 +392,7 @@
                         {{stemsfile}}
                     </label>
                     <label *ngIf="!stemsfileuploaded && stemsfile" class="custom-file-label upload_btn" (click)="uploadfile('Stemsfile')">{{stemsfile}}</label>
+                    <label id="Stemsfile"></label>
                     <label *ngIf="stemsfile" class="custom-file-label remove_btn" (click)="RemoveImg(stemsfile, 'Stemsfile')"> {{stemsfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .zip, .rar</span>
@@ -407,6 +414,7 @@
                         {{MIDIfile}}
                     </label>
                     <label *ngIf="!MIDIfileuploaded && MIDIfile" class="custom-file-label upload_btn" (click)="uploadfile('MIDIfile')">{{MIDIfile}}</label>
+                    <label id="MIDIfile"></label>
                     <label *ngIf="MIDIfile" class="custom-file-label remove_btn" (click)="RemoveImg(MIDIfile, 'MIDIfile')"> {{MIDIfile}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .midi</span>
@@ -429,6 +437,7 @@
                         {{projectfile}}
                     </label>
                     <label *ngIf="!projectfileuploaded && projectfile" class="custom-file-label upload_btn" (click)="uploadfile('Projectfile')">{{projectfile}}</label>
+                    <label id="Projectfile"></label>
                     <label *ngIf="projectfile" class="custom-file-label remove_btn" (click)="RemoveImg(projectfile, 'Projectfile')"> {{projectfile}}</label>
                 </div>
                 <span class="file_formats">Attchment format : .zip, .rar</span>
