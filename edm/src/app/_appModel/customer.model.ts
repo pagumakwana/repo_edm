@@ -14,7 +14,8 @@ export interface userModel {
     Ref_User_Id?: any,
     CreatedName?: any,
     IsSocialLogin?: any,
-    User_Code?: any
+    User_Code?: any,
+    IsRemember?: any
 }
 export interface requestOTP {
     Ref_OTP_ID?: any,

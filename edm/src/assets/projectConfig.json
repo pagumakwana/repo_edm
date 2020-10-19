@@ -1,6 +1,6 @@
 {
-    "apiBaseURL1": "http://edmapi.webdroids.in/api",
-    "apiBaseURL": "http://webdroids-001-site5.itempurl.com/api",
+    "apiBaseURL1": "http://localhost:2763/api",
+    "apiBaseURL": "http://localhost:2763/api",
     "ipifyUrl": "http://api.ipify.org/?format=json",
     "cdnURL": "http://webdroids-001-site5.itempurl.com/",
     "cdnURL1": "http://localhost:2763/",

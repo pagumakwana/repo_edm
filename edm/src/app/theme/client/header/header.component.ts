@@ -39,11 +39,12 @@ export class HeaderComponent implements OnInit,OnDestroy {
       this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
           this._base._encryptedStorage.get(enAppSession.EmailID).then(EmailID => {
-            this._base._encryptedStorage.get(enAppSession.ProfilePic).then(ProfilePic => {
+            this._base._encryptedStorage.get(enAppSession.FileUrls).then(ProfilePic => {
               this.FullName = FullName;
               this.Ref_User_ID = Ref_User_ID;
               this.EmailID = EmailID;
-              this.ProfilePic = ProfilePic;
+              console.log("ProfilePic", JSON.parse(ProfilePic));
+              // this.ProfilePic = ProfilePic;
             });
           });
         });

@@ -5,17 +5,38 @@
             <form [formGroup]="formSignIn">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" formControlName="User_Code" id="User_Code" name="User_Code"
+                        <input type="text" formControlName="User_Code" id="User_Code" name="User_Code" #User_Code
                             placeholder="Email ID" aria-describedby="User_CodeHelp" required />
                         <span class="input_icon user_icon"></span>
+                    </div>
+                    <div *ngIf="formSignIn.controls.User_Code.invalid && (formSignIn.controls.User_Code.dirty || formSignIn.controls.User_Code.touched)" class="alert alert-danger">
+                        <div *ngIf="formSignIn.controls.User_Code.errors.required">
+                            Email ID is required.
+                        </div>
+                        <div *ngIf="formSignIn.controls.User_Code.errors.pattern">
+                            Email ID is Invalid.
+                        </div>
                     </div>
                     <!-- <edm-error [control]="formSignIn.controls.User_Code"></edm-error> -->
                 </div>
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="showPassword == false ? 'password' : 'text'" formControlName="Password" id="Password" name="Password"
-                            placeholder="Password" aria-describedby="PasswordHelp" required />
+                        <input [type]="showPassword == false ? 'password' : 'text'" (keyup.enter)="setSignInModel()" formControlName="Password"
+                            id="Password" name="Password" #Password placeholder="Password" aria-describedby="PasswordHelp"
+                            required />
                         <span class="input_icon password_icon" (click)="show_Password()"></span>
+                    </div>
+                    <div *ngIf="formSignIn.controls.Password.invalid && (formSignIn.controls.Password.dirty || formSignIn.controls.Password.touched)" class="alert alert-danger">
+                        <div *ngIf="formSignIn.controls.Password.errors.required">
+                            Password is required.
+                        </div>
+                        <div *ngIf="formSignIn.controls.Password.errors.pattern">
+                            Password is Invalid.
+                        </div>
+                    </div>
+                    <div class="password-field-requirment">
+                        <div class="password-requirment-heading">Your password must be have at least</div>
+                        <div class="password-requirments">At least 8 characters in length, 1 Lowercase letter, 1 Uppercase letter, 1 Number, 1 Special character</div>
                     </div>
                     <!-- <edm-error [control]="formSignIn.controls.Password"></edm-error> -->
                 </div>
@@ -30,7 +51,8 @@
                 <div class="save_pwd_sec">
                     <p class="remember_me">
                         <label class="checkbox">
-                            <input name="remember" type="checkbox">Remember Me
+                            <input name="rememberMe" type="checkbox" formControlName="rememberMe"
+                            id="rememberMe" name="rememberMe" #rememberMe>Remember Me
                             <span></span>
                         </label>
                     </p>

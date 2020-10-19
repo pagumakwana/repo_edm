@@ -192,7 +192,11 @@ export class CommonService {
 
     //Added Identifer & displayorder in FilesUrl Array
     createFileArray(uploadedFilesArray, identiferList: string, displayOrderArray: Array<any>, filesUrl: Array<any>): Array<any> {
+        debugger;
         console.log("insidecreateFileArray")
+        console.log("uploadedFilesArray", uploadedFilesArray);
+        console.log("displayOrderArray", displayOrderArray);
+        console.log("filesUrl", filesUrl);
         let filesUrlFinal: Array<any> = []
         let counter = 0
         uploadedFilesArray = Array.isArray(uploadedFilesArray) ? uploadedFilesArray : []

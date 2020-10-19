@@ -20,22 +20,22 @@ export class ProducerProfileComponent implements OnInit {
 
     constructor(private _base: BaseServiceHelper, private fb: FormBuilder, private _profileService: ProfileUpdateService) { }
     ngOnInit(): void {
-        this.getDaw()
-        this.getCountry()
-        this.getProfileData()
+        this.getDaw();
     }
 
     addProfile: ProfileUpdateModel;
     dawList: Array<any>
     countryList: Array<any>
     fileURL = this._base._commonService.cdnURL;
+    selectedStudioGears: any = [];
+    selectedCountry: any = [];
+    emailRegEx = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
     config = {
         displayKey: "UserMasterData",
         search: true,
         height: 'auto',
         placeholder: 'Select Your Country',
-        // customComparator: ()=>{},
         limitTo: 0,
         moreText: 'more',
         noResultsFound: 'No results found!',
@@ -75,8 +75,8 @@ export class ProducerProfileComponent implements OnInit {
             SpotifyUrl: ['']
         }),
         step3: this.fb.group({
-            PayPalEmailID: [''],
-            EmailID: [''],
+            PayPalEmailID: ['', [Validators.required, Validators.pattern(this.emailRegEx)]],
+            EmailID: ['', [Validators.required, Validators.pattern(this.emailRegEx)]],
             GovitID: ['']
         })
     })
@@ -104,11 +104,9 @@ export class ProducerProfileComponent implements OnInit {
         let currentFormGroup: FormGroup = (this.addProfileForm.controls['step' + this.stage.current] as FormGroup)
         this._base._commonService.markFormGroupTouched(currentFormGroup)
         // this._base._commonService.markFormGroupTouched(this.addProfileForm.controls['step' + this.stage.current])
-        console.log("changeStage", this.addProfileForm, currentFormGroup)
-        if (currentFormGroup.valid || true) {
+        if (currentFormGroup.valid) {
             if (this.stage.current < this.stage.completed)
                 this.stage.current++
-
             if (this.stage.completed < this.stage.total) {
                 this.stage.completed++
                 this.stage.current = this.stage.completed;
@@ -189,9 +187,7 @@ export class ProducerProfileComponent implements OnInit {
     }
 
     saveProfile() {
-        console.log("saveProfile", this.addProfileForm, this.addProfile)
         this._profileService.SignUp(this.addProfile).subscribe((res: string) => {
-            console.log("saveProfile_res", res)
             this._profileService.setProfileInfo(this.addProfile)
             let msg: { [key: string]: string } = {
                 "USERUPDATEDSUCCESS": "Profile Updated Sucessfully"
@@ -200,43 +196,55 @@ export class ProducerProfileComponent implements OnInit {
             this._base._router.navigate(['admin'])
             // $('#acknowledge_popup').modal('show')
             // setTimeout(() => { $('#acknowledge_popup').modal('hide'); this._base._router.navigate(['admin']) }, 3000);
-
         })
     }
 
     getProfileData() {
         this._profileService.getProfileInfo().subscribe((res: ProfileUpdateModel) => {
-            console.log("getProfileData_observer", res)
             this.addProfile = res;
+            console.log("this.addProfile", this.addProfile);
             (this.addProfileForm.controls.step1 as FormGroup).controls.FullName.setValue(this.addProfile.FullName);
-            (this.addProfileForm.controls.step1 as FormGroup).controls.StudioGears.setValue(this.addProfile.StudioGears);
+            let StudioGears: Array<string> = this.addProfile.StudioGears ? this.addProfile.StudioGears.split('|') : [];
+            StudioGears.splice(-1,1);
+            StudioGears.filter(sg => {
+                this.dawList.filter(dl => {
+                    if(sg == dl.DAW){
+                        this.selectedStudioGears.push({Ref_DAW_ID: dl.Ref_DAW_ID, DAW: dl.DAW});
+                    }
+                });
+            });
+            (this.addProfileForm.controls.step1 as FormGroup).controls.StudioGears.setValue(this.selectedStudioGears);
             (this.addProfileForm.controls.step1 as FormGroup).controls.Bio.setValue(this.addProfile.Bio);
-            (this.addProfileForm.controls.step1 as FormGroup).controls.UserMasterDataIDs.setValue(this.addProfile.UserMasterDataIDs);
-            (this.addProfileForm.controls.step1 as FormGroup).controls.StudioGears.setValue(this.addProfile.StudioGears);
+            
+            let tuserMaster: any = JSON.parse(this.addProfile.UserMasterDataIDs);
+            this.countryList.filter(cl => {
+                if(cl.UserMasterData == tuserMaster[0].MasterDataName){
+                    this.selectedCountry.push({Ref_UserMasterData_ID: cl.Ref_UserMasterData_ID, UserMasterData: cl.UserMasterData})
+                }
+            });
+            
+            (this.addProfileForm.controls.step1 as FormGroup).controls.UserMasterDataIDs.setValue(this.selectedCountry);
 
             let SocialProfileUrl: Array<string> = this.addProfile.SocialProfileUrl ? this.addProfile.SocialProfileUrl.split('|') : [];
-            if (SocialProfileUrl.length == 3) {
+
+            if (SocialProfileUrl.length >= 3) {
                 (this.addProfileForm.controls.step2 as FormGroup).controls.FacebookUrl.setValue(SocialProfileUrl[0]);
                 (this.addProfileForm.controls.step2 as FormGroup).controls.SoundCloudUrl.setValue(SocialProfileUrl[1]);
                 (this.addProfileForm.controls.step2 as FormGroup).controls.SpotifyUrl.setValue(SocialProfileUrl[2]);
             }
 
-            (this.addProfileForm.controls.step3 as FormGroup).controls.PayPalEmailID.setValue(this.addProfile.PayPalEmailID);
+            (this.addProfileForm.controls.step3 as FormGroup).controls.PayPalEmailID.setValue(this.addProfile.PayPalEmailID.split('|')[0]);
             (this.addProfileForm.controls.step3 as FormGroup).controls.EmailID.setValue(this.addProfile.EmailID);
-            this.initFilesUrl(this.addProfile.FileUrls)
+            this.initFilesUrl(this.addProfile.FileManager);
         })
     }
 
     getDaw() {
         this._profileService.DAW().subscribe((res: any) => {
-            console.log("getDaw", res)
-            this.dawList = res
-        })
-    }
-    getCountry() {
-        this._profileService.UserMasterData('0').subscribe((res: any) => {
-            console.log("getCountry", res)
-            this.countryList = res
+            this.dawList = res;this._profileService.UserMasterData('0').subscribe((res: any) => {
+                this.countryList = res;
+                this.getProfileData();
+            })
         })
     }
 
@@ -263,7 +271,6 @@ export class ProducerProfileComponent implements OnInit {
             }
         }
     }
-
 
     //files start
     justFilesArray(ArrayData: Array<fileChoosenDataModel | any>) {
@@ -358,8 +365,4 @@ export class ProducerProfileComponent implements OnInit {
             }
         })
     }
-
-    //files end
-
-
 }
