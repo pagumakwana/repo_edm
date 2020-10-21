@@ -36,7 +36,7 @@ export class ProfileUpdateService {
         this._base._encryptedStorage.set(enAppSession.GovitID, data.GovitID);
         this._base._encryptedStorage.set(enAppSession.PayPalEmailID, data.PayPalEmailID);
         this._base._encryptedStorage.set(enAppSession.UserMasterDataIDs, data.UserMasterDataIDs);
-        this._base._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(data.FileUrls));
+        this._base._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(data.FileManager));
     }
 
 

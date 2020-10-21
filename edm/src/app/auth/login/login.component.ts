@@ -16,15 +16,18 @@ export class LoginComponent implements OnInit {
   constructor(private _base: BaseServiceHelper,
     private _fb: FormBuilder,
     public _registerService: RegisterService,
-    public OAuth: AuthService, ) { }
+    public OAuth: AuthService,) { }
 
   _userModel: userModel = {};
+  emailRegEx = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+  passwordRegEx = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
+  showPassword: boolean = false;
 
   formSignIn: FormGroup = this._fb.group({
-    User_Code: ['', [Validators.required]],
-    Password: ['', [Validators.required]]
-  })
-  showPassword: boolean = false;
+    User_Code: ['', [Validators.required, Validators.pattern(this.emailRegEx)]],
+    Password: ['', [Validators.required, Validators.pattern(this.passwordRegEx)]],
+    rememberMe: false
+  });
 
   setSignInModel() {
     this._base._commonService.markFormGroupTouched(this.formSignIn);
@@ -32,13 +35,22 @@ export class LoginComponent implements OnInit {
       this._userModel.IsSocialLogin = false;
       this._userModel.User_Code = this.formSignIn.value.User_Code;
       this._userModel.Password = this.formSignIn.value.Password;
+      this._userModel.IsRemember = this.formSignIn.value.rememberMe;
       this.signIn();
     }
   }
 
   signIn() {
+    localStorage.removeItem('User_Code');
+    localStorage.removeItem('Password');
+    localStorage.removeItem('RememberMe');
     this._registerService.loginCustomer(this._userModel).subscribe((resData: any) => {
       if (resData[0].Response == 'USERSIGNINSUCCESS') {
+        if (this._userModel.IsRemember) {
+          localStorage.setItem('User_Code', this._userModel.User_Code);
+          localStorage.setItem('Password', this._userModel.Password);
+          localStorage.setItem('RememberMe', JSON.stringify(this._userModel.IsRemember));
+        }
         let responseData = resData[0];
         this._base._appSessionService.setUserSession(responseData).subscribe((res) => {
           if (res) {
@@ -46,18 +58,27 @@ export class LoginComponent implements OnInit {
             this._base._router.navigate(['/']);
           }
         });
-      } else {
+      }
+      else if (resData[0].Response == 'USERSIGNINFAILED') {
+        this._base._alertMessageService.error("Invalid EmailID / Password.");
+        // this.formSignIn.reset();
       }
     });
   }
 
   ngOnInit(): void {
+    if (JSON.parse(localStorage.getItem('RememberMe')) !== null) {
+      this.formSignIn.controls.User_Code.setValue(localStorage.getItem('User_Code'));
+      this.formSignIn.controls.Password.setValue(localStorage.getItem('Password'));
+      this.formSignIn.controls.rememberMe.setValue(localStorage.getItem('RememberMe'));
+    }
   }
+
   signUp() {
     this._base._commonService.navigation('signup');
   }
+
   public socialSignIn(socialProvider: string) {
-    debugger;
     let socialPlatformProvider;
     if (socialProvider === 'facebook') {
       socialPlatformProvider = FacebookLoginProvider.PROVIDER_ID;
@@ -65,19 +86,12 @@ export class LoginComponent implements OnInit {
       socialPlatformProvider = GoogleLoginProvider.PROVIDER_ID;
     }
     this.OAuth.signIn(socialPlatformProvider).then(socialusers => {
-      // console.log(socialProvider, socialusers);  
-      console.log(socialusers);
-      console.log(socialusers.email)
-      console.log(socialusers.name)
-      console.log(socialusers.photoUrl)
       this.register(socialusers);
     }, e => {
-      console.log(e);
     });
   }
 
   register(data) {
-    debugger
     this._userModel.CreatedName = data.name;
     this._userModel.EmailID = data.email;
     this._userModel.FullName = data.name;
@@ -85,7 +99,6 @@ export class LoginComponent implements OnInit {
     this._userModel.IsSocialLogin = true;
     this._registerService.registerCustomer(this._userModel).subscribe(response => {
       this._registerService.loginCustomer(this._userModel).subscribe(res => {
-        debugger
         if (res[0].Response == 'USERSIGNUP') {
           let responseData = res[0];
           // this._base._CommonService.showAlert("Registered success!", false);
@@ -113,12 +126,12 @@ export class LoginComponent implements OnInit {
   forgotPassword() {
     this._base._router.navigate(['forgotpassword']);
   }
-  
+
   show_Password() {
-    if(this.showPassword == false){
+    if (this.showPassword == false) {
       this.showPassword = true;
     }
-    else{
+    else {
       this.showPassword = false;
     }
   }

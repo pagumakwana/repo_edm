@@ -30,10 +30,8 @@ export class AppSessionService {
             this._encryptedStorage.set(enAppSession.SocialProfileUrl, responseData.SocialProfileUrl);
             this._encryptedStorage.set(enAppSession.StudioGears, responseData.StudioGears);
             this._encryptedStorage.set(enAppSession.UserCode, responseData.UserCode);
-            this._encryptedStorage.set(enAppSession.UserMasterDataIDs, responseData.UserMasterDataIDs);
-            this._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(responseData.FileUrls));
-
-
+            this._encryptedStorage.set(enAppSession.UserMasterDataIDs, JSON.stringify(responseData.UserMaster));
+            this._encryptedStorage.set(enAppSession.FileUrls, JSON.stringify(responseData.FileManager));
 
             setTimeout(() => {
                 observer.next(true);

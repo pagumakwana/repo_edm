@@ -19,11 +19,13 @@ export class SignupComponent implements OnInit {
     public _registerService: RegisterService) { }
 
   _userModel: userModel = {};
+  emailRegEx = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+  passwordRegEx = '(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}';
   formSignup: FormGroup = this.fb.group({
     FullName: ['', [Validators.required]],
-    EmailID: ['', [Validators.required]],
-    Password: ['', [Validators.required]]
-  })
+    EmailID: ['', [Validators.required, Validators.pattern(this.emailRegEx)]],
+    Password: ['', [Validators.required, Validators.pattern(this.passwordRegEx)]]
+  });
   showPassword: boolean = false;
 
   ngOnInit(): void {
