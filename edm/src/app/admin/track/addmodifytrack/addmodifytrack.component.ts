@@ -542,7 +542,7 @@ export class AddModifyTrackComponent implements OnInit {
       if (res.type === HttpEventType.Response) {
         this.commonService.hideLoader();
         let result = res.body
-        this.fileManager.push(result)
+        this.fileManager.push(result[0])
         this.trackImg = result[0].FilePath;
         this.trackImguploaded = true;
         this.trackImgNotuploaded = false
@@ -572,7 +572,7 @@ export class AddModifyTrackComponent implements OnInit {
           console.log('Upload complete');
           this.commonService.hideLoader();
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.masterfileurl = result[0].FilePath;
           this.masterfileuploaded = true;
           this.masterfileNotuploaded = false
@@ -598,7 +598,7 @@ export class AddModifyTrackComponent implements OnInit {
         if (res.type === HttpEventType.Response) {
           this.commonService.hideLoader();
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.unmasterfileurl = result[0].FilePath;
           this.unmasterfileuploaded = true;
           this.unmasterfileNotuploaded = false
@@ -624,7 +624,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._commonService.SaveModuleFile(this.uploadmixdowfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.mixdowfileurl = result[0].FilePath;
           this.mixdowfileuploaded = true;
           this.mixdowfileNotuploaded = false
@@ -650,7 +650,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._commonService.SaveModuleFile(this.uploadstemsfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.stemsfileurl = result[0].FilePath;
           this.stemsfileuploaded = true;
           this.stemsfileNotuploaded = false
@@ -676,7 +676,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._commonService.SaveModuleFile(this.uploadmidifile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.midifileurl = result[0].FilePath;
           this.MIDIfileuploaded = true;
           this.MIDIfileNotuploaded = false
@@ -702,7 +702,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._commonService.SaveModuleFile(this.uploadprojectfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.projectfileurl = result[0].FilePath;
           this.projectfileuploaded = true;
           this.projectfileNotuploaded = false
@@ -728,7 +728,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._commonService.SaveModuleFile(this.uploadurtoggedfile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.masterfileurl = result[0].FilePath;
           this.masterfileuploaded = true;
         this.urtoggedfileuploaded = true;
@@ -756,7 +756,7 @@ export class AddModifyTrackComponent implements OnInit {
       this._base._commonService.SaveModuleFile(this.uploadwavefile, filesData, { reportProgress: true, observe: 'events' }).subscribe((res: any) => {
         if (res.type === HttpEventType.Response) {
           let result = res.body
-          this.fileManager.push(result)
+          this.fileManager.push(result[0])
           this.unmasterfileurl = result[0].FilePath;
           this.wavefileurl = result[0].FilePath;
           this.unmasterfileuploaded = true;
