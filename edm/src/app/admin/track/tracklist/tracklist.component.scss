@@ -2,3 +2,19 @@
  .play_video {
      background: url(../../../../assets/images/play.svg) no-repeat;
  }
+ 
+ .play_audio,
+ .pause_audio {
+     background-size: contain;
+     width: 15px;
+     height: 15px;
+     display: inline-block;
+     position: absolute;
+     top: 0;
+     bottom: 0;
+     left: 0;
+     right: 0;
+     background-position: center;
+     margin: auto;
+     cursor: pointer;
+ }
