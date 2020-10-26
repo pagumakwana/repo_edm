@@ -61,6 +61,10 @@ const routes: Routes = [
             {
                 path: "cart",
                 loadChildren: () => import('../cartscreen/cartscreen.module').then(m => m.CartScreenModule)
+            },
+            {
+                path: "wishlist",
+                loadChildren: () => import('../wishlist/wishlist.module').then(m => m.WishlistModule)
             }
         ],
     },
