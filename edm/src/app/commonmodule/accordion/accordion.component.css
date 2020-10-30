@@ -2,7 +2,6 @@
     background-color: white;
     color: #222;
 }
-
 .mypanel .title {
     background-color: #ccc;
     width: 100%;
@@ -10,11 +9,9 @@
     cursor: pointer;
     border-bottom: 1px solid #666;
 }
-
 .mypanel .body {
     padding: 10px;
 }
-
 .mypanel .body.hidden {
     display: none;
 }

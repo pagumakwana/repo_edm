@@ -1,82 +1,131 @@
-.cart_page {
-    padding: 15px;
-    .cart_items {
-        width: calc(100% - 380px);
+.wishlist_page {
+    .product_list {
+        width: 100%;
+    }
+    .product_list .product_box {
+        width: 20%;
+    }
+    .remove_track {
+        position: absolute;
+        right: 0;
+        top: 0;
+        left: auto;
+        bottom: auto;
+        width: 18px;
+        z-index: 1;
+        margin: 5px;
+        background-color: white;
+        border-radius: 100%;
+        cursor: pointer;
+    }
+    .beats_box {
+        width: 25%;
         display: inline-block;
+        padding: 10px;
         vertical-align: top;
     }
-    .cart_total {
-        width: 380px;
-        display: inline-block;
-        vertical-align: top;
+    .beats_sec {
+        background: #F4F4F4;
         padding: 15px;
+        transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out, border-color 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
+        box-shadow: 0 0 7px #dedede;
+        -webkit-box-shadow: 0 0 7px #dedede;
+        -moz-box-shadow: 0 0 7px #dedede;
+        border-radius: 10px;
+        position: relative;
     }
-    .primary_table tbody td:last-child {
-        width: 320px;
+    .beats_sec:hover {
+        box-shadow: 0 0 7px #c1c1c1;
+        -webkit-box-shadow: 0 0 7px #c1c1c1;
+        -moz-box-shadow: 0 0 7px #c1c1c1;
     }
-    .total_count_list {
-        background: white;
-        border: 1px solid #e4e4e4;
-        border-radius: 15px;
-        padding: 20px 15px;
-        box-shadow: 0 0 15px 1px #eaeaea;
+    .play_upper_layer img {
+        max-width: 50px;
+        max-height: 50px;
+        border-radius: 5px;
+        width: auto;
+        height: auto;
     }
-    .coupon_section .global_btn {
-        margin: 0;
-    }
-    .coupon_section .form_area {
-        width: calc(100% - 80px);
+    .beats_info {
         display: inline-block;
-        padding-right: 15px;
+        vertical-align: top;
+        width: calc(100% - 50px);
+        padding-left: 20px;
+        margin-bottom: 20px;
     }
-    .total_count_list ul, .total_count_list ul li {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-        font-size: 14px;
-    }
-    .total_count_list ul li {
+    .play_upper_layer {
+        width: 50px;
+        height: 50px;
         display: inline-block;
-        width: 50%;
-        padding: 9px 0;
     }
-    .total_count_list ul li:last-child {
-        text-align: right;
+    .beats_info h2 {
+        font-size: 17px;
+        margin: 0 0 5px 0;
     }
-    .total_count_list ul li:first-child {
+    .beats_info p {
+        margin: 0;
+        font-size: 11px;
         font-weight: bold;
     }
-    .total {
-        margin: 5px 0 15px 0 !important;
-        border-bottom: 0 !important;
+    .button_group .global_btn {
+        margin-bottom: 0;
     }
-    .total_count_list ul {
-        border-bottom: 1px solid #efefef;
-    }
-    .payment_options img {
-        height: 51px;
-        width: auto;
-    }
-    .payment_options a {
-        display: inline-block;
-        border-radius: 5px;
-        width: 25%;
-        text-align: center;
-        vertical-align: top;
+}
+.wishlist_page:first-child .product_list {
+    width: 100%;
+    padding-bottom: 0 !important;
+}
+/* ********** Responsive ********** */
+
+@media screen and (max-width: 1200px) {
+    .wishlist_page {
+        .product_list .product_box {
+            width: 25%;
+        }
+        .beats_info {
+            padding-left: 10px;
+        }
+        .beats_box {
+            width: 33.33%;
+        }
     }
 }
 
-/* ********** Responsive ********** */
-
-@media screen and (max-width: 1100px) {
-    .cart_page {
-        .cart_items {
-            width: 100%;
+@media screen and (max-width: 950px) {
+    .wishlist_page {
+        .product_list .product_box {
+            width: 33%;
         }
-        .cart_total {
-            max-width: 400px;
-            width: auto;
-            padding: 15px 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .wishlist_page {
+        .beats_box {
+            width: 50%;
+        }
+        .product_list .product_box {
+            width: 33%;
+        }
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .wishlist_page {
+        .product_list .product_box {
+            width: 50%;
+        }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .wishlist_page {
+        .beats_box {
+            width: 100%;
+            padding: 0 10px 20px 10px;
+        }
+        .product_list .product_box {
+            width: 100%;
         }
     }
 }

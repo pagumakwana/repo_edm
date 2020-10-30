@@ -2,16 +2,13 @@
 .was-validated .form-control:invalid {
     background-image: none;
 }
-
 .custom-file-label {
     background: none;
 }
-
 input[type="time"]::-webkit-calendar-picker-indicator {
     background: none;
 }
-
-form_group input,
+.form_group input,
 .form_group textarea,
 .form_group select,
 .custom-control-label::before,
@@ -25,7 +22,6 @@ form_group input,
     resize: none;
     margin: 0;
 }
-
 .form_group .remove_btn::after {
     left: 0px;
     content: "Remove" !important;

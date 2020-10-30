@@ -876,10 +876,10 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 .user_profile_img, .user_photo {
     background: url(../images/user_profile.svg) no-repeat;
 }
-.play_audio, .play_video {
+.playy, .play_video {
     background: url(../images/play.svg) no-repeat;
 }
-.pause_audio, .pause_video {
+.pausee, .pause_video {
     background: url(../images/pause.svg) no-repeat;
 }
 .add_new_icon {
@@ -896,6 +896,9 @@ select::-ms-expand, input::-ms-clear, input::-ms-reveal {
 }
 .ng5-slider .ng5-slider-pointer:after {
     background: url(../images/next_arrow.svg) no-repeat !important;
+}
+.add_to_favourites_fill_icon {
+    background: url(../images/fill_heart.svg) no-repeat;
 }
 .ng5-slider .ng5-slider-bar {
     background: #E9E5E4 !important;
@@ -1317,7 +1320,7 @@ table.dataTable thead th {
     background: #00000036;
     display: none;
 }
-.play_audio, .pause_audio {
+.playy, .pausee {
     background-size: contain;
     width: 15px;
     height: 15px;

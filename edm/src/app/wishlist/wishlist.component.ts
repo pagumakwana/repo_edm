@@ -7,7 +7,7 @@ import { enAppSession } from '../_appModel/enAppSession';
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
-  styleUrls: ['./wishlist.component.scss'],
+  styleUrls: ['./wishlist.component.scss','../product/product.component.scss','../widgets/featuredProductSlider/featuredProductSlider.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class WishlistComponent implements OnInit {

@@ -180,29 +180,29 @@ export class TrackListComponent implements OnInit {
   }
   playaudio(path, id, data) {
     debugger
-    if ($('.playpause_' + id).hasClass('pause_audio')) {
+    if ($('.playpause_' + id).hasClass('pausee')) {
       data.filter(item => {
-        $('.playpause_' + item.Ref_Track_ID).removeClass('pause_audio');
-        $('.playpause_' + item.Ref_Track_ID).addClass('play_audio');
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
+        $('.playpause_' + item.Ref_Track_ID).addClass('playy');
       })
       this.audio.pause();
       this.audio = new Audio();
       // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
-    } else if ($('.playpause_' + id).hasClass('play_audio')) {
+    } else if ($('.playpause_' + id).hasClass('playy')) {
      
         let  file = path.filter(item => item.FileIdentifier == "MasterFile")
     
       this.audio.src = this._base._commonService.cdnURL + file[0].FilePath;
       data.filter(item => {
-        $('.playpause_' + item.Ref_Track_ID).removeClass('pause_audio');
-        $('.playpause_' + item.Ref_Track_ID).addClass('play_audio');
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
+        $('.playpause_' + item.Ref_Track_ID).addClass('playy');
       })
       this.audio.pause();
       this.audio.load();
       this.audio.play();
-      $('.playpause_' + id).removeClass('play_audio');
-      $('.playpause_' + id).addClass('pause_audio');
+      $('.playpause_' + id).removeClass('playy');
+      $('.playpause_' + id).addClass('pausee');
       
     }
   }

@@ -62,9 +62,12 @@
                 <td>
                     <div class="play_upper_layer">
                         <img *ngIf="track.FileManager.length != 0" class="tbl_img" [src]="filterfile(track.FileManager, 'Thumbnail')" />
-                        <div *ngIf="track.FileManager.length != 0" class="" [id]="track.Ref_Track_ID" (click)="playaudio(track.FileManager, track.Ref_Track_ID, data)">
+                        <!-- <div *ngIf="track.FileManager.length != 0" class="" [id]="track.Ref_Track_ID" (click)="playaudio(track.FileManager, track.Ref_Track_ID, data)">
                             <span class="playpause_{{track.Ref_Track_ID}} play_audio"></span>
-                            <!-- <span title="Pause" class="pause_audio" style="display: none;"></span> -->
+                        </div> -->
+                        <div class="play_audio">
+                            <span class="playy" title="Play"></span>
+                            <span title="Pause" class="pausee" style="display: none;"></span>
                         </div>
                     </div>
                 </td>
@@ -104,8 +107,8 @@
                     <div class="play_upper_layer">
                         <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
                         <div class="play_audio">
-                            <span title="Play" class="play_audio"></span>
-                            <span title="Pause" class="pause_audio" style="display: none;"></span>
+                            <span title="Play" class="playy"></span>
+                            <span title="Pause" class="pausee" style="display: none;"></span>
                         </div>
                     </div>
                 </td>
@@ -146,8 +149,8 @@
                     <div class="play_upper_layer">
                         <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
                         <div class="play_audio">
-                            <span title="Play" class="play_audio"></span>
-                            <span title="Pause" class="pause_audio" style="display: none;"></span>
+                            <span title="Play" class="playy"></span>
+                            <span title="Pause" class="pausee" style="display: none;"></span>
                         </div>
                     </div>
                 </td>
