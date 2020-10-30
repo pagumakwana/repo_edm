@@ -1,4 +1,7 @@
 .wishlist_page {
+    .track_list {
+        padding-bottom: 0 !important;
+    }
     .product_list {
         width: 100%;
     }
@@ -70,10 +73,6 @@
     .button_group .global_btn {
         margin-bottom: 0;
     }
-}
-.wishlist_page:first-child .product_list {
-    width: 100%;
-    padding-bottom: 0 !important;
 }
 /* ********** Responsive ********** */
 
