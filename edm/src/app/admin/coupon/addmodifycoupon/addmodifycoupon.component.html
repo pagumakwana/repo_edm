@@ -1,21 +1,19 @@
 <div class="portlet_body admin_half_forms">
-    <form>
+    <form [formGroup]="addCouponForm">
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="text" name="couponname" placeholder="Enter Coupon Name" />
+                <input formControlName='CouponCode' type="text" name="couponname" placeholder="Enter Coupon Name" />
                 <span class="input_icon "></span>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
+            <edm-error [control]="addCouponForm.controls.CouponCode"></edm-error>
+
         </div>
         <div class="form_group">
             <div class="form_area">
-                <textarea rows="4" placeholder="Coupon Description"></textarea>
+                <textarea formControlName='Description' rows="4" placeholder="Coupon Description"></textarea>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
+            <edm-error [control]="addCouponForm.controls.Description"></edm-error>
+
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
@@ -26,20 +24,30 @@
                 </select>
                 <span class="input_icon dropdown_icon"></span>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
+            <!-- <edm-error [control]="addCouponForm.controls.Revision"></edm-error> -->
+
         </div>
         <div class="multipul_form_group">
             <div class="width_50">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="date" name="expirydate" placeholder="Coupon Expiry Date" />
+                        <input formControlName='StartDate' type="date" name="startDate"
+                            placeholder="Coupon Start Date" />
                         <span class="input_icon date_icon"></span>
                     </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
+                    <edm-error [control]="addCouponForm.controls.StartDate"></edm-error>
+
+                </div>
+            </div>
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input formControlName='EndDate' type="date" name="expirydate"
+                            placeholder="Coupon Expiry Date" />
+                        <span class="input_icon date_icon"></span>
                     </div>
+                    <edm-error [control]="addCouponForm.controls.EndDate"></edm-error>
+
                 </div>
             </div>
             <div class="width_50">
@@ -48,9 +56,8 @@
                         <input type="text" name="discountamount" placeholder="Discount Amount" />
                         <span class="input_icon price_icon"></span>
                     </div>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
+                    <!-- <edm-error [control]="addCouponForm.controls.Revision"></edm-error> -->
+
                 </div>
             </div>
         </div>
@@ -74,20 +81,28 @@
                         <input name="IsParent" type="radio">apply for by minimum price 500$ Track
                         <span></span>
                     </label>
+                    <label class="radio">
+                        <input name="IsParent" type="radio">apply for by minimum price 500$ Track
+                        <span></span>
+                    </label>
                 </div>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
+            <!-- <edm-error [control]="addCouponForm.controls.Revision"></edm-error> -->
+
         </div>
         <div class="form_group">
-            <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
-                <span>ADD COUPON CODE</span>
+            <!-- <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup"> -->
+            <a class="global_btn primary_btn" (click)="addCouponCode()">
+                <span>{{ addCoupon.Ref_Coupon_ID == 0 ? 'ADD COUPON CODE' : 'MODIFY COUPON CODE'}}</span>
+            </a>
+            <a class="global_btn primary_btn" routerLink='/admin/coupan'>
+                <span>Cancel</span>
             </a>
         </div>
     </form>
 </div>
-<div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+<!-- <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-md modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -97,4 +112,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

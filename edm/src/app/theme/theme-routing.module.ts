@@ -98,8 +98,8 @@ const routes: Routes = [
                 loadChildren: () => import('../admin/genservices/genservices.module').then(m => m.GenServiceModule)
             },
             {
-                path: "coupan",
-                loadChildren: () => import('../admin/coupan/coupan.module').then(m => m.CoupanModule)
+                path: "coupon",
+                loadChildren: () => import('../admin/coupon/coupon.module').then(m => m.CouponModule)
             },
             {
                 path: "config",

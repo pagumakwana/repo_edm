@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BaseServiceHelper } from '../baseHelper.service';
 // import { CategoryModel } from 'src/app/_appModel/category/category.model';
 import { ApiConstant } from 'src/app/_appmodel/apiconstant';
+import { CouponModel } from 'src/app/_appModel/coupon/coupon.model';
 
 @Injectable()
 export class CouponService {
@@ -12,6 +13,10 @@ export class CouponService {
 
     CouponCode() {
         return this._base._ApiService.get(ApiConstant.CouponCode.CouponCode)
+    }
+
+    saveCouponCode(data: CouponModel) {
+        return this._base._ApiService.post(ApiConstant.CouponCode.CouponCode, data)
     }
 
     // getCartData(userID: string) {

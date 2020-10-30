@@ -5,9 +5,9 @@ import { CouponService } from 'src/app/_appService/coupon/coupon.service';
 import { dataTableConfig, tableEvent } from 'src/app/commonmodule/datatables/datatables.modal';
 
 @Component({
-  selector: 'appAdmin-coupanlist',
-  templateUrl: './coupanlist.component.html',
-  styleUrls: ['./coupanlist.component.scss'],
+  selector: 'appAdmin-couponlist',
+  templateUrl: './couponlist.component.html',
+  styleUrls: ['./couponlist.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class CoupanListComponent implements OnInit {
@@ -38,16 +38,17 @@ export class CoupanListComponent implements OnInit {
 
   tableClick(dataItem: tableEvent) {
     console.log("tableClick", dataItem)
-    // if (dataItem.action.type == 'link' || (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Edit")) {
-    //   this.modifyService(dataItem.tableItem, 'MODIFYSERVICE');
-    // } else if (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Delete") {
-    //   this.modifyService(dataItem.tableItem, 'DELETESERVICE');
-    // }
+    if (dataItem.action.type == 'link' || (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Edit")) {
+          this._base._router.navigate(['/admin/coupon/' + dataItem.tableItem.Ref_Coupon_ID]);
+          // this.modifyService(dataItem.tableItem, 'MODIFYSERVICE');
+    } else if (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Delete") {
+      // this.modifyService(dataItem.tableItem, 'DELETESERVICE');
+    }
   }
 
   ngOnInit(): void {
     // this._base._commonService.showLoader();
-    this._base._pageTitleService.setTitle("ALL COUPAN CODE", "ALL COUPAN CODE");
+    this._base._pageTitleService.setTitle("ALL COUPON CODE", "ALL COUPON CODE");
     this.CouponCode()
   }
 
