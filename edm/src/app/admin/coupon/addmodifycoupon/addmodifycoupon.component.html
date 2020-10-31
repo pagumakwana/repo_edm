@@ -95,21 +95,21 @@
             <a class="global_btn primary_btn" (click)="addCouponCode()">
                 <span>{{ addCoupon.Ref_Coupon_ID == 0 ? 'ADD COUPON CODE' : 'MODIFY COUPON CODE'}}</span>
             </a>
-            <a class="global_btn primary_btn" routerLink='/admin/coupan'>
+            <a class="global_btn primary_btn" [routerLink]="['/admin','coupon']">
                 <span>Cancel</span>
             </a>
         </div>
     </form>
 </div>
-<!-- <div class="modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
-    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body">
-                <img src="../../../../assets/images/success_tick.svg" alt="Coupon Submitted Successfully">
-                <h3>Thank You</h3>
-                <p>Your Coupon has been submitted will notify you the status of coupon approval.</p>
-            </div>
-        </div>
-    </div>
-</div> -->
+<!-- <div class=" modal fade acknowledge_popup" id="acknowledge_popup" tabindex="-1" role="dialog"
+                aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+                <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img src="../../../../assets/images/success_tick.svg" alt="Coupon Submitted Successfully">
+                            <h3>Thank You</h3>
+                            <p>Your Coupon has been submitted will notify you the status of coupon approval.</p>
+                        </div>
+                    </div>
+                </div>
+        </div> -->
