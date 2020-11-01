@@ -19,6 +19,11 @@ export class CouponService {
         return this._base._ApiService.post(ApiConstant.CouponCode.CouponCode, data)
     }
 
+    ManageCouponCode(data: { CouponIDs: number, Action: string }) {
+        let params: string = `?CouponIDs=${data.CouponIDs}&Action=${data.Action}`
+        return this._base._ApiService.get(ApiConstant.CouponCode.ManageCouponCode + params)
+    }
+
     // getCartData(userID: string) {
     //     let params: string = `?UserID=${userID}`
     //     return this._base._ApiService.get(ApiConstant.Order.Order + params)

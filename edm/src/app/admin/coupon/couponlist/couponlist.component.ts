@@ -19,12 +19,12 @@ export class CoupanListComponent implements OnInit {
   tableConfig: dataTableConfig = {
     tableData: [],
     tableConfig: [
-      { identifer: "CouponCode", title: "CouponCode", type: "link"},
-      { identifer: "Description", title: "Description", type: "text"},
-      { identifer: "DiscountInPercentage", title: "DiscountInPercentage", type: "text"},
-      { identifer: "DiscountInMax", title: "DiscountInMax", type: "text"},
-      { identifer: "StartDate", title: "StartDate", type: "text"},
-      { identifer: "EndDate", title: "EndDate", type: "text"},
+      { identifer: "CouponCode", title: "CouponCode", type: "link" },
+      { identifer: "Description", title: "Description", type: "text" },
+      { identifer: "DiscountInPercentage", title: "DiscountInPercentage", type: "text" },
+      { identifer: "DiscountInMax", title: "DiscountInMax", type: "text" },
+      { identifer: "StartDate", title: "StartDate", type: "text" },
+      { identifer: "EndDate", title: "EndDate", type: "text" },
       // { identifer: "FileManager", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
       // { identifer: "ServiceTitle", title: "Service Title", type: "link" },
       // { identifer: "Price", title: "Price", type: "text" },
@@ -32,17 +32,17 @@ export class CoupanListComponent implements OnInit {
       // { identifer: "Revision", title: "Revision", type: "text" },
       // { identifer: "CreatedName", title: "CreatedBy", type: "text" },
       // { identifer: "IsActive", title: "IsActive", type: "flag" },
-      // { identifer: "", title: "Action", type: "buttonIcons", buttonIconList: [{ title: 'Edit', class: 'small_icon_btn', iconClass: 'edit_btn' }, { title: 'Delete', class: 'small_icon_btn', iconClass: 'delete_btn' }] }
+      { identifer: "", title: "Action", type: "buttonIcons", buttonIconList: [{ title: 'Edit', class: 'small_icon_btn', iconClass: 'edit_btn' }, { title: 'Delete', class: 'small_icon_btn', iconClass: 'delete_btn' }] }
     ]
   }
 
   tableClick(dataItem: tableEvent) {
     console.log("tableClick", dataItem)
     if (dataItem.action.type == 'link' || (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Edit")) {
-          this._base._router.navigate(['/admin/coupon/' + dataItem.tableItem.Ref_Coupon_ID]);
-          // this.modifyService(dataItem.tableItem, 'MODIFYSERVICE');
+      this._base._router.navigate(['/admin/coupon/' + dataItem.tableItem.Ref_Coupon_ID]);
+      // this.modifyService(dataItem.tableItem, 'MODIFYSERVICE');
     } else if (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Delete") {
-      // this.modifyService(dataItem.tableItem, 'DELETESERVICE');
+      this.ManageCouponCode(dataItem.tableItem.Ref_Coupon_ID, 'delete');
     }
   }
 
@@ -60,6 +60,26 @@ export class CoupanListComponent implements OnInit {
 
       this.tableObj.initializeTable()
 
+    })
+  }
+
+  // Deactive,active and delete
+  ManageCouponCode(CouponId: number, action: string) {
+    console.log("ManageCouponCode", CouponId, action)
+    this._coupon.ManageCouponCode({ CouponIDs: CouponId, Action: action }).subscribe((res: any) => {
+      console.log("ManageCouponCode_res", res)
+      if (res == 'COUPONDELETE') {
+        debugger
+        this._base._alertMessageService.success("Coupon deleted successfully!");
+        let tableData: Array<any> = this.tableConfig.tableData
+        tableData.filter((res: any, index: number) => {
+          if (res.Ref_Coupon_ID == CouponId) {
+            tableData.splice(index, 1);
+          }
+        });
+        this.tableConfig.tableData = tableData
+        this.tableObj.initializeTable()
+      }
     })
   }
 
