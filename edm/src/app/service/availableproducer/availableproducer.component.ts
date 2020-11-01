@@ -11,7 +11,7 @@ import {
 @Component({
   selector: 'app-availableproducer',
   templateUrl: './availableproducer.component.html',
-  styleUrls: ['./availableproducer.component.scss'],
+  styleUrls: ['./availableproducer.component.scss','../../widgets/featuredProductSlider/featuredProductSlider.component.scss','../../product/product.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
 export class AvailableProducerComponent implements OnInit {

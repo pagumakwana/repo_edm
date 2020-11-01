@@ -8,7 +8,7 @@
 .product_detail_page .secondary_btn {
 	border: 1px solid #05C38F;
 }
-.product_detail_page .global_btn:first-child {
+.product_detail_page .button_group .global_btn:first-child {
 	margin: 0 20px 5px 0;
 }
 .product_thumbnail_sec>img {
@@ -51,18 +51,18 @@
 .product_thumbnail_sec:hover .product_thumbnail_hover_sec {
 	display: inline-block;
 }
-.product_details {
+.product_details_sec {
 	width: calc(100% - 400px);
 	display: inline-block;
 	vertical-align: top;
 	padding: 0 0 0 40px;
 }
-.product_details .product_name {
+.product_details_sec .productdetail_name {
 	font-size: 35px;
 	margin-bottom: 5px;
 	font-weight: bold;
 }
-.product_details .product_tagname {
+.product_details_sec .product_tagname {
 	font-size: 25px;
 	margin-bottom: 15px;
 	color: #696969;
@@ -114,10 +114,10 @@
 	.featuredProduct_sections {
 		padding: 50px 0;
 	}
-	.product_details .product_name {
+	.product_details_sec .productdetail_name {
 		font-size: 27px;
 	}
-	.product_details .product_tagname {
+	.product_details_sec .product_tagname {
 		font-size: 22px;
 	}
 }
@@ -125,7 +125,7 @@
 	.product_thumbnail_sec {
 		width: 250px;
 	}
-	.product_details {
+	.product_details_sec {
 		width: calc(100% - 250px);
 		padding: 0 0 0 30px;
 	}
@@ -141,14 +141,14 @@
 	.product_thumbnail_sec {
 		width: 200px;
 	}
-	.product_details {
+	.product_details_sec {
 		width: calc(100% - 200px);
 		padding: 0 0 0 20px;
 	}
-	.product_details .product_name {
+	.product_details_sec .productdetail_name {
 		font-size: 20px;
 	}
-	.product_details .product_tagname {
+	.product_details_sec .product_tagname {
 		font-size: 17px;
 	}
 	.files_included_heading {
@@ -168,7 +168,7 @@
 	.product_more_details li {
 		width: 50%;
 	}
-	.product_detail_page .global_btn:first-child {
+	.product_detail_page .button_group .global_btn:first-child {
 		margin: 0 10px 5px 0;
 	}
 	.product_thumbnail_hover_sec {
@@ -179,7 +179,7 @@
 	.product_thumbnail_sec {
 		width: 100%;
 	}
-	.product_details {
+	.product_details_sec {
 		width: 100%;
 		padding: 20px 0 0 0;
 	}

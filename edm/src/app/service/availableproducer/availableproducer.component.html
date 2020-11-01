@@ -1,68 +1,46 @@
-<div style="text-align: center; width: 100%;">
-    <h1>AVAILABLE PRODUCER</h1>
-    <p>For Custom Track</p>
-</div>
-<!-- <ul class="nav nav-tabs">
-    <li *ngFor="let tab of customServicelist" (click)="selectTab(tab.ServiceTitle)" [class.active]="tab.active" style="width: 50%; text-align: center;">
-        <a>{{tab.ServiceTitle}}</a>
-    </li>
-</ul> -->
-<!-- <div class="service_page">
-    <div class="services_section">
-        <div class="news_sec" *ngFor="let producer of producerDetails">
-            <div class="news_data">
-                <img [src]="producer.ProfilePhoto">
-                <div class="news_content">
-                    <h2>{{producer.FullName}}</h2>
-                    <p>{{producer.Bio}}</p>
-                    <a class="global_btn icon_btn secondary_btn">
-                        <span>Add to Fav</span>
-                        <span class="double_right_icon btn_icon"></span>
-                    </a>
-                    <a class="global_btn icon_btn primary_btn "> -->
-<!-- <span>From &#36;{{service.Price}}</span> -->
-<!-- <span class="black_user_icon btn_icon"></span> -->
-<!-- </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-<swiper class="product_slider producer_slider" [config]="config">
-    <div *ngFor="let producer of producerDetails" class="swiper-slide">
-        <div class="slider_product">
-            <div class="product_img">
-                <img [src]="producer.ProfilePhoto" class="product_thumbnail">
-                <div class="producer_upper_layer">
-                    <div class="producer_profile_photo">
-                        <img [src]="producer.ProfilePhoto" />
+<h2 class="simple_heading">
+    AVAILABLE PRODUCER
+</h2>
+<p>For Custom Track</p>
+<div class="availableproducer_page">
+    <div class="product_list">
+        <swiper class="product_slider producer_slider" [config]="config">
+            <div *ngFor="let producer of producerDetails" class="swiper-slide">
+                <div class="slider_product">
+                    <div class="product_img">
+                        <img [src]="producer.ProfilePhoto" class="product_thumbnail">
+                        <div class="producer_upper_layer">
+                            <div class="producer_profile_photo">
+                                <img [src]="producer.ProfilePhoto" />
+                            </div>
+                            <p class="product_name">
+                                {{producer.FullName}}
+                            </p>
+                            <p class="producer_info">
+                                {{producer.Bio}}
+                            </p>
+                        </div>
                     </div>
-                    <p class="product_name">
-                        {{producer.FullName}}
-                    </p>
-                    <p class="producer_info">
-                        {{producer.Bio}}
-                    </p>
+                    <div class="product_details">
+                        <div class="slider_buttons">
+                            <a *ngIf="producer.Followed != 'Followed'" class="global_btn icon_btn primary_btn" (click)="useraction(producer.Ref_User_ID,'Producer','Follow')">
+                                <span>Follow</span>
+                                <span class="follow_icon btn_icon left_btn_icon"></span>
+                            </a>
+                            <a *ngIf="producer.Followed == 'Followed'" class="global_btn icon_btn primary_btn">
+                                <span>Followed</span>
+                                <span class="follow_icon btn_icon left_btn_icon"></span>
+                            </a>
+                            <a (click)="navigateToProducer(producer)" class="global_btn grey_btn">
+                                <span>View Profile</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="product_details">
-                <div class="slider_buttons">
-                    <a *ngIf="producer.Followed != 'Followed'" class="global_btn icon_btn primary_btn" (click)="useraction(producer.Ref_User_ID,'Producer','Follow')">
-                        <span>Follow</span>
-                        <span class="follow_icon btn_icon left_btn_icon"></span>
-                    </a>
-                    <a *ngIf="producer.Followed == 'Followed'" class="global_btn icon_btn primary_btn">
-                        <span>Followed</span>
-                        <span class="follow_icon btn_icon left_btn_icon"></span>
-                    </a>
-                    <a (click)="navigateToProducer(producer)" class="global_btn grey_btn">
-                        <span>View Profile</span>
-                    </a>
-                </div>
-            </div>
+        </swiper>
+        <div class="no_record" *ngIf="producerlist?.length == 0">
+            No record found
         </div>
     </div>
-</swiper>
-<div class="no_record" *ngIf="producerlist?.length == 0">
-    No record found
 </div>
