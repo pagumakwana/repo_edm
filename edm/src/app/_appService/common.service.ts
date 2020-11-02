@@ -226,11 +226,20 @@ export class CommonService {
         return args.reduce((acc, val) => [...acc, ...val]);
     }
 
+    //Join from Object Key
+    plunk(ArrayData: Array<any>, key: string) {
+        ArrayData.map(e => e[key]).join(",");
+    }
+
+    // this.plunk([{ name: "Joe", age: 22 }, { name: "Kevin", age: 24 }], 'name')
+
+
+
     uploadFile(filesData, ModuleName) {
         return this._apiService.postFile(ApiConstant.common.uploadFileData + "?ModuleName=" + ModuleName, filesData);
     }
 
-    SaveModuleFile(filesData, Data: SaveModuleFileModel,  options?:any) {
+    SaveModuleFile(filesData, Data: SaveModuleFileModel, options?: any) {
         let params = `?FileManagerID=${Data.FileManagerID}&ModuleID=${Data.ModuleID}&ModuleType=${Data.ModuleType}&FileIdentifier=${Data.FileIdentifier}&Sequence=${Data.Sequence}`
         return this._apiService.postFile(ApiConstant.common.SaveModuleFile + params, [filesData], options);
     }
