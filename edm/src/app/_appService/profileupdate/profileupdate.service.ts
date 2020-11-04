@@ -119,5 +119,9 @@ export class ProfileUpdateService {
         return this._base._ApiService.post(`${ApiConstant.Order.UserAction}`, data);
     }
 
+    Order(data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> }) {
+        return this._base._ApiService.post(`${ApiConstant.Order.Order}`, data);
+    }
+
 
 }

@@ -14,6 +14,9 @@ export class CartService {
         let params: string = `?UserID=${userID}`
         return this._base._ApiService.get(ApiConstant.Order.Order + params)
     }
+    Order(data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> }) {
+        return this._base._ApiService.post(`${ApiConstant.Order.Order}`, data);
+    }
 
     // addmodifycategory(objCategoryModel: CategoryModel) {
     //     return this._base._ApiService.post(ApiConstant.category.AddModifyCategory, objCategoryModel)
