@@ -67,10 +67,10 @@ export class CartScreenComponent implements OnInit {
     console.log("calculateCost", selectedProducts)
     let subtotal: number = 0
     for (let product of selectedProducts) {
-      subtotal = subtotal + parseInt(product.Price)
+      subtotal = subtotal + parseFloat(product.Price)
     }
-    this.cartAmount.subtotal = parseInt(subtotal.toFixed(2));
-    this.cartAmount.serviceTax = parseInt(((subtotal * (this.cartAmount.serviceTaxPer / 100))).toFixed(2));
+    this.cartAmount.subtotal = parseFloat(subtotal.toFixed(2));
+    this.cartAmount.serviceTax = parseFloat(((subtotal * (this.cartAmount.serviceTaxPer / 100))).toFixed(2));
     this.cartAmount.total = subtotal + this.cartAmount.serviceTax
   }
 
