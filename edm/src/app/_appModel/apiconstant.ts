@@ -59,7 +59,8 @@ export class ApiConstant {
     }
     public static Order = {
         UserAction: "UserOrder/UserAction",
-        Order: "UserOrder/Order"
+        Order: "UserOrder/Order",
+        Remove: "UserOrder/Remove"
     }
     public static AuthorityManagement = {
         Module: "Admin/AuthorityManagement/Module",

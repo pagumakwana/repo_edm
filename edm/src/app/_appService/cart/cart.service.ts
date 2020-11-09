@@ -18,11 +18,8 @@ export class CartService {
         return this._base._ApiService.post(`${ApiConstant.Order.Order}`, data);
     }
 
-    // addmodifycategory(objCategoryModel: CategoryModel) {
-    //     return this._base._ApiService.post(ApiConstant.category.AddModifyCategory, objCategoryModel)
-    // }
-    // categorylist(flag, ref_category_id, AliasName = null) {
-    //     let params = `?Flag=${flag}&Ref_Category_ID=${ref_category_id}&AliasName=${AliasName}`
-    //     return this._base._ApiService.get(ApiConstant.category.category + params);
-    // }
+    Remove(data: { UserID: number; OrderID: number; ObjectID: number; }) {
+        let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&ObjectID=${data.ObjectID}`
+        return this._base._ApiService.post(`${ApiConstant.Order.Remove}${params}`);
+    }
 }

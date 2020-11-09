@@ -28,12 +28,12 @@ export class CartScreenComponent implements OnInit {
     }
   cartList: Array<any> = []
   imageBaseUrl: string = this._base._commonService.cdnURL
-  UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
-    UserID: null,
-    ObjectID: null,
-    ObjectType: "Producer",
-    Action: null
-  }
+  // UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
+  //   UserID: null,
+  //   ObjectID: null,
+  //   ObjectType: "Producer",
+  //   Action: null
+  // }
 
 
   constructor(public _base: BaseServiceHelper,
@@ -74,30 +74,49 @@ export class CartScreenComponent implements OnInit {
     this.cartAmount.total = subtotal + this.cartAmount.serviceTax
   }
 
-  Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
-    this.UserActionData.Action = Action
-    this.UserActionData.ObjectID = parseInt(ObjectID)
-    this.UserActionData.ObjectType = ObjectType
+  // Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+  //   this.UserActionData.Action = Action
+  //   this.UserActionData.ObjectID = parseInt(ObjectID)
+  //   this.UserActionData.ObjectType = ObjectType
 
-    // if (ActionType == 'follow')
-    //     this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
-    // if (ActionType == 'favorite')
-    //     this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
-    let Object = {
-      UserID: this.UserActionData.UserID,
-      OrderID: 0,
-      ObjectID: parseInt(ObjectID),
-      ObjectType: ObjectType,
-      OrderStatus: Action
+  //   // if (ActionType == 'follow')
+  //   //     this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
+  //   // if (ActionType == 'favorite')
+  //   //     this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
+  //   let Object = {
+  //     UserID: this.UserActionData.UserID,
+  //     OrderID: 0,
+  //     ObjectID: parseInt(ObjectID),
+  //     ObjectType: ObjectType,
+  //     OrderStatus: Action
+  //   }
+
+  //   let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
+
+  //   Data.ObjectList.push(Object)
+
+  //   this._cartService.Order(Data).subscribe((res: any) => {
+  //     console.log("Order", res, actionObj)
+  //     this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+  //     // if (ActionType == 'follow') {
+  //     //     actionObj.Followed = (res == 'Follow')
+  //     //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
+  //     // } else if (ActionType == 'favorite') {
+  //     //     actionObj = (res == 'Favourite')
+  //     // }
+  //   })
+  // }
+
+  Remove(OrderID: number | any, ObjectID: number | any, index: number) {
+    let Object: any = {
+      UserID: this.requestData.userId,
+      OrderID: parseInt(OrderID),
+      ObjectID: parseInt(ObjectID)
     }
-
-    let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
-
-    Data.ObjectList.push(Object)
-
-    this._cartService.Order(Data).subscribe((res: any) => {
-      console.log("Order", res, actionObj)
-      this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+    this._cartService.Remove(Object).subscribe((res: any) => {
+      Object.Action = 'Remove'
+      console.log("Remove", res, Object)
+      // this._base._commonService.UserActionNotificationAlert(actionObj, Object, res)
       // if (ActionType == 'follow') {
       //     actionObj.Followed = (res == 'Follow')
       //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
