@@ -82,10 +82,10 @@
                         </select>
                         <span class="input_icon dropdown_icon"></span>
                     </div> -->
-                    <!-- <div class="error_msg">
+                <!-- <div class="error_msg">
                         <span>This field is Required</span>
                     </div> -->
-                    <!-- <edm-error [control]="addProfileForm.controls.step1.controls.BigImageUrl"></edm-error> -->
+                <!-- <edm-error [control]="addProfileForm.controls.step1.controls.BigImageUrl"></edm-error> -->
                 <!-- </div> -->
                 <div class="form_group">
                     <div class="form_area icon_form_group">
@@ -185,7 +185,8 @@
                         <span>This field is Required</span>
                     </div> -->
                     <!-- <edm-error [control]="addProfileForm?.controls?.step3?.controls?.PayPalEmailID"></edm-error> -->
-                    <div *ngIf="addProfileForm?.controls?.step3?.controls?.PayPalEmailID.invalid && (addProfileForm?.controls?.step3?.controls?.PayPalEmailID.dirty || addProfileForm?.controls?.step3?.controls?.PayPalEmailID.touched)" class="alert alert-danger">
+                    <div *ngIf="addProfileForm?.controls?.step3?.controls?.PayPalEmailID.invalid && (addProfileForm?.controls?.step3?.controls?.PayPalEmailID.dirty || addProfileForm?.controls?.step3?.controls?.PayPalEmailID.touched)"
+                        class="alert alert-danger">
                         <div *ngIf="addProfileForm?.controls?.step3?.controls?.PayPalEmailID.errors.required">
                             Pay Pal Email ID is required.
                         </div>
@@ -203,7 +204,8 @@
                         <span class="input_icon error_icon"></span>
                     </div>
                     <!-- <edm-error [control]="addProfileForm?.controls?.step3?.controls?.EmailID"></edm-error> -->
-                    <div *ngIf="addProfileForm?.controls?.step3?.controls?.EmailID.invalid && (addProfileForm?.controls?.step3?.controls?.EmailID.dirty || addProfileForm?.controls?.step3?.controls?.EmailID.touched)" class="alert alert-danger">
+                    <div *ngIf="addProfileForm?.controls?.step3?.controls?.EmailID.invalid && (addProfileForm?.controls?.step3?.controls?.EmailID.dirty || addProfileForm?.controls?.step3?.controls?.EmailID.touched)"
+                        class="alert alert-danger">
                         <div *ngIf="addProfileForm?.controls?.step3?.controls?.EmailID.errors.required">
                             Email ID is required.
                         </div>
@@ -217,23 +219,22 @@
                     <div class="form_area">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="exampleFormControlFile1">
-                            <!-- <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" /> -->
+                            <img src="" class="image_preview" />
                             <label class="custom-file-label" for="customFile">
                                 Choose file
                             </label>
-                            <!-- <label class="custom-file-label upload_btn"></label> -->
                         </div>
                         <div class="attched_img">
                             <div>
-                                <!-- <img [src]="img.thumb" /> -->
+                                <img [src]="fileChoosenData.thumbnail[1]?.thumb" />
                                 <a (click)="removeFile('GovitID','i')" title="Remove Image">
                                     <img src="../../../../assets/images/close_blue.svg">
                                 </a>
                             </div>
                         </div>
-                        <span class="file_formats">Note: File upload limit - 2MB, Attchment format : jpg, jpeg,
-                            png</span>
-                        <edm-error [control]="addProfileForm?.controls?.step3?.controls?.GovitID"></edm-error>
+                        <span class="file_formats">
+                            Note: File upload limit - 2MB, Attchment format : jpg, jpeg, png
+                        </span>
                     </div>
                 </div>
                 <div class="button_group center_align" (click)="changeStage()">
