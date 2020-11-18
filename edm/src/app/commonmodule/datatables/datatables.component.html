@@ -2,12 +2,16 @@
     <thead>
         <tr>
             <!-- <th>Sr#</th> -->
+            <th *ngIf="config?.showCheckBox"><input type="checkbox" name="checkALL" [(ngModel)]="isCheckAll"
+                    (click)="checkALlItems($event)"></th>
             <th *ngFor="let title of config?.tableConfig">{{title.title}}</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let tableItem of config?.tableData;let i = index">
             <!-- <td>{{i+1}}</td> -->
+            <td *ngIf="config?.showCheckBox"><input name="checkALL" type="checkbox"
+                    [(ngModel)]='tableItem.isChecked_DataTable' (click)="tableClick(tableItem,'checkedBox')"></td>
             <td *ngFor="let key of config?.tableConfig">
                 <ng-container *ngIf="key?.type == 'text'">
                     {{tableItem[key.identifer]}}

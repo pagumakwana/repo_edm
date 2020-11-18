@@ -19,6 +19,7 @@ export class DatatablesComponent implements OnInit {
   dataTable: any;
   imageBaseUrl: string = this._base._commonService.cdnURL
   ishide: boolean = true
+  isCheckAll = false
 
   constructor(public _base: BaseServiceHelper) { }
 
@@ -26,8 +27,25 @@ export class DatatablesComponent implements OnInit {
     console.log("inside_table", this.config)
   }
 
+  checkBoxSetup() {
+    if (this.config.showCheckBox) {
+      this.config.tableData.map(item => {
+        return item.isChecked_DataTable = this.isCheckAll
+      })
+    }
+  }
+
+  checkALlItems(event) {
+    console.log("checkALlItems", event)
+    for (let item of this.config.tableData) {
+      item.isChecked_DataTable = event.target.checked
+    }
+    this.tableClick(undefined, 'checkedBox')
+  }
+
   initializeTable() {
     setTimeout(() => {
+      this.checkBoxSetup()
       this.dataTable = $(this.table.nativeElement);
       this.dataTable.DataTable();
       this.ishide = false
@@ -43,13 +61,19 @@ export class DatatablesComponent implements OnInit {
   }
 
   tableClick(tableItem, action, actionInfo?) {
-    let emitData: tableEvent = {
-      tableItem: tableItem,
-      action: action,
-      actionInfo: actionInfo
-    }
-    this.tableEvent.emit(emitData)
+    setTimeout(() => {
+      let checkedItems = this.config.tableData.filter(item => item.isChecked_DataTable)
+      let emitData: tableEvent = {
+        tableItem: tableItem,
+        action: action,
+        actionInfo: actionInfo,
+        checkedData: checkedItems
+      }
+      this.isCheckAll = checkedItems.length == this.config.tableData.length
+      this.tableEvent.emit(emitData)
+    }, 50);
   }
+
 
 
 }

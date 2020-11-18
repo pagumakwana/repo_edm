@@ -60,6 +60,7 @@ export class ApiConstant {
     public static Order = {
         UserAction: "UserOrder/UserAction",
         Order: "UserOrder/Order",
+        ApplyCoupon: "UserOrder/ApplyCoupon",
         Remove: "UserOrder/Remove"
     }
     public static AuthorityManagement = {
