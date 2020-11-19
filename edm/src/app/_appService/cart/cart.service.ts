@@ -18,8 +18,13 @@ export class CartService {
         return this._base._ApiService.post(`${ApiConstant.Order.Order}`, data);
     }
 
-    Remove(data: { UserID: number; OrderID: number; ObjectID: number; }) {
-        let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&ObjectID=${data.ObjectID}`
+    Remove(data: { UserID: number; OrderID: number; ObjectID: number; ObjectType: string }) {
+        let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&ObjectID=${data.ObjectID}&ObjectType=${data.ObjectType}`
         return this._base._ApiService.post(`${ApiConstant.Order.Remove}${params}`);
+    }
+
+    ApplyCoupon(data: { UserID: number; OrderID: number; CouponCode: string; }) {
+        let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&CouponCode=${data.CouponCode}`
+        return this._base._ApiService.post(`${ApiConstant.Order.ApplyCoupon}${params}`);
     }
 }
