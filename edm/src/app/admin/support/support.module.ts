@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SupportListComponent } from './supportlist/supportlist.component';
 import { AddModifySupportComponent } from './addmodifysupport/addmodifysupport.component';
+import { SupportService } from "../../_appService/support/support.service";
+
 @NgModule({
     declarations: [
         SupportListComponent,
@@ -13,15 +15,15 @@ import { AddModifySupportComponent } from './addmodifysupport/addmodifysupport.c
         CommonModule,
         RouterModule.forChild([
             {
-                path: '',
+                path: ':ref_support_id',
                 component: SupportListComponent
             },
             {
-                path: ':ref_support_id',
+                path: '',
                 component: AddModifySupportComponent
             }
         ]),
     ],
-    providers: []
+    providers: [SupportService]
 })
 export class SupportModule { }

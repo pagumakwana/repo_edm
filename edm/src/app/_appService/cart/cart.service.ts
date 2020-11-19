@@ -14,12 +14,17 @@ export class CartService {
         let params: string = `?UserID=${userID}`
         return this._base._ApiService.get(ApiConstant.Order.Order + params)
     }
+    Order(data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> }) {
+        return this._base._ApiService.post(`${ApiConstant.Order.Order}`, data);
+    }
 
-    // addmodifycategory(objCategoryModel: CategoryModel) {
-    //     return this._base._ApiService.post(ApiConstant.category.AddModifyCategory, objCategoryModel)
-    // }
-    // categorylist(flag, ref_category_id, AliasName = null) {
-    //     let params = `?Flag=${flag}&Ref_Category_ID=${ref_category_id}&AliasName=${AliasName}`
-    //     return this._base._ApiService.get(ApiConstant.category.category + params);
-    // }
+    Remove(data: { UserID: number; OrderID: number; ObjectID: number; ObjectType: string }) {
+        let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&ObjectID=${data.ObjectID}&ObjectType=${data.ObjectType}`
+        return this._base._ApiService.post(`${ApiConstant.Order.Remove}${params}`);
+    }
+
+    ApplyCoupon(data: { UserID: number; OrderID: number; CouponCode: string; }) {
+        let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&CouponCode=${data.CouponCode}`
+        return this._base._ApiService.post(`${ApiConstant.Order.ApplyCoupon}${params}`);
+    }
 }

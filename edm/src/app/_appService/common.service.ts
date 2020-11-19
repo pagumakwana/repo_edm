@@ -9,12 +9,14 @@ import { Subject, Observable } from 'rxjs';
 import * as _ from "lodash";
 import configData from '../../assets/projectConfig.json'
 import { SaveModuleFileModel } from '../_appModel/common.model';
+import { AlertMessageService } from './alert/alertmessage.service';
 
 declare var $: any;
 @Injectable()
 export class CommonService {
     constructor(public _apiService: ApiService,
         public _encryptedStorage: EncryptedStorage,
+        public _alertMessageService: AlertMessageService,
         private _router: Router) {
 
     }
@@ -228,7 +230,7 @@ export class CommonService {
 
     //Join from Object Key
     plunk(ArrayData: Array<any>, key: string) {
-        ArrayData.map(e => e[key]).join(",");
+        return ArrayData.map(e => e[key]).join(",");
     }
 
     // this.plunk([{ name: "Joe", age: 22 }, { name: "Kevin", age: 24 }], 'name')
@@ -283,5 +285,26 @@ export class CommonService {
 
     globalSearch(SearchKeyWord) {
         return this._apiService.get(`${ApiConstant.Shared.GlobalSearch}?SearchKeyWord=${SearchKeyWord}`);
+    }
+
+    UserActionNotificationAlert(ObjectData, requestData, responseData) {
+        console.log("UserActionNotificationAlert", ObjectData, requestData, responseData)
+        let msg = {
+            Follow: `${requestData.ObjectType} followed successfully`,
+            Unfollow: `${requestData.ObjectType} unfollow successfully`,
+            Favourite: `${requestData.ObjectType} added`,
+            Unfavourite: `${requestData.ObjectType} removed`,
+            // error: `Something Went Wrong`,
+        }
+        // this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
+        this._alertMessageService['success'](msg[responseData])
+        if (requestData.Action == responseData) {
+            if (requestData.ObjectType == 'Producer') {
+                ObjectData.Followed = (responseData == 'Follow')
+                ObjectData.Followers = (responseData == 'Follow') ? ObjectData.Followers + 1 : ObjectData.Followers - 1
+            } else if (requestData.ObjectType == 'track') {
+                ObjectData.Favourite = (responseData == 'Favourite')
+            }
+        }
     }
 }

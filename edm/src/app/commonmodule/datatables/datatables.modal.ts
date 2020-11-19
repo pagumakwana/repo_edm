@@ -1,6 +1,7 @@
 export class dataTableConfig {
     tableData: Array<any>
     tableConfig: tableConfig[]
+    showCheckBox?: boolean
 }
 
 export class tableConfig {
@@ -32,4 +33,5 @@ export class tableEvent {
     tableItem: any;
     action: tableConfig;
     actionInfo: any;
+    checkedData?: any;
 }

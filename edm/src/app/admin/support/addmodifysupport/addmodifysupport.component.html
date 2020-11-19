@@ -3,9 +3,9 @@
         <div class="form_group">
             <div class="form_area icon_form_group">
                 <select name="tickettype">
-                    <option disabled selected>Select ticket Type</option>
-                    <option>Options</option>
-                    <option>Options</option>
+                    <option *ngFor="let type of ticketType" value= {{type.Ref_TicketType_ID}}>
+                        {{type.TicketType}}
+                    </option>
                 </select>
                 <span class="input_icon dropdown_icon"></span>
             </div>

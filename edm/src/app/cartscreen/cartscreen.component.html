@@ -4,7 +4,51 @@
         <div class="primary_table">
             <table style="min-width: 800px;">
                 <tbody>
-                    <tr>
+                    <tr *ngFor="let cart of cartList;let i = index">
+                        <td>
+                            <label class="checkbox">
+                                <input name="tracks" [(ngModel)]="cart.isChecked" type="checkbox"
+                                    (change)="onStatusChange($event)">
+                                <span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <div class="play_upper_layer">
+                                <img class="tbl_img" [src]="imageBaseUrl + cart.Thumbnail" />
+                                <!-- <img class="tbl_img" [src]="../../../../assets/images/product_thumbnail.jpg" /> -->
+                                <div class="play_audio">
+                                    <span title="Play" class="playy"></span>
+                                    <span title="Pause" class="pausee" style="display: none;"></span>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <b>{{cart.ObjectName}}</b><br>
+                            <b><small>by <a href="#"><u>Jorden</u></a></small></b>
+                        </td>
+                        <td>
+                            <b><a>
+                                    {{cart.ObjectCategory}}
+                                </a></b>
+                        </td>
+                        <td>
+                            <div class="table_btn">
+                                <a class="global_btn primary_btn">
+                                    <span><b>$ {{cart.Price}}</b></span>
+                                </a>
+                                <a class="global_btn primary_btn">
+                                    <span>Add Project Files</span>
+                                    <span class="bio_black_icon btn_icon left_btn_icon"></span>
+                                </a>
+                                <a class="global_btn red_btn"
+                                    (click)="Remove(cart.OrderID,cart.ObjectID,cart.ObjectType,cart)">
+                                    <span>Remove</span>
+                                    <span class="delete_icon btn_icon"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- <tr>
                         <td>
                             <div class="play_upper_layer">
                                 <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
@@ -73,42 +117,7 @@
                                 </a>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="play_upper_layer">
-                                <img class="tbl_img" src="../../../../assets/images/product_thumbnail.jpg" />
-                                <div class="play_audio">
-                                    <span title="Play" class="playy"></span>
-                                    <span title="Pause" class="pausee" style="display: none;"></span>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <b>Extreme Adventure</b><br>
-                            <b><small>by <a href="#"><u>Jorden</u></a></small></b>
-                        </td>
-                        <td>
-                            <b><a>
-                                Hiphop
-                            </a></b>
-                        </td>
-                        <td>
-                            <div class="table_btn">
-                                <a class="global_btn primary_btn">
-                                    <span><b>$ 500</b></span>
-                                </a>
-                                <a class="global_btn primary_btn">
-                                    <span>Add Project Files</span>
-                                    <span class="bio_black_icon btn_icon left_btn_icon"></span>
-                                </a>
-                                <a class="global_btn red_btn">
-                                    <span>Remove</span>
-                                    <span class="delete_icon btn_icon"></span>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
         </div>
@@ -117,28 +126,32 @@
         <div class="total_count_list">
             <div class="coupon_section">
                 <div class="form_group">
-                    <div class="form_area">
-                        <input type="text" name="couponcode" placeholder="Enter Valid Coupon Code" />
-                    </div>
-                    <a class="global_btn primary_btn">
-                        <span>APPLY</span>
-                    </a>
-                    <div class="error_msg">
-                        <span>This field is Required</span>
-                    </div>
+                    <form [formGroup]="couponForm">
+                        <div class="form_area">
+                            <input formControlName='couponCode' type="text" name="couponcode"
+                                placeholder="Enter Valid Coupon Code" />
+                        </div>
+                        <a class="global_btn primary_btn" (click)="applyCoupon()">
+                            <span>APPLY</span>
+                        </a>
+                        <div class="error_msg"
+                            *ngIf="couponForm?.controls?.couponcode?.invalid && couponForm?.controls?.couponcode?.touched">
+                            <span>This field is Required</span>
+                        </div>
+                    </form>
                 </div>
             </div>
             <ul>
                 <li>Subtotal:-</li>
-                <li>$1023</li>
+                <li>${{cartAmount?.subtotal}}</li>
             </ul>
             <ul>
-                <li>Service Tax - (5.2%):-</li>
-                <li>$188</li>
+                <li>Service Tax - ({{cartAmount?.serviceTaxPer}}%):-</li>
+                <li>${{cartAmount?.serviceTax}}</li>
             </ul>
             <ul class="total">
                 <li>Total:-</li>
-                <li>$1211</li>
+                <li>${{cartAmount?.total}}</li>
             </ul>
             <a class="global_btn primary_btn full_btn">
                 <span>PLACE ORDER</span>

@@ -85,26 +85,7 @@ export class ProducerProfileComponent implements OnInit {
             this._base._commonService.hideLoader();
         })
     }
-    UserActionNotificationAlert(ObjectData, requestData, responseData) {
-        console.log("UserActionNotificationAlert", ObjectData, requestData, responseData)
-        let msg = {
-            Follow: `${requestData.ObjectType} followed successfully`,
-            Unfollow: `${requestData.ObjectType} unfollow successfully`,
-            Favourite: `${requestData.ObjectType} added`,
-            Unfavourite: `${requestData.ObjectType} removed`,
-            // error: `Something Went Wrong`,
-        }
-        // this._base._alertMessageService[requestData.Action == responseData ? 'success' : 'error'](requestData.Action == responseData ? msg[responseData] : msg.error)
-        this._base._alertMessageService['success'](msg[responseData])
-        if (requestData.Action == responseData) {
-            if (requestData.ObjectType == 'Producer') {
-                ObjectData.Followed = (responseData == 'Follow')
-                ObjectData.Followers = (responseData == 'Follow') ? ObjectData.Followers + 1 : ObjectData.Followers - 1
-            } else if (requestData.ObjectType == 'track') {
-                ObjectData.Favourite = (responseData == 'Favourite')
-            }
-        }
-    }
+
 
     // UserAction(ActionType: string, actionSet: boolean, actionObj: any) {
     UserAction(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
@@ -118,7 +99,7 @@ export class ProducerProfileComponent implements OnInit {
         //     this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
         this._profileService.UserAction(this.UserActionData).subscribe((res: any) => {
             console.log("UserAction", res, actionObj)
-            this.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+            this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
             // if (ActionType == 'follow') {
             //     actionObj.Followed = (res == 'Follow')
             //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
@@ -128,7 +109,40 @@ export class ProducerProfileComponent implements OnInit {
         })
     }
 
-    
+    Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+        this.UserActionData.Action = Action
+        this.UserActionData.ObjectID = parseInt(ObjectID)
+        this.UserActionData.ObjectType = ObjectType
+
+        // if (ActionType == 'follow')
+        //     this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
+        // if (ActionType == 'favorite')
+        //     this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
+        let Object = {
+            UserID: this.UserActionData.UserID,
+            OrderID: 0,
+            ObjectID: parseInt(ObjectID),
+            ObjectType: ObjectType,
+            OrderStatus: Action
+        }
+
+        let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
+
+        Data.ObjectList.push(Object)
+
+        this._profileService.Order(Data).subscribe((res: any) => {
+            console.log("Order", res, actionObj)
+            this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+            // if (ActionType == 'follow') {
+            //     actionObj.Followed = (res == 'Follow')
+            //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
+            // } else if (ActionType == 'favorite') {
+            //     actionObj = (res == 'Favourite')
+            // }
+        })
+    }
+
+
 
 
 
