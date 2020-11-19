@@ -65,9 +65,8 @@
                         <!-- <div *ngIf="track.FileManager.length != 0" class="" [id]="track.Ref_Track_ID" (click)="playaudio(track.FileManager, track.Ref_Track_ID, data)">
                             <span class="playpause_{{track.Ref_Track_ID}} play_audio"></span>
                         </div> -->
-                        <div class="play_audio">
-                            <span class="playy" title="Play"></span>
-                            <span title="Pause" class="pausee" style="display: none;"></span>
+                        <div class="play_audio" *ngIf="track.FileManager.length != 0" [id]="track.Ref_Track_ID" (click)="playaudio(track.FileManager, track.Ref_Track_ID, data)">
+                            <span class="playpause_{{track.Ref_Track_ID}} playy"></span>
                         </div>
                     </div>
                 </td>

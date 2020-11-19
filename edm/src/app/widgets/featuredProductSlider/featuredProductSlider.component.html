@@ -12,7 +12,7 @@
             <div class="product_details">
                 <div class="left_details">
                     <img *ngIf="objSlide.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(objSlide.Ref_Track_ID,'Track','Favourite')" />
-                    <img *ngIf="objSlide.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" />
+                    <img *ngIf="objSlide.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" title="Remove from Favorites" (click)="useraction(objSlide.Ref_Track_ID,'Track','Unfavourite')" />
                     <img src="../../../assets/images/read_more.svg" (click)="redirect(objSlide.Ref_Track_ID)" class="green_heart" title="Read More" />
                 </div>
                 <div class="right_details">

@@ -294,13 +294,33 @@ export class ProductComponent implements OnInit {
       }
       this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
         console.log(data);
+        if(Action == "Favourite" || Action == "Unfavourite"){
+          this.Addonwhishlist(Ref_User_ID,ObjectID,ObjectType, Action)
+      }else{
         this.getProductlist();
         this._base._commonService.hideLoader()
+      }
+        
       }, e => {
         this._base._commonService.hideLoader()
       })
     })
   }
+  Addonwhishlist(Ref_User_ID,ObjectID,ObjectType, Action){
+    let ObjUseraction = {
+        "UserID": Ref_User_ID,
+        "ObjectID": ObjectID,
+        "ObjectType": ObjectType,
+        "Action": Action == "Favourite"?"Wishlist":"Unwishlist"
+    }
+    this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
+        console.log(data)
+        this.ngOnInit()
+        this._base._commonService.hideLoader()
+    }, e => {
+        this._base._commonService.hideLoader()
+    }) 
+}
   playaudio(path, id, data) {
     debugger
     if ($('.playpause_' + id).hasClass('pause')) {

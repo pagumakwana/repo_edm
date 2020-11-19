@@ -6,7 +6,7 @@
     <swiper class="genre_slider" [config]="config" *ngIf="genrelist?.length != 0">
         <div class="swiper-slide" *ngFor="let genre of genrelist" (click)="onGenreFilter(genre.CategoryName)">
             <div class="genre_slider_sec">
-                <img [src]="filterfile(genre.FileManager, 'Image')">
+                <img [src]="filterfile(genre.FileManager, 'thumbnail')">
                 <p>
                     {{genre.CategoryName}}
                 </p>
@@ -114,7 +114,7 @@
                     <div class="left_details">
                         <img *ngIf="product.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')" />
 
-                        <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" />
+                        <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" (click)="useraction(product.Ref_Track_ID,'Track','Unfavourite')" />
                         <img src="../../../assets/images/read_more.svg" routerLink="details/{{product.Ref_Track_ID}}" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
@@ -167,7 +167,7 @@
                                 <a *ngIf="product.Favourite != 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Favourite')">
                                     <span class="add_to_favourites_green_icon"></span>
                                 </a>
-                                <a *ngIf="product.Favourite == 'Favourite'" title="Like" class="small_icon_btn">
+                                <a *ngIf="product.Favourite == 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Unfavourite')">
                                     <span class="add_to_favourites_green_icon"></span>
                                 </a>
                                 <a title="Read More" class="small_icon_btn" routerLink="details/{{product.Ref_Track_ID}}">
