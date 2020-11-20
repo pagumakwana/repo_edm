@@ -145,6 +145,15 @@
                 <li>Subtotal:-</li>
                 <li>${{cartAmount?.subtotal}}</li>
             </ul>
+            <ul *ngIf="cartAmount?.discounted?.couponCode">
+                <li>Discount Applied:- <span (click)="removeCoupon()">[{{cartAmount?.discounted?.couponCode}} Remove]</span>
+                    <!-- <a class="global_btn red_btn" (click)="Remove(cart.OrderID,cart.ObjectID,cart.ObjectType,cart)">
+                        <span>[{{cartAmount?.discounted?.couponCode}} Remove]</span>
+                        <span class="delete_icon btn_icon"></span>
+                    </a> -->
+                </li>
+                <li>${{cartAmount?.discounted?.price}}</li>
+            </ul>
             <ul>
                 <li>Service Tax - ({{cartAmount?.serviceTaxPer}}%):-</li>
                 <li>${{cartAmount?.serviceTax}}</li>

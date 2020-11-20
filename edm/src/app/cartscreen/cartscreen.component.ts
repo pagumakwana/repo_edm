@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../_appService/cart/cart.service';
 import { enAppSession } from '../_appModel/enAppSession';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-cartscreen',
@@ -18,11 +19,19 @@ export class CartScreenComponent implements OnInit {
   }
   cartAmount: {
     total: number,
+    discounted: {
+      price: number,
+      couponCode: string
+    },
     serviceTaxPer: number,
     serviceTax: number,
     subtotal: number,
   } = {
       total: 0,
+      discounted: {
+        price: 0,
+        couponCode: null
+      },
       serviceTaxPer: 5.2,
       serviceTax: 0,
       subtotal: 0
@@ -48,35 +57,6 @@ export class CartScreenComponent implements OnInit {
     this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
       this.requestData.userId = Ref_User_ID
       this.getCartList()
-
-      // let arr = ["a.b.c"]
-      // let obj: {
-      //   [key: string]: {
-      //     [key: string]: {
-      //       [key: string]: boolean
-      //     }
-      //   }
-      // } = {}
-      // for (let item of arr) {
-      //   let data = item.split('.')
-      //   // let temp1 = { [data[2]]: true }
-      //   // let temp2 = { [data[1]]: temp1 }
-      //   // obj[data[0]] = temp2
-      //   // obj[data[0]][data[1]][data[2]] = true
-      // }
-      // console.log("objform", obj)
-
-      // let input = [
-      //   [['firstName', 'Joe'], ['lastName', 'Blow'], ['age', 42], ['role', 'clerk']],
-      //   [['firstName', 'Mary'], ['lastName', 'Jenkins'], ['age', 36], ['role', 'manager']]
-      // ]
-
-      // let output = input.map(a => Object.fromEntries(a));
-      // let output1 = Object.fromEntries(output);
-
-      // console.log("output", output, output1);
-
-
     })
   }
 
@@ -85,6 +65,7 @@ export class CartScreenComponent implements OnInit {
       this.cartList = data
       this.cartList.map(res => {
         res.isChecked = true
+        res.discountedPrice = 0
       })
       console.log("getCartList", this.cartList)
       this.calculateCost()
@@ -93,6 +74,7 @@ export class CartScreenComponent implements OnInit {
   }
   onStatusChange(event) {
     console.log("onstatusChange", event)
+    this.removeCoupon(false)
     this.calculateCost()
   }
 
@@ -100,46 +82,16 @@ export class CartScreenComponent implements OnInit {
     let selectedProducts = this.cartList.filter(res => res.isChecked)
     console.log("calculateCost", selectedProducts)
     let subtotal: number = 0
+    let discountedPrice: number = 0
     for (let product of selectedProducts) {
       subtotal = subtotal + parseFloat(product.Price)
+      discountedPrice = discountedPrice + parseFloat(product.discountedPrice)
     }
     this.cartAmount.subtotal = parseFloat(subtotal.toFixed(2));
-    this.cartAmount.serviceTax = parseFloat(((subtotal * (this.cartAmount.serviceTaxPer / 100))).toFixed(2));
-    this.cartAmount.total = subtotal + this.cartAmount.serviceTax
+    this.cartAmount.discounted.price = parseFloat(discountedPrice.toFixed(2));
+    this.cartAmount.serviceTax = parseFloat((((this.cartAmount.subtotal - this.cartAmount.discounted.price) * (this.cartAmount.serviceTaxPer / 100))).toFixed(2));
+    this.cartAmount.total = (this.cartAmount.subtotal - this.cartAmount.discounted.price) + this.cartAmount.serviceTax
   }
-
-  // Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
-  //   this.UserActionData.Action = Action
-  //   this.UserActionData.ObjectID = parseInt(ObjectID)
-  //   this.UserActionData.ObjectType = ObjectType
-
-  //   // if (ActionType == 'follow')
-  //   //     this.UserActionData.Action = actionSet ? 'Follow' : "Unfollow"
-  //   // if (ActionType == 'favorite')
-  //   //     this.UserActionData.Action = actionSet ? 'Favourite' : "Unfavourite"
-  //   let Object = {
-  //     UserID: this.UserActionData.UserID,
-  //     OrderID: 0,
-  //     ObjectID: parseInt(ObjectID),
-  //     ObjectType: ObjectType,
-  //     OrderStatus: Action
-  //   }
-
-  //   let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
-
-  //   Data.ObjectList.push(Object)
-
-  //   this._cartService.Order(Data).subscribe((res: any) => {
-  //     console.log("Order", res, actionObj)
-  //     this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
-  //     // if (ActionType == 'follow') {
-  //     //     actionObj.Followed = (res == 'Follow')
-  //     //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
-  //     // } else if (ActionType == 'favorite') {
-  //     //     actionObj = (res == 'Favourite')
-  //     // }
-  //   })
-  // }
 
   Remove(OrderID: number | any, ObjectID: number | any, ObjectType: string, index: number) {
     let Object: { UserID: number; OrderID: number; ObjectID: number; ObjectType: string, Action?: string } = {
@@ -153,45 +105,70 @@ export class CartScreenComponent implements OnInit {
     this._cartService.Remove(Object).subscribe((res: any) => {
       Object.Action = 'Remove'
       console.log("Remove", res, Object)
-      // this._base._commonService.UserActionNotificationAlert(actionObj, Object, res)
-      // if (ActionType == 'follow') {
-      //     actionObj.Followed = (res == 'Follow')
-      //     actionObj.Followers = (res == 'Follow') ? actionObj.Followers + 1 : actionObj.Followers - 1
-      // } else if (ActionType == 'favorite') {
-      //     actionObj = (res == 'Favourite')
-      // }
     })
   }
 
   applyCoupon() {
     console.log("applyCoupon", this.couponForm.value.couponCode)
-    let selectedProducts = this.cartList.filter(res => res.isChecked)
+    let selectedProducts: Array<any> = this.cartList.filter(res => res.isChecked)
     console.log("calculateCost", selectedProducts)
-    for (let product of selectedProducts) {
-      this.checkCoupon(product.OrderID)
+    this.cartAmount.discounted.price = 0
+    this.cartAmount.discounted.couponCode = null
+    for (let i in selectedProducts) {
+      this.checkCoupon(selectedProducts[i].OrderID, parseInt(i) == selectedProducts.length - 1)
     }
   }
 
-  checkCoupon(OrderID) {
-    console.log("checkCoupon", OrderID, this.couponForm.value.couponCode)
+  checkCoupon(OrderID, showMsg: boolean = false) {
+    console.log("checkCoupon", OrderID, this.couponForm.value.couponCode, showMsg)
     let data: { UserID: number; OrderID: number; CouponCode: string; } = {
       UserID: this.requestData.userId,
       OrderID: OrderID,
       CouponCode: this.couponForm.value.couponCode
     }
-    let res = [
+    let res: any = [
       {
         "ObjectIDs": "",
         "DiscountInMax": 0,
         "DiscountInPercentage": 0,
-        "CouponStatus": "INVALIDCOUPONCODE"
+        "CouponStatus": "APPLIED"
       }
+      // {
+      //   "ObjectIDs": "",
+      //   "DiscountInMax": 10,
+      //   "DiscountInPercentage": 0,
+      //   "CouponStatus": "INVALIDCOUPONCODE"
+      // }
     ]
-    // this._cartService.ApplyCoupon(data).subscribe((res: any) => {
-    //   console.log("ApplyCoupon", res)
-    // })
+    res = Array.isArray(res) && res.length > 0 ? res[0] : null
+    if (res && res.CouponStatus == 'APPLIED') {
+      this.cartAmount.discounted.couponCode = this.couponForm.value.couponCode
+      if (showMsg) this._base._alertMessageService.success(`${this.cartAmount.discounted.couponCode} Applied Sucessfully`)
+      let index: number = _.findIndex(this.cartList, (o: any) => {
+        return o.OrderID == OrderID
+      })
+      if (index > -1) {
+        this.cartList[index].discountedPrice = res.DiscountInMax
+        this.calculateCost()
+      }
+    } else {
+      if (showMsg) this._base._alertMessageService.error('Invalid Coupon Code')
+    }
+    this._cartService.ApplyCoupon(data).subscribe((res: any) => {
+      console.log("ApplyCoupon", res)
+    })
 
 
+  }
+
+  removeCoupon(calcCost: boolean = true) {
+    this.cartAmount.discounted.price = 0
+    this.cartAmount.discounted.couponCode = null
+    this.couponForm.controls.couponCode.setValue('')
+    for (let product of this.cartList) {
+      product.discountedPrice = 0
+    }
+    if (calcCost) this.calculateCost()
   }
 
 
