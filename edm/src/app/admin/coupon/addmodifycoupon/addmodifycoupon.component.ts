@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { CouponModel } from 'src/app/_appModel/coupon/coupon.model';
 import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { formatDate } from '@angular/common';
+import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
 
 @Component({
   selector: 'appAdmin-addmodifycoupon',
@@ -23,10 +24,25 @@ export class AddModifyCouponComponent implements OnInit {
   Ref_Coupon_ID: string;
   addCoupon: CouponModel;
 
+  addCouponForm = this.fb.group({
+    Ref_Coupon_ID: ['', [Validators.required]],
+    CouponCode: ['', [Validators.required]],
+    Description: ['', [Validators.required]],
+    DiscountInPercentage: ['', [Validators.required]],
+    DiscountInMax: ['', [Validators.required]],
+    StartDate: ['', [Validators.required, ValidationService.dateValidator(1)]],
+    EndDate: ['', []],
+    OneTimeUse: ['', [Validators.required]],
+    AudienceCount: ['', [Validators.required]],
+    OnlyForNewUsers: ['', [Validators.required]],
+    IsActive: ['', [Validators.required]],
+    DiscountType: ['flat', [Validators.required]], //Static [Flat,Percent]
+  })
+
   ngOnInit(): void {
     this._base._pageTitleService.setTitle("CREATE NEW COUPON CODE", "CREATE NEW COUPON CODE");
     this.Ref_Coupon_ID = this._activatedRouter.snapshot.paramMap.get('Ref_Coupon_ID');
-
+    this.addCouponForm.controls.EndDate.setValidators([Validators.required, ValidationService.dateValidator(1), ValidationService.dateValidator(2, this.addCouponForm.controls.StartDate.value)])
     if (this.Ref_Coupon_ID != '0') {
       this.bindCoupon();
     } else {
@@ -34,19 +50,7 @@ export class AddModifyCouponComponent implements OnInit {
     }
   }
 
-  addCouponForm = this.fb.group({
-    Ref_Coupon_ID: ['', [Validators.required]],
-    CouponCode: ['', [Validators.required]],
-    Description: ['', [Validators.required]],
-    DiscountInPercentage: ['', [Validators.required]],
-    DiscountInMax: ['', [Validators.required]],
-    StartDate: ['', [Validators.required]],
-    EndDate: ['', [Validators.required]],
-    OneTimeUse: ['', [Validators.required]],
-    AudienceCount: ['', [Validators.required]],
-    OnlyForNewUsers: ['', [Validators.required]],
-    IsActive: ['', [Validators.required]]
-  })
+
 
   initialize() {
     this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
@@ -62,7 +66,7 @@ export class AddModifyCouponComponent implements OnInit {
         OneTimeUse: null,
         AudienceCount: null,
         OnlyForNewUsers: null,
-        IsActive: null,
+        IsActive: true,
         CreatedBy: Ref_User_ID,
         CouponObject: []
       }
@@ -119,7 +123,6 @@ export class AddModifyCouponComponent implements OnInit {
       }
       let isRedirect: boolean = (res != "COUPONCODEEXISTS")
       this._base._alertMessageService[isRedirect ? 'success' : 'error'](msg[res]);
-      // $('#acknowledge_popup').modal('show')
       if (isRedirect)
         setTimeout(() => { this._base._router.navigate(['admin', 'coupon']) }, 3000);
     })

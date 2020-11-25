@@ -20,11 +20,11 @@ export class CartService {
 
     Remove(data: { UserID: number; OrderID: number; ObjectID: number; ObjectType: string }) {
         let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&ObjectID=${data.ObjectID}&ObjectType=${data.ObjectType}`
-        return this._base._ApiService.post(`${ApiConstant.Order.Remove}${params}`);
+        return this._base._ApiService.get(`${ApiConstant.Order.Remove}${params}`);
     }
 
     ApplyCoupon(data: { UserID: number; OrderID: number; CouponCode: string; }) {
         let params: string = `?UserID=${data.UserID}&OrderID=${data.OrderID}&CouponCode=${data.CouponCode}`
-        return this._base._ApiService.post(`${ApiConstant.Order.ApplyCoupon}${params}`);
+        return this._base._ApiService.get(`${ApiConstant.Order.ApplyCoupon}${params}`);
     }
 }

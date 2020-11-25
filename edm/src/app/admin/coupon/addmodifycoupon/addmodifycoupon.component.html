@@ -17,14 +17,14 @@
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <select name="trackgenre">
+                <select name="trackgenre" formControlName='DiscountType'>
                     <option disabled selected>Discount Type</option>
-                    <option>Options</option>
-                    <option>Options</option>
+                    <option value="flat">Flat Discount</option>
+                    <option value="percent">Percent Discount</option>
                 </select>
                 <span class="input_icon dropdown_icon"></span>
             </div>
-            <!-- <edm-error [control]="addCouponForm.controls.Revision"></edm-error> -->
+            <edm-error [control]="addCouponForm.controls.DiscountType"></edm-error>
 
         </div>
         <div class="multipul_form_group">
@@ -53,23 +53,51 @@
             <div class="width_50">
                 <div class="form_group">
                     <div class="form_area icon_form_group">
-                        <input type="text" name="discountamount" placeholder="Discount Amount" />
+                        <input type="text" formControlName='DiscountInMax' name="discountamount"
+                            placeholder="Discount Amount" />
                         <span class="input_icon price_icon"></span>
                     </div>
-                    <!-- <edm-error [control]="addCouponForm.controls.Revision"></edm-error> -->
-
+                    <edm-error [control]="addCouponForm.controls.DiscountInMax"></edm-error>
+                </div>
+            </div>
+            <div class="width_50" *ngIf="addCouponForm.controls.DiscountType.value == 'percent'">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="number" formControlName='DiscountInPercentage' name="discountamount"
+                            placeholder="Percent Discount" />
+                        <!-- <span class="input_icon price_icon"></span> -->
+                    </div>
+                    <edm-error [control]="addCouponForm.controls.DiscountInPercentage"></edm-error>
+                </div>
+            </div>
+            <div class="width_50">
+                <div class="form_group">
+                    <div class="form_area icon_form_group">
+                        <input type="number" formControlName='AudienceCount' name="discountamount"
+                            placeholder="Audience Count" />
+                        <span class="input_icon price_icon"></span>
+                    </div>
+                    <edm-error [control]="addCouponForm.controls.AudienceCount"></edm-error>
                 </div>
             </div>
         </div>
         <div class="form_group inline_form_group">
-            <label class="form_label">Is Parent</label>
+            <!-- <label class="form_label">Is Parent</label> -->
             <div class="form_area">
                 <div class="inline_radio">
-                    <label class="radio">
-                        <input name="IsParent" type="radio" checked="checked">only for new users
+                    <label class="checkbox">
+                        <input name="tracks" formControlName='OneTimeUse' type="checkbox">One Time Use
                         <span></span>
                     </label>
-                    <label class="radio">
+                    <label class="checkbox">
+                        <input name="tracks" formControlName='OnlyForNewUsers' type="checkbox">Only For New Users
+                        <span></span>
+                    </label>
+                    <!-- <label class="radio">
+                        <input name="IsParent" type="radio" checked="checked">only for new users
+                        <span></span>
+                    </label> -->
+                    <!-- <label class="radio">
                         <input name="IsParent" type="radio">apply for our Best Buyers
                         <span></span>
                     </label>
@@ -84,7 +112,7 @@
                     <label class="radio">
                         <input name="IsParent" type="radio">apply for by minimum price 500$ Track
                         <span></span>
-                    </label>
+                    </label> -->
                 </div>
             </div>
             <!-- <edm-error [control]="addCouponForm.controls.Revision"></edm-error> -->
