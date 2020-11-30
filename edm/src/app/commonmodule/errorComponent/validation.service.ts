@@ -14,7 +14,9 @@ export class ValidationService {
             'invalid_File_Size': 'Invalid File Size',
             'invalid_File_Resolution': 'Invalid File Resolution',
             'invalid_white_Space': 'White Space Not Allowed',
-            'invalid_Number_Price_Type': `Invalid Price Field Max price should be less than equal to ${validatorValue.requiredPrice}`
+            'invalid_Number_Price_Type': `Invalid Price Field Max price should be less than equal to ${validatorValue.requiredPrice}`,
+            'invalid_Date_1': `Selected Date is Invalid`,
+            'invalid_Date_2': `End Date should be Greater than Start Date`
         };
 
         return config[validatorName];
@@ -117,5 +119,22 @@ export class ValidationService {
                 resolve(returnData)
             }
         })
+    }
+
+    static dateValidator(identifer: number, minDateData = '2020-01-01', maxDateData = '2100-01-01') {
+        return (control: AbstractControl): { [key: string]: any } | null => {
+            // const initalValue: string = control.value && typeof control.value == 'string' ? control.value : ""
+            // let valueAFterTrim: string = initalValue.trim()
+            let controlDate: Date = new Date(control.value)
+            // let DateToday: Date = new Date()
+            let minDate: Date = minDateData ? new Date(minDateData) : new Date()
+            let maxDate: Date = maxDateData ? new Date(maxDateData) : new Date()
+            let isDateValid: boolean = true
+            if (identifer == 1) isDateValid = minDate <= controlDate && controlDate <= maxDate
+            if (identifer == 2) isDateValid = minDate <= controlDate
+            console.log("dateValidatorinvalid_Date_" + identifer, minDateData, control.value, isDateValid)
+
+            return !isDateValid ? { ['invalid_Date_' + identifer]: true } : null
+        }
     }
 }
