@@ -68,4 +68,8 @@ export class ApiConstant {
         Authority: "Admin/AuthorityManagement/Authority",
         AuthorityDetails: "Admin/AuthorityManagement/AuthorityDetails",
     }
+    public static support = {
+        TicketType: "User/TicketType",
+        Ticket: "User/Ticket",
+    }
 }

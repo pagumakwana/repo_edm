@@ -1,51 +1,55 @@
 <div class="portlet_body admin_half_forms">
-    <form>
+    <form [formGroup]="addTicket">
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <select name="tickettype">
-                    <option *ngFor="let type of ticketType" value= {{type.Ref_TicketType_ID}}>
+                <select name="tickettype" [value]="TicketType_ID" formControlName="typeofTicket" [(ngModel)]="typeofTicket">
+                    <option  [value]="undefined" disabled hidden>Select Ticket Type</option>
+                    <option *ngFor="let type of ticketType" [value]= "type.Ref_TicketType_ID"  [selected]="type.Ref_TicketType_ID == TicketType_ID">
                         {{type.TicketType}}
                     </option>
                 </select>
                 <span class="input_icon dropdown_icon"></span>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
+            <edm-error [control]="addTicket.controls.typeofTicket"></edm-error>
         </div>
         <div class="form_group">
             <div class="form_area icon_form_group">
-                <input type="text" name="subject" placeholder="Subject" />
+                <input type="text" name="subject" formControlName="subject" [(ngModel)]="subject" placeholder="Subject" />
                 <span class="input_icon "></span>
             </div>
-            <div class="error_msg">
+            <!-- <div class="error_msg">
                 <span>This field is Required</span>
-            </div>
+            </div> -->
+            <edm-error [control]="addTicket.controls.subject"></edm-error>
         </div>
         <div class="form_group">
             <div class="form_area">
-                <textarea rows="4" placeholder="Description in brief about query"></textarea>
+                <textarea rows="4" formControlName="Description" [(ngModel)]="Description" placeholder="Description in brief about query"></textarea>
             </div>
-            <div class="error_msg">
-                <span>This field is Required</span>
-            </div>
+            <edm-error [control]="addTicket.controls.Description"></edm-error>
         </div>
         <div class="form_group">
             <label class="form_label">Attach Files</label>
             <div class="form_area">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <img src="../../../../assets/images/product_thumbnail.jpg" class="image_preview" />
-                    <label class="custom-file-label" for="customFile">
-                        Choose file
+                    <input [ngModelOptions]="{standalone: true}" type="file" class="custom-file-input" accept="image/*" id="customFile" [(ngModel)]="supportImg" (change)="changeListenerSupportImg($event)">
+                    <img *ngIf="preview" [src]="preview" class="image_preview" />
+                    <label *ngIf="preview == undefined" class="custom-file-label" for="customFile">
+                        {{supportImg}}
                     </label>
-                    <label class="custom-file-label upload_btn"></label>
+                    <label *ngIf="preview" class="custom-file-label remove_btn" (click)="RemoveImg(supportImg)"> {{supportImg}}</label>
                 </div>
                 <span class="file_formats">Note: File upload limit - 1GB</span>
             </div>
+            <div class="error_msg" *ngIf="!bannerImguploaded">
+                <span>This field is Required</span>
+            </div>
+            <div class="error_msg" *ngIf="invlideimg">
+                <span>Please select jpg/jpeg/png formate.</span>
+            </div>
         </div>
         <div class="button_group">
-            <a class="global_btn primary_btn" data-toggle="modal" data-target="#acknowledge_popup">
+            <a class="global_btn primary_btn" (click)="addmodifySupportsubmit()">
                 <span>submit Ticket</span>
             </a>
         </div>
