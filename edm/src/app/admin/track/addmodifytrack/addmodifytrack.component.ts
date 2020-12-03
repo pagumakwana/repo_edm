@@ -412,7 +412,7 @@ export class AddModifyTrackComponent implements OnInit {
       this.midifileurl = undefined;
       this.MIDIfileNotuploaded = true
       this.MIDIfileuploaded = false
-      this.mixdowfileurl = undefined;
+      this.MIDIfile = undefined;
 
     }
   }
