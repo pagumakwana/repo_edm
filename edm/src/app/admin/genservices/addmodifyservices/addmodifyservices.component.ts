@@ -401,7 +401,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
   removeFile(fieldName, fileIndex) {
     console.log("removeFile", fieldName, fileIndex)
-    if (this.fileChoosenData[fieldName][fileIndex].FileManagerID != null)
+    if (this.fileChoosenData[fieldName][fileIndex].FileManagerID != null && this.fileChoosenData[fieldName][fileIndex].FileManagerID > 0)
       this.removeThumbnail(this.fileChoosenData[fieldName][fileIndex].FileManagerID)
 
     this.fileChoosenData[fieldName].splice(fileIndex, 1)
