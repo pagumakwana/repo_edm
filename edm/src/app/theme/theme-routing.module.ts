@@ -65,6 +65,10 @@ const routes: Routes = [
             {
                 path: "wishlist",
                 loadChildren: () => import('../wishlist/wishlist.module').then(m => m.WishlistModule)
+            },
+            {
+                path: "profileupdate",
+                loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
             }
         ],
     },
