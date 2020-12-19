@@ -114,6 +114,10 @@ const routes: Routes = [
                 loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
             },
             {
+                path: "producer",
+                loadChildren: () => import('../admin/producer/producerlist.module').then(m => m.ProducerModule)
+            },
+            {
                 path: "support",
                 loadChildren: () => import('../admin/support/support.module').then(m => m.SupportModule)
             },
