@@ -17,4 +17,9 @@ export class CategoryService {
         let params = `?Flag=${flag}&Ref_Category_ID=${ref_category_id}&AliasName=${AliasName}`
         return this._base._ApiService.get(ApiConstant.category.category + params);
     }
+    ManageCategory(CategoryIDs, Action) {
+        let params = `?CategoryIDs=${CategoryIDs}&Action=${Action}`
+        return this._base._ApiService.get(ApiConstant.category.ManageCategory + params);
+    }
+
 }
