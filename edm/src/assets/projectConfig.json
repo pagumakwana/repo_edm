@@ -1,12 +1,7 @@
 {
-    "apiBaseURL1": "http://localhost:2763/api",
-    "apiBaseURL2": "http://webdroids-001-site5.itempurl.com/api",
     "apiBaseURL": "http://api.shivajimaharaj.in/api",
     "ipifyUrl": "http://api.ipify.org/?format=json",
-    "cdnURL": "http://api.shivajimaharaj.in/",
-    "cdnURL3": "http://edmapi.webdroids.in/",
-    "cdnURL2": "http://webdroids-001-site5.itempurl.com/",
-    "cdnURL1": "http://localhost:2763/",
+    "cdnURL": "http://api.shivajimaharaj.in/api/",
     "client_id": "2",
     "clientname": "EDM",
     "project_id": "2",

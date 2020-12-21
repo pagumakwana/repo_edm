@@ -116,12 +116,12 @@ export class GenerListComponent implements OnInit {
   changeFilter(event) {
     debugger
     this.bindCategory().then((res: any) => {
-      if (event.target.value >= 1) {
+      if (parseInt(event.target.value) >= 1) {
         this.tableConfig.tableData = this.categoryData.filter((res: any) => {
-          return res.CategoryUseBy == event.target.value;
+          return res.CategoryUseBy == parseInt(event.target.value);
         })
-      } else if (event.target.value == 0) {
-        this.tableConfig.tableData = this.categoryData.sort((a, b) => b.CreatedDateTime.localeCompare(a.CreatedDateTime));
+      } else if (parseInt(event.target.value) == 0) {
+        this.tableConfig.tableData = this.categoryData;
       }
       this.tableObj.initializeTable();
 
