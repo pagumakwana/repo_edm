@@ -75,7 +75,11 @@ export class producerListComponent implements OnInit {
       }
       this._producer.ApproveAndRejact(data).subscribe((resData: any) => {
         // this.categoryData = resData
+        this._base._alertMessageService.success(resData);
+
         this.getProducerList()
+      }, err => {
+        this._base._alertMessageService.error("Something went wrong");
       });
     });
   }

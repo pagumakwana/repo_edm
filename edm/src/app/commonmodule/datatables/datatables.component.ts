@@ -19,6 +19,7 @@ export class DatatablesComponent implements OnInit {
   dataTable: any;
   imageBaseUrl: string = this._base._commonService.cdnURL
   ishide: boolean = true
+  tableData: Array<any> = null
   isCheckAll = false
 
   constructor(public _base: BaseServiceHelper) { }
@@ -29,7 +30,7 @@ export class DatatablesComponent implements OnInit {
 
   checkBoxSetup() {
     if (this.config.showCheckBox) {
-      this.config.tableData.map(item => {
+      this.tableData.map(item => {
         return item.isChecked_DataTable = this.isCheckAll
       })
     }
@@ -37,13 +38,21 @@ export class DatatablesComponent implements OnInit {
 
   checkALlItems(event) {
     console.log("checkALlItems", event)
-    for (let item of this.config.tableData) {
+    for (let item of this.tableData) {
       item.isChecked_DataTable = event.target.checked
     }
     this.tableClick(undefined, 'checkedBox')
   }
 
+
+
   initializeTable() {
+    this.tableData = null
+    let data = Array.isArray(this.config.tableData) ? this.config.tableData : []
+    this.tableData = JSON.parse(JSON.stringify(data))
+    if (this.dataTable) {
+      this.dataTable.DataTable().clear().destroy();
+    }
     setTimeout(() => {
       this.checkBoxSetup()
       this.dataTable = $(this.table.nativeElement);
@@ -62,14 +71,14 @@ export class DatatablesComponent implements OnInit {
 
   tableClick(tableItem, action, actionInfo?) {
     setTimeout(() => {
-      let checkedItems = this.config.tableData.filter(item => item.isChecked_DataTable)
+      let checkedItems = this.tableData.filter(item => item.isChecked_DataTable)
       let emitData: tableEvent = {
         tableItem: tableItem,
         action: action,
         actionInfo: actionInfo,
         checkedData: checkedItems
       }
-      this.isCheckAll = checkedItems.length == this.config.tableData.length
+      this.isCheckAll = checkedItems.length == this.tableData.length
       this.tableEvent.emit(emitData)
     }, 50);
   }

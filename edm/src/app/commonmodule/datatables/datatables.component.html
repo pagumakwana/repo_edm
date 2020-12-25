@@ -8,7 +8,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let tableItem of config?.tableData;let i = index">
+        <tr *ngFor="let tableItem of tableData;let i = index">
             <!-- <td>{{i+1}}</td> -->
             <td *ngIf="config?.showCheckBox"><input name="checkALL" type="checkbox"
                     [(ngModel)]='tableItem.isChecked_DataTable' (click)="tableClick(tableItem,'checkedBox')"></td>
