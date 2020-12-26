@@ -7,6 +7,8 @@ export class ApiConstant {
         forgotPassword: "Admin/UserManagement/ForgotPassword",
         requestOTP: "Admin/UserManagement/RequestOTP",
         registerGuest: "Admin/UserManagement/RegisterGuest",
+        ProducersAdmin: "Admin/UserManagement/Producers",
+        ApproveAndRejact: "Admin/UserManagement/ApproveAndRejact",
         Producers: "User/Producers",
         CustomServices: "User/CustomServices",
         TrackAndBeat: "User/TrackAndBeat",
@@ -14,9 +16,11 @@ export class ApiConstant {
         CustomServiceDetails: "User/Service/CustomServiceDetails",
         AvailableProducers: "User/AvailableProducers",
     }
+
     public static category = {
         AddModifyCategory: "Admin/MasterManagement/Category",
-        category: "Admin/MasterManagement/Category"
+        category: "Admin/MasterManagement/Category",
+        ManageCategory: "Admin/MasterManagement/ManageCategory"
     }
     public static CouponCode = {
         CouponCode: "Admin/MasterManagement/CouponCode",
@@ -27,6 +31,7 @@ export class ApiConstant {
         ManageService: "Admin/ServiceManagement/ManageService",
         servicebycatehory: "User/Service/ServiceByCategory",
     }
+
     public static common = {
         thumbnail: "Admin/Common/Image",
         uploadfiles: "Admin/Common/File",

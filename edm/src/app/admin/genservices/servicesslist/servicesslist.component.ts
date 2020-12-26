@@ -57,7 +57,7 @@ export class ServicesListComponent implements OnInit {
   }
 
   getCategory() {
-    this._categoryService.categorylist('SERVICE', 0).subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       this.categoryData = resData
     });
   }
@@ -110,13 +110,14 @@ export class ServicesListComponent implements OnInit {
     this._service.ManageService(this._serviceModel.Ref_Service_ID, 'delete').subscribe((response: any) => {
       if (response == 'SERVICEDELETE') {
         this._base._alertMessageService.success("Service deleted successfully!");
-        this.serviceList.filter((res: any, index: number) => {
-          if (res.Ref_Service_ID == this._serviceModel.Ref_Service_ID) {
-            this.serviceList.splice(index, 1);
-          }
-        });
-        this.tableConfig.tableData = this.serviceList
-        this.tableObj.initializeTable()
+        this.getService()
+        // this.serviceList.filter((res: any, index: number) => {
+        //   if (res.Ref_Service_ID == this._serviceModel.Ref_Service_ID) {
+        //     this.serviceList.splice(index, 1);
+        //   }
+        // });
+        // this.tableConfig.tableData = this.serviceList
+        // this.tableObj.initializeTable()
       }
     }, error => {
       this._base._alertMessageService.error("Something went wrong !!");

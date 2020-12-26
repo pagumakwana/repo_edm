@@ -30,6 +30,7 @@ export class TrackListComponent implements OnInit {
   confirmClicked = false;
   cancelClicked = false;
   rejectedReasonTxt
+  trackid: number = 0;
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private route: ActivatedRoute,
@@ -42,10 +43,10 @@ export class TrackListComponent implements OnInit {
       this.moduleName = params['module'];
       this._base._pageTitleService.setTitle("All " + this.moduleName + "s", "All " + this.moduleName + "s");
       this._base._commonService.showLoader();
-      let genretype="All"
-      if(this.moduleName == "Beat"){
+      let genretype = "All"
+      if (this.moduleName == "Beat") {
         genretype = "Beats"
-      }else if(this.moduleName == "Track"){
+      } else if (this.moduleName == "Track") {
         genretype = "Track"
       }
       this._categoryService.categorylist(genretype, 0).subscribe((resData: any) => {
@@ -108,8 +109,8 @@ export class TrackListComponent implements OnInit {
       this._base._commonService.hideLoader();
     })
   }
-  public filterfile(FileManager, fileType){
-  let file = FileManager.filter(item => item.FileIdentifier == fileType)
+  public filterfile(FileManager, fileType) {
+    let file = FileManager.filter(item => item.FileIdentifier == fileType)
     return this._base._commonService.cdnURL + file[0].FilePath
   }
   bindCategory() {
@@ -148,7 +149,7 @@ export class TrackListComponent implements OnInit {
       this.filteredProducts = this.data
     } else {
       this.filteredProducts = this.data.filter(x =>
-        (x.TrackStatus == 'Approve' && this.filter.Approved)
+        (x.TrackStatus == 'Approved' && this.filter.Approved)
         || (x.TrackStatus == 'SoldOut' && this.filter.SoldOut)
         || (x.TrackStatus == 'Rejected' && this.filter.Rejected)
         || (x.TrackStatus == '-' && this.filter.Pending)
@@ -190,9 +191,9 @@ export class TrackListComponent implements OnInit {
       // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('playy')) {
-     
-        let  file = path.filter(item => item.FileIdentifier == "MasterFile")
-    
+
+      let file = path.filter(item => item.FileIdentifier == "MasterFile")
+
       this.audio.src = this._base._commonService.cdnURL + file[0].FilePath;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
@@ -203,10 +204,10 @@ export class TrackListComponent implements OnInit {
       this.audio.play();
       $('.playpause_' + id).removeClass('playy');
       $('.playpause_' + id).addClass('pausee');
-      
+
     }
   }
-  public showreason(reason){
+  public showreason(reason) {
     this.rejectedReasonTxt = reason;
     (<any>$('#readmore_popup')).modal('show');
   }
@@ -232,7 +233,7 @@ export class TrackListComponent implements OnInit {
   }
   public manageTrackBeat(id, action) {
     this._base._commonService.showLoader();
-    if (action == 'Approve') {
+    if (action == 'Approved') {
       this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
         let ObjApproveAndRejact = {
           "TrackIDs": id,
@@ -241,7 +242,7 @@ export class TrackListComponent implements OnInit {
           "ActionBy": Ref_User_ID
         }
         this._base._ApiService.post(ApiConstant.TrackManagement.ApproveAndRejact, ObjApproveAndRejact).subscribe((data: any) => {
-          if (data == "Approve") {
+          if (data == "Approved") {
             this._base._alertMessageService.success(this.moduleName + " Approved successfully!");
             this.getAllTracks("0", 'All');
           } else {
@@ -253,23 +254,10 @@ export class TrackListComponent implements OnInit {
           this._base._commonService.hideLoader();
         })
       })
-    } else if (action == 'Reject') {
+    } else if (action == 'Rejected') {
       (<any>$('#rejectConfirmation')).modal('show');
 
       this.rejectTrackId = id;
-    } else {
-      this._base._ApiService.get(ApiConstant.TrackManagement.ManageTrack + '?TrackIDs=' + id + '&Action=' + action).subscribe((data: any) => {
-        if (data == "TRACKDELETE") {
-          this._base._alertMessageService.success(this.moduleName + " deleted successfully!");
-          this.getAllTracks("0", 'All');
-        } else {
-          console.log(data)
-          this._base._commonService.hideLoader();
-        }
-      }, e => {
-        console.log(e)
-        this._base._commonService.hideLoader();
-      })
     }
 
   }
@@ -304,5 +292,29 @@ export class TrackListComponent implements OnInit {
       })
     }
   }
-
+  deletetrack() {
+    if (this.trackid != 0) {
+      this._base._ApiService.get(ApiConstant.TrackManagement.ManageTrack + '?TrackIDs=' + this.trackid + '&Action=Delete').subscribe((data: any) => {
+        if (data == "TRACKDELETE") {
+          this._base._alertMessageService.success(this.moduleName + " deleted successfully!");
+          this.getAllTracks("0", 'All');
+        } else {
+          console.log(data)
+          this._base._commonService.hideLoader();
+        }
+        (<any>$('#modal-deleteconfirmation')).modal('hide');
+      }, e => {
+        console.log(e)
+        this._base._commonService.hideLoader();
+      })
+    }
+  }
+  deleteconfirm(trackid) {
+    this.trackid = trackid;
+    (<any>$('#modal-deleteconfirmation')).modal('show');
+  }
+  canceltrack() {
+    this.trackid = 0;
+    (<any>$('#modal-deleteconfirmation')).modal('hide');
+  }
 }

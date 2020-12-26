@@ -122,7 +122,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
 
 
   getCategory() {
-    this._categoryService.categorylist('SERVICE', 0).subscribe((resData: any) => {
+    this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
       this.categoryData = resData
     });
   }

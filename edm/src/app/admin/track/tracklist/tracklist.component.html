@@ -79,11 +79,11 @@
                     <a *ngIf="track.TrackStatus == 'Rejected'" class="read_more" (click)="showreason(track.Reason)"> READ MORE</a>
                 </td>
                 <td class="table_btn">
-                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Approve')" class="global_btn icon_btn primary_btn">
+                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Approved')" class="global_btn icon_btn primary_btn">
                         <span>Approve</span>
                         <span class="right_icon btn_icon"></span>
                     </a>
-                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Reject')" class="global_btn icon_btn red_btn">
+                    <a *ngIf="track.TrackStatus == '-'" (click)="manageTrackBeat(track.Ref_Track_ID, 'Rejected')" class="global_btn icon_btn red_btn">
                         <span>Reject</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>
@@ -91,7 +91,7 @@
                         <!-- <span>Edit</span> -->
                         <span class="edit_btn"></span>
                     </a>
-                    <a (click)="manageTrackBeat(track.Ref_Track_ID, 'Delete')" class="small_icon_btn" title="Delete">
+                    <a (click)="deleteconfirm(track.Ref_Track_ID)" class="small_icon_btn" title="Delete">
                         <!-- <span>Delete</span> -->
                         <span class="delete_btn"></span>
                     </a>
@@ -312,6 +312,29 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-block primary_btn" (click)="accept()">Reject</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Once you delete track/beat can not be rollback. Do you still want to continue?</p>
+            </div>
+            <div class="modal-footer">
+                <a type="button" class="btn btn-block primary_btn" (click)="canceltrack()"
+                    data-dismiss="modal">Cancel</a>
+                <a (click)="deletetrack()" class="btn btn-block primary_btn" data-dismiss="modal">Yes</a>
             </div>
         </div>
     </div>

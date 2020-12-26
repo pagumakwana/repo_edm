@@ -11,6 +11,9 @@
                 </a>
             </div>
             <div class="mobile_menu_list">
+                <div class="mobile_menus">
+                    <a><span>Become a Producer</span></a>
+                </div>
                 <div class="mobile_menus accordian_menu">
                     <a><span>Store</span></a>
                 </div>
@@ -56,6 +59,9 @@
     </div>
     <div class="project_menu">
         <div class="menu_list">
+            <div>
+                <a routerLink="/profileupdate">Become a Producer</a>
+            </div>
             <div class="dropdown_point">
                 <a>Store</a>
                 <div class="dropdown_panel menu_dropdown_panel">
@@ -102,7 +108,7 @@
         </div>
         <div class="user_profile">
             <div class="user_profile_img dropdown_point" [hidden]="!hasLogin">
-                <img [src]="ProfilePic" />
+                <img *ngIf="ProfilePic!='' && ProfilePic!=undefined" [src]="ProfilePic" />
                 <div class="dropdown_panel profile_dropdown_panel">
                     <div class="dropdown_inner">
                         <div class="dropdown_body">

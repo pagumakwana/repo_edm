@@ -41,7 +41,7 @@
             </div>
             <div class="inner_menu">
                 <div class="admin_menu_list">
-                    <a><span>All Producers</span></a>
+                    <a routerLink="producer"><span>All Producers</span></a>
                 </div>
                 <div class="admin_menu_list">
                     <a><span>Approved Profile</span></a>
@@ -116,7 +116,7 @@
                 Pallavi Chapla
             </p> -->
             <div class="user_profile_img dropdown_point" *ngIf="hasLogin">
-                <img [src]="ProfilePic" />
+                <img *ngIf="ProfilePic!='' && ProfilePic!=undefined" [src]="ProfilePic" />
                 <div class="dropdown_panel profile_dropdown_panel">
                     <div class="dropdown_inner">
                         <div class="dropdown_body">
