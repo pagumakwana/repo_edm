@@ -143,20 +143,14 @@ export class AddModifySupportComponent implements OnInit {
             }
             this._supportService.postTicket(Obj).subscribe(data => {
               console.log(data);
-             // if (data == "BANNERADDED") {
-               // this._base._alertMessageService.success(" Banner Added successfully!");
+              if (data == "USERTICKETSUCCESS") {
                 this.addTicket.reset();
                 this.fileManager = [];
                 this.supportImg = undefined;
-                this.formDataSupportImg = undefined
-                this.preview = undefined
-
-                this._base._commonService.hideLoader();
+                this.formDataSupportImg = undefined;
+                this.preview = undefined;
                 (<any>$('#acknowledge_popup')).modal('show');
-              //}
-              // if (data == "BANNERUPDATED") {
-              //   this._base._alertMessageService.success(" Banner Modify successfully!");
-              // }
+              }
               this._base._commonService.hideLoader();
             }, e => {
               this._base._commonService.hideLoader();

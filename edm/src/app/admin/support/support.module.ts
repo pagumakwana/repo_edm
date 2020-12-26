@@ -20,11 +20,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         ReactiveFormsModule,
         RouterModule.forChild([
             {
-                path: ':ref_support_id',
+                path: '',
                 component: SupportListComponent
             },
             {
-                path: '',
+                path: ':ref_support_id',
                 component: AddModifySupportComponent
             }
         ]),
