@@ -31,7 +31,7 @@ export class AddModifyCouponComponent implements OnInit {
     DiscountInPercentage: ['', [Validators.required]],
     DiscountInMax: ['', [Validators.required]],
     StartDate: ['', [Validators.required, ValidationService.dateValidator(1)]],
-    EndDate: ['', []],
+    EndDate: ['', [Validators.required, ValidationService.dateValidator(1), ValidationService.dateValidator(2, 'StartDate')]],
     OneTimeUse: ['', [Validators.required]],
     AudienceCount: ['', [Validators.required]],
     OnlyForNewUsers: ['', [Validators.required]],
@@ -42,12 +42,14 @@ export class AddModifyCouponComponent implements OnInit {
   ngOnInit(): void {
     this._base._pageTitleService.setTitle("CREATE NEW COUPON CODE", "CREATE NEW COUPON CODE");
     this.Ref_Coupon_ID = this._activatedRouter.snapshot.paramMap.get('Ref_Coupon_ID');
-    this.addCouponForm.controls.EndDate.setValidators([Validators.required, ValidationService.dateValidator(1), ValidationService.dateValidator(2, this.addCouponForm.controls.StartDate.value)])
     if (this.Ref_Coupon_ID != '0') {
       this.bindCoupon();
     } else {
       this.initialize();
     }
+    this.addCouponForm.controls.StartDate.valueChanges.subscribe(res => {
+      this.addCouponForm.controls.EndDate.setValue('')
+    })
   }
 
 

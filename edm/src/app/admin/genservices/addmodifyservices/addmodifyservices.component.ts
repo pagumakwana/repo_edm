@@ -46,7 +46,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     Price: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
     PriceWithProjectFiles: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
     Revision: ['', [Validators.required]],
-    DeliveryDate: ['', [Validators.required]],
+    DeliveryDate: ['', [Validators.required, ValidationService.dateValidator(1)]],
     // ProjectFilesUrl: ['', [Validators.required]],
     ServiceVideoUrl: ['', [Validators.required]],
     thumbnail: ['', [Validators.required]],
