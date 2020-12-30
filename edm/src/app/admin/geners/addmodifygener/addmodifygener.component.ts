@@ -88,7 +88,7 @@ export class AddModifyGenersComponent implements OnInit {
           AliasName: '',
           Description: '',
           CategoryUseBy: '',
-          FileUrls: [],
+          FileManager: [],
           Ref_User_ID: Ref_User_ID,
           CreatedName: FullName,
           MetaTitle: '',

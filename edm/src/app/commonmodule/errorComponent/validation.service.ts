@@ -121,10 +121,19 @@ export class ValidationService {
         })
     }
 
-    static dateValidator(identifer: number, minDateData = '2020-01-01', maxDateData = '2100-01-01') {
+    static dateValidator(identifer: number, minDateDataIdentifier = null, maxDateDataIdentifer = null) {
         return (control: AbstractControl): { [key: string]: any } | null => {
             // const initalValue: string = control.value && typeof control.value == 'string' ? control.value : ""
             // let valueAFterTrim: string = initalValue.trim()
+            // minDateData: '2020-01-01',
+            let minDateData = minDateDataIdentifier && control.parent.get(minDateDataIdentifier) ? control.parent.get(minDateDataIdentifier).value : '2020-01-01'
+            let maxDateData = maxDateDataIdentifer && control.parent.get(maxDateDataIdentifer) ? control.parent.get(maxDateDataIdentifer).value : '2100-01-01'
+
+            //YYYY-MM-dd
+            // let defaultDate = {
+            //     minDateData: '2020-01-01',
+            //     maxDateData: '2100-01-01'
+            // }
             let controlDate: Date = new Date(control.value)
             // let DateToday: Date = new Date()
             let minDate: Date = minDateData ? new Date(minDateData) : new Date()
@@ -132,7 +141,7 @@ export class ValidationService {
             let isDateValid: boolean = true
             if (identifer == 1) isDateValid = minDate <= controlDate && controlDate <= maxDate
             if (identifer == 2) isDateValid = minDate <= controlDate
-            console.log("dateValidatorinvalid_Date_" + identifer, minDateData, control.value, isDateValid)
+            console.log("dateValidatorinvalid_Date_" + identifer, minDate, minDateData, control.value, isDateValid, control)
 
             return !isDateValid ? { ['invalid_Date_' + identifer]: true } : null
         }

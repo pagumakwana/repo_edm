@@ -91,14 +91,17 @@ export class GenerListComponent implements OnInit {
   }
 
   removeGenre() {
-    this._categoryService.addmodifycategory(this._categoryModel).subscribe(response => {
-      if (response == 'CATEGORYDELETED') {
+    // this._categoryService.addmodifycategory(this._categoryModel).subscribe(response => {
+    this._categoryService.ManageCategory(this._categoryModel.Ref_Category_ID, 'delete').subscribe((response: any) => {
+      if (response == 'CATEGORYDELETE') {
         this._base._alertMessageService.success("Category deleted successfully!");
         this.categoryData.filter((res: any, index: number) => {
           if (res.Ref_Category_ID === this._categoryModel.Ref_Category_ID) {
             this.categoryData.splice(index, 1);
           }
         });
+        this.tableConfig.tableData = this.categoryData;
+        this.tableObj.initializeTable();   
       }
     }, error => {
       this._base._alertMessageService.error("Something went wrong !!");
@@ -123,7 +126,7 @@ export class GenerListComponent implements OnInit {
       } else if (parseInt(event.target.value) == 0) {
         this.tableConfig.tableData = this.categoryData;
       }
-      this.tableObj.initializeTable();
+      this.tableObj.initializeTable(); 
 
     });
   }

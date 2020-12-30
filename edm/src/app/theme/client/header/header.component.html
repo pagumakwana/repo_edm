@@ -11,7 +11,7 @@
                 </a>
             </div>
             <div class="mobile_menu_list">
-                <div class="mobile_menus">
+                <div class="mobile_menus" [hidden]="!hasLogin">
                     <a><span>Become a Producer</span></a>
                 </div>
                 <div class="mobile_menus accordian_menu">
@@ -59,7 +59,7 @@
     </div>
     <div class="project_menu">
         <div class="menu_list">
-            <div>
+            <div [hidden]="!hasLogin">
                 <a routerLink="/profileupdate">Become a Producer</a>
             </div>
             <div class="dropdown_point">
