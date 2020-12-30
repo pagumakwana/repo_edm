@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WishlistComponent } from './wishlist.component';
+import { ProfileUpdateService } from '../_appService/profileupdate/profileupdate.service';
 // import { CartService } from '../_appService/cart/cart.service';
 @NgModule({
     declarations: [
@@ -18,6 +19,6 @@ import { WishlistComponent } from './wishlist.component';
             }
         ]),
     ],
-    providers: []
+    providers: [ProfileUpdateService]
 })
 export class WishlistModule { }

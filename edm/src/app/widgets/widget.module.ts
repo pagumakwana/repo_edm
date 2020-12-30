@@ -11,7 +11,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FeaturedProductSliderComponent } from './featuredProductSlider/featuredProductSlider.component';
 import { ProducerSliderComponent } from './producerSlider/producerSlider.component';
 import { TrackService } from '../_appService/trackService';
-
+import { ProfileUpdateService } from '../_appService/profileupdate/profileupdate.service';
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     observer: true,
     direction: 'horizontal',
@@ -42,6 +42,6 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
         {
             provide: SWIPER_CONFIG,
             useValue: DEFAULT_SWIPER_CONFIG
-        }, TrackService]
+        }, TrackService,ProfileUpdateService]
 })
 export class WidgetsModule { }

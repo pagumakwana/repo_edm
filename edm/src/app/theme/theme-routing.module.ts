@@ -69,7 +69,15 @@ const routes: Routes = [
             {
                 path: "profileupdate",
                 loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
-            }
+            },
+            {
+                path: "support",
+                loadChildren: () => import('../admin/support/support.module').then(m => m.SupportModule)
+            },
+            {
+                path: "supportTicket",
+                loadChildren: () => import('../support/support.module').then(m => m.SupportTicketModule)
+            },
         ],
     },
     {
@@ -121,6 +129,7 @@ const routes: Routes = [
                 path: "support",
                 loadChildren: () => import('../admin/support/support.module').then(m => m.SupportModule)
             },
+           
             {
                 path: "authority",
                 loadChildren: () => import('../admin/authoritymanagement/authority.module').then(m => m.AuthorityModule)

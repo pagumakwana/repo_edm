@@ -10,6 +10,7 @@ import {
     SwiperModule, SwiperConfigInterface,
     SWIPER_CONFIG
 } from 'ngx-swiper-wrapper'
+import { ProfileUpdateService } from '../_appService/profileupdate/profileupdate.service';
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     observer: true,
     direction: 'horizontal',
@@ -42,7 +43,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     providers: [ {
         provide: SWIPER_CONFIG,
         useValue: DEFAULT_SWIPER_CONFIG
-    }],
+    },
+    ProfileUpdateService],
     bootstrap:    [ ProductComponent ]
 })
 export class ProductModule { }

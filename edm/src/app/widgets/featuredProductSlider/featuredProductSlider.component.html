@@ -16,7 +16,7 @@
                     <img src="../../../assets/images/read_more.svg" (click)="redirect(objSlide.Ref_Track_ID)" class="green_heart" title="Read More" />
                 </div>
                 <div class="right_details">
-                    <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="useraction(objSlide.Ref_Track_ID,'Track','Add to cart')">
+                    <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',objSlide.Ref_Track_ID,'Track','Track')">
                         <span>&#36;{{objSlide.Price}}</span>
                         <span class="add_to_cart_icon btn_icon"></span>
                     </a>

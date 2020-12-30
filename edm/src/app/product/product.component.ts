@@ -9,6 +9,7 @@ import {
   SwiperComponent, SwiperDirective, SwiperConfigInterface,
   SwiperScrollbarInterface, SwiperPaginationInterface
 } from 'ngx-swiper-wrapper';
+import { ProfileUpdateService } from '../_appService/profileupdate/profileupdate.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -114,9 +115,15 @@ export class ProductComponent implements OnInit {
   audioplay: boolean = false;
   playpause: string = 'play'
   playpauseImg: string = '../../../assets/images/play_video.svg'
+  UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
+    UserID: null,
+    ObjectID: null,
+    ObjectType: "Producer",
+    Action: null
+}
   constructor(public _base: BaseServiceHelper,
     private _categoryService: CategoryService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute, private _profileService: ProfileUpdateService) {
     this.bindDAW()
   }
   public isFilterDisplay: boolean = false;
@@ -135,9 +142,13 @@ export class ProductComponent implements OnInit {
         this._base._commonService.hideLoader();
       });
       console.log(this.minValue, this.maxValue)
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(userID => {
+        this.UserActionData.UserID = parseInt(userID)
+      })
     }, e => {
       this._base._commonService.hideLoader();
     });
+   
 
   }
   getProductlist() {
@@ -355,4 +366,25 @@ export class ProductComponent implements OnInit {
       return '../../../assets/images/pause.svg'
     }
   }
+  Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+    this.UserActionData.Action = Action
+    this.UserActionData.ObjectID = parseInt(ObjectID)
+    this.UserActionData.ObjectType = ObjectType
+    let Object = {
+        UserID: this.UserActionData.UserID,
+        OrderID: 0,
+        ObjectID: parseInt(ObjectID),
+        ObjectType: ObjectType,
+        OrderStatus: Action
+    }
+
+    let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
+
+    Data.ObjectList.push(Object)
+
+    this._profileService.Order(Data).subscribe((res: any) => {
+        console.log("Order", res, actionObj)
+        this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+    })
+}
 }

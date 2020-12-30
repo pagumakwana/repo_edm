@@ -6,6 +6,7 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { CommonService } from './../../_appService/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from './../../_appService/category/category.serviec';
+import { ProfileUpdateService } from '../../_appService/profileupdate/profileupdate.service';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -62,11 +63,17 @@ export class ProductDetailsComponent implements OnInit {
   playpause: string = 'play'
   storetype
   playpauseImg: string = '../../../assets/images/play_video.svg'
+  UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
+    UserID: null,
+    ObjectID: null,
+    ObjectType: "Producer",
+    Action: null
+}
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
     public route: ActivatedRoute,
-    private _categoryService: CategoryService) {
+    private _categoryService: CategoryService,private _profileService: ProfileUpdateService) {
     this.bindDAW()
   }
 
@@ -81,6 +88,9 @@ export class ProductDetailsComponent implements OnInit {
       this._base._commonService.FeatureProducts = this.storetype
       debugger;
       this.getProductDetails(this.productId);
+      this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(userID => {
+        this.UserActionData.UserID = parseInt(userID)
+      })
     })
   }
   public bindDAW() {
@@ -172,4 +182,25 @@ export class ProductDetailsComponent implements OnInit {
       })
     })
   }
+  Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+    this.UserActionData.Action = Action
+    this.UserActionData.ObjectID = parseInt(ObjectID)
+    this.UserActionData.ObjectType = ObjectType
+    let Object = {
+        UserID: this.UserActionData.UserID,
+        OrderID: 0,
+        ObjectID: parseInt(ObjectID),
+        ObjectType: ObjectType,
+        OrderStatus: Action
+    }
+
+    let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
+
+    Data.ObjectList.push(Object)
+
+    this._profileService.Order(Data).subscribe((res: any) => {
+        console.log("Order", res, actionObj)
+        this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+    })
+}
 }

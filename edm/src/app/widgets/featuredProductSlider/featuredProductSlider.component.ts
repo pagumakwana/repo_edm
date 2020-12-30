@@ -6,8 +6,9 @@ import {
 } from 'ngx-swiper-wrapper';
 import { ApiConstant } from './../../_appModel/apiconstant';
 import { Router } from '@angular/router';
-import { TrackService } from 'src/app/_appService/trackService';
-import { enAppSession } from 'src/app/_appModel/enAppSession';
+import { TrackService } from '../../_appService/trackService';
+import { enAppSession } from '../../_appModel/enAppSession';
+import { ProfileUpdateService } from '../../_appService/profileupdate/profileupdate.service';
 
 @Component({
     selector: 'app-featuredProductSlider',
@@ -21,9 +22,16 @@ export class FeaturedProductSliderComponent implements OnInit {
     audioplay: boolean = false;
     playpause: string = 'play'
     playpauseImg: string = '../../../assets/images/play_video.svg'
+    UserActionData: { UserID: number, ObjectID: number, ObjectType: string, Action: string } = {
+        UserID: null,
+        ObjectID: null,
+        ObjectType: "Producer",
+        Action: null
+    }
     constructor(public _base: BaseServiceHelper,
         private _trackService: TrackService,
-        public router: Router) { }
+        public router: Router,
+        private _profileService: ProfileUpdateService) { }
     public featuredTrack: any = [];
     public config: SwiperConfigInterface = {
         direction: 'horizontal',
@@ -65,6 +73,7 @@ export class FeaturedProductSliderComponent implements OnInit {
     ngOnInit(): void {
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
             this._trackService.getFeaturedTrack(0, 5, Ref_User_ID).subscribe((data: any) => {
+                this.UserActionData.UserID = parseInt(Ref_User_ID)
                 if (this._base._commonService.FeatureProducts == "Beats") {
                     this.featuredTrack = data.filter(a => a.IsTrack == 'Beat');
                 } else {
@@ -154,6 +163,27 @@ export class FeaturedProductSliderComponent implements OnInit {
         }, e => {
             this._base._commonService.hideLoader()
         }) 
+    }
+    Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+        this.UserActionData.Action = Action
+        this.UserActionData.ObjectID = parseInt(ObjectID)
+        this.UserActionData.ObjectType = ObjectType
+        let Object = {
+            UserID: this.UserActionData.UserID,
+            OrderID: 0,
+            ObjectID: parseInt(ObjectID),
+            ObjectType: ObjectType,
+            OrderStatus: Action
+        }
+    
+        let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
+    
+        Data.ObjectList.push(Object)
+    
+        this._profileService.Order(Data).subscribe((res: any) => {
+            console.log("Order", res, actionObj)
+            this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
+        })
     }
 
 }
