@@ -22,8 +22,36 @@ export class producerListComponent implements OnInit {
     // private _service: GenService,
     private _producer: ProducerService
   ) { }
-  // selectedCategory: any = 'ALL'
+  selectedStatus: any = ''
   producerList = [];
+  statusArray: Array<{ text: string, value: string }> = [
+    {
+      text: "pending", value: ''
+    },
+    {
+      text: "Approved", value: 'Approved'
+    },
+    {
+      text: "reject", value: 'Rejected'
+    }
+  ]
+
+  tableConfig: dataTableConfig = {
+    tableData: [],
+    tableConfig: [
+      // { identifer: "FileManager", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
+      { identifer: "FullName", title: "Artist Name", type: "text" },
+      { identifer: "", title: "country", type: "text" },
+      { identifer: "", title: "Tracks /SO", type: "text" },
+      { identifer: "", title: "Beats /SO", type: "text" },
+      { identifer: "Earning", title: "Earning", type: "text" },
+      { identifer: "AccountStatus", title: "Status", type: "text" },
+      { identifer: "", title: "Gov ID", type: "text" },
+      // { identifer: "CreatedName", title: "CreatedBy", type: "text" },
+      // { identifer: "IsActive", title: "IsActive", type: "flag" },
+      { identifer: "", title: "Action", type: "button", buttonList: [{ name: 'Accept', class: 'primary_btn', iconClass: 'edit_btn', condition: { type: 'logic', key: 'AccountStatus', value: 'Rejected' } }, { name: 'Reject', class: 'red_btn', iconClass: 'delete_icon' }] }
+    ]
+  }
   // categoryData: []
   // _serviceModel: ServiceModel = {};
   @ViewChild('dataTableCom', { static: false }) tableObj: DatatablesComponent;
@@ -36,9 +64,14 @@ export class producerListComponent implements OnInit {
     // this.getCategory()
   }
 
+
+
   getProducerList() {
     this._producer.Producers().subscribe((res: any) => {
       this.producerList = Array.isArray(res) ? res : []
+      this.producerList.map(item => {
+        return item.AccountStatus = item.AccountStatus == null ? '' : item.AccountStatus
+      })
       this.loadTableData()
       setTimeout(() => {
         this._base._commonService.hideLoader();
@@ -49,13 +82,13 @@ export class producerListComponent implements OnInit {
   loadTableData() {
     let tableData = JSON.parse(JSON.stringify(this.producerList))
     // this.tableConfig.tableData = this.selectedCategory == 'ALL' ? JSON.parse(JSON.stringify(this.serviceList)) : this.serviceList.filter(item => item.Ref_Category_ID == this.selectedCategory)
-    this.tableConfig.tableData = tableData
+    this.tableConfig.tableData = tableData.filter(item => item.AccountStatus == this.selectedStatus)
     console.log("loadTableData", this.tableConfig.tableData)
     this.tableObj.initializeTable()
   }
 
   filterchange(event) {
-    // console.log("filterchange", event, this.selectedCategory)
+    console.log("filterchange", event, this.selectedStatus)
     this.loadTableData()
   }
 
@@ -90,22 +123,7 @@ export class producerListComponent implements OnInit {
   //   });
   // }
 
-  tableConfig: dataTableConfig = {
-    tableData: [],
-    tableConfig: [
-      // { identifer: "FileManager", title: "Thumbnail", type: "image", dataType: { type: "array", path: ['0', 'FilePath'] }, size: { height: "35px", width: "35px" } },
-      { identifer: "FullName", title: "Artist Name", type: "text" },
-      { identifer: "", title: "country", type: "text" },
-      { identifer: "", title: "Tracks /SO", type: "text" },
-      { identifer: "", title: "Beats /SO", type: "text" },
-      { identifer: "Earning", title: "Earning", type: "text" },
-      { identifer: "AccountStatus", title: "Status", type: "text" },
-      { identifer: "", title: "Gov ID", type: "text" },
-      // { identifer: "CreatedName", title: "CreatedBy", type: "text" },
-      // { identifer: "IsActive", title: "IsActive", type: "flag" },
-      { identifer: "", title: "Action", type: "button", buttonList: [{ name: 'Accept', class: 'primary_btn', iconClass: 'edit_btn' }, { name: 'Reject', class: 'red_btn', iconClass: 'delete_icon' }] }
-    ]
-  }
+
   // AccountStatus: null
   // BeatCount: 3
   // Bio: "EGTRHYTJ"

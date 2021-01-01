@@ -4,6 +4,28 @@
         <span>Add New Service</span>
     </a> -->
     <form>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <!-- <select name="filterbygenretype" class="grey_dropdown">
+                    <option disabled selected>Filter By Genre Type</option>
+                    <option value="0">ALL</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
+                    <option value="4">Service</option>
+                    <option value="5">News</option>
+                </select> -->
+                <select name="filterbygenretype" class="grey_dropdown" [(ngModel)]="selectedStatus"
+                    (change)="filterchange($event)">
+                    <option selected disabled>Select status</option>
+                    <option *ngFor="let status of statusArray" [value]="status.value">
+                        {{status.text}}</option>
+                </select>
+                <span class="input_icon down_icon"></span>
+            </div>
+        </div>
+    </form>
+    <form>
         <div class="form_group" *ngIf="false">
             <div class="form_area icon_form_group">
                 <!-- <select name="filterbygenretype" class="grey_dropdown">
