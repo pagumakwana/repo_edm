@@ -87,13 +87,13 @@
                         <span>Reject</span>
                         <span class="delete_icon btn_icon"></span>
                     </a>
-                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="small_icon_btn" title="Edit">
-                        <!-- <span>Edit</span> -->
-                        <span class="edit_btn"></span>
+                    <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="small_icon_btn" title="Edit" class="global_btn icon_btn primary_btn">
+                        <span>Edit</span>
+                        <span class=" btn_icon edit_icon"></span>
                     </a>
-                    <a (click)="deleteconfirm(track.Ref_Track_ID)" class="small_icon_btn" title="Delete">
-                        <!-- <span>Delete</span> -->
-                        <span class="delete_btn"></span>
+                    <a (click)="deleteconfirm(track.Ref_Track_ID)" class="global_btn icon_btn red_btn">
+                        <span>Delete</span>
+                        <span class=" btn_icon delete_icon_white"></span>
                     </a>
                     <!-- <a (click)="redirectToaddmodifytrack(track.Ref_Track_ID)" class="global_btn icon_btn grey_btn">
                         <span>View</span>
@@ -318,8 +318,7 @@
 </div>
 
 
-<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-md modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -332,8 +331,7 @@
                 <p>Once you delete track/beat can not be rollback. Do you still want to continue?</p>
             </div>
             <div class="modal-footer">
-                <a type="button" class="btn btn-block primary_btn" (click)="canceltrack()"
-                    data-dismiss="modal">Cancel</a>
+                <a type="button" class="btn btn-block primary_btn" (click)="canceltrack()" data-dismiss="modal">Cancel</a>
                 <a (click)="deletetrack()" class="btn btn-block primary_btn" data-dismiss="modal">Yes</a>
             </div>
         </div>
