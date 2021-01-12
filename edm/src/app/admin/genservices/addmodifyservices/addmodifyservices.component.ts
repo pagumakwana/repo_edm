@@ -246,7 +246,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   saveModuleFile_multi_helper(arrayData: Array<SaveModuleFileModel>, counter: number, resolveData: Array<any>) {
     this._base._commonService.saveModuleFile(arrayData[counter - 1].files, arrayData[counter - 1], this.addServiceForm.controls[arrayData[counter - 1].FileIdentifier].value).then((uploadResponse: Array<any>) => {
       // resolve(uploadResponse)
-      resolveData.push(uploadResponse)
+                  resolveData = this._base._commonService.joinArray(resolveData, uploadResponse)
+
       if (counter > 1) {
         counter--
         this.saveModuleFile_multi_helper(arrayData, counter, resolveData)

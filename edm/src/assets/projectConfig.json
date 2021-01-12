@@ -1,7 +1,7 @@
 {
     "apiBaseURL": "http://api.shivajimaharaj.in/api",
     "ipifyUrl": "http://api.ipify.org/?format=json",
-    "cdnURL": "http://api.shivajimaharaj.in/api/",
+    "cdnURL": "http://api.shivajimaharaj.in/",
     "client_id": "2",
     "clientname": "EDM",
     "project_id": "2",

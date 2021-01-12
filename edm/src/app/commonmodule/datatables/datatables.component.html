@@ -54,6 +54,7 @@
                 </ng-container>
                 <ng-container *ngIf="key?.type == 'button'">
                     <div class="table_btn">
+                        <!-- [hidden]="!(button?.condition ? ({{button?.condition?.type == 'logic' ?  (tableItem[button?.condition?.key] == button?.condition?.value) : button?.condition?.value  }}) : true )" -->
                         <a *ngFor="let button of key?.buttonList" (click)="tableClick(tableItem,key,button)"
                             class="global_btn {{button.class}}">
                             <span>{{button.name}}</span>

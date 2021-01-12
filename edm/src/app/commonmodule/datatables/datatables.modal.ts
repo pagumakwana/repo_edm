@@ -20,7 +20,12 @@ export class tableConfig {
     buttonList?: Array<{
         name: string,
         class: string,
-        iconClass?: string
+        iconClass?: string,
+        condition?: {
+            type: string, //logic | boolean
+            key?: string,
+            value?: any
+        }
     }>
     buttonIconList?: Array<{
         title: string,

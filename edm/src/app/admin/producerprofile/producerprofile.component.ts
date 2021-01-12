@@ -155,7 +155,8 @@ export class ProducerProfileComponent implements OnInit {
         this._base._commonService.saveModuleFile(arrayData[counter - 1].files, arrayData[counter - 1], (this.addProfileForm.controls[this.stepName[arrayData[counter - 1].FileIdentifier]] as FormGroup).controls[arrayData[counter - 1].FileIdentifier].value).then((uploadResponse: Array<any>) => {
         // this._base._commonService.saveModuleFile(arrayData[counter - 1].files, arrayData[counter - 1], this.addServiceForm.controls[arrayData[counter - 1].FileIdentifier].value).then((uploadResponse: Array<any>) => {
           // resolve(uploadResponse)
-          resolveData.push(uploadResponse)
+                      resolveData = this._base._commonService.joinArray(resolveData, uploadResponse)
+
           if (counter > 1) {
             counter--
             this.saveModuleFile_multi_helper(arrayData, counter, resolveData)
