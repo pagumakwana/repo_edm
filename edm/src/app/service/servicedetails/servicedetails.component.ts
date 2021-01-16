@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { isNgTemplate } from '@angular/compiler';
+import { Component, ElementRef, IterableDiffers, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiConstant } from 'src/app/_appModel/apiconstant';
 import { BaseServiceHelper } from 'src/app/_appService/baseHelper.service';
@@ -39,14 +40,20 @@ export class ServiceDetailsComponent implements OnInit {
       this.ServiceID = params['ServiceId'];
       this._base._ApiService.get(ApiConstant.customer.CustomServiceDetails + '?ServiceID=' + this.ServiceID).subscribe((res: any) => {
         this.ServiceDetails = res;
-        this.ServiceDetails.filter(item => {
-          item.FileManager.map(item => {
-            item.FilePath = item.FilePath == undefined || item.FilePath == null || item.FilePath == "" || item.FilePath == "-" ? '../../../assets/images/producer_profile.jpg' : this._base._commonService.cdnURL + item.FilePath;
-          })
+       // this.ServiceDetails.filter(item => {
+          // item.FileManager.map(item => {
+          //   item.FilePath = item.FilePath == undefined || item.FilePath == null || item.FilePath == "" || item.FilePath == "-" ? '../../../assets/images/producer_profile.jpg' : item.FilePath;
+          // })
 
-        })
+        //})
       })
     })
+  }
+  public filterfile(FileManager, fileType) {
+    debugger
+    let file = FileManager.filter(item => item.FileIdentifier == fileType)
+      const lastItem = file[file.length - 1]
+      return this._base._commonService.cdnURL +  lastItem.FilePath
   }
 
 }

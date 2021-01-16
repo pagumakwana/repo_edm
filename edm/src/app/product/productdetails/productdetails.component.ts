@@ -133,7 +133,8 @@ export class ProductDetailsComponent implements OnInit {
   }
   public filterfile(FileManager, fileType){
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
-      return this._base._commonService.cdnURL + file[0].FilePath
+    const lastItem = file[file.length - 1]
+    return this._base._commonService.cdnURL +  lastItem.FilePath
     }
   playaudio(path, id, data) {
     debugger
@@ -183,6 +184,7 @@ export class ProductDetailsComponent implements OnInit {
     })
   }
   Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+    this._base._commonService.showLoader()
     this.UserActionData.Action = Action
     this.UserActionData.ObjectID = parseInt(ObjectID)
     this.UserActionData.ObjectType = ObjectType
@@ -199,8 +201,12 @@ export class ProductDetailsComponent implements OnInit {
     Data.ObjectList.push(Object)
 
     this._profileService.Order(Data).subscribe((res: any) => {
+      this._base._commonService.hideLoader()
         console.log("Order", res, actionObj)
-        this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
-    })
+       //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
+       this._base._alertMessageService.success("Added in cart successfully!");
+      }, e=>{
+          this._base._commonService.hideLoader()
+      })
 }
 }

@@ -173,8 +173,10 @@ export class ProductComponent implements OnInit {
   }
   public filterfile(FileManager, fileType){
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
-      if(file.length != 0)
-      return this._base._commonService.cdnURL + file[0].FilePath
+      if(file.length != 0){
+        const lastItem = file[file.length - 1]
+        return this._base._commonService.cdnURL +  lastItem.FilePath
+      }
     }
   bindDAW() {
     this._base._ApiService.get(ApiConstant.MasterManagement.DAW).subscribe((data: any) => {
@@ -367,6 +369,7 @@ export class ProductComponent implements OnInit {
     }
   }
   Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
+    this._base._commonService.showLoader()
     this.UserActionData.Action = Action
     this.UserActionData.ObjectID = parseInt(ObjectID)
     this.UserActionData.ObjectType = ObjectType
@@ -383,8 +386,12 @@ export class ProductComponent implements OnInit {
     Data.ObjectList.push(Object)
 
     this._profileService.Order(Data).subscribe((res: any) => {
+      this._base._commonService.hideLoader()
         console.log("Order", res, actionObj)
-        this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
-    })
+       //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
+       this._base._alertMessageService.success("Added in cart successfully!");
+      }, e=>{
+          this._base._commonService.hideLoader()
+      })
 }
 }

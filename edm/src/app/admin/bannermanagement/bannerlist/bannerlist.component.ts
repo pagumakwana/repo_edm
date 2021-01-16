@@ -32,7 +32,8 @@ export class BannerListComponent implements OnInit {
   }
   public filterfile(FileManager, fileType) {
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
-    return this._base._commonService.cdnURL + file[0].FilePath
+    const lastItem = file[file.length - 1]
+    return this._base._commonService.cdnURL +  lastItem.FilePath
   }
   public redirectToaddmodifybanner(Id) {
     debugger;
