@@ -7,6 +7,11 @@ import { CommonService } from './../../_appService/common.service';
 import { ActivatedRoute } from '@angular/router';
 import { CategoryService } from './../../_appService/category/category.serviec';
 import { ProfileUpdateService } from '../../_appService/profileupdate/profileupdate.service';
+import {
+  SwiperComponent, SwiperDirective, SwiperConfigInterface,
+  SwiperScrollbarInterface, SwiperPaginationInterface
+} from 'ngx-swiper-wrapper';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-productdetails',
   templateUrl: './productdetails.component.html',
@@ -69,11 +74,49 @@ export class ProductDetailsComponent implements OnInit {
     ObjectType: "Producer",
     Action: null
 }
+public config: SwiperConfigInterface = {
+  direction: 'horizontal',
+  navigation: false,
+  pagination: false,
+  autoplay: false,
+  centeredSlides: false,
+  breakpoints: {
+      501: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+      },
+      701: {
+          slidesPerView: 3,
+          spaceBetween: 20,
+      },
+      951: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+      },
+      1201: {
+          slidesPerView: 5,
+          spaceBetween: 50,
+      },
+  }
+};
+
+private scrollbar: SwiperScrollbarInterface = {
+  el: '.swiper-scrollbar',
+  hide: false,
+  draggable: true
+};
+
+private pagination: SwiperPaginationInterface = {
+  el: '.swiper-pagination',
+  clickable: true,
+  hideOnClick: false
+};
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
     public route: ActivatedRoute,
-    private _categoryService: CategoryService,private _profileService: ProfileUpdateService) {
+    private _categoryService: CategoryService,private _profileService: ProfileUpdateService,
+    private router : Router) {
     this.bindDAW()
   }
 
@@ -142,6 +185,13 @@ export class ProductDetailsComponent implements OnInit {
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');
+        if(item.RelatedTrack.length != 0){
+          item.RelatedTrack.filter(items => {
+            $('.playpause_' + items.Ref_Track_ID).removeClass('pause');
+            $('.playpause_' + items.Ref_Track_ID).addClass('play');
+           
+          })
+        }
       })
       this.audio.pause();
       this.audio = new Audio();
@@ -153,6 +203,49 @@ export class ProductDetailsComponent implements OnInit {
       let  file = path.filter(item => item.FileIdentifier == "MasterFile")
       this.audio.src = this._base._commonService.cdnURL  + file[0].FilePath;;
       data.filter(item => {
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+        if(item.RelatedTrack.length != 0){
+          item.RelatedTrack.filter(items => {
+            $('.playpause_' + items.Ref_Track_ID).removeClass('pause');
+            $('.playpause_' + items.Ref_Track_ID).addClass('play');
+           
+          })
+        }
+      })
+      this.audio.pause();
+      this.audio.load();
+      this.audio.play();
+      this.playpause = 'Pause';
+      this.playpauseImg = '../../../assets/images/pause.svg'
+      $('.playpause_' + id).removeClass('play');
+      $('.playpause_' + id).addClass('pause');
+    }
+  }
+  playaudio2(path, id, data) {
+    debugger
+    if ($('.playpause_' + id).hasClass('pause')) {
+      data.filter(item => {
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+      })
+      this.productDetails.filter(item => {
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+      })
+      this.audio.pause();
+      this.audio = new Audio();
+      this.playpause = 'Play';
+      this.playpauseImg = '../../../assets/images/play_video.svg'
+      // $('.playpause_' + id).removeClass('pause');
+      //$('.playpause_' + id).addClass('play');
+    } else if ($('.playpause_' + id).hasClass('play')) {
+      this.audio.src = this._base._commonService.cdnURL + path;
+      data.filter(item => {
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
+        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+      })
+      this.productDetails.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');
       })
@@ -171,12 +264,12 @@ export class ProductDetailsComponent implements OnInit {
       let ObjUseraction = {
         "UserID": Ref_User_ID,
         "ObjectID": ObjectID,
-        "ObjectType": ObjectType,
+        "ObjectType": ObjectType == "Beats"?"Beat": ObjectType,
         "Action": Action
       }
       this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
         console.log(data)
-        this.getProductDetails(ObjectID);
+        this.getProductDetails(this.productId);
         this._base._commonService.hideLoader();
       },e =>{
         this._base._commonService.hideLoader();
@@ -187,12 +280,12 @@ export class ProductDetailsComponent implements OnInit {
     this._base._commonService.showLoader()
     this.UserActionData.Action = Action
     this.UserActionData.ObjectID = parseInt(ObjectID)
-    this.UserActionData.ObjectType = ObjectType
+    this.UserActionData.ObjectType =  ObjectType == "Beats"?"Beat": ObjectType
     let Object = {
         UserID: this.UserActionData.UserID,
         OrderID: 0,
         ObjectID: parseInt(ObjectID),
-        ObjectType: ObjectType,
+        ObjectType: ObjectType == "Beats"?"Beat": ObjectType,
         OrderStatus: Action
     }
 
@@ -208,5 +301,21 @@ export class ProductDetailsComponent implements OnInit {
       }, e=>{
           this._base._commonService.hideLoader()
       })
+}
+setImg(id){
+  if ($('.playpause_' + id).hasClass('play')) {
+    return '../../../assets/images/play_video.svg'
+  }else{
+    return '../../../assets/images/pause.svg'
+  }
+}
+redirect(id) {
+  this.router.navigate(['product/' + this._base._commonService.FeatureProducts + '/details', id]).then((e) => {
+      if (e) {
+          console.log("Navigation is successful!");
+      } else {
+          console.log("Navigation has failed!");
+      }
+  });
 }
 }

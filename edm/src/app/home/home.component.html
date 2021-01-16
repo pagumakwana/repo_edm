@@ -13,10 +13,8 @@
             <h2>Find The Perfect Service For Your Next Hit</h2>
             <div class="search_track">
                 <img src="../../assets/images/search.svg" />
-                <input placeholder='Try "Custom Track"' type="text" name="searchtrack" [(ngModel)]="globalSearch"
-                    (input)="getGlobalSearch()" />
-                <button [ngStyle]="{'opacity':globalSearch.length == 0 ? '0.5' : '1' }" class="global_btn primary_btn"
-                    [disabled]="globalSearch.length == 0 " (click)="getGlobalSearch()">
+                <input placeholder='Try "Custom Track"' type="text" name="searchtrack" [(ngModel)]="globalSearch" (input)="getGlobalSearch()" />
+                <button [ngStyle]="{'opacity':globalSearch.length == 0 ? '0.5' : '1' }" class="global_btn primary_btn" [disabled]="globalSearch.length == 0 " (click)="getGlobalSearch()">
                     <span>SEARCH</span>
                 </button>
 
@@ -92,7 +90,7 @@
     </h2>
     <div class="hp_block_section">
         <div class="branding_sec" *ngFor="let data of artistBranding">
-            <div class="branding_data">
+            <div class="branding_data" (click)="redirecttoservice(data.Ref_Service_ID)">
                 <img [src]="this._base._commonService.cdnURL + data.Thumbnail">
                 <p>{{data.ServiceTitle}}</p>
             </div>

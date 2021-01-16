@@ -3,11 +3,12 @@
         <div class="product_thumbnail_sec">
             <img [src]="filterfile(product.FileManager, 'Thumbnail')" />
             <div class="product_thumbnail_hover_sec" [id]="product.Ref_Track_ID">
-                <img style="background:none" (click)="playaudio(product.FileManager, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="playpauseImg" />
+                <img style="background:none" (click)="playaudio(product.FileManager, product.Ref_Track_ID, productDetails)" class="playpause_{{product.Ref_Track_ID}} play" [src]="setImg(product.Ref_Track_ID)" />
             </div>
         </div>
         <div class="product_details_sec">
-            <h2 class="productdetail_name">{{product.TrackName}} ({{product.TrackType}})</h2>
+            <h2 class="productdetail_name" *ngIf="storetype == 'Beats'">{{product.TrackName}}</h2>
+            <h2 class="productdetail_name" *ngIf="storetype != 'Beats'">{{product.TrackName}} ({{product.TrackType}})</h2>
             <h3 class="product_tagname">{{product.Bio}}</h3>
             <p class="files_included_heading">
                 Files Included:
@@ -53,32 +54,62 @@
                 </li>
             </ul>
             <div class="button_group">
-                <a *ngIf="product.Favourite != 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')">
+                <a *ngIf="product.Favourite != 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,storetype,'Favourite')">
                     <span>Add To Favourites</span>
                     <span class="add_to_favourites_icon btn_icon"></span>
                 </a>
-                <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn">
+                <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,storetype,'Unfavourite')">
                     <span>Favourite</span>
                     <span class="add_to_favourites_fill_icon"></span>
                 </a>
-                <a class="global_btn icon_btn primary_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Track','Track')">
+                <a class="global_btn icon_btn primary_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,storetype,storetype)">
                     <span>Add To Cart</span>
                     <span class="add_to_cart_icon btn_icon"></span>
                 </a>
             </div>
         </div>
-    </div>
 
-    <div class="featuredProduct_sections">
-        <h2 class="global_heading" *ngIf="storetype == 'Track'  || storetype == 'CustomTrack'">
-            Related Track
-        </h2>
-        <h2 class="global_heading" *ngIf="storetype == 'Beats'">
-            Related Beats
-        </h2>
-        <div class="global_slider">
-            <app-featuredProductSlider></app-featuredProductSlider>
+
+        <div class="featuredProduct_sections">
+            <h2 class="global_heading">
+                Related {{product.IsTrack}}
+            </h2>
+            <!-- <h2 class="global_heading" *ngIf="storetype == 'Beats'">
+                Related Beats
+            </h2> -->
+            <!-- <div class="global_slider"> -->
+            <!-- <app-featuredProductSlider></app-featuredProductSlider> -->
+            <swiper class="product_slider" [config]="config">
+                <div *ngFor="let objSlide of product.RelatedTrack" class="swiper-slide">
+                    <div class="slider_featureproduct">
+                        <div class="product_img">
+                            <img [src]="this._base._commonService.cdnURL + objSlide.ThumbnailImageUrl" class="product_thumbnail">
+                            <div class="product_upper_layer">
+                                <img style="background:none" (click)="playaudio2(objSlide.PlayUrl, objSlide.Ref_Track_ID, product.RelatedTrack)" class="playpause_{{objSlide.Ref_Track_ID}} play" [src]="setImg(objSlide.Ref_Track_ID)" />
+                                <p class="product_name">{{objSlide.TrackName}}</p>
+                                <p class="product_bass">{{objSlide.CategoryName}}</p>
+                            </div>
+                        </div>
+                        <div class="product_details">
+                            <div class="left_details">
+                                <img *ngIf="objSlide.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(objSlide.Ref_Track_ID,objSlide.IsTrack,'Favourite')" />
+                                <img *ngIf="objSlide.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" title="Remove from Favorites" (click)="useraction(objSlide.Ref_Track_ID,objSlide.IsTrack,'Unfavourite')" />
+                                <img src="../../../assets/images/read_more.svg" (click)="redirect(objSlide.Ref_Track_ID)" class="green_heart" title="Read More" />
+                            </div>
+                            <div class="right_details">
+                                <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',objSlide.Ref_Track_ID,objSlide.IsTrack,objSlide.IsTrack)">
+                                    <span>&#36;{{objSlide.Price}}</span>
+                                    <span class="add_to_cart_icon btn_icon"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </swiper>
+            <div class="no_record" *ngIf="product.RelatedTrack?.length == 0">
+                No record found
+            </div>
+            <!-- </div> -->
         </div>
     </div>
-
 </div>

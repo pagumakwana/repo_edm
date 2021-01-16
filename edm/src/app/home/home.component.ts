@@ -36,6 +36,8 @@ export class HomeComponent implements OnInit {
   public redirecttopage(data) {
     console.log(data.Ref_Object_ID, data.ObjectType)
     if (data.ObjectType == 'TRACK' || data.ObjectType == 'BEAT') {
+      if(data.ObjectType == 'BEAT')
+      this._base._commonService.FeatureProducts = "Beats"
       this.router.navigate(['product/' + this._base._commonService.FeatureProducts + '/details', data.Ref_Object_ID]).then((e) => {
         if (e) {
           console.log("Navigation is successful!");
@@ -53,5 +55,15 @@ export class HomeComponent implements OnInit {
       });
     }
   }
+  public redirecttoservice(Ref_Service_ID) {
+  
+      this.router.navigate(['service/details', Ref_Service_ID]).then((e) => {
+        if (e) {
+          console.log("Navigation is successful!");
+        } else {
+          console.log("Navigation has failed!");
+        }
+      });
+    }
 
 }

@@ -336,29 +336,29 @@ export class ProductComponent implements OnInit {
 }
   playaudio(path, id, data) {
     debugger
-    if ($('.playpause_' + id).hasClass('pause')) {
+    if ($('.playpause_' + id).hasClass('pausee')) {
       data.filter(item => {
-        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
-        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
+        $('.playpause_' + item.Ref_Track_ID).addClass('playy');
       })
       this.audio.pause();
       this.audio = new Audio();
       this.playpause = 'Play';
       this.playpauseImg = '../../../assets/images/play_video.svg'
     } else
-     if ($('.playpause_' + id).hasClass('play')) {
+     if ($('.playpause_' + id).hasClass('playy')) {
       this.audio.src = this._base._commonService.cdnURL + path;
       data.filter(item => {
-        $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
-        $('.playpause_' + item.Ref_Track_ID).addClass('play');
+        $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
+        $('.playpause_' + item.Ref_Track_ID).addClass('playy');
       })
       this.audio.pause();
       this.audio.load();
       this.audio.play();
       this.playpause = 'Pause';
       this.playpauseImg = '../../../assets/images/pause.svg'
-      $('.playpause_' + id).removeClass('play');
-      $('.playpause_' + id).addClass('pause');
+      $('.playpause_' + id).removeClass('playy');
+      $('.playpause_' + id).addClass('pausee');
     }
   }
   setImg(id){

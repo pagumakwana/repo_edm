@@ -16,9 +16,9 @@
                             <div class="play_upper_layer">
                                 <img class="tbl_img" [src]="imageBaseUrl + cart.Thumbnail" />
                                 <!-- <img class="tbl_img" [src]="../../../../assets/images/product_thumbnail.jpg" /> -->
-                                <div class="play_audio">
-                                    <span title="Play" class="playy"></span>
-                                    <span title="Pause" class="pausee" style="display: none;"></span>
+                                <div class="play_audio" (click)="playaudio(cart.PlayUrl, cart.ObjectID, cartList)">
+                                    <span class="playpause_{{cart.ObjectID}} playy"></span>
+                                    <!-- <span title="Pause" class="pausee" style="display: none;"></span> -->
                                 </div>
                             </div>
                         </td>
@@ -40,8 +40,7 @@
                                     <span>Add Project Files</span>
                                     <span class="bio_black_icon btn_icon left_btn_icon"></span>
                                 </a>
-                                <a class="global_btn red_btn"
-                                    (click)="Remove(cart.OrderID,cart.ObjectID,cart.ObjectType,cart)">
+                                <a class="global_btn red_btn" (click)="Remove(cart.OrderID,cart.ObjectID,cart.ObjectType,cart)">
                                     <span>Remove</span>
                                     <span class="delete_icon btn_icon"></span>
                                 </a>
@@ -128,14 +127,12 @@
                 <div class="form_group">
                     <form [formGroup]="couponForm">
                         <div class="form_area">
-                            <input formControlName='couponCode' type="text" name="couponcode"
-                                placeholder="Enter Valid Coupon Code" />
+                            <input formControlName='couponCode' type="text" name="couponcode" placeholder="Enter Valid Coupon Code" />
                         </div>
                         <a class="global_btn primary_btn" (click)="applyCoupon()">
                             <span>APPLY</span>
                         </a>
-                        <div class="error_msg"
-                            *ngIf="couponForm?.controls?.couponcode?.invalid && couponForm?.controls?.couponcode?.touched">
+                        <div class="error_msg" *ngIf="couponForm?.controls?.couponcode?.invalid && couponForm?.controls?.couponcode?.touched">
                             <span>This field is Required</span>
                         </div>
                     </form>

@@ -17,7 +17,7 @@
                         <img *ngIf="product.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(product.ObjectID,'Track','Favourite')" />
 
                         <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" />
-                        <img src="../../../assets/images/read_more.svg" routerLink="details/{{product.ObjectID}}" class="green_heart" title="Read More" />
+                        <img src="../../../assets/images/read_more.svg" routerLink="/product/track/details/{{product.ObjectID}}" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
                         <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',product.ObjectID,'Track','Track')">
@@ -57,7 +57,7 @@
                     </p>
                 </div>
                 <div class="button_group">
-                    <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',beat.ObjectID,'Beats','Beats')">
+                    <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',beat.ObjectID,'Beat','Beat')">
                         <span>&#36;{{beat.Price}}</span>
                         <span class="add_to_cart_icon btn_icon"></span>
                     </a>

@@ -321,7 +321,7 @@ export class AddModifyTrackComponent implements OnInit {
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
     if (file.length != 0){
       const lastItem = file[file.length - 1]
-      return this._base._commonService.cdnURL +  lastItem.FilePath
+      return  lastItem.FilePath
     }
   }
   changeListenerTrackImg($event): void {

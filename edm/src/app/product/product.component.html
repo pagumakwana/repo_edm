@@ -168,12 +168,12 @@
                                     <span class="add_to_favourites_green_icon"></span>
                                 </a>
                                 <a *ngIf="product.Favourite == 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Unfavourite')">
-                                    <span class="add_to_favourites_green_icon"></span>
+                                    <span class="add_to_favourites_fill_icon"></span>
                                 </a>
                                 <a title="Read More" class="small_icon_btn" routerLink="details/{{product.Ref_Track_ID}}">
                                     <span class="readmore_icon"></span>
                                 </a>
-                                <a title="Like" class="small_icon_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Beats','Beats')">
+                                <a title="Like" class="small_icon_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Beat','Beat')">
                                     <span class="add_to_cart_blue_icon"></span>
                                 </a>
                             </div>

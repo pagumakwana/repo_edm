@@ -112,7 +112,7 @@ export class TrackListComponent implements OnInit {
   public filterfile(FileManager, fileType) {
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
     const lastItem = file[file.length - 1]
-    return this._base._commonService.cdnURL +  lastItem.FilePath
+    return this._base._commonService.cdnURL +  file[0].FilePath
   }
   bindCategory() {
     this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {

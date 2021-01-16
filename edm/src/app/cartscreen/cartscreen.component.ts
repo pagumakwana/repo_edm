@@ -48,7 +48,7 @@ export class CartScreenComponent implements OnInit {
   couponForm: FormGroup = this._fb.group({
     couponCode: ['', [Validators.required]]
   })
-
+  audio = new Audio();
   constructor(public _base: BaseServiceHelper,
     public router: Router,
     private _cartService: CartService,
@@ -172,6 +172,28 @@ export class CartScreenComponent implements OnInit {
     if (calcCost) this.calculateCost()
   }
 
-
+  playaudio(path, id, data) {
+    debugger
+    if ($('.playpause_' + id).hasClass('pausee')) {
+      data.filter(item => {
+        $('.playpause_' + item.ObjectID).removeClass('pausee');
+        $('.playpause_' + item.ObjectID).addClass('playy');
+      })
+      this.audio.pause();
+      this.audio = new Audio();
+    } else
+     if ($('.playpause_' + id).hasClass('playy')) {
+      this.audio.src = this._base._commonService.cdnURL + path;
+      data.filter(item => {
+        $('.playpause_' + item.ObjectID).removeClass('pausee');
+        $('.playpause_' + item.ObjectID).addClass('playy');
+      })
+      this.audio.pause();
+      this.audio.load();
+      this.audio.play();
+      $('.playpause_' + id).removeClass('playy');
+      $('.playpause_' + id).addClass('pausee');
+    }
+  }
 
 }
