@@ -270,31 +270,15 @@ export class AddModifyTrackComponent implements OnInit {
       this.model.trackImg = this.filterfile(data[0].FileManager, 'Thumbnail')
       this.trackImg = this.filterfile(data[0].FileManager, 'Thumbnail')
       this.preview = this._base._commonService.cdnURL + this.filterfile(data[0].FileManager, 'Thumbnail')
-      this.trackImguploaded = true;
-      this.trackImgNotuploaded = false
       this.masterfile = this.filterfile(data[0].FileManager, 'MasterFile')
-      this.masterfileuploaded = true;
-      this.masterfileNotuploaded = false
       this.formDataTrackImg = this.filterfile(data[0].FileManager, 'Thumbnail')
       this.urtoggedfile = this.filterfile(data[0].FileManager, 'MasterFile')
-      this.urtoggedfileuploaded = true;
-      this.urtoggedfileNotuploaded = false
       this.unmasterfile = this.filterfile(data[0].FileManager, 'UnmasterFile')
-      this.unmasterfileuploaded = true;
-      this.unmasterfileNotuploaded = false
       this.wavefileurl = this.filterfile(data[0].FileManager, 'WavFile')
       this.Wavfile = this.filterfile(data[0].FileManager, 'WavFile')
-      this.Wavfileuploaded = true;
-      this.WavfileupNotloaded = false
       this.mixdowfile = this.filterfile(data[0].FileManager, 'MixdowFile')
-      this.mixdowfileuploaded = true;
-      this.mixdowfileNotuploaded = false
       this.stemsfile = this.filterfile(data[0].FileManager, 'StemsFile')
-      this.stemsfileuploaded = true;
-      this.stemsfileNotuploaded = false
       this.MIDIfile = this.filterfile(data[0].FileManager, 'MIDIFile')
-      this.MIDIfileuploaded = true;
-      this.MIDIfileNotuploaded = false
       this.midifileurl = this.filterfile(data[0].FileManager, 'MIDIFile')
       this.projectfile = this.filterfile(data[0].FileManager, 'ProjectFile')
       if(this.projectfile != undefined)
@@ -320,8 +304,63 @@ export class AddModifyTrackComponent implements OnInit {
   public filterfile(FileManager, fileType) {
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
     if (file.length != 0){
+      if(fileType == "Thumbnail"){
+        this.trackImguploaded = true;
+        this.trackImgNotuploaded = false;
+      }else  if(fileType == "MasterFile"){
+        this.masterfileuploaded = true;
+        this.masterfileNotuploaded = false;
+      }else  if(fileType == "UnmasterFile"){
+        this.unmasterfileuploaded = true;
+      this.unmasterfileNotuploaded = false
+      }else  if(fileType == "WavFile"){
+        this.Wavfileuploaded = true;
+        this.WavfileupNotloaded = false
+      }else  if(fileType == "MixdowFile"){
+        this.mixdowfileuploaded = true;
+      this.mixdowfileNotuploaded = false
+      }else  if(fileType == "StemsFile"){
+        this.stemsfileuploaded = true;
+        this.stemsfileNotuploaded = false
+      }else  if(fileType == "MIDIFile"){
+        this.MIDIfileuploaded = true;
+        this.MIDIfileNotuploaded = false;
+      }else  if(fileType == "ProjectFile"){
+        this.projectfileuploaded = true;
+      }else  if(fileType == "Urtoggedfile"){
+        this.unmasterfileuploaded = true;
+        this.unmasterfileNotuploaded = false;
+      }
       const lastItem = file[file.length - 1]
       return  lastItem.FilePath
+    }else{
+      if(fileType == "Thumbnail"){
+        this.trackImguploaded = false;
+        this.trackImgNotuploaded = true;
+      }else  if(fileType == "MasterFile"){
+        this.masterfileuploaded = false;
+        this.masterfileNotuploaded = true;
+      }else  if(fileType == "UnmasterFile"){
+        this.unmasterfileuploaded = false;
+      this.unmasterfileNotuploaded = true
+      }else  if(fileType == "WavFile"){
+        this.Wavfileuploaded = false;
+        this.WavfileupNotloaded = true
+      }else  if(fileType == "MixdowFile"){
+        this.mixdowfileuploaded = false;
+      this.mixdowfileNotuploaded = true
+      }else  if(fileType == "StemsFile"){
+        this.stemsfileuploaded = false;
+        this.stemsfileNotuploaded = true
+      }else  if(fileType == "MIDIFile"){
+        this.MIDIfileuploaded = false;
+        this.MIDIfileNotuploaded = true;
+      }else  if(fileType == "ProjectFile"){
+        this.projectfileuploaded = false;
+      }else  if(fileType == "Urtoggedfile"){
+        this.unmasterfileuploaded = false;
+        this.unmasterfileNotuploaded = true;
+      }
     }
   }
   changeListenerTrackImg($event): void {
