@@ -9,6 +9,7 @@ import { WidgetsModule } from '../widgets/widget.module';
 import { CommonModule } from '@angular/common';
 import { ClientModule } from './client/client.module';
 import { AdminModule } from './admin/admin.module';
+import { CartService } from '../_appService/cart/cart.service';
 @NgModule({
     declarations: [
         // ThemeComponent,
@@ -30,6 +31,6 @@ import { AdminModule } from './admin/admin.module';
         AdminModule,
         ThemeRoutingModule,
     ],
-    providers: []
+    providers: [CartService]
 })
 export class ThemeModule { }

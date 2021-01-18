@@ -132,6 +132,8 @@ export class ProducerProfileComponent implements OnInit {
 
         this._profileService.Order(Data).subscribe((res: any) => {
             console.log("Order", res, actionObj)
+
+            this._base._commonService.checkCartValue()
             this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res)
             // if (ActionType == 'follow') {
             //     actionObj.Followed = (res == 'Follow')

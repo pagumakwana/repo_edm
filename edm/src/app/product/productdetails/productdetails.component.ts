@@ -73,58 +73,58 @@ export class ProductDetailsComponent implements OnInit {
     ObjectID: null,
     ObjectType: "Producer",
     Action: null
-}
-public config: SwiperConfigInterface = {
-  direction: 'horizontal',
-  navigation: false,
-  pagination: false,
-  autoplay: false,
-  centeredSlides: false,
-  breakpoints: {
+  }
+  public config: SwiperConfigInterface = {
+    direction: 'horizontal',
+    navigation: false,
+    pagination: false,
+    autoplay: false,
+    centeredSlides: false,
+    breakpoints: {
       501: {
-          slidesPerView: 2,
-          spaceBetween: 10,
+        slidesPerView: 2,
+        spaceBetween: 10,
       },
       701: {
-          slidesPerView: 3,
-          spaceBetween: 20,
+        slidesPerView: 3,
+        spaceBetween: 20,
       },
       951: {
-          slidesPerView: 4,
-          spaceBetween: 20,
+        slidesPerView: 4,
+        spaceBetween: 20,
       },
       1201: {
-          slidesPerView: 5,
-          spaceBetween: 50,
+        slidesPerView: 5,
+        spaceBetween: 50,
       },
-  }
-};
+    }
+  };
 
-private scrollbar: SwiperScrollbarInterface = {
-  el: '.swiper-scrollbar',
-  hide: false,
-  draggable: true
-};
+  private scrollbar: SwiperScrollbarInterface = {
+    el: '.swiper-scrollbar',
+    hide: false,
+    draggable: true
+  };
 
-private pagination: SwiperPaginationInterface = {
-  el: '.swiper-pagination',
-  clickable: true,
-  hideOnClick: false
-};
+  private pagination: SwiperPaginationInterface = {
+    el: '.swiper-pagination',
+    clickable: true,
+    hideOnClick: false
+  };
   constructor(public _base: BaseServiceHelper,
     public fileUploadService: FileUploadService,
     public commonService: CommonService,
     public route: ActivatedRoute,
-    private _categoryService: CategoryService,private _profileService: ProfileUpdateService,
-    private router : Router) {
+    private _categoryService: CategoryService, private _profileService: ProfileUpdateService,
+    private router: Router) {
     this.bindDAW()
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      if( params['type'] == "CustomTrack"){
+      if (params['type'] == "CustomTrack") {
         this.storetype = "Track";
-      }else{
+      } else {
         this.storetype = params['type'];
       }
       this.productId = params['ID'];
@@ -170,26 +170,26 @@ private pagination: SwiperPaginationInterface = {
           item.DAWName = this.getDawName(item.DAW);
           item.MoodName = this.getMoodName(item.Mood);
         })
-        console.log( this.productDetails);
+        console.log(this.productDetails);
       })
     })
   }
-  public filterfile(FileManager, fileType){
+  public filterfile(FileManager, fileType) {
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
     const lastItem = file[file.length - 1]
-    return this._base._commonService.cdnURL +  lastItem.FilePath
-    }
+    return this._base._commonService.cdnURL + lastItem.FilePath
+  }
   playaudio(path, id, data) {
     debugger
     if ($('.playpause_' + id).hasClass('pause')) {
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');
-        if(item.RelatedTrack.length != 0){
+        if (item.RelatedTrack.length != 0) {
           item.RelatedTrack.filter(items => {
             $('.playpause_' + items.Ref_Track_ID).removeClass('pause');
             $('.playpause_' + items.Ref_Track_ID).addClass('play');
-           
+
           })
         }
       })
@@ -200,16 +200,16 @@ private pagination: SwiperPaginationInterface = {
       // $('.playpause_' + id).removeClass('pause');
       //$('.playpause_' + id).addClass('play');
     } else if ($('.playpause_' + id).hasClass('play')) {
-      let  file = path.filter(item => item.FileIdentifier == "MasterFile")
-      this.audio.src = this._base._commonService.cdnURL  + file[0].FilePath;;
+      let file = path.filter(item => item.FileIdentifier == "MasterFile")
+      this.audio.src = this._base._commonService.cdnURL + file[0].FilePath;;
       data.filter(item => {
         $('.playpause_' + item.Ref_Track_ID).removeClass('pause');
         $('.playpause_' + item.Ref_Track_ID).addClass('play');
-        if(item.RelatedTrack.length != 0){
+        if (item.RelatedTrack.length != 0) {
           item.RelatedTrack.filter(items => {
             $('.playpause_' + items.Ref_Track_ID).removeClass('pause');
             $('.playpause_' + items.Ref_Track_ID).addClass('play');
-           
+
           })
         }
       })
@@ -264,14 +264,14 @@ private pagination: SwiperPaginationInterface = {
       let ObjUseraction = {
         "UserID": Ref_User_ID,
         "ObjectID": ObjectID,
-        "ObjectType": ObjectType == "Beats"?"Beat": ObjectType,
+        "ObjectType": ObjectType == "Beats" ? "Beat" : ObjectType,
         "Action": Action
       }
       this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
         console.log(data)
         this.getProductDetails(this.productId);
         this._base._commonService.hideLoader();
-      },e =>{
+      }, e => {
         this._base._commonService.hideLoader();
       })
     })
@@ -280,13 +280,13 @@ private pagination: SwiperPaginationInterface = {
     this._base._commonService.showLoader()
     this.UserActionData.Action = Action
     this.UserActionData.ObjectID = parseInt(ObjectID)
-    this.UserActionData.ObjectType =  ObjectType == "Beats"?"Beat": ObjectType
+    this.UserActionData.ObjectType = ObjectType == "Beats" ? "Beat" : ObjectType
     let Object = {
-        UserID: this.UserActionData.UserID,
-        OrderID: 0,
-        ObjectID: parseInt(ObjectID),
-        ObjectType: ObjectType == "Beats"?"Beat": ObjectType,
-        OrderStatus: Action
+      UserID: this.UserActionData.UserID,
+      OrderID: 0,
+      ObjectID: parseInt(ObjectID),
+      ObjectType: ObjectType == "Beats" ? "Beat" : ObjectType,
+      OrderStatus: Action
     }
 
     let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
@@ -295,27 +295,28 @@ private pagination: SwiperPaginationInterface = {
 
     this._profileService.Order(Data).subscribe((res: any) => {
       this._base._commonService.hideLoader()
-        console.log("Order", res, actionObj)
-       //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
-       this._base._alertMessageService.success("Added in cart successfully!");
-      }, e=>{
-          this._base._commonService.hideLoader()
-      })
-}
-setImg(id){
-  if ($('.playpause_' + id).hasClass('play')) {
-    return '../../../assets/images/play_video.svg'
-  }else{
-    return '../../../assets/images/pause.svg'
+      this._base._commonService.checkCartValue()
+      console.log("Order", res, actionObj)
+      //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
+      this._base._alertMessageService.success("Added in cart successfully!");
+    }, e => {
+      this._base._commonService.hideLoader()
+    })
   }
-}
-redirect(id) {
-  this.router.navigate(['product/' + this._base._commonService.FeatureProducts + '/details', id]).then((e) => {
+  setImg(id) {
+    if ($('.playpause_' + id).hasClass('play')) {
+      return '../../../assets/images/play_video.svg'
+    } else {
+      return '../../../assets/images/pause.svg'
+    }
+  }
+  redirect(id) {
+    this.router.navigate(['product/' + this._base._commonService.FeatureProducts + '/details', id]).then((e) => {
       if (e) {
-          console.log("Navigation is successful!");
+        console.log("Navigation is successful!");
       } else {
-          console.log("Navigation has failed!");
+        console.log("Navigation has failed!");
       }
-  });
-}
+    });
+  }
 }

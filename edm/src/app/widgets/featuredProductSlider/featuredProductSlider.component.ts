@@ -120,13 +120,13 @@ export class FeaturedProductSliderComponent implements OnInit {
             $('.playpause_' + id).addClass('pause');
         }
     }
-    setImg(id){
+    setImg(id) {
         if ($('.playpause_' + id).hasClass('play')) {
-          return '../../../assets/images/play_video.svg'
-        }else{
-          return '../../../assets/images/pause.svg'
+            return '../../../assets/images/play_video.svg'
+        } else {
+            return '../../../assets/images/pause.svg'
         }
-      }
+    }
     useraction(ObjectID, ObjectType, Action) {
         this._base._commonService.showLoader()
         this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
@@ -138,9 +138,9 @@ export class FeaturedProductSliderComponent implements OnInit {
             }
             this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
                 console.log(data)
-                if(Action == "Favourite" || Action == "Unfavourite"){
-                    this.Addonwhishlist(Ref_User_ID,ObjectID,ObjectType, Action)
-                }else{
+                if (Action == "Favourite" || Action == "Unfavourite") {
+                    this.Addonwhishlist(Ref_User_ID, ObjectID, ObjectType, Action)
+                } else {
                     this.ngOnInit()
                     this._base._commonService.hideLoader()
                 }
@@ -149,12 +149,12 @@ export class FeaturedProductSliderComponent implements OnInit {
             })
         })
     }
-    Addonwhishlist(Ref_User_ID,ObjectID,ObjectType, Action){
+    Addonwhishlist(Ref_User_ID, ObjectID, ObjectType, Action) {
         let ObjUseraction = {
             "UserID": Ref_User_ID,
             "ObjectID": ObjectID,
             "ObjectType": ObjectType,
-            "Action": Action == "Favourite"?"Wishlist":"Unwishlist"
+            "Action": Action == "Favourite" ? "Wishlist" : "Unwishlist"
         }
         this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
             console.log(data)
@@ -162,7 +162,7 @@ export class FeaturedProductSliderComponent implements OnInit {
             this._base._commonService.hideLoader()
         }, e => {
             this._base._commonService.hideLoader()
-        }) 
+        })
     }
     Order(Action: string, ObjectID: number | any, ObjectType: string, actionObj: any) {
         this._base._commonService.showLoader()
@@ -176,17 +176,18 @@ export class FeaturedProductSliderComponent implements OnInit {
             ObjectType: ObjectType,
             OrderStatus: Action
         }
-    
+
         let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
-    
+
         Data.ObjectList.push(Object)
-    
+
         this._profileService.Order(Data).subscribe((res: any) => {
+            this._base._commonService.checkCartValue()
             this._base._commonService.hideLoader()
             console.log("Order", res, actionObj);
             //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
             this._base._alertMessageService.success("Added in cart successfully!");
-        }, e=>{
+        }, e => {
             this._base._commonService.hideLoader()
         })
     }

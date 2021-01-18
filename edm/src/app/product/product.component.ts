@@ -120,7 +120,7 @@ export class ProductComponent implements OnInit {
     ObjectID: null,
     ObjectType: "Producer",
     Action: null
-}
+  }
   constructor(public _base: BaseServiceHelper,
     private _categoryService: CategoryService,
     private route: ActivatedRoute, private _profileService: ProfileUpdateService) {
@@ -148,7 +148,7 @@ export class ProductComponent implements OnInit {
     }, e => {
       this._base._commonService.hideLoader();
     });
-   
+
 
   }
   getProductlist() {
@@ -158,7 +158,7 @@ export class ProductComponent implements OnInit {
         if (this.storetype == "Beats") {
           this.products = data.filter(res => res.IsTrack == "Beat");
         } else {
-         
+
           this.products = data.filter(res => res.IsTrack == "Track");
         }
         this._base._commonService.hideLoader();
@@ -171,13 +171,13 @@ export class ProductComponent implements OnInit {
       })
     })
   }
-  public filterfile(FileManager, fileType){
+  public filterfile(FileManager, fileType) {
     let file = FileManager.filter(item => item.FileIdentifier == fileType)
-      if(file.length != 0){
-        const lastItem = file[file.length - 1]
-        return this._base._commonService.cdnURL +  lastItem.FilePath
-      }
+    if (file.length != 0) {
+      const lastItem = file[file.length - 1]
+      return this._base._commonService.cdnURL + lastItem.FilePath
     }
+  }
   bindDAW() {
     this._base._ApiService.get(ApiConstant.MasterManagement.DAW).subscribe((data: any) => {
       this.DAWlist = data;
@@ -307,33 +307,33 @@ export class ProductComponent implements OnInit {
       }
       this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
         console.log(data);
-        if(Action == "Favourite" || Action == "Unfavourite"){
-          this.Addonwhishlist(Ref_User_ID,ObjectID,ObjectType, Action)
-      }else{
-        this.getProductlist();
-        this._base._commonService.hideLoader()
-      }
-        
+        if (Action == "Favourite" || Action == "Unfavourite") {
+          this.Addonwhishlist(Ref_User_ID, ObjectID, ObjectType, Action)
+        } else {
+          this.getProductlist();
+          this._base._commonService.hideLoader()
+        }
+
       }, e => {
         this._base._commonService.hideLoader()
       })
     })
   }
-  Addonwhishlist(Ref_User_ID,ObjectID,ObjectType, Action){
+  Addonwhishlist(Ref_User_ID, ObjectID, ObjectType, Action) {
     let ObjUseraction = {
-        "UserID": Ref_User_ID,
-        "ObjectID": ObjectID,
-        "ObjectType": ObjectType,
-        "Action": Action == "Favourite"?"Wishlist":"Unwishlist"
+      "UserID": Ref_User_ID,
+      "ObjectID": ObjectID,
+      "ObjectType": ObjectType,
+      "Action": Action == "Favourite" ? "Wishlist" : "Unwishlist"
     }
     this._base._ApiService.post(ApiConstant.Order.UserAction, ObjUseraction).subscribe((data: any) => {
-        console.log(data)
-        this.ngOnInit()
-        this._base._commonService.hideLoader()
+      console.log(data)
+      this.ngOnInit()
+      this._base._commonService.hideLoader()
     }, e => {
-        this._base._commonService.hideLoader()
-    }) 
-}
+      this._base._commonService.hideLoader()
+    })
+  }
   playaudio(path, id, data) {
     debugger
     if ($('.playpause_' + id).hasClass('pausee')) {
@@ -346,25 +346,25 @@ export class ProductComponent implements OnInit {
       this.playpause = 'Play';
       this.playpauseImg = '../../../assets/images/play_video.svg'
     } else
-     if ($('.playpause_' + id).hasClass('playy')) {
-      this.audio.src = this._base._commonService.cdnURL + path;
-      data.filter(item => {
-        $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
-        $('.playpause_' + item.Ref_Track_ID).addClass('playy');
-      })
-      this.audio.pause();
-      this.audio.load();
-      this.audio.play();
-      this.playpause = 'Pause';
-      this.playpauseImg = '../../../assets/images/pause.svg'
-      $('.playpause_' + id).removeClass('playy');
-      $('.playpause_' + id).addClass('pausee');
-    }
+      if ($('.playpause_' + id).hasClass('playy')) {
+        this.audio.src = this._base._commonService.cdnURL + path;
+        data.filter(item => {
+          $('.playpause_' + item.Ref_Track_ID).removeClass('pausee');
+          $('.playpause_' + item.Ref_Track_ID).addClass('playy');
+        })
+        this.audio.pause();
+        this.audio.load();
+        this.audio.play();
+        this.playpause = 'Pause';
+        this.playpauseImg = '../../../assets/images/pause.svg'
+        $('.playpause_' + id).removeClass('playy');
+        $('.playpause_' + id).addClass('pausee');
+      }
   }
-  setImg(id){
+  setImg(id) {
     if ($('.playpause_' + id).hasClass('play')) {
       return '../../../assets/images/play_video.svg'
-    }else{
+    } else {
       return '../../../assets/images/pause.svg'
     }
   }
@@ -374,11 +374,11 @@ export class ProductComponent implements OnInit {
     this.UserActionData.ObjectID = parseInt(ObjectID)
     this.UserActionData.ObjectType = ObjectType
     let Object = {
-        UserID: this.UserActionData.UserID,
-        OrderID: 0,
-        ObjectID: parseInt(ObjectID),
-        ObjectType: ObjectType,
-        OrderStatus: Action
+      UserID: this.UserActionData.UserID,
+      OrderID: 0,
+      ObjectID: parseInt(ObjectID),
+      ObjectType: ObjectType,
+      OrderStatus: Action
     }
 
     let Data: { ObjectList: Array<{ UserID: number; OrderID: number; ObjectID: number; ObjectType: string; OrderStatus: string; }> } = { ObjectList: [] }
@@ -387,11 +387,12 @@ export class ProductComponent implements OnInit {
 
     this._profileService.Order(Data).subscribe((res: any) => {
       this._base._commonService.hideLoader()
-        console.log("Order", res, actionObj)
-       //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
-       this._base._alertMessageService.success("Added in cart successfully!");
-      }, e=>{
-          this._base._commonService.hideLoader()
-      })
-}
+      this._base._commonService.checkCartValue()
+      console.log("Order", res, actionObj)
+      //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
+      this._base._alertMessageService.success("Added in cart successfully!");
+    }, e => {
+      this._base._commonService.hideLoader()
+    })
+  }
 }

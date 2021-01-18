@@ -61,6 +61,7 @@ export class CartScreenComponent implements OnInit {
   }
 
   getCartList() {
+    this._base._commonService.checkCartValue()
     this._cartService.getCartData(this.requestData.userId).subscribe((data: any) => {
       this.cartList = data
       this.cartList.map(res => {
@@ -105,7 +106,7 @@ export class CartScreenComponent implements OnInit {
     this._cartService.Remove(Object).subscribe((res: any) => {
       Object.Action = 'Remove'
       console.log("Remove", res, Object)
-      this.ngOnInit()
+      this.getCartList()
     })
   }
 

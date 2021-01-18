@@ -26,8 +26,13 @@ export class CommonService {
     public ipAddress: string = "";
 
     public setHasLoginSubscribe = new Subject<boolean>();
+    public setCartCountSubscribe = new Subject<boolean>();
     public cdnURL = configData.cdnURL;
     public FeatureProducts = "Track"
+
+    public checkCartValue() {
+        this.setCartCountSubscribe.next()
+    }
     public navigation(url: any) {
         this._router.navigate([url]);
     }

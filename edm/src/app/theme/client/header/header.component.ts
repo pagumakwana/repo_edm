@@ -4,6 +4,7 @@ import { enAppSession } from 'src/app/_appModel/enAppSession';
 import { CategoryService } from 'src/app/_appService/category/category.serviec';
 import { CategoryModel } from 'src/app/_appModel/category/category.model';
 import { Subscription } from 'rxjs';
+import { CartService } from 'src/app/_appService/cart/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -11,16 +12,22 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./header.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent implements OnInit,OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  constructor(private _base: BaseServiceHelper, private _categoryService: CategoryService) {
+
+  constructor(private _base: BaseServiceHelper, private _categoryService: CategoryService, private _cartService: CartService) {
     this.subscriptionData = this._base._commonService.setHasLoginSubscribe.subscribe(hasLogin => {
       this.checkIsLogin()
     })
+    this.subscriptionCartData = this._base._commonService.setCartCountSubscribe.subscribe(cart => {
+      this.checkCartCount()
+    })
     this.checkIsLogin()
+    this._base._commonService.checkCartValue()
   }
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe()
+    this.subscriptionCartData.unsubscribe()
   }
   _categoryModel: CategoryModel = {};
   public categoryData: any;
@@ -30,6 +37,19 @@ export class HeaderComponent implements OnInit,OnDestroy {
   public EmailID: string = '';
   public ProfilePic: string = '';
   subscriptionData: Subscription;
+  subscriptionCartData: Subscription;
+  cartCount: number = null
+
+  //Checks CartCount
+  checkCartCount() {
+    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
+      this._cartService.getCartData(Ref_User_ID).subscribe((data: any) => {
+        console.log("checkCartCount", data)
+        this.cartCount = data.length
+      })
+    })
+  }
+
 
 
   //Checks If Login
@@ -68,7 +88,7 @@ export class HeaderComponent implements OnInit,OnDestroy {
     //   Ref_Category_ID: 0,
     //   Ref_Parent_ID: 0
     // }
-    this._categoryService.categorylist('TRACK',0).subscribe((resData: any) => {
+    this._categoryService.categorylist('TRACK', 0).subscribe((resData: any) => {
       this.categoryData = resData;
     });
   }

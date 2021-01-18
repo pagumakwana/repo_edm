@@ -126,6 +126,7 @@ export class WishlistComponent implements OnInit {
 
     this._profileService.Order(Data).subscribe((res: any) => {
         console.log("Order", res, actionObj)
+        this._base._commonService.checkCartValue()
         this._base._alertMessageService.success("Added in cart successfully!");
       }, e=>{
           this._base._commonService.hideLoader()

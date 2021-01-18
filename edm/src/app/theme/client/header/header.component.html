@@ -102,7 +102,7 @@
         </div>
         <div class="cart_section" [hidden]="!hasLogin">
             <div (click)="redirectUrl('cart')" class="cart_area" title="My Cart">
-                <span>3</span>
+                <span *ngIf="cartCount">{{cartCount}}</span>
                 <img src="../../../../assets/images/cart.svg" alt="Cart Image">
             </div>
         </div>
@@ -124,11 +124,11 @@
                                     My Account
                                 </a>
                                 <a routerLink="/wishlist">
-                                   My Wishlist
+                                    My Wishlist
                                 </a>
                                 <a routerLink="/support/0">
                                     Support
-                                 </a>
+                                </a>
                                 <a href="#">
                                     Get In Touch
                                 </a>
