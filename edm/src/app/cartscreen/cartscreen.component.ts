@@ -127,36 +127,37 @@ export class CartScreenComponent implements OnInit {
       OrderID: OrderID,
       CouponCode: this.couponForm.value.couponCode
     }
-    let res: any = [
-      {
-        "ObjectIDs": "",
-        "DiscountInMax": 0,
-        "DiscountInPercentage": 0,
-        "CouponStatus": "APPLIED"
-      }
-      // {
-      //   "ObjectIDs": "",
-      //   "DiscountInMax": 10,
-      //   "DiscountInPercentage": 0,
-      //   "CouponStatus": "INVALIDCOUPONCODE"
-      // }
-    ]
-    res = Array.isArray(res) && res.length > 0 ? res[0] : null
-    if (res && res.CouponStatus == 'APPLIED') {
-      this.cartAmount.discounted.couponCode = this.couponForm.value.couponCode
-      if (showMsg) this._base._alertMessageService.success(`${this.cartAmount.discounted.couponCode} Applied Sucessfully`)
-      let index: number = _.findIndex(this.cartList, (o: any) => {
-        return o.OrderID == OrderID
-      })
-      if (index > -1) {
-        this.cartList[index].discountedPrice = res.DiscountInMax
-        this.calculateCost()
-      }
-    } else {
-      if (showMsg) this._base._alertMessageService.error('Invalid Coupon Code')
-    }
+    // let res: any = [
+    //   {
+    //     "ObjectIDs": "",
+    //     "DiscountInMax": 0,
+    //     "DiscountInPercentage": 0,
+    //     "CouponStatus": "APPLIED"
+    //   }
+    //   // {
+    //   //   "ObjectIDs": "",
+    //   //   "DiscountInMax": 10,
+    //   //   "DiscountInPercentage": 0,
+    //   //   "CouponStatus": "INVALIDCOUPONCODE"
+    //   // }
+    // ]
+
     this._cartService.ApplyCoupon(data).subscribe((res: any) => {
+      res = Array.isArray(res) && res.length > 0 ? res[0] : null
       console.log("ApplyCoupon", res)
+      if (res && res.CouponStatus == 'APPLIED') {
+        this.cartAmount.discounted.couponCode = this.couponForm.value.couponCode
+        if (showMsg) this._base._alertMessageService.success(`${this.cartAmount.discounted.couponCode} Applied Sucessfully`)
+        let index: number = _.findIndex(this.cartList, (o: any) => {
+          return o.OrderID == OrderID
+        })
+        if (index > -1) {
+          this.cartList[index].discountedPrice = res.DiscountInMax
+          this.calculateCost()
+        }
+      } else {
+        if (showMsg) this._base._alertMessageService.error('Invalid Coupon Code')
+      }
     })
 
 
@@ -182,18 +183,18 @@ export class CartScreenComponent implements OnInit {
       this.audio.pause();
       this.audio = new Audio();
     } else
-     if ($('.playpause_' + id).hasClass('playy')) {
-      this.audio.src = this._base._commonService.cdnURL + path;
-      data.filter(item => {
-        $('.playpause_' + item.ObjectID).removeClass('pausee');
-        $('.playpause_' + item.ObjectID).addClass('playy');
-      })
-      this.audio.pause();
-      this.audio.load();
-      this.audio.play();
-      $('.playpause_' + id).removeClass('playy');
-      $('.playpause_' + id).addClass('pausee');
-    }
+      if ($('.playpause_' + id).hasClass('playy')) {
+        this.audio.src = this._base._commonService.cdnURL + path;
+        data.filter(item => {
+          $('.playpause_' + item.ObjectID).removeClass('pausee');
+          $('.playpause_' + item.ObjectID).addClass('playy');
+        })
+        this.audio.pause();
+        this.audio.load();
+        this.audio.play();
+        $('.playpause_' + id).removeClass('playy');
+        $('.playpause_' + id).addClass('pausee');
+      }
   }
 
 }

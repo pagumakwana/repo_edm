@@ -40,7 +40,8 @@
                                     <span>Add Project Files</span>
                                     <span class="bio_black_icon btn_icon left_btn_icon"></span>
                                 </a>
-                                <a class="global_btn red_btn" (click)="Remove(cart.OrderID,cart.ObjectID,cart.ObjectType,cart)">
+                                <a class="global_btn red_btn"
+                                    (click)="Remove(cart.OrderID,cart.ObjectID,cart.ObjectType,cart)">
                                     <span>Remove</span>
                                     <span class="delete_icon btn_icon"></span>
                                 </a>
@@ -119,6 +120,7 @@
                     </tr> -->
                 </tbody>
             </table>
+            <p *ngIf="cartList.length < 1">No Items in Cart</p>
         </div>
     </div>
     <div class="cart_total" *ngIf="cartList.length > 0">
@@ -127,12 +129,14 @@
                 <div class="form_group">
                     <form [formGroup]="couponForm">
                         <div class="form_area">
-                            <input formControlName='couponCode' type="text" name="couponcode" placeholder="Enter Valid Coupon Code" />
+                            <input formControlName='couponCode' type="text" name="couponcode"
+                                placeholder="Enter Valid Coupon Code" />
                         </div>
                         <a class="global_btn primary_btn" (click)="applyCoupon()">
                             <span>APPLY</span>
                         </a>
-                        <div class="error_msg" *ngIf="couponForm?.controls?.couponcode?.invalid && couponForm?.controls?.couponcode?.touched">
+                        <div class="error_msg"
+                            *ngIf="couponForm?.controls?.couponcode?.invalid && couponForm?.controls?.couponcode?.touched">
                             <span>This field is Required</span>
                         </div>
                     </form>

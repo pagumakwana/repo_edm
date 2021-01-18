@@ -83,6 +83,15 @@ export class DatatablesComponent implements OnInit {
     }, 50);
   }
 
+  validateCondition(condition, record) {
+    console.log(condition, record)
+    let valid: boolean = true
+    if (condition.type == "logic") {
+      valid = record[condition.key] ? record[condition.key] == condition.value : true
+    }
+    return valid
+  }
+
 
 
 }

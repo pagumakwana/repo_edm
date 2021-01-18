@@ -126,8 +126,8 @@ export class ValidationService {
             // const initalValue: string = control.value && typeof control.value == 'string' ? control.value : ""
             // let valueAFterTrim: string = initalValue.trim()
             // minDateData: '2020-01-01',
-            let minDateData = minDateDataIdentifier && control.parent.get(minDateDataIdentifier) ? control.parent.get(minDateDataIdentifier).value : '2020-01-01'
-            let maxDateData = maxDateDataIdentifer && control.parent.get(maxDateDataIdentifer) ? control.parent.get(maxDateDataIdentifer).value : '2100-01-01'
+            let minDateData = minDateDataIdentifier && control.parent && control.parent.get(minDateDataIdentifier) ? control.parent.get(minDateDataIdentifier).value : '2020-01-01'
+            let maxDateData = maxDateDataIdentifer && control.parent && control.parent.get(maxDateDataIdentifer) ? control.parent.get(maxDateDataIdentifer).value : '2100-01-01'
 
             //YYYY-MM-dd
             // let defaultDate = {
