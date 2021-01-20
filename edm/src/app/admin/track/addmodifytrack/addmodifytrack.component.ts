@@ -574,7 +574,7 @@ export class AddModifyTrackComponent implements OnInit {
     let filesData: SaveModuleFileModel = {
       FileManagerID: 0,
       ModuleID: 0,
-      ModuleType: 'Track',
+      ModuleType: this.moduleName,
       FileIdentifier: "Thumbnail",
       Sequence: 0,
       files: this.formDataTrackImg,
@@ -603,7 +603,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "MasterFile",
         Sequence: 0,
         files: this.uploadmasterfile,
@@ -630,7 +630,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "UnmasterFile",
         Sequence: 0,
         files: this.uploadunmasterfile,
@@ -657,7 +657,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "MixdowFile",
         Sequence: 0,
         files: this.uploadmixdowfile,
@@ -683,7 +683,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "StemsFile",
         Sequence: 0,
         files: this.uploadmixdowfile,
@@ -709,7 +709,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "MIDIFile",
         Sequence: 0,
         files: this.uploadmixdowfile,
@@ -735,7 +735,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "ProjectFile",
         Sequence: 0,
         files: this.uploadmixdowfile,
@@ -761,7 +761,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "MasterFile",
         Sequence: 0,
         files: this.uploadmixdowfile,
@@ -789,7 +789,7 @@ export class AddModifyTrackComponent implements OnInit {
       let filesData: SaveModuleFileModel = {
         FileManagerID: 0,
         ModuleID: 0,
-        ModuleType: 'Track',
+        ModuleType: this.moduleName,
         FileIdentifier: "WavFile",
         Sequence: 0,
         files: this.uploadmixdowfile,

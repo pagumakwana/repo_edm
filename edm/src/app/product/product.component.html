@@ -114,11 +114,15 @@
                     <div class="left_details">
                         <img *ngIf="product.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')" />
 
-                        <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" (click)="useraction(product.Ref_Track_ID,'Track','Unfavourite')" />
+                        <img *ngIf="product.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" (click)="useraction(product.Ref_Track_ID,'Track','Favourite')" />
                         <img src="../../../assets/images/read_more.svg" routerLink="details/{{product.Ref_Track_ID}}" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Track','Track')">
+                        <a *ngIf="product.SoldOut == 'ADD_TO_CART'" class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Track','Track')">
+                            <span>&#36;{{product.Price}}</span>
+                            <span class="add_to_cart_icon btn_icon"></span>
+                        </a>
+                        <a *ngIf="product.SoldOut == 'IN_CART'" class="global_btn icon_btn primary_btn" title="View In Cart" routerLink="/cart/">
                             <span>&#36;{{product.Price}}</span>
                             <span class="add_to_cart_icon btn_icon"></span>
                         </a>
@@ -167,13 +171,16 @@
                                 <a *ngIf="product.Favourite != 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Favourite')">
                                     <span class="add_to_favourites_green_icon"></span>
                                 </a>
-                                <a *ngIf="product.Favourite == 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Unfavourite')">
+                                <a *ngIf="product.Favourite == 'Favourite'" title="Like" class="small_icon_btn" (click)="useraction(product.Ref_Track_ID,'Beat','Favourite')">
                                     <span class="add_to_favourites_fill_icon"></span>
                                 </a>
                                 <a title="Read More" class="small_icon_btn" routerLink="details/{{product.Ref_Track_ID}}">
                                     <span class="readmore_icon"></span>
                                 </a>
-                                <a title="Like" class="small_icon_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Beat','Beat')">
+                                <a *ngIf="product.SoldOut == 'ADD_TO_CART'" title="Add To Cart" class="small_icon_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,'Beat','Beat')">
+                                    <span class="add_to_cart_blue_icon"></span>
+                                </a>
+                                <a *ngIf="product.SoldOut == 'IN_CART'" title="View In Cart" class="small_icon_btn" routerLink="/cart/">
                                     <span class="add_to_cart_blue_icon"></span>
                                 </a>
                             </div>

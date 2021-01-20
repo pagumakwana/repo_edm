@@ -58,12 +58,16 @@
                     <span>Add To Favourites</span>
                     <span class="add_to_favourites_icon btn_icon"></span>
                 </a>
-                <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,storetype,'Unfavourite')">
+                <a *ngIf="product.Favourite == 'Favourite'" class="global_btn icon_btn secondary_btn" (click)="useraction(product.Ref_Track_ID,storetype,'Favourite')">
                     <span>Favourite</span>
                     <span class="add_to_favourites_fill_icon"></span>
                 </a>
-                <a class="global_btn icon_btn primary_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,storetype,storetype)">
+                <a *ngIf="product.SoldOut == 'ADD_TO_CART'" class="global_btn icon_btn primary_btn" (click)="Order('ADD_TO_CART',product.Ref_Track_ID,storetype,storetype)">
                     <span>Add To Cart</span>
+                    <span class="add_to_cart_icon btn_icon"></span>
+                </a>
+                <a *ngIf="product.SoldOut == 'IN_CART'" class="global_btn icon_btn primary_btn" routerLink="/cart/">
+                    <span>View In Cart</span>
                     <span class="add_to_cart_icon btn_icon"></span>
                 </a>
             </div>
@@ -93,11 +97,15 @@
                         <div class="product_details">
                             <div class="left_details">
                                 <img *ngIf="objSlide.Favourite != 'Favourite'" src="../../../assets/images/blank_heart.svg" class="blank_heart" title="Add to Favorites" (click)="useraction(objSlide.Ref_Track_ID,objSlide.IsTrack,'Favourite')" />
-                                <img *ngIf="objSlide.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" title="Remove from Favorites" (click)="useraction(objSlide.Ref_Track_ID,objSlide.IsTrack,'Unfavourite')" />
+                                <img *ngIf="objSlide.Favourite == 'Favourite'" src="../../../assets/images/fill_heart.svg" class="blank_heart" title="Remove from Favorites" (click)="useraction(objSlide.Ref_Track_ID,objSlide.IsTrack,'Favourite')" />
                                 <img src="../../../assets/images/read_more.svg" (click)="redirect(objSlide.Ref_Track_ID)" class="green_heart" title="Read More" />
                             </div>
                             <div class="right_details">
-                                <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',objSlide.Ref_Track_ID,objSlide.IsTrack,objSlide.IsTrack)">
+                                <a *ngIf="objSlide.SoldOut == 'ADD_TO_CART'" class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',objSlide.Ref_Track_ID,objSlide.IsTrack,objSlide.IsTrack)">
+                                    <span>&#36;{{objSlide.Price}}</span>
+                                    <span class="add_to_cart_icon btn_icon"></span>
+                                </a>
+                                <a *ngIf="objSlide.SoldOut == 'IN_CART'" class="global_btn icon_btn primary_btn" title="View In Cart" class="small_icon_btn" routerLink="/cart/">
                                     <span>&#36;{{objSlide.Price}}</span>
                                     <span class="add_to_cart_icon btn_icon"></span>
                                 </a>

@@ -184,6 +184,7 @@ export class FeaturedProductSliderComponent implements OnInit {
         this._profileService.Order(Data).subscribe((res: any) => {
             this._base._commonService.checkCartValue()
             this._base._commonService.hideLoader()
+            this.ngOnInit()
             console.log("Order", res, actionObj);
             //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
             this._base._alertMessageService.success("Added in cart successfully!");
@@ -191,5 +192,13 @@ export class FeaturedProductSliderComponent implements OnInit {
             this._base._commonService.hideLoader()
         })
     }
-
+    redirecttoCart(){
+        this.router.navigate(['cart']).then((e) => {
+            if (e) {
+                console.log("Navigation is successful!");
+            } else {
+                console.log("Navigation has failed!");
+            }
+        });  
+    }
 }

@@ -20,7 +20,11 @@
                         <img src="../../../assets/images/read_more.svg" routerLink="/product/track/details/{{product.ObjectID}}" class="green_heart" title="Read More" />
                     </div>
                     <div class="right_details">
-                        <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',product.ObjectID,'Track','Track')">
+                        <a *ngIf="product.SoldOut == 'ADD_TO_CART'" class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',product.ObjectID,'Track','Track')">
+                            <span>&#36;{{product.Price}}</span>
+                            <span class="add_to_cart_icon btn_icon"></span>
+                        </a>
+                        <a *ngIf="product.SoldOut == 'IN_CART'" class="global_btn icon_btn primary_btn" title="View In Cart" routerLink="/cart/">
                             <span>&#36;{{product.Price}}</span>
                             <span class="add_to_cart_icon btn_icon"></span>
                         </a>
@@ -57,7 +61,11 @@
                     </p>
                 </div>
                 <div class="button_group">
-                    <a class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',beat.ObjectID,'Beat','Beat')">
+                    <a *ngIf="beat.SoldOut == 'ADD_TO_CART'" class="global_btn icon_btn primary_btn" title="Add To Cart" (click)="Order('ADD_TO_CART',beat.ObjectID,'Beat','Beat')">
+                        <span>&#36;{{beat.Price}}</span>
+                        <span class="add_to_cart_icon btn_icon"></span>
+                    </a>
+                    <a *ngIf="beat.SoldOut == 'IN_CART'" class="global_btn icon_btn primary_btn" title="View In Cart" routerLink="/cart/">
                         <span>&#36;{{beat.Price}}</span>
                         <span class="add_to_cart_icon btn_icon"></span>
                     </a>

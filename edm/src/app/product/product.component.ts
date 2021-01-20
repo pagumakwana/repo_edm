@@ -387,6 +387,7 @@ export class ProductComponent implements OnInit {
 
     this._profileService.Order(Data).subscribe((res: any) => {
       this._base._commonService.hideLoader()
+      this. getProductlist()
       this._base._commonService.checkCartValue()
       console.log("Order", res, actionObj)
       //this._base._commonService.UserActionNotificationAlert(actionObj, this.UserActionData, res);
