@@ -3,9 +3,9 @@ export class ApiConstant {
     public static customer = {
         signIn: "User/SignIn",
         registerCustomer: "User/SignUp",
-        validateUser: "Admin/UserManagement/ValidateUser",
-        forgotPassword: "Admin/UserManagement/ForgotPassword",
-        requestOTP: "Admin/UserManagement/RequestOTP",
+        validateUser: "User/ValidateUser",
+        forgotPassword: "User/ForgotPassword",
+        requestOTP: "User/RequestOTP",
         registerGuest: "Admin/UserManagement/RegisterGuest",
         ProducersAdmin: "Admin/UserManagement/Producers",
         ApproveAndRejact: "Admin/UserManagement/ApproveAndRejact",
