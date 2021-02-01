@@ -25,13 +25,13 @@ export class BlogComponent implements OnInit {
   selectedCategory: any = 'ALL'
   blogList = [];
   categoryData: []
-  _blogModel: BlogModel;
+  Ref_blog_ID
   @ViewChild('dataTableCom', { static: false }) tableObj: DatatablesComponent;
 
 
   ngOnInit(): void {
     this._base._commonService.showLoader();
-    this._base._pageTitleService.setTitle("Manage Service", "Manage Service");
+    this._base._pageTitleService.setTitle("Manage Blog", "Manage Blog");
     this.getBlog()
     // this.getCategory()
   }
@@ -59,11 +59,6 @@ export class BlogComponent implements OnInit {
     this.loadTableData()
   }
 
-  // getCategory() {
-  //   this._categoryService.categorylist('ALL', 0).subscribe((resData: any) => {
-  //     this.categoryData = resData
-  //   });
-  // }
 
   tableConfig: dataTableConfig = {
     tableData: [],
@@ -76,7 +71,7 @@ export class BlogComponent implements OnInit {
       // { identifer: "Revision", title: "Revision", type: "text" },
       // { identifer: "CreatedName", title: "CreatedBy", type: "text" },
       // { identifer: "IsActive", title: "IsActive", type: "flag" },
-      // { ident  ifer: "", title: "Action", type: "buttonIcons", buttonIconList: [{ title: 'Edit', class: 'small_icon_btn', iconClass: 'edit_btn' }, { title: 'Delete', class: 'small_icon_btn', iconClass: 'delete_btn' }] }
+      { identifer: "", title: "Action", type: "buttonIcons", buttonIconList: [{ title: 'Edit', class: 'small_icon_btn', iconClass: 'edit_btn' }, { title: 'Delete', class: 'small_icon_btn', iconClass: 'delete_btn' }] }
     ]
   }
 
@@ -87,47 +82,29 @@ export class BlogComponent implements OnInit {
       this._base._router.navigate(['/admin/blog/' + dataItem.tableItem.Ref_Blog_ID]);
 
     } else if (dataItem.action.type == 'buttonIcons' && dataItem.actionInfo.title == "Delete") {
-      this.modifyService(dataItem.tableItem, 'DELETESERVICE');
+      this.Ref_blog_ID = dataItem.tableItem.Ref_Blog_ID
+      $('#modal-deleteconfirmation').modal('show')
+      // this.modifyService(dataItem.tableItem, 'DELETESERVICE');
     }
   }
 
-  modifyService(data, flag) {
-    this._base._encryptedStorage.get(enAppSession.Ref_User_ID).then(Ref_User_ID => {
-      this._base._encryptedStorage.get(enAppSession.FullName).then(FullName => {
-        // this._blogModel.Flag = flag;
-        // this._blogModel.Ref_User_ID = Ref_User_ID;
-        // this._blogModel.Ref_blog_ID = data.Ref_blog_ID;
-        // this._blogModel.Ref_Category_ID = data.Ref_Category_ID;
-        // this._blogModel.ServiceTitle = data.CategoryName;
-        // this._blogModel.Description = data.Description;
-        // this._blogModel.CreatedName = FullName;
-        // this._blogModel.AliasName = data.AliasName;
-        // debugger
-        // if (flag == 'MODIFYSERVICE') {
-        //   this._base._router.navigate(['/admin/service/' + data.AliasName]);
-        // } else if (flag == 'DELETESERVICE') {
-        //   $('#modal-deleteconfirmation').modal('show')
-        // }
-      });
-    });
-  }
 
-  removeService() {
-    // this._blog.ManageService(this._blogModel.Ref_blog_ID, 'delete').subscribe((response: any) => {
-    //   if (response == 'SERVICEDELETE') {
-    //     this._base._alertMessageService.success("Service deleted successfully!");
-    //     this.getBlog()
-    //     // this.blogList.filter((res: any, index: number) => {
-    //     //   if (res.Ref_blog_ID == this._blogModel.Ref_blog_ID) {
-    //     //     this.blogList.splice(index, 1);
-    //     //   }
-    //     // });
-    //     // this.tableConfig.tableData = this.blogList
-    //     // this.tableObj.initializeTable()
-    //   }
-    // }, error => {
-    //   this._base._alertMessageService.error("Something went wrong !!");
-    // })
+  removeBlog() {
+    this._blog.ManageBlog(this.Ref_blog_ID, 'delete').subscribe((response: any) => {
+      if (response == 'BLOGDELETE') {
+        this._base._alertMessageService.success("Blog deleted successfully!");
+        this.getBlog()
+        // this.blogList.filter((res: any, index: number) => {
+        //   if (res.Ref_blog_ID == this._blogModel.Ref_blog_ID) {
+        //     this.blogList.splice(index, 1);
+        //   }
+        // });
+        // this.tableConfig.tableData = this.blogList
+        // this.tableObj.initializeTable()
+      }
+    }, error => {
+      this._base._alertMessageService.error("Something went wrong !!");
+    })
   }
 
   cancelService() {

@@ -22,10 +22,10 @@ export class BlogService {
     addmodifyBlog(data: BlogModel) {
         return this._base._ApiService.post(ApiConstant.category.Blog, data);
     }
-    // ManageService(ServiceIDs, Action) {
-    //     let params = `?ServiceIDs=${ServiceIDs}&Action=${Action}`
-    //     return this._base._ApiService.get(ApiConstant.genService.ManageService + params);
-    // }
+    ManageBlog(BlogIDs, Action) {
+        let params = `?BlogIDs=${BlogIDs}&Action=${Action}`
+        return this._base._ApiService.get(ApiConstant.category.ManageBlog + params);
+    }
     // getServiceByCategory(StartCount, EndCount, AliasName = null) {
     //     let params = `?StartCount=${StartCount}&EndCount=${EndCount}&AliasName=${AliasName}`
     //     return this._base._ApiService.get(ApiConstant.genService.servicebycatehory + params);

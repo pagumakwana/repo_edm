@@ -21,7 +21,8 @@ export class ApiConstant {
         AddModifyCategory: "Admin/MasterManagement/Category",
         category: "Admin/MasterManagement/Category",
         ManageCategory: "Admin/MasterManagement/ManageCategory",
-        Blog: "Admin/MasterManagement/Blog"
+        Blog: "Admin/MasterManagement/Blog",
+        ManageBlog: "Admin/MasterManagement/ManageBlog",
     }
     public static CouponCode = {
         CouponCode: "Admin/MasterManagement/CouponCode",
