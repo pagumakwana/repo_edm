@@ -1,0 +1,78 @@
+<div>
+
+    <form [formGroup]="addBlogForm">
+        <div class="portlet_body admin_half_forms">
+            <div class="form_group">
+                <div class="form_area icon_form_group">
+                    <input type="text" name="BlogTitle" formControlName="BlogTitle" placeholder="blog Title" />
+                    <span class="input_icon "></span>
+                </div>
+                <edm-error [control]="addBlogForm?.controls?.BlogTitle"></edm-error>
+            </div>
+
+            <div class="form_group">
+                <div class="form_area icon_form_group textarea_icon_form_group">
+                    <textarea rows="4" placeholder="Describe your blog" formControlName="Blog"></textarea>
+                    <span class="input_icon bio_icon"></span>
+                </div>
+                <span class="file_formats right_align">Max 1200 caractors</span>
+                <edm-error [control]="addBlogForm?.controls?.Blog"></edm-error>
+            </div>
+            <div class="form_group">
+                <label class="form_label">Upload blog Cover Image</label>
+                <div class="form_area">
+                    <div class="custom-file">
+                        <input type="file" (change)="fileChoosen($event,'thumbnail')" class="custom-file-input" multiple
+                            id="customFile">
+                        <!-- <img [src]="thumb ? thumb : '../../../../assets/images/product_thumbnail.jpg'"
+                            class="image_preview" /> -->
+                        <label class="custom-file-label" for="customFile">
+                            Choose file
+                        </label>
+                        <!-- <label class="custom-file-label upload_btn"></label> -->
+                    </div>
+                    <div class="attched_img">
+                        <ng-container *ngFor="let img of fileChoosenData.thumbnail;let i = index;">
+                            <div>
+                                <img [src]="img.thumb" />
+                                <a (click)="removeFile('thumbnail',i)" title="Remove Image">
+                                    <img src="../../../../assets/images/close_blue.svg">
+                                </a>
+                                <!-- <img height="80" width="120" src="../../../../assets/images/product_thumbnail.jpg" /> -->
+                            </div>
+                        </ng-container>
+                    </div>
+                    <span class="file_formats">Note: File upload limit - 3MB, Attchment format : .jpg, .png,
+                        .jpeg</span>
+                </div>
+                <edm-error [control]="addBlogForm?.controls?.thumbnail"></edm-error>
+
+            </div>
+            <!-- </form> -->
+        </div>
+
+
+        <div class="button_group">
+            <!-- <a class="global_btn primary_btn" (click)="saveblog()" data-toggle="modal" data-target="#acknowledge_popup"> -->
+            <a class="global_btn primary_btn" (click)="saveblog()">
+                <span>{{btnTitle}}</span>
+            </a>
+            <a class="global_btn primary_btn" routerLink='/admin/blog'>
+                <span>Cancel</span>
+            </a>
+        </div>
+
+    </form>
+</div>
+<div class="modal fade acknowledge_popup" #acknowledge_popup id="acknowledge_popup" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="../../../../assets/images/success_tick.svg" alt="blog Submitted Successfully">
+                <h3>Thank You</h3>
+                <p>Your blog has been submitted will notify you the status of blog approval.</p>
+            </div>
+        </div>
+    </div>
+</div>

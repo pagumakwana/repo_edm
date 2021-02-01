@@ -106,13 +106,17 @@ const routes: Routes = [
                 loadChildren: () => import('../admin/genservices/genservices.module').then(m => m.GenServiceModule)
             },
             {
+                path: "blog",
+                loadChildren: () => import('../admin/blogmanagement/blog.module').then(m => m.BlogManagement)
+            },
+            {
                 path: "coupon",
                 loadChildren: () => import('../admin/coupon/coupon.module').then(m => m.CouponModule)
             },
             {
                 path: "config",
                 loadChildren: () => import('../admin/masters/masters.module').then(m => m.MastersModule)
-            }, 
+            },
             {
                 path: "profileupdate",
                 loadChildren: () => import('../admin/producerprofile/producerprofile.module').then(m => m.ProducerProfileModule)
@@ -125,7 +129,7 @@ const routes: Routes = [
                 path: "support",
                 loadChildren: () => import('../admin/support/support.module').then(m => m.SupportModule)
             },
-           
+
             {
                 path: "authority",
                 loadChildren: () => import('../admin/authoritymanagement/authority.module').then(m => m.AuthorityModule)
