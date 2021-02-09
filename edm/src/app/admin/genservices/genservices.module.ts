@@ -9,7 +9,7 @@ import { ErrorModule } from 'src/app/commonmodule/errorComponent/error.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatatablesModule } from 'src/app/commonmodule/datatables/datatables.module';
 import { DragulaModule } from 'ng2-dragula';
-
+import { AngularMyDatePickerModule } from 'angular-mydatepicker';
 @NgModule({
     declarations: [
         ServicesListComponent,
@@ -17,6 +17,7 @@ import { DragulaModule } from 'ng2-dragula';
     ],
     imports: [
         CommonModule,
+        AngularMyDatePickerModule,
         RouterModule.forChild([
             {
                 path: '',

@@ -41,8 +41,7 @@
                     <div class="form_group">
                         <label class="form_label">Add FAQ's</label>
                         <div class="form_area icon_form_group">
-                            <input type="text" name="servicetitle" formControlName="Questions"
-                                placeholder="Add Question" />
+                            <input type="text" name="servicetitle" formControlName="Questions" placeholder="Add Question" />
                             <span class="input_icon question_icon"></span>
                         </div>
                         <edm-error [control]="faq?.controls?.Questions"></edm-error>
@@ -63,8 +62,7 @@
                             <span>Add</span>
                             <span class="right_icon btn_icon"></span>
                         </a>
-                        <a class="global_btn icon_btn red_btn" *ngIf="FaqListArray.controls.length>1"
-                            (click)="addFaq(i,false)">
+                        <a class="global_btn icon_btn red_btn" *ngIf="FaqListArray.controls.length>1" (click)="addFaq(i,false)">
                             <span>Cancel</span>
                             <span class="delete_icon btn_icon"></span>
                         </a>
@@ -89,8 +87,7 @@
                 <div class="width_50">
                     <div class="form_group">
                         <div class="form_area icon_form_group">
-                            <input type="text" formControlName="PriceWithProjectFiles" name="filesincluded"
-                                placeholder="Enter price including files" />
+                            <input type="text" formControlName="PriceWithProjectFiles" name="filesincluded" placeholder="Enter price including files" />
                             <span class="input_icon included_icon"></span>
                         </div>
                         <edm-error [control]="addServiceForm.controls.PriceWithProjectFiles"></edm-error>
@@ -101,9 +98,9 @@
                 <div class="width_50">
                     <div class="form_group">
                         <div class="form_area icon_form_group">
-                            <input type="date" formControlName="DeliveryDate" name="deliverydate"
-                                placeholder="Delivery Date" />
-                            <span class="input_icon date_icon"></span>
+                            <input class="input-box" formControlName="DeliveryDate" placeholder="Delivery Date" angular-mydatepicker name="DeliveryDate" (click)="dp.toggleCalendar()" [options]="myDpOptions" #dp="angular-mydatepicker" />
+                            <!-- <input type="date" formControlName="DeliveryDate" name="deliverydate" placeholder="Delivery Date" /> -->
+                            <span class="input_icon date_icon" (click)="dp.toggleCalendar()"></span>
                         </div>
                         <edm-error [control]="addServiceForm.controls.DeliveryDate"></edm-error>
                     </div>
@@ -129,31 +126,25 @@
             </div>
             <div class="form_group">
                 <div class="form_area">
-                    <input type="text" formControlName="MetaTitle" id="MetaTitle" name="MetaTitle"
-                        placeholder="Enter meta title here" aria-describedby="MetaTitleHelp" />
+                    <input type="text" formControlName="MetaTitle" id="MetaTitle" name="MetaTitle" placeholder="Enter meta title here" aria-describedby="MetaTitleHelp" />
                 </div>
-                <div class="error_msg"
-                    *ngIf="addServiceForm.controls.MetaTitle.invalid && addServiceForm.controls.MetaTitle.touched">
+                <div class="error_msg" *ngIf="addServiceForm.controls.MetaTitle.invalid && addServiceForm.controls.MetaTitle.touched">
                     <span id="MetaTitleHelp">This field is Required</span>
                 </div>
             </div>
             <div class="form_group">
                 <div class="form_area">
-                    <input type="text" formControlName="MetaKeywords" id="MetaKeywords" name="MetaKeywords"
-                        placeholder="Enter meta keywords here" aria-describedby="MetaKeywordsHelp" />
+                    <input type="text" formControlName="MetaKeywords" id="MetaKeywords" name="MetaKeywords" placeholder="Enter meta keywords here" aria-describedby="MetaKeywordsHelp" />
                 </div>
-                <div class="error_msg"
-                    *ngIf="addServiceForm.controls.MetaKeywords.invalid && addServiceForm.controls.MetaKeywords.touched">
+                <div class="error_msg" *ngIf="addServiceForm.controls.MetaKeywords.invalid && addServiceForm.controls.MetaKeywords.touched">
                     <span id="MetaKeywordsHelp">This field is Required</span>
                 </div>
             </div>
             <div class="form_group">
                 <div class="form_area">
-                    <textarea rows="4" formControlName="MetaDescription" id="MetaDescription"
-                        placeholder="Enter meta description here" aria-describedby="MetaDescriptionHelp"></textarea>
+                    <textarea rows="4" formControlName="MetaDescription" id="MetaDescription" placeholder="Enter meta description here" aria-describedby="MetaDescriptionHelp"></textarea>
                 </div>
-                <div class="error_msg"
-                    *ngIf="addServiceForm.controls.MetaDescription.invalid && addServiceForm.controls.MetaDescription.touched">
+                <div class="error_msg" *ngIf="addServiceForm.controls.MetaDescription.invalid && addServiceForm.controls.MetaDescription.touched">
                     <span id="MetaDescriptionHelp">This field is Required</span>
                 </div>
             </div>
@@ -161,8 +152,7 @@
                 <label class="form_label">Upload Service Video</label>
                 <div class="form_area" *ngIf="fileChoosenData.ServiceVideoUrl.length < 1">
                     <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input"
-                            id="customFile">
+                        <input type="file" (change)="fileChoosen($event,'ServiceVideoUrl')" class="custom-file-input" id="customFile">
                         <label class="custom-file-label" for="customFile">
                             Choose file
                         </label>
@@ -196,8 +186,7 @@
                 <label class="form_label">Upload Service Cover Image</label>
                 <div class="form_area">
                     <div class="custom-file">
-                        <input type="file" (change)="fileChoosen($event,'thumbnail')" class="custom-file-input"
-                            multiple id="customFile">
+                        <input type="file" (change)="fileChoosen($event,'thumbnail')" class="custom-file-input" multiple id="customFile">
                         <!-- <img [src]="thumb ? thumb : '../../../../assets/images/product_thumbnail.jpg'"
                             class="image_preview" /> -->
                         <label class="custom-file-label" for="customFile">
@@ -238,8 +227,7 @@
 
     </form>
 </div>
-<div class="modal fade acknowledge_popup" #acknowledge_popup id="acknowledge_popup" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+<div class="modal fade acknowledge_popup" #acknowledge_popup id="acknowledge_popup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
     <div class="modal-md modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-body">

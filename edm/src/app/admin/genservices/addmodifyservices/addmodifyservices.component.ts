@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
 import { ValidationService } from 'src/app/commonmodule/errorComponent/validation.service';
 import { SaveModuleFileModel } from 'src/app/_appModel/common.model';
+import { IAngularMyDpOptions, IMyDateModel } from 'angular-mydatepicker';
 
 declare var $: any;
 
@@ -24,7 +25,14 @@ declare var $: any;
 
 
 export class AddModifyServicesComponent implements OnInit, OnDestroy {
+  myDpOptions: IAngularMyDpOptions = {
+    dateRange: false,
+    dateFormat: 'yyyy-mm-dd'
+    // other options are here...
+  };
 
+  myDateInit: boolean = true;
+  model: IMyDateModel = null;
   constructor(public _base: BaseServiceHelper,
     private _activatedRouter: ActivatedRoute,
     private _service: GenService,
@@ -46,7 +54,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
     Price: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
     PriceWithProjectFiles: ['', [Validators.required, ValidationService.ValidateNumberPriceType(5000)]],
     Revision: ['', [Validators.required]],
-    DeliveryDate: ['', [Validators.required, ValidationService.dateValidator(1)]],
+    DeliveryDate: ['', [Validators.required]],
     // ProjectFilesUrl: ['', [Validators.required]],
     ServiceVideoUrl: ['', [Validators.required]],
     thumbnail: ['', [Validators.required]],
@@ -73,6 +81,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
   aliasName: string;
 
   ngOnInit(): void {
+   
     this._base._pageTitleService.setTitle("Manage Service", this.btnTitle + " Service");
     this.aliasName = this._activatedRouter.snapshot.paramMap.get('slug');
     console.log("service")
@@ -141,7 +150,8 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
           this.addServiceForm.controls.Price.setValue(this.addService.Price)
           this.addServiceForm.controls.PriceWithProjectFiles.setValue(this.addService.PriceWithProjectFiles)
           this.addServiceForm.controls.Revision.setValue(this.addService.Revision)
-          this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-MM-dd', 'en'))
+         // this.addServiceForm.controls.DeliveryDate.setValue(formatDate(this.addService.DeliveryDate, 'yyyy-mm-dd', 'en'))
+          this.addServiceForm.controls.DeliveryDate.setValue({isRange: false, singleDate: {jsDate: new Date(this.addService.DeliveryDate)}})
           this.addServiceForm.controls.MetaTitle.setValue(this.addService.MetaTitle);
           this.addServiceForm.controls.MetaKeywords.setValue(this.addService.MetaKeywords);
           this.addServiceForm.controls.MetaDescription.setValue(this.addService.MetaDescription);
@@ -293,7 +303,7 @@ export class AddModifyServicesComponent implements OnInit, OnDestroy {
           this.addService.Price = this.addServiceForm.value.Price
           this.addService.PriceWithProjectFiles = this.addServiceForm.value.PriceWithProjectFiles
           this.addService.Revision = this.addServiceForm.value.Revision
-          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate
+          this.addService.DeliveryDate = this.addServiceForm.value.DeliveryDate.singleDate.formatted
           this.addService.FileManager = []
           // this.addService.FileUrls = this._base._commonService.joinArray(this._base._commonService.createFileArray(ImageUrls, 'thumbnail', this.fileChoosenData['thumbnail'], this.addService.FileUrls), this._base._commonService.createFileArray(serviceUrl, 'ServiceVideoUrl', this.fileChoosenData['ServiceVideoUrl'], this.addService.FileUrls))
           this.addService.FAQDetails = this.addServiceForm.value.FAQDetails
