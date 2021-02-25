@@ -10,13 +10,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatatablesModule } from 'src/app/commonmodule/datatables/datatables.module';
 import { DragulaModule } from 'ng2-dragula';
 import { producerListComponent } from './producerlist/producerlist.component';
+import { ProducerHomeComponent } from './producerhome/producerhome.component';
 import { ProducerService } from 'src/app/_appService/producer/producer.serviec';
 
 @NgModule({
     declarations: [
         // ServicesListComponent,
         // AddModifyServicesComponent
-        producerListComponent
+        producerListComponent,
+        ProducerHomeComponent
+
     ],
     imports: [
         CommonModule,
@@ -24,6 +27,10 @@ import { ProducerService } from 'src/app/_appService/producer/producer.serviec';
             {
                 path: '',
                 component: producerListComponent
+            },
+            {
+                path: 'producerhome',
+                component: ProducerHomeComponent
             },
             // {
             //     path: ':slug',

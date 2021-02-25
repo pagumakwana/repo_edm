@@ -1,0 +1,74 @@
+<div class="filter_section desktop_filter_section">
+    <!-- <a class="add_new" routerLink='/admin/service/0'>
+        <span class="add_new_icon"></span>
+        <span>Add New Service</span>
+    </a> -->
+    <form>
+        <div class="form_group">
+            <div class="form_area icon_form_group">
+                <!-- <select name="filterbygenretype" class="grey_dropdown">
+                    <option disabled selected>Filter By Genre Type</option>
+                    <option value="0">ALL</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
+                    <option value="4">Service</option>
+                    <option value="5">News</option>
+                </select> -->
+                <select name="filterbygenretype" class="grey_dropdown" [(ngModel)]="selectedStatus"
+                    (change)="filterchange($event)">
+                    <option selected disabled>Select status</option>
+                    <option *ngFor="let status of statusArray" [value]="status.value">
+                        {{status.text}}</option>
+                </select>
+                <span class="input_icon down_icon"></span>
+            </div>
+        </div>
+    </form>
+    <form>
+        <div class="form_group" *ngIf="false">
+            <div class="form_area icon_form_group">
+                <!-- <select name="filterbygenretype" class="grey_dropdown">
+                    <option disabled selected>Filter By Genre Type</option>
+                    <option value="0">ALL</option>
+                    <option value="1">Track</option>
+                    <option value="2">Beats</option>
+                    <option value="3">Blog</option>
+                    <option value="4">Service</option>
+                    <option value="5">News</option>
+                </select> -->
+                <!-- <select name="filterbygenretype" class="grey_dropdown" [(ngModel)]="selectedCategory"
+                    (change)="filterchange($event)">
+                    <option selected value='ALL'>Select Category</option>
+                    <option *ngFor="let category of categoryData" [value]="category.Ref_Category_ID">
+                        {{category.CategoryName}}</option>
+                </select> -->
+                <span class="input_icon down_icon"></span>
+            </div>
+        </div>
+    </form>
+</div>
+<div>
+    <com-datatable #dataTableCom [config]='tableConfig' (tableEvent)="tableClick($event)"></com-datatable>
+</div>
+<div class="modal fade plain_content" id="modal-deleteconfirmation" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true" keyboard="true">
+    <div class="modal-md modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Once you delete data can not be rollback. Do you still want to continue?</p>
+            </div>
+            <div class="modal-footer">
+                <!-- <a type="button" class="btn btn-block primary_btn" (click)="cancelService()"
+                    data-dismiss="modal">Cancel</a> -->
+                <!-- <a (click)="removeService()" class="btn btn-block primary_btn" data-dismiss="modal">Yes</a> -->
+            </div>
+        </div>
+    </div>
+</div>
